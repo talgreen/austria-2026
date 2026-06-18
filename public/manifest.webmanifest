@@ -1,0 +1,28 @@
+{
+  "name": "Austria '26",
+  "short_name": "Austria '26",
+  "description": "18 days across Austria — alps, lakes and castles, 8–26 August 2026. Itinerary, map, stays and tips for our family adventure.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#F5EFE6",
+  "theme_color": "#2F5E3F",
+  "lang": "en",
+  "dir": "ltr",
+  "categories": ["travel", "lifestyle"],
+  "icons": [
+    {
+      "src": "icon-austria-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icon-austria.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
