@@ -1,24 +1,24 @@
-// Build Italian "words of the day" audio as **trilingual clips** (Italian →
+// Build German "words of the day" audio as **trilingual clips** (German →
 // short pause → English → short pause → Hebrew) by stitching three TTS MP3s
 // with ffmpeg. Two files per slot:
 //   • day-NN-M.mp3      — word + EN meaning + HE meaning
-//   • day-NN-M-ex.mp3  — Italian example + EN exampleMeaning + HE exampleMeaning
+//   • day-NN-M-ex.mp3  — German example + EN exampleMeaning + HE exampleMeaning
 //
 // **Default (Google path): Gemini 3.1 Flash TTS** — `GEMINI_API_KEY` (AI Studio key;
 // same family as the site’s Gemini features). Model: `GEMINI_TTS_MODEL` or
 // `gemini-3.1-flash-tts-preview`. Voices: prebuilt names, e.g. `GEMINI_TTS_VOICE_NAME=Kore`
 // or per-language `GEMINI_TTS_VOICE_IT` / `_EN` / `_HE`.
 //
-// **Legacy Cloud Chirp 3 HD:** `--google-chirp3` or `ITALIAN_WORDS_TTS=google-chirp3`
+// **Legacy Cloud Chirp 3 HD:** `--google-chirp3` or `GERMAN_WORDS_TTS=google-chirp3`
 // — requires Cloud Text-to-Speech API + `gcloud auth application-default login`
 // or `GOOGLE_APPLICATION_CREDENTIALS`. See `scripts/lib/google-tts.mjs` for env vars.
 //
-// **ElevenLabs:** `--elevenlabs` or `ITALIAN_WORDS_TTS=elevenlabs` + `ELEVEN_API_KEY`.
+// **ElevenLabs:** `--elevenlabs` or `GERMAN_WORDS_TTS=elevenlabs` + `ELEVEN_API_KEY`.
 //
-//   node scripts/fetch-italian-word-audio.mjs
-//   node scripts/fetch-italian-word-audio.mjs --force
-//   node scripts/fetch-italian-word-audio.mjs --google-chirp3 --force
-//   node scripts/fetch-italian-word-audio.mjs --elevenlabs --force --examples-only
+//   node scripts/fetch-german-word-audio.mjs
+//   node scripts/fetch-german-word-audio.mjs --force
+//   node scripts/fetch-german-word-audio.mjs --google-chirp3 --force
+//   node scripts/fetch-german-word-audio.mjs --elevenlabs --force --examples-only
 //
 // Source of truth: `src/data/itinerary.ts` + `src/data/i18n/itinerary.he.ts`
 
@@ -42,7 +42,7 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const REPO_ROOT = resolve(__dirname, "..");
 const ITINERARY_EN = resolve(REPO_ROOT, "src", "data", "itinerary.ts");
 const ITINERARY_HE = resolve(REPO_ROOT, "src", "data", "i18n", "itinerary.he.ts");
-const OUT_DIR = resolve(REPO_ROOT, "public", "audio", "italian-words");
+const OUT_DIR = resolve(REPO_ROOT, "public", "audio", "german-words");
 
 const ELEVEN_OUTPUT_FORMAT = "mp3_44100_128";
 
@@ -82,12 +82,12 @@ const ELEVEN_VOICE_SETTINGS = {
 const PAUSE_SEC = 0.65;
 
 function useElevenLabs() {
-  return process.argv.includes("--elevenlabs") || process.env.ITALIAN_WORDS_TTS === "elevenlabs";
+  return process.argv.includes("--elevenlabs") || process.env.GERMAN_WORDS_TTS === "elevenlabs";
 }
 
 /** Legacy Cloud Text-to-Speech Chirp 3 HD (OAuth). Default is Gemini Flash TTS (API key). */
 function useGoogleChirp3() {
-  return process.argv.includes("--google-chirp3") || process.env.ITALIAN_WORDS_TTS === "google-chirp3";
+  return process.argv.includes("--google-chirp3") || process.env.GERMAN_WORDS_TTS === "google-chirp3";
 }
 
 function getGeminiVoiceConfig() {
@@ -103,7 +103,7 @@ function geminiPromptFor(lang, literal) {
   const body = literal.replace(/\r\n/g, "\n");
   switch (lang) {
     case "it":
-      return `Speak in Italian with a calm, clear travel-phrasebook tone. Read exactly the following text, with natural pacing:\n\n${body}`;
+      return `Speak in German with a calm, clear travel-phrasebook tone. Read exactly the following text, with natural pacing:\n\n${body}`;
     case "en":
       return `Speak in American English with a calm, clear travel-phrasebook tone. Read exactly the following text, with natural pacing:\n\n${body}`;
     case "he":
@@ -192,8 +192,8 @@ function extractHeDayInner(src, dayNum) {
   return m ? m[1] : null;
 }
 
-function extractItalianWordsInner(dayInner) {
-  const marker = "italianWords:";
+function extractGermanWordsInner(dayInner) {
+  const marker = "germanWords:";
   const mi = dayInner.indexOf(marker);
   if (mi < 0) return null;
   let i = mi + marker.length;
@@ -230,8 +230,8 @@ function extractItalianWordsInner(dayInner) {
 function parseEnWordsForDay(src, dayNum) {
   const day = extractEnDayInner(src, dayNum);
   if (!day) throw new Error(`EN day ${dayNum} block not found`);
-  const inner = extractItalianWordsInner(day);
-  if (!inner) throw new Error(`EN day ${dayNum} italianWords not found`);
+  const inner = extractGermanWordsInner(day);
+  if (!inner) throw new Error(`EN day ${dayNum} germanWords not found`);
   const objs = parseWordObjects(inner);
   return objs.map(chunk => ({
     word: pickField(chunk, "word"),
@@ -244,8 +244,8 @@ function parseEnWordsForDay(src, dayNum) {
 function parseHeWordsForDay(src, dayNum) {
   const day = extractHeDayInner(src, dayNum);
   if (!day) throw new Error(`HE day ${dayNum} block not found`);
-  const inner = extractItalianWordsInner(day);
-  if (!inner) throw new Error(`HE day ${dayNum} italianWords not found`);
+  const inner = extractGermanWordsInner(day);
+  if (!inner) throw new Error(`HE day ${dayNum} germanWords not found`);
   const objs = parseWordObjects(inner);
   return objs.map(chunk => ({
     meaning: pickField(chunk, "meaning"),
@@ -403,7 +403,7 @@ async function main() {
   const parseOnly = process.argv.includes("--parse-only");
   /** Skip the `*-ex.mp3` example sentences; only build the word/meaning clip. */
   const wordsOnly = process.argv.includes("--words-only");
-  /** Skip word/meaning clips; only (re)build `*-ex.mp3` Italian example + meanings. */
+  /** Skip word/meaning clips; only (re)build `*-ex.mp3` German example + meanings. */
   const examplesOnly = process.argv.includes("--examples-only");
   if (examplesOnly && wordsOnly) {
     console.error("Use only one of --examples-only or --words-only.");
@@ -465,7 +465,7 @@ async function main() {
     geminiKey = process.env.GEMINI_API_KEY?.trim();
     if (!geminiKey) {
       console.error(
-        "Italian words TTS defaults to Gemini 3.1 Flash TTS. Set GEMINI_API_KEY (e.g. in `.env.local`).\n" +
+        "German words TTS defaults to Gemini 3.1 Flash TTS. Set GEMINI_API_KEY (e.g. in `.env.local`).\n" +
           "For legacy Cloud Chirp3 instead: pass --google-chirp3 and authenticate with gcloud / a service account."
       );
       process.exit(1);
@@ -485,7 +485,7 @@ async function main() {
 
   await mkdir(OUT_DIR, { recursive: true });
 
-  const tmpDir = await mkdtemp(join(tmpdir(), "tuscany-itwords-"));
+  const tmpDir = await mkdtemp(join(tmpdir(), "austria-itwords-"));
   let silencePath;
   try {
     silencePath = await ensureSilenceMp3(tmpDir);

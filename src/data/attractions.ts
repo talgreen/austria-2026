@@ -7,7 +7,7 @@ import type { POI } from "./types";
  * addresses and opening notes were verified from official sites /
  * Wikipedia in 2026; re-confirm exact hours the week of travel.
  * Image paths are relative (./images/...) so they resolve under the
- * GitHub Pages base path; fetch them with scripts/fetch-images.mjs.
+ * GitHub Pages base path; drop matching .jpg files into public/images/.
  */
 export const attractions: POI[] = [
   /* ---------- Salzburg & Salzkammergut (south) ---------- */

@@ -137,7 +137,7 @@ export function isLikelyMobile(): boolean {
 /* ---------- Persistence ---------- */
 
 /** Bump (`v2`) resets soft-snooze / "don't show again" once after install UX fixes. */
-const STORAGE_KEY = "tuscany:a2hs-prefs:v2";
+const STORAGE_KEY = "austria:a2hs-prefs:v2";
 /** How long a "Maybe later" tap suppresses the popup. Long enough that the
  *  user isn't pestered, short enough that they'll see it again on a future
  *  visit (e.g. a week before the trip). */
@@ -195,7 +195,7 @@ function isSnoozed(p: Prefs): boolean {
  * honouring the safety check that we're not already in standalone
  * mode (i.e. already installed).
  */
-const FORCE_OPEN_EVENT = "tuscany:a2hs:force-open";
+const FORCE_OPEN_EVENT = "austria:a2hs:force-open";
 
 /** Imperatively open the install prompt from anywhere in the app
  *  (e.g. a "Install app" link in the More menu). Bypasses the soft

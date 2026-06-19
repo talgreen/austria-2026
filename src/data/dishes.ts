@@ -9,7 +9,7 @@ export const dishes: Dish[] = [
   {
     id: "wiener-schnitzel",
     name: "Wiener Schnitzel",
-    italianName: "Wiener Schnitzel",
+    germanName: "Wiener Schnitzel",
     region: "north",
     category: "main",
     description:
@@ -20,7 +20,7 @@ export const dishes: Dish[] = [
   {
     id: "kaesespaetzle",
     name: "Käsespätzle / Kasspatzln",
-    italianName: "Kasspatzln",
+    germanName: "Kasspatzln",
     region: "south",
     category: "main",
     description:
@@ -31,7 +31,7 @@ export const dishes: Dish[] = [
   {
     id: "tafelspitz",
     name: "Tafelspitz",
-    italianName: "Tafelspitz",
+    germanName: "Tafelspitz",
     region: "north",
     category: "main",
     description:
@@ -42,7 +42,7 @@ export const dishes: Dish[] = [
   {
     id: "kasnocken",
     name: "Pinzgauer Kasnocken",
-    italianName: "Kasnocken",
+    germanName: "Kasnocken",
     region: "south",
     category: "main",
     description:
@@ -55,7 +55,7 @@ export const dishes: Dish[] = [
   {
     id: "kaiserschmarrn",
     name: "Kaiserschmarrn",
-    italianName: "Kaiserschmarrn",
+    germanName: "Kaiserschmarrn",
     region: "austria",
     category: "dessert",
     description:
@@ -66,7 +66,7 @@ export const dishes: Dish[] = [
   {
     id: "apfelstrudel",
     name: "Apfelstrudel",
-    italianName: "Apfelstrudel",
+    germanName: "Apfelstrudel",
     region: "austria",
     category: "dessert",
     description:
@@ -77,7 +77,7 @@ export const dishes: Dish[] = [
   {
     id: "sachertorte",
     name: "Sachertorte",
-    italianName: "Original Sacher-Torte",
+    germanName: "Original Sacher-Torte",
     region: "north",
     category: "dessert",
     description:
@@ -88,7 +88,7 @@ export const dishes: Dish[] = [
   {
     id: "salzburger-nockerl",
     name: "Salzburger Nockerl",
-    italianName: "Salzburger Nockerl",
+    germanName: "Salzburger Nockerl",
     region: "south",
     category: "dessert",
     description:
@@ -101,7 +101,7 @@ export const dishes: Dish[] = [
   {
     id: "brezel",
     name: "Brezel & bakery breakfast",
-    italianName: "Brezel / Semmel",
+    germanName: "Brezel / Semmel",
     region: "austria",
     category: "snack",
     description:
@@ -112,7 +112,7 @@ export const dishes: Dish[] = [
   {
     id: "eis",
     name: "Eis (ice cream)",
-    italianName: "Eis",
+    germanName: "Eis",
     region: "austria",
     category: "snack",
     description:
@@ -125,7 +125,7 @@ export const dishes: Dish[] = [
   {
     id: "almdudler",
     name: "Almdudler",
-    italianName: "Almdudler",
+    germanName: "Almdudler",
     region: "austria",
     category: "drink",
     description:
@@ -136,7 +136,7 @@ export const dishes: Dish[] = [
   {
     id: "apfelsaft-gespritzt",
     name: "Apfelsaft gespritzt",
-    italianName: "Apfelsaft g'spritzt",
+    germanName: "Apfelsaft g'spritzt",
     region: "austria",
     category: "drink",
     description:
@@ -147,7 +147,7 @@ export const dishes: Dish[] = [
   {
     id: "gruener-veltliner",
     name: "Grüner Veltliner",
-    italianName: "Grüner Veltliner",
+    germanName: "Grüner Veltliner",
     region: "north",
     category: "drink",
     description:
@@ -158,7 +158,7 @@ export const dishes: Dish[] = [
   {
     id: "stiegl-bier",
     name: "Stiegl & alpine beer",
-    italianName: "Stiegl / Gösser",
+    germanName: "Stiegl / Gösser",
     region: "south",
     category: "drink",
     description:
@@ -169,7 +169,7 @@ export const dishes: Dish[] = [
   {
     id: "wiener-melange",
     name: "Wiener Melange",
-    italianName: "Melange",
+    germanName: "Melange",
     region: "north",
     category: "drink",
     description:

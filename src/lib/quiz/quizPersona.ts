@@ -3,7 +3,7 @@
  * recap quiz. A separate persona from Gemininio because the voice,
  * the audience (8–14 year olds), and the *shape* of the output
  * (strict JSON, exactly 5 questions) are all different. Gemininio
- * is a chatty Italian friend; Quizzo is an upbeat host who lives
+ * is a chatty German friend; Quizzo is an upbeat host who lives
  * to make kids feel clever.
  *
  * The system prompt is built per-day from the same itinerary data
@@ -56,7 +56,7 @@ function buildDayDigest(dayNumber: number, lang: Lang): string {
           if (att.tags?.length) lines.push(`      Tags: ${att.tags.join(", ")}`);
           // Hand-curated story trivia — surface these to Gemini as
           // priority question fodder so the AI also reaches for the
-          // "Devil's Bridge → dog" / "why does Pisa lean" angles
+          // "Hallstatt salt → salt" / "why is the Werfen cave icy" angles
           // instead of generic "which town are we in?" facts. Format
           // mirrors the quiz output (Q + correct + plausible wrong
           // answers) so Gemini can lift, paraphrase, OR invent its
@@ -80,10 +80,10 @@ function buildDayDigest(dayNumber: number, lang: Lang): string {
     }
   }
 
-  if (day.italianWords?.length) {
+  if (day.germanWords?.length) {
     lines.push("");
     lines.push("GERMAN WORDS LEARNED TODAY:");
-    for (const w of day.italianWords) {
+    for (const w of day.germanWords) {
       lines.push(`  • "${w.word}" — ${w.meaning}` + (w.example ? ` (e.g. ${w.example})` : ""));
     }
   }
@@ -118,8 +118,8 @@ the apartment. Write questions in a way that assumes the kid has just
 seen, walked through, swum in, climbed up, eaten, or photographed the
 attraction in question — past-tense or present-tense both work, but
 always treat the experience as something the kid has just lived
-("which animal did the villagers send across the Devil's Bridge?",
-"how many bells did you see at the top of the Leaning Tower?").
+("what did the miners dig out of the Hallstatt mountain?",
+"how cold did it feel inside the Werfen ice cave?").
 
 ROLE:
 - You write a quiz of EXACTLY ${count} multiple-choice questions drawn
@@ -176,19 +176,19 @@ QUESTION DESIGN RULES (these matter — read carefully):
 
 (C) GOOD QUESTION TYPES (lean heavily on these):
     - VERY SHORT AND PUNCHY: Keep questions short (1-2 sentences max) and options short (1-5 words max). Perfect for 7-9 year olds.
-    - Legends and folklore tied to the attraction ("which animal did
-      the villagers send across the Devil's Bridge first?", "which
-      Roman god's lightning bolts created Saturnia's hot springs?")
+    - Legends and folklore tied to the attraction ("which emperor is
+      said to sleep deep inside the Untersberg mountain?", "what did
+      miners dig out of the Hallstatt mountain for thousands of years?")
     - Signature physical / sensory details the kid will have noticed
-      ("what colour is the water in the canyon?", "why does the
-      water at Saturnia smell like eggs?", "how many bells sit at
-      the top of the Leaning Tower?")
-    - Real history with a memorable hook ("how many years did the
-      Leaning Tower take to build?", "which two ancient peoples
-      carved into the cliffs at Pitigliano?")
+      ("what colour is the water in the gorge?", "how cold does it stay
+      inside the Werfen ice cave, even in summer?", "how do you climb up
+      to the Hohensalzburg fortress?")
+    - Real history with a memorable hook ("how old is the Hohensalzburg
+      fortress above Salzburg?", "what was hauled down the mountains
+      along the old Alpine salt roads?")
     - Local food, language, and fun cultural details ATTACHED to a
-      place the family visited today ("what's the famous Pitigliano
-      sweet stick called?")
+      place the family visited today ("what's the famous round Salzburg
+      chocolate called?")
 
 (D) REQUIRED QUESTION DISTRIBUTION:
 ${distributionText}
@@ -200,9 +200,9 @@ ${distributionText}
     question fodder for the attractions portion.
 
 (F) Difficulty mix: about 40% easy headline facts ("which colour is
-    the canyon water?"), 40% medium story details ("which animal did
-    the villagers send across the Devil's Bridge?"), and ~20% harder
-    fun-facts ("how many years did the Leaning Tower take to build?").
+    the gorge water?"), 40% medium story details ("which emperor is
+    said to sleep inside the Untersberg?"), and ~20% harder
+    fun-facts ("how old is the Hohensalzburg fortress?").
 
 (G) Attraction + German-word questions must be ANSWERABLE from the
     blocks below (or obvious paraphrases of the same facts). General
@@ -330,19 +330,19 @@ QUESTION DESIGN RULES (read carefully):
 
 (C) GOOD QUESTION TYPES (lean heavily on these):
     - VERY SHORT AND PUNCHY: Keep questions short (1-2 sentences max) and options short (1-5 words max). Perfect for 7-9 year olds.
-    - Legends and folklore tied to the attraction ("which animal did
-      the villagers send across the Devil's Bridge first?", "which
-      Roman god's lightning bolts created Saturnia's hot springs?")
+    - Legends and folklore tied to the attraction ("which emperor is
+      said to sleep deep inside the Untersberg mountain?", "what did
+      miners dig out of the Hallstatt mountain for thousands of years?")
     - Signature physical / sensory details the kid will have noticed
-      ("what colour is the water in the canyon?", "why does the
-      water at Saturnia smell like eggs?", "how many bells sit at
-      the top of the Leaning Tower?")
-    - Real history with a memorable hook ("how many years did the
-      Leaning Tower take to build?", "which two ancient peoples
-      carved into the cliffs at Pitigliano?")
+      ("what colour is the water in the gorge?", "how cold does it stay
+      inside the Werfen ice cave, even in summer?", "how do you climb up
+      to the Hohensalzburg fortress?")
+    - Real history with a memorable hook ("how old is the Hohensalzburg
+      fortress above Salzburg?", "what was hauled down the mountains
+      along the old Alpine salt roads?")
     - Local food, language, and fun cultural details ATTACHED to a
-      place the family visited today ("what's the famous Pitigliano
-      sweet stick called?")
+      place the family visited today ("what's the famous round Salzburg
+      chocolate called?")
 
 (D) REQUIRED QUESTION DISTRIBUTION:
 ${distributionText}
@@ -358,9 +358,9 @@ ${distributionText}
     use as-is.
 
 (F) Difficulty mix: about 40% easy headline facts ("מה צבע המים
-    בקניון?"), 40% medium story details ("איזו חיה שלחו תושבי
-    הכפר ראשונה על גשר השטן?"), and ~20% harder fun-facts ("כמה
-    זמן בנו את המגדל הנטוי?").
+    בקניון?"), 40% medium story details ("איזה קיסר ישן, לפי
+    האגדה, בתוך הר האונטרסברג?"), and ~20% harder fun-facts ("בן
+    כמה מבצר הוהנזלצבורג?").
 
 (G) Attraction + German-word questions must be ANSWERABLE from the
     blocks below (or obvious paraphrases of the same facts). General

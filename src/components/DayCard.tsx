@@ -36,8 +36,8 @@ const tagLabel: Record<string, string> = {
 };
 
 const regionLabel: Record<string, string> = {
-  north: "North Tuscany",
-  south: "South Tuscany",
+  north: "North Austria",
+  south: "South Austria",
   transit: "Transit"
 };
 

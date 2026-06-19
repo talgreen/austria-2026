@@ -214,7 +214,7 @@ export default function AttractionCard({ poi: rawPoi }: { poi: POI }) {
               <p className="text-[14px] leading-relaxed text-ink-700/90">
                 {poi.description}
               </p>
-              {/* Italian-accented narration of the description above.
+              {/* German-accented narration of the description above.
                   Audio is pre-generated locally via
                   scripts/fetch-attraction-audio.mjs and served as a
                   static asset — no runtime API calls or keys. */}

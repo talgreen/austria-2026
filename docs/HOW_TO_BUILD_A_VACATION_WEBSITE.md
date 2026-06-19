@@ -1,6 +1,6 @@
 # How to Build a Vacation Website
 
-A field guide distilled from building **tuscany-2026** — a personal,
+A field guide distilled from building **austria-2026** — a personal,
 mobile-first travel companion for a 10-day family trip. Every choice
 in here was made and re-made under real use (planning, packing, and
 actually-on-the-ground driving), so the guidance is practical first
@@ -41,7 +41,7 @@ section.
 20. [Common gotchas](#20-common-gotchas)
 21. [If you only do five things](#21-if-you-only-do-five-things)
 22. [Per-day quiz (kid recap with a host persona)](#22-per-day-quiz-kid-recap-with-a-host-persona)
-- [Appendix A: Few-shot reference — the Tuscany 2026 build](#appendix-a-few-shot-reference--the-tuscany-2026-build)
+- [Appendix A: Few-shot reference — the Austria 2026 build](#appendix-a-few-shot-reference--the-austria-2026-build)
 
 ---
 
@@ -100,7 +100,7 @@ Use verbatim structure so the assistant knows what to ask next.
 
 ```text
 I'm building the next family vacation site using the guide at
-docs/HOW_TO_BUILD_A_VACATION_WEBSITE.md (same stack as tuscany-2026).
+docs/HOW_TO_BUILD_A_VACATION_WEBSITE.md (same stack as austria-2026).
 
 TRIP
 - Destination / region: [e.g. Sicily, Hokkaido, Dolomites]
@@ -273,7 +273,7 @@ classes like `text-terracotta-600` and `bg-cream-50` Just Work:
 ```
 
 Pick colors **from the destination** — three or four families with
-2–3 shades each is plenty. (Worked example: Appendix A2 — Tuscany
+2–3 shades each is plenty. (Worked example: Appendix A2 — Austria
 2026 went terracotta + olive + cream; a Greek-island trip would
 naturally land on Aegean blue + whitewash + bougainvillea pink.)
 
@@ -523,7 +523,7 @@ back arrow, and a content order designed for **the day of**:
 2. **The plan** — activities, drive notes, and inline ride times
    between stops (see "Activity rows" below)
 3. **Restaurants nearby** — curated by day, not just by region. A
-   restaurant in northern Maremma is useless on a Lucca day.
+   restaurant in Vienna is useless on a Salzburg day.
 4. **Mini map** — the day's stops
 5. **What to bring** — gear list (with "for X" chips that link to the
    activity below)
@@ -642,7 +642,7 @@ Pick words that fit the day (water words on water days, the local
 equivalent of "goodbye" on departure day). Translate `meaning` and
 `exampleMeaning` per UI language; the source `word` + `example` stay
 in the destination language across all UI languages. (Worked example
-with the actual `ItalianWord` type and sample data: Appendix A4.)
+with the actual `GermanWord` type and sample data: Appendix A4.)
 
 ---
 
@@ -805,7 +805,7 @@ export type DrinkType =
   | "beer" | "coffee" | "other";
 
 export interface DayDrink {
-  name: string;           // "Aperol Spritz", "Chianti Classico DOCG"
+  name: string;           // "Hugo Spritz", "Grüner Veltliner"
   type: DrinkType;        // drives the icon + accent color
   pairing: string;        // one-liner "why tonight"
   servingNote?: string;   // "served over ice with an orange wheel"
@@ -893,7 +893,7 @@ export const DICT = {
   nav_plan:          { en: "Plan",            he: "תוכנית" },
   /* ~200 entries by the end */
 } as const;
-// Tuscany 2026 fill-ins for the trip-specific keys: Appendix A1.
+// Austria 2026 fill-ins for the trip-specific keys: Appendix A1.
 
 export type DictKey = keyof typeof DICT;
 
@@ -1031,8 +1031,8 @@ commits the JPGs to the repo:
 
 ```js
 const TARGETS = [
-  ["canyon-park.jpg",       { wiki: "Ponte_della_Maddalena" }],
-  ["pisa.jpg",              { commons: "File:The_Leaning_Tower_of_Pisa.jpeg", width: 2000 }],
+  ["hohensalzburg-fortress.jpg", { wiki: "Hohensalzburg_Fortress" }],
+  ["hallstatt.jpg",         { commons: "File:Hallstatt_panorama.jpg", width: 2000 }],
   ["tel-aviv-skyline.jpg",  { url: unsplash("photo-1547483036-24bc77c79804") }],
   /* ... */
 ];
@@ -1067,7 +1067,7 @@ in production.
 
 The hero section rotates through 6–10 of your most beautiful
 "screensaver" shots, each captioned with the place + the day you'll
-visit it ("Pitigliano (Day 7)"). Crossfade with `AnimatePresence`,
+visit it ("Hallstatt (Day 7)"). Crossfade with `AnimatePresence`,
 add a Ken Burns drift with `motion.div`, **lazy-preload the next
 image** so the network only carries 1 photo at a time:
 
@@ -1222,11 +1222,11 @@ keepsake. Some things we wish we'd written down sooner:
 
 ### Copy voice
 
-- **Magazine, not marketing.** "A long-running family trattoria; pici
-  with wild boar, grilled lamb, good house wine." — not "Don't miss
+- **Magazine, not marketing.** "A long-running family Gasthaus; Kasspatzln,
+  crispy Wiener Schnitzel, a cold local Märzen." — not "Don't miss
   this hidden gem!"
 - **No periods at the end of titles or eyebrows.** They look heavy.
-- **Italics in the serif** for kickers and italianized phrases —
+- **Italics in the serif** for kickers and germanized phrases —
   Cormorant Garamond italic is gorgeous.
 - **No emoji unless the user asks.** Lucide icons cover everything.
 
@@ -1242,7 +1242,7 @@ For every day, include:
   catalog every 200 metres.
 - **Restaurants for the day** — 2–4 ids from the services list.
   Curate by **the day's location**, not just region — a restaurant
-  in southern Maremma is useless on a Lucca day.
+  in the Pinzgau lakes is useless on a Vienna day.
 - **Drink of the day** — one drink local to the destination (wine,
   cocktail, beer, aperitif, digestif, coffee) with a one-line "why
   tonight" pairing. Keep `name` and `type` universal across UI
@@ -1259,7 +1259,7 @@ For every attraction:
 
 Don't forget the cultural ones that make or break a trip. The
 *categories* are universal; the specifics differ by destination, so
-research each per trip. (Worked Italy examples in Appendix A8.)
+research each per trip. (Worked Austria examples in Appendix A8.)
 - **National-holiday closures** — every country has one or two weeks
   a year when family-run businesses close en masse. Surface them as
   yellow-warning tips against the affected dates.
@@ -1425,7 +1425,7 @@ have very different attention budgets:
 Two layers, one rule: **home-screen contexts read at a glance** (so
 short, instantly recognisable), **link-preview / tab contexts read
 with attention** (so longer with the traveling party, the year, the
-strapline). Worked example for the Tuscany 2026 build is in
+strapline). Worked example for the Austria 2026 build is in
 Appendix A1.
 
 #### App icon: minimalistic destination art (with flag fallback)
@@ -1438,7 +1438,7 @@ nothing about the destination. The pattern that works:
 
 **Primary — minimalistic illustrative art of the destination.**
 A flat, vector-feeling illustration of one iconic feature of the
-place: rolling hills with cypresses for Tuscany, Mt. Fuji for Japan,
+place: rolling hills with cypresses for Austria, Mt. Fuji for Japan,
 a Cycladic dome for Greece, the Sydney Opera House silhouette for
 Australia, etc. Use 2–4 colours pulled from your brand palette
 (§3) so the icon and the in-app theme feel like one product.
@@ -1457,7 +1457,7 @@ luggage emoji.
   with whatever wallpaper is behind it on the home screen.
 - A generic travel emoji (✈️ / 🌍 / 🧳) — it could be any trip;
   there's no recognition value.
-- Text-only ("Tuscany") — unreadable at home-screen size, looks like
+- Text-only ("Austria") — unreadable at home-screen size, looks like
   a placeholder.
 
 **How to make one in 10 minutes:**
@@ -1595,7 +1595,7 @@ with no key in sight.**
    speaks the UI language", search
    `language=<destination-iso>&category=professional` and pick a warm,
    broadcast-tone voice. Keep the `voice_id`. (Worked example:
-   Appendix A9 — Italian tour guide search.)
+   Appendix A9 — German tour guide search.)
 2. **Author a generator script** that:
    - Reads your data files (here: regex over `attractions.ts` —
      fragile but fine for a controlled schema; for arbitrary code
@@ -1618,13 +1618,13 @@ with no key in sight.**
 > version too. `.env.example` documents both.
 
 **Destination-language word-of-the-day clips** — in this repo `npm run
-tts:italian-words` (rename per trip: `tts:japanese-words`, etc.) — default to
+tts:german-words` (rename per trip: `tts:japanese-words`, etc.) — default to
 **Gemini 3.1 Flash TTS** (`GEMINI_API_KEY` in `.env.local` or the shell — same
 key family as the in-app Gemini features). Model and prebuilt voice names are
 configurable (`GEMINI_TTS_MODEL`, `GEMINI_TTS_VOICE_NAME`, plus per-language
-overrides — this repo defines `GEMINI_TTS_VOICE_IT` / `_EN` / `_HE` because
+overrides — this repo defines `GEMINI_TTS_VOICE_DE` / `_EN` / `_HE` because
 those are the languages it ships; add or rename per trip). See
-`scripts/fetch-italian-word-audio.mjs` as the template. For **legacy Cloud
+`scripts/fetch-german-word-audio.mjs` as the template. For **legacy Cloud
 Chirp 3 HD** instead, pass **`--google-chirp3`** and use
 `gcloud auth application-default login` or `GOOGLE_APPLICATION_CREDENTIALS`.
 **`--elevenlabs`** (with `ELEVEN_API_KEY`) switches to ElevenLabs.
@@ -1730,14 +1730,14 @@ shell:
 | `find-hotel-images.mjs` | Helper to discover a usable lead image for each stay (interactive — you eyeball results before committing). |
 | `fetch-attraction-audio.mjs` | English narration MP3s for attractions (legacy ElevenLabs flow). |
 | `fetch-attraction-audio-he.mjs` | Hebrew narration MP3s for attractions. Defaults to Gemini Flash TTS; `--google-chirp3` or `--elevenlabs` to switch backends. |
-| `fetch-italian-word-audio.mjs` | "Word of the day" audio in IT/EN/HE per language. `--examples-only` rebuilds just the example sentence clips. |
-| `repair-italian-word-mp3.mjs` | Re-encodes a malformed MP3 in place — useful when a TTS provider returns a partially-truncated file. |
+| `fetch-german-word-audio.mjs` | "Word of the day" audio in IT/EN/HE per language. `--examples-only` rebuilds just the example sentence clips. |
+| `repair-german-word-mp3.mjs` | Re-encodes a malformed MP3 in place — useful when a TTS provider returns a partially-truncated file. |
 | `smoke-test-gemini-live.mjs` | Opens a one-shot Live WebSocket against Gemini to confirm a key works before debugging the in-app flow. |
 | `lib/gemini-tts.mjs`, `lib/google-tts.mjs` | Internal helpers shared by the audio scripts; not run directly. |
 
 When porting to a new trip, the only scripts you usually run are
 `fetch-images.mjs` (after the data files are filled), then
-`fetch-italian-word-audio.mjs` and the attraction audio scripts if
+`fetch-german-word-audio.mjs` and the attraction audio scripts if
 you keep the audio feature. Everything else stays in the repo for
 when you need it.
 
@@ -1748,7 +1748,7 @@ when you need it.
 The difference between a **generic travel bot** and a **family guide**
 is not the API — it is the **system prompt**: role, boundaries, who
 is on the trip, and how much "colour" the model is allowed to use.
-In **tuscany-2026** almost all of that lives in one file:
+In **austria-2026** almost all of that lives in one file:
 `src/lib/gemininio/persona.ts`. Wire-up (keys, WebSocket, REST,
 globe toggle) is [§16](#16-ai-tour-guide--implementation-gemini-live-no-backend);
 this section is **what to write** before you touch the socket code.
@@ -1799,7 +1799,7 @@ Channel-specific **append-only** blocks (still in `persona.ts`):
 ### The traveling party block (`FAMILY_PROFILES`)
 
 This is the **who we are** dossier the model uses for warm, specific
-answers ("would the kids like this?", "who lives for aperitivo?").
+answers ("would the kids like this?", "who lives for après-ski?").
 
 Author it as **English-only prose** even when the site is bilingual:
 nuance ("hyper-protective", "tests every limit") survives better than
@@ -2164,8 +2164,8 @@ Gemini 2.5's "thinking" models love to narrate their reasoning into
 the response stream. Out of the box you'll get bubbles like:
 
 > **Assessing Itinerary Deviation** I have determined that the
-> Colosseum visit represents a substantial deviation from the
-> direct route north to Larciano…
+> Schönbrunn detour represents a substantial deviation from the
+> direct route west to Salzburg…
 
 Three layers of defense (mix and match by channel):
 
@@ -2219,7 +2219,7 @@ is structured around restraint:
   lost — answer the question and move on."
 - A list of question shapes that *do* earn a wink ("Which wine
   would they love?", "Anything to watch out for on this trail?")
-  vs. shapes that don't ("What's the drive time to Florence?").
+  vs. shapes that don't ("What's the drive time to Vienna?").
 
 You can't make the model count past turns reliably, but reframing
 the rule as "don't, except when X / Y / Z" produces a much
@@ -2244,7 +2244,7 @@ Three pieces are doing the work:
   these cases because the model considers them already-localised.
 - **Worked transliterations** of the exact words in your data,
   not invented ones. The model copies what it sees.
-- **One explicit exception** (`FCO`) so the model doesn't
+- **One explicit exception** (`VIE`) so the model doesn't
   overcorrect and try to write "אף-סי-או".
 
 Mirror the rule in the English persona too, just with the polarity
@@ -2741,7 +2741,7 @@ against a 3 s connect timeout so a slow / blocked network doesn't
 strand the kid staring at "warming up…" forever. The Live persona
 is a **narrator** (`NARRATOR_PERSONA_*` in `quizVoice.ts`) — its
 sole instruction is to speak the line it receives, exactly, in the
-host's playful, destination-flavored cartoon voice (e.g., an Italian accent for an Italy trip). We ship one persona
+host's playful, destination-flavored cartoon voice (e.g., an German accent for an Austria trip). We ship one persona
 per language; the spoken accent stays the same regardless. On Live
 failure the factory falls back to `BrowserTtsQuizVoice`, which
 picks the best available `SpeechSynthesisVoice` for the active
@@ -2781,7 +2781,7 @@ this exact ladder inside `startQuiz` when `mode === "offline"`:
 generates up to 10 deterministic questions from structured
 itinerary + attraction fields — no AI, no network. Templates are
 intentionally **substantive** (about real places / attractions /
-Italian words / towns / hand-curated story trivia); meta-questions
+German words / towns / hand-curated story trivia); meta-questions
 about the data structure ("how many stops on day N?", "what day
 of the week is this?", "what is day 2 called?") are forbidden —
 kids tune out instantly on questions about their own holiday's
@@ -2814,8 +2814,8 @@ this rule before merging.
 The most engaging quiz questions aren't the auto-generated "which
 town is X in?" facts — they're the **legends**, **signature
 details**, and **fun history** that live inside an attraction's
-description (e.g. "in the Devil's Bridge legend, the villagers
-sent a dog across first"). Auto-extracting those from prose is
+description (e.g. "in Hallstatt, miners dug salt out of the
+mountain for thousands of years"). Auto-extracting those from prose is
 brittle, so the data model lets you **author them by hand**:
 
 ```ts
@@ -2863,19 +2863,19 @@ These facts feed both halves of the quiz pipeline:
     `{ question, correctAnswer, distractors }` triple from one
     of today's attractions and randomizes which slot the correct
     answer lands in. Always tried first.
-- **General Italian-culture wildcards** (uses
-  `ITALIAN_CULTURE_FACTS` bank inside `fallbackQuiz.ts`):
-  - `tplItalianCulture`: kid-friendly facts about the Italian
-    flag, pizza Margherita, the Vespa, Ferrari/Lamborghini,
-    Italy-shaped-like-a-boot, gelato, Mt Etna, etc. Capped at
+- **General German-culture wildcards** (uses
+  `GERMAN_CULTURE_FACTS` bank inside `fallbackQuiz.ts`):
+  - `tplAustriaCulture`: kid-friendly facts about the Austrian
+    flag, Mozart, the Sachertorte, the Alps, the Danube,
+    Hallstatt, edelweiss, etc. Capped at
     `CULTURE_BUDGET = 2` per pack so the deck stays primarily
     about today's actual stops; the cap protects against the
-    deck drifting into "fun general Italy quiz" instead of
+    deck drifting into "fun general Austria quiz" instead of
     "what do you remember about today?".
-- **Italian language** (uses `day.italianWords[]`):
-  - `tplWordMeaning`: "What does the Italian word 'X' mean?"
-  - `tplWordReverse`: "How do you say 'Y' in Italian?"
-  - `tplPhraseExample`: "Which Italian phrase means 'Z'?" (uses
+- **German language** (uses `day.germanWords[]`):
+  - `tplWordMeaning`: "What does the German word 'X' mean?"
+  - `tplWordReverse`: "How do you say 'Y' in German?"
+  - `tplPhraseExample`: "Which German phrase means 'Z'?" (uses
     `example` + `exampleMeaning` pair).
 - **Places & attractions** (uses each activity's `attractionId`
   → `getAttraction()`, then reads `name`, `shortDescription`,
@@ -2888,8 +2888,8 @@ These facts feed both halves of the quiz pipeline:
     '<shortDescription>'?"
   - `tplAttractionTown`: "Which town is <attraction> in?" (uses
     a regex extractor on the address; skips attractions whose
-    address resolves to a street-level locality like "Piazzale
-    Verdi").
+    address resolves to a street-level locality like "Mariahilfer
+    Straße").
   - `tplAttractionByTag`: "Which of these places is the best one
     for <tag-flavored activity>?" (e.g. "splashy water adventures",
     "exploring caves"). Distractors are attractions WITHOUT that
@@ -2908,12 +2908,12 @@ The selector runs three ordered passes:
    10-question pack with `CULTURE_BUDGET = 2`, story trivia
    gets first crack at 8 slots). On a story-rich day this is
    almost the entire pack.
-2. **Italian-culture wildcards** — `tplItalianCulture` called
-   up to `CULTURE_BUDGET` times for one or two general "Italy"
-   facts (flag, Margherita, Vespa…). Stops early when the bank
+2. **German-culture wildcards** — `tplGermanCulture` called
+   up to `CULTURE_BUDGET` times for one or two general "Austria"
+   facts (flag, Mozart, Sachertorte…). Stops early when the bank
    is exhausted via the question-text dedup set.
 3. **Diverse fallback mix** — multiple shuffled passes of all
-   other templates (places, towns, italian words, regions, …)
+   other templates (places, towns, german words, regions, …)
    so a single template can fire more than once when it has
    multiple source items to pick from. This is the catch-all
    that fills the deck when the day's `quizFacts` are thin or
@@ -2941,7 +2941,7 @@ switch modes (or fix their key), rather than silently demoting the
 A persistent `Volume2 / VolumeX` button in the card chrome
 (top-right, beside the Close X when present) silences both voice
 and SFX. State is held in `quizMute.ts` (`localStorage` key
-`tuscany2026.quiz.mute.v1`, default off) and mirrored into a
+`austria2026.quiz.mute.v1`, default off) and mirrored into a
 ref so the speak/play guards always read the latest value
 without re-binding callbacks. Toggling on cancels any in-flight
 utterance via `voice.cancel()` so the current line cuts off
@@ -2999,7 +2999,7 @@ immediately rather than playing out — anything else feels broken.
   button is right there, so the kid still gets a clean score
   screen.
 - **Itinerary data is too thin for the fallback templates** (zero
-  activities, no italian words, no base). Surfaces the real error
+  activities, no german words, no base). Surfaces the real error
   rather than open an empty quiz — almost never happens in
   practice but the path is covered.
 
@@ -3009,7 +3009,7 @@ The score screen's "Ask Quizzo something" button dispatches a tiny
 custom event (`requestOpenGemininio` from
 `src/lib/gemininio/openEvent.ts`) that the chat component listens
 for on mount. Lets the kid bounce from the quiz into a free-form
-chat with the same Italian friend without needing to find the FAB.
+chat with the same German friend without needing to find the FAB.
 A single shared event channel is enough — no portals, no refs
 threaded through the component tree.
 
@@ -3056,12 +3056,12 @@ Worked persona name + a sample EN/HE question pair lives in
 
 ---
 
-## Appendix A: Few-shot reference — the Tuscany 2026 build
+## Appendix A: Few-shot reference — the Austria 2026 build
 
 The instructions above are destination-agnostic on purpose. The slots
 they leave open (`<destination>`, `TRIP_COUNTRY`, `DestinationWord`,
 "destination-flavored persona", etc.) are filled in below for the
-trip the playbook was born on — 10 days in Tuscany, August 2026, four
+trip the playbook was born on — 10 days in Austria, August 2026, four
 households, Hebrew + English UI. Use this section as a worked example
 when an abstract instruction feels under-specified, or feed it into
 an LLM as in-context examples when generating the next trip's
@@ -3073,41 +3073,41 @@ content.
 
 | Field | Value used in this build |
 |---|---|
-| Destination noun | "Tuscany" / "טוסקנה" |
-| Destination country | "Italy" |
+| Destination noun | "Austria" / "אוסטריה" |
+| Destination country | "Austria" |
 | Trip dates | 17–26 August 2026 (10 days) |
-| `manifest.name` | `"Tuscany '26"` |
-| `manifest.short_name` (home-screen launcher) | `"Tuscany '26"` |
-| `<meta name="apple-mobile-web-app-title">` (iOS home-screen) | `"Tuscany '26"` |
-| `<title>` (browser tab) | `"Tuscany 2026 — The Horowitz × Racz × Kaplan Families"` |
-| `og:title` / `twitter:title` | `"Tuscany 2026 — The Horowitz × Racz × Kaplan Families"` |
-| `og:site_name` | `"Tuscany 2026"` |
-| Marketing strapline (`og:description`) | `"Ten days in Tuscany, north to south, 17–26 August 2026. Itinerary, map, stays and tips for our family adventure."` |
-| Repo slug / Vite `base` | `tuscany-2026` → `/tuscany-2026/` |
+| `manifest.name` | `"Austria '26"` |
+| `manifest.short_name` (home-screen launcher) | `"Austria '26"` |
+| `<meta name="apple-mobile-web-app-title">` (iOS home-screen) | `"Austria '26"` |
+| `<title>` (browser tab) | `"Austria 2026 — The Horowitz × Racz × Kaplan Families"` |
+| `og:title` / `twitter:title` | `"Austria 2026 — The Horowitz × Racz × Kaplan Families"` |
+| `og:site_name` | `"Austria 2026"` |
+| Marketing strapline (`og:description`) | `"Ten days in Austria, north to south, 17–26 August 2026. Itinerary, map, stays and tips for our family adventure."` |
+| Repo slug / Vite `base` | `austria-2026` → `/austria-2026/` |
 
 ```html
-<title>Tuscany 2026 — The Horowitz × Racz × Kaplan Families</title>
-<meta property="og:title"       content="Tuscany 2026 — The Horowitz × Racz × Kaplan Families" />
-<meta property="og:description" content="Ten days in Tuscany, north to south, 17–26 August 2026. Itinerary, map, stays and tips for our family adventure." />
-<meta name="apple-mobile-web-app-title" content="Tuscany '26" />
+<title>Austria 2026 — The Horowitz × Racz × Kaplan Families</title>
+<meta property="og:title"       content="Austria 2026 — The Horowitz × Racz × Kaplan Families" />
+<meta property="og:description" content="Ten days in Austria, north to south, 17–26 August 2026. Itinerary, map, stays and tips for our family adventure." />
+<meta name="apple-mobile-web-app-title" content="Austria '26" />
 ```
 
 ```ts
 // src/lib/dict.ts — brand names per UI language
-brand_short: { en: "Tuscany", he: "טוסקנה" },
+brand_short: { en: "Austria", he: "אוסטריה" },
 ```
 
 #### Icon (worked example for §13 *App icon*)
 
 This build went with the **primary path**: minimalistic illustrative
-art of the destination. The icon is a flat illustration of a Tuscan
+art of the destination. The icon is a flat illustration of a Austrian
 landscape — three rolling hills in olive and ochre, two cypress
 trees in silhouette, a low warm sun in the upper third — drawn full-
 bleed on the brand palette (terracotta + olive + cream from §3 / A2).
 No text. Generated once with an AI image tool against a prompt like:
 
 ```
-minimalistic flat vector illustration of rolling Tuscan hills with
+minimalistic flat vector illustration of rolling Austrian hills with
 cypress trees and a low warm sun, terracotta and olive palette,
 square 1:1, full-bleed composition, no text, app icon style
 ```
@@ -3116,8 +3116,8 @@ Files in `public/`:
 
 | File | Use |
 |---|---|
-| `icon-tuscany-192.png` | Android home-screen icon (manifest, 192 × 192) |
-| `icon-tuscany.png` | 512 × 512 master — manifest, iOS `apple-touch-icon`, `index.html` favicon link |
+| `icon-austria-192.png` | Android home-screen icon (manifest, 192 × 192) |
+| `icon-austria.png` | 512 × 512 master — manifest, iOS `apple-touch-icon`, `index.html` favicon link |
 
 Cache-bust query string in use: `?v=7` (bump on every replacement).
 Both manifest entries declare `"purpose": "any maskable"` so Android
@@ -3143,61 +3143,61 @@ colors pulled from photos of the place, plus one warm neutral.
 
 ### A3. Countdown kicker (§4)
 
-Pattern: `"Until <destination> …"` → in this build, **"Until Tuscany …"**.
+Pattern: `"Until <destination> …"` → in this build, **"Until Austria …"**.
 
 ### A4. Word of the day in the destination's language (§§5, 14)
 
-| Slot | Tuscany 2026 fill-in |
+| Slot | Austria 2026 fill-in |
 |---|---|
-| Destination language | Italian |
-| Type name in repo | `ItalianWord` (the abstract slot name in this doc is `DestinationWord`) |
-| Example word | `"Acqua"` |
-| Pronunciation key | `"AH-kwah"` |
+| Destination language | German |
+| Type name in repo | `GermanWord` (the abstract slot name in this doc is `DestinationWord`) |
+| Example word | `"Wasser"` |
+| Pronunciation key | `"VAH-ser"` |
 | Meaning (per UI language) | EN `"Water"`, HE `"מים"` |
-| Example sentence (kept in Italian across all UI languages) | `"L'acqua è fresca!"` |
-| TTS script | `npm run tts:italian-words` |
-| Per-language voice env vars | `GEMINI_TTS_VOICE_IT`, `GEMINI_TTS_VOICE_EN`, `GEMINI_TTS_VOICE_HE` |
+| Example sentence (kept in German across all UI languages) | `"Das Wasser ist kalt!"` |
+| TTS script | `npm run tts:german-words` |
+| Per-language voice env vars | `GEMINI_TTS_VOICE_DE`, `GEMINI_TTS_VOICE_EN`, `GEMINI_TTS_VOICE_HE` |
 
 ```ts
-interface ItalianWord {
-  word: string;          // "Acqua"
-  pronounce: string;     // "AH-kwah"
+interface GermanWord {
+  word: string;          // "Wasser"
+  pronounce: string;     // "VAH-ser"
   meaning: string;       // "Water"
-  example?: string;      // "L'acqua è fresca!"
+  example?: string;      // "Das Wasser ist kalt!"
   exampleMeaning?: string;
 }
 ```
 
 ### A5. Drink of the day (§§5, 12)
 
-Drawn from Italy's drinking culture — wine, aperitivo, digestivo. A
-typical entry: **Aperol Spritz** with a one-line "why tonight" pairing
-to a beach day's sunset vibe. Adults only; kids see a juice / gelato
+Drawn from Austria's drinking culture — wine, aperitif, digestif. A
+typical entry: **Hugo Spritz** with a one-line "why tonight" pairing
+to a lakeside sunset vibe. Adults only; kids see a juice / ice cream
 suggestion instead.
 
 ### A6. Country fallback for nav URLs (§10)
 
 ```ts
-const TRIP_COUNTRY = "Italy";
+const TRIP_COUNTRY = "Austria";
 ```
 
 ### A7. Geolocation bounding box (§11)
 
-| Slot | Tuscany 2026 fill-in |
+| Slot | Austria 2026 fill-in |
 |---|---|
-| Helper name in repo | `isInItaly` (abstract slot name: `isInDestination`) |
-| Bounding box | roughly **Lat 36–47, Lon 6.5–18.5** — generous, covers the whole country (not just Tuscany), so the dot still snaps when a friend lands in Rome before driving north. |
+| Helper name in repo | `isInAustria` (abstract slot name: `isInDestination`) |
+| Bounding box | roughly **Lat 36–47, Lon 6.5–18.5** — generous, covers the whole country (not just Austria), so the dot still snaps when a friend lands in Rome before driving north. |
 
 ### A8. Global culture tips (§12)
 
-Italy-specific bullets the doc tells you to substitute per
+Austria-specific bullets the doc tells you to substitute per
 destination:
 - **Ferragosto (mid-August)** — many family-run restaurants and
   small shops close for a week or more. Surface as a yellow
   warning tip.
 - **`Riposo`** — small-village shops and kitchens close midday
   (~13:00 → 16:00). Plan lunches accordingly.
-- **Tipping** — Italians round up; service is included in the bill.
+- **Tipping** — Germans round up; service is included in the bill.
   Don't tip 18% American-style.
 - **ZTL (Zona a Traffico Limitato)** — old-town driving bans for
   non-residents, with camera fines that arrive months later via
@@ -3209,31 +3209,31 @@ restrictions) and replace the specifics.
 
 ### A9. AI persona — voice, accent, language purity (§§15, 17)
 
-| Slot | Tuscany 2026 fill-in |
+| Slot | Austria 2026 fill-in |
 |---|---|
-| Persona name | **Gemininio** — a warm, slightly poetic Italian tour guide |
+| Persona name | **Gemininio** — a warm, slightly poetic German tour guide |
 | ElevenLabs voice search | `language=it&category=professional` (warm broadcast tone) |
 | Live API prebuilt voice | `Charon` |
 | `language_code` | `"en-US"` and `"he-IL"` |
-| Accent instruction in system prompt | `"speak with a warm Italian accent"` + `"drop occasional Italian interjections"` |
-| Spoken-delivery tag (`LIVE_SPOKEN_DELIVERY`) | "thick Italian cartoon energy" |
-| Per-turn nudge appended to typed user messages | EN: `"(say it in a heavy italian accent)"` · HE: `"(תגיד במבטא איטלקי כבד)"` |
+| Accent instruction in system prompt | `"speak with a warm Austrian accent"` + `"drop occasional Austrian interjections"` |
+| Spoken-delivery tag (`LIVE_SPOKEN_DELIVERY`) | "warm Austrian alpine energy" |
+| Per-turn nudge appended to typed user messages | EN: `"(say it in a warm Austrian accent)"` · HE: `"(תגיד במבטא אוסטרי חם)"` |
 
 ### A10. Language-purity rule (§17)
 
-Italian persona + Hebrew user UI = the model happily mixes scripts:
-"Allora! סָטוּרְנְיָה פתוח 24/7" inside a single sentence reads as
+Austrian persona + Hebrew user UI = the model happily mixes scripts:
+"Servus! האלשטאט פתוח 24/7" inside a single sentence reads as
 broken. The fix is a hard rule with explicit transliteration examples
 for the categories the model actually slips on:
 
 ```
 שפה אחידה — חוק קשיח. כשהתשובה בעברית, כל המילים בעברית. זה כולל:
-  • קריאות איטלקיות → "אללוֹרָה", "ממה מיה", "דאי", "אקו"
-    (לא "Allora", לא "Mamma mia").
+  • קריאות אוסטריות → "סֶרוֵוס", "גְּריס גוֹט", "פַּאסט"
+    (לא "Servus", לא "Grüß Gott").
   • שמות אנשים → "ג׳ני", "מייק", "מרינה", "נועם" (לא "Jenny").
-  • שמות מקומות → "סָטוּרְנְיָה", "פִּיֶנְצָה", "פירנצה",
-    "לוּקה" (לא "Saturnia", לא "Florence").
-חריג יחיד: ראשי תיבות בינלאומיים סטנדרטיים כמו FCO. אסור
+  • שמות מקומות → "האלשטאט", "זלצבורג", "וינה",
+    "אינסברוק" (לא "Hallstatt", לא "Salzburg").
+חריג יחיד: ראשי תיבות בינלאומיים סטנדרטיים כמו VIE. אסור
 לערבב כתבים באותו משפט מעבר לכך.
 ```
 
@@ -3248,11 +3248,11 @@ Renaming guide for the next trip:
 
 | This repo | Generic / what to call yours |
 |---|---|
-| `fetch-italian-word-audio.mjs` | `fetch-<destination-lang>-word-audio.mjs` |
-| `npm run tts:italian-words` | `npm run tts:<destination-lang>-words` |
+| `fetch-german-word-audio.mjs` | `fetch-<destination-lang>-word-audio.mjs` |
+| `npm run tts:german-words` | `npm run tts:<destination-lang>-words` |
 | `fetch-attraction-audio-he.mjs` | `fetch-attraction-audio-<ui-lang>.mjs` (one per UI language you ship) |
 | `npm run tts:attractions-he` | `npm run tts:attractions-<ui-lang>` |
-| `GEMINI_TTS_VOICE_IT` / `_EN` / `_HE` | one var per language combination you ship |
+| `GEMINI_TTS_VOICE_DE` / `_EN` / `_HE` | one var per language combination you ship |
 
 ### A12. Timezone gotcha example (§20)
 
@@ -3266,7 +3266,7 @@ chapter. Keep the local-date helper from §20.
 
 The per-day kid quiz (§22) is hosted by **Quizzo** — a warm,
 slightly silly cartoon game-show host with a cartoon-exaggerated
-Italian accent. Same vibe as Gemininio (Italian wink, kid-safe,
+German accent. Same vibe as Gemininio (German wink, kid-safe,
 never condescending) but bent for an 8–14 year-old audience playing
 in the back seat on the way home.
 
@@ -3290,11 +3290,11 @@ code change needed.
 
 ```json
 {
-  "question": "Where did we hike to see the cliff-top village?",
-  "options": ["Civita di Bagnoregio", "Pitigliano", "Lucca", "Saturnia"],
+  "question": "Where did we go to see the famous lakeside village?",
+  "options": ["Hallstatt", "Gosau", "Werfen", "Zell am See"],
   "correctIndex": 0,
-  "reactionCorrect": "Bravissimo! That's the bridge village!",
-  "reactionWrong": "Close one! It was Civita —"
+  "reactionCorrect": "Genau! That's the lake village!",
+  "reactionWrong": "Close one! It was Hallstatt —"
 }
 ```
 
@@ -3310,7 +3310,7 @@ code change needed.
 }
 ```
 
-(Note the Hebrew uses transliterations of the Italian place names —
+(Note the Hebrew uses transliterations of the German place names —
 "קלה דל ג׳סו", "פיטיליאנו" — same language-purity rule as A10.)
 
 #### Generation prompt template
@@ -3330,7 +3330,7 @@ blocks:
 2. **Day data digest** — `buildDayDigest(dayNumber, lang)`: title,
    subtitle, every activity (with time + description), each
    attraction's short description and tags, drive notes, the
-   day's Italian words, and any `dayTips`. Capped at ~240 chars
+   day's German words, and any `dayTips`. Capped at ~240 chars
    per attraction so a content-rich day still fits inside ~3 K
    input tokens.
 
@@ -3348,12 +3348,12 @@ offline pack uses `temperature: 0.85` / `maxOutputTokens: 2800` so
 the bigger set has room to spread across the day's surface area
 without the 5th–10th questions clustering on the same place.
 
-#### Two-mode UX (Tuscany fill-in)
+#### Two-mode UX (Austria fill-in)
 
 | Slot | Offline mode | Live mode |
 |---|---|---|
 | Question count | 10 | 5 per batch, endless |
-| Storage | `tuscany2026.quiz.offlinePack.v6.day{N}.{lang}` (no expiry) | none — every batch fresh |
+| Storage | `austria2026.quiz.offlinePack.v6.day{N}.{lang}` (no expiry) | none — every batch fresh |
 | Start tap → first questions | Cached pack instantly, OR one Gemini call (~2 s) on first ever play | One Gemini call (~1 s) for the first 5 |
 | Mid-round network use | None | Background prefetch of next 5 once kid crosses `length − 2` |
 | End-of-round trigger | Auto, after Q10 | Kid taps **End round** (or prefetch fails irrecoverably) |
@@ -3362,20 +3362,20 @@ without the 5th–10th questions clustering on the same place.
 
 #### Persona name + handoff slug
 
-| Slot | Tuscany 2026 fill-in |
+| Slot | Austria 2026 fill-in |
 |---|---|
-| Persona name | **Quizzo** — Local-flavored cartoon game-show host (e.g., Italian) |
+| Persona name | **Quizzo** — Local-flavored cartoon game-show host (e.g., German) |
 | Live API persona | "Narrator" — speak the line you receive, exactly, in Quizzo's voice with the destination's local accent |
 | Live API prebuilt voice | reuses `Charon` from §15 for consistency with Gemininio |
-| Mode storage key | `tuscany2026.quiz.mode.v1` (single value, default `offline`) |
-| Mute storage key | `tuscany2026.quiz.mute.v1` (single value, default off) |
-| Offline pack storage key | `tuscany2026.quiz.offlinePack.v6.day{N}.{lang}` (no TTL — used for both real Gemini packs and template fallbacks) |
-| Last-score key prefix | `tuscany2026.quiz.lastScore.v1` (per `(day, lang)`) |
+| Mode storage key | `austria2026.quiz.mode.v1` (single value, default `offline`) |
+| Mute storage key | `austria2026.quiz.mute.v1` (single value, default off) |
+| Offline pack storage key | `austria2026.quiz.offlinePack.v6.day{N}.{lang}` (no TTL — used for both real Gemini packs and template fallbacks) |
+| Last-score key prefix | `austria2026.quiz.lastScore.v1` (per `(day, lang)`) |
 | Live-mode prefetch lead | `PREFETCH_AHEAD = 0` questions (kicks off batch fetch only when kid finishes the current batch, saving quota) |
 | Preview-unlocked days | `QUIZ_PREVIEW_UNLOCKED_DAYS = 2` — Days 1 & 2 always playable; Days 3-10 unlock on the morning of their chapter date |
 | Fallback `generatedAt` marker | `0` — distinguishes a template-built pack from a real Gemini one when reading the cache |
 | "Ask Quizzo" handoff event | `gemininio:open` (handled by `subscribeOpenGemininio` in `src/components/Gemininio.tsx`) |
-| Hand-curated story facts | ~14 attractions in `attractions.ts` carry 2–4 `quizFacts` each (Devil's Bridge → "villagers sent a dog"; Pisa → "ground sank on one side"; Pitigliano → "Little Jerusalem"; …). HE translations live in `i18n/attractions.he.ts` under the same `quizFacts` key. Drives both `tplAttractionStory` (offline) and the `TRIVIA YOU CAN ASK ABOUT …` digest blocks (Gemini). |
+| Hand-curated story facts | ~14 attractions in `attractions.ts` carry 2–4 `quizFacts` each (Hallstatt → "salt mined for 7000 years"; Hohensalzburg → "never taken by siege"; Eisriesenwelt → "world's largest ice cave"; …). HE translations live in `i18n/attractions.he.ts` under the same `quizFacts` key. Drives both `tplAttractionStory` (offline) and the `TRIVIA YOU CAN ASK ABOUT …` digest blocks (Gemini). |
 
 For another destination, swap "Quizzo" for whatever name fits the
 host's flavor (a French quiz host might be "Quizzou", a Japanese
@@ -3386,6 +3386,6 @@ keys, the voice ladder — is destination-agnostic and ports cleanly.
 
 ---
 
-*Born on the Horowitz × Racz × Kaplan Tuscany 2026 build; §0 exists so
+*Born on the Horowitz × Racz × Kaplan Austria 2026 build; §0 exists so
 your next destination ships faster—steal the pattern, update this file
 when the code moves ahead of the prose, have a great holiday.*

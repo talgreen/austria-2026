@@ -9,13 +9,13 @@ import {
   Quote,
   Volume2
 } from "lucide-react";
-import type { ItalianWord } from "../data/types";
+import type { GermanWord } from "../data/types";
 import { resolveAudioUrl } from "../lib/audioUrl";
 import { usePageAudio } from "../lib/usePageAudio";
 import {
-  firstUnheardItalianWordIndex,
-  markItalianWordHeard
-} from "../lib/italianWordListenProgress";
+  firstUnheardGermanWordIndex,
+  markGermanWordHeard
+} from "../lib/germanWordListenProgress";
 import { useT } from "../lib/dict";
 import { useCarouselSwipe } from "../lib/useCarouselSwipe";
 
@@ -23,38 +23,38 @@ function padDay(n: number) {
   return String(n).padStart(2, "0");
 }
 
-export default function ItalianWordCarousel({
+export default function GermanWordCarousel({
   dayNumber,
   words
 }: {
   dayNumber: number;
-  words: ItalianWord[];
+  words: GermanWord[];
 }) {
   if (words.length === 0) return null;
   return (
-    <ItalianWordCarouselInner key={`${dayNumber}-${words.length}`} dayNumber={dayNumber} words={words} />
+    <GermanWordCarouselInner key={`${dayNumber}-${words.length}`} dayNumber={dayNumber} words={words} />
   );
 }
 
-function ItalianWordCarouselInner({
+function GermanWordCarouselInner({
   dayNumber,
   words
 }: {
   dayNumber: number;
-  words: ItalianWord[];
+  words: GermanWord[];
 }) {
   const t = useT();
   const count = words.length;
   const [slideIdx, setSlideIdx] = useState(() =>
-    firstUnheardItalianWordIndex(dayNumber, count)
+    firstUnheardGermanWordIndex(dayNumber, count)
   );
 
   const assetPath = useMemo(
-    () => `italian-words/day-${padDay(dayNumber)}-${slideIdx}`,
+    () => `german-words/day-${padDay(dayNumber)}-${slideIdx}`,
     [dayNumber, slideIdx]
   );
   const exampleAssetPath = useMemo(
-    () => `italian-words/day-${padDay(dayNumber)}-${slideIdx}-ex`,
+    () => `german-words/day-${padDay(dayNumber)}-${slideIdx}-ex`,
     [dayNumber, slideIdx]
   );
   const url = resolveAudioUrl({ audioAssetPath: assetPath });
@@ -62,7 +62,7 @@ function ItalianWordCarouselInner({
   const wordListenOpts = useMemo(
     () => ({
       preload: "auto" as const,
-      onEnded: () => markItalianWordHeard(dayNumber, markIndexRef.current)
+      onEnded: () => markGermanWordHeard(dayNumber, markIndexRef.current)
     }),
     [dayNumber]
   );

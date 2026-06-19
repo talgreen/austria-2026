@@ -19,10 +19,10 @@
  * See `.env.example` for the full warning.
  */
 
-const KEY = "tuscany2026.gemininio.apiKey";
-const HISTORY_KEY = "tuscany2026.gemininio.history"; // legacy single-chat key
-const CONVERSATIONS_KEY = "tuscany2026.gemininio.conversations";
-const ACTIVE_CONV_ID_KEY = "tuscany2026.gemininio.activeConvId";
+const KEY = "austria2026.gemininio.apiKey";
+const HISTORY_KEY = "austria2026.gemininio.history"; // legacy single-chat key
+const CONVERSATIONS_KEY = "austria2026.gemininio.conversations";
+const ACTIVE_CONV_ID_KEY = "austria2026.gemininio.activeConvId";
 
 /** Build-time default key. Vite replaces `import.meta.env.VITE_…`
  *  references with string literals at compile time, so this becomes
