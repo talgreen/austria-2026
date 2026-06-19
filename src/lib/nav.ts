@@ -9,7 +9,7 @@
  * (Maps) or "Go" (Waze) themselves once they've decided.
  *
  * Strategy:
- *   - With a name → search by "<name>, <address-or-Italy>". Google
+ *   - With a name → search by "<name>, <address-or-Austria>". Google
  *     Maps usually opens directly to the top hit's place card; Waze
  *     opens search results with the place pinned.
  *   - Without a name → drop a plain coord pin. The user still sees
@@ -22,7 +22,7 @@ export interface NavTarget {
   /** Lat, lon. Used when no name is available. */
   coords: [number, number];
   /** Optional street address. Sharpens the search; if absent we
-   *  fall back to "<name>, Italy" which is still usually enough. */
+   *  fall back to "<name>, Austria" which is still usually enough. */
   address?: string;
 }
 

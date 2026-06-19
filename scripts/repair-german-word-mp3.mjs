@@ -1,13 +1,13 @@
 /**
- * Re-encode every MP3 under `public/audio/italian-words/` as one clean
+ * Re-encode every MP3 under `public/audio/german-words/` as one clean
  * stereo 44.1 kHz CBR stream. Use this if pronunciation fails with "audio
- * unavailable" or example clips stop after Italian — older stitched files
+ * unavailable" or example clips stop after German — older stitched files
  * could confuse the browser decoder.
  *
- *   node scripts/repair-italian-word-mp3.mjs
- *   node scripts/repair-italian-word-mp3.mjs --dry-run
+ *   node scripts/repair-german-word-mp3.mjs
+ *   node scripts/repair-german-word-mp3.mjs --dry-run
  *
- * Requires `ffmpeg` on PATH (same as `fetch-italian-word-audio.mjs`).
+ * Requires `ffmpeg` on PATH (same as `fetch-german-word-audio.mjs`).
  */
 
 import { readdir, rm, rename } from "node:fs/promises";
@@ -18,7 +18,7 @@ import { promisify } from "node:util";
 
 const execFileP = promisify(execFile);
 const __dirname = dirname(fileURLToPath(import.meta.url));
-const AUDIO_DIR = join(__dirname, "..", "public", "audio", "italian-words");
+const AUDIO_DIR = join(__dirname, "..", "public", "audio", "german-words");
 
 const dryRun = process.argv.includes("--dry-run");
 

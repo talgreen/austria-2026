@@ -74,19 +74,19 @@ export function localizeDay(d: Day, lang: "en" | "he"): Day {
       ? d.gear.map((g, i) => ({ ...g, item: he.gear?.[i] ?? g.item }))
       : d.gear;
 
-  /* Italian words (up to three per day): keep `word` and `example` as the
-     original Italian, but let HE override per-index (pronunciation in Hebrew
+  /* German words (up to three per day): keep `word` and `example` as the
+     original German, but let HE override per-index (pronunciation in Hebrew
      letters, meaning, example translation). */
-  const localizedItalianWords =
-    d.italianWords && he.italianWords
-      ? d.italianWords.map((w, i) => ({
+  const localizedGermanWords =
+    d.germanWords && he.germanWords
+      ? d.germanWords.map((w, i) => ({
           ...w,
-          ...stripUndefined(he.italianWords?.[i] ?? {})
+          ...stripUndefined(he.germanWords?.[i] ?? {})
         }))
-      : d.italianWords;
+      : d.germanWords;
 
-  /* End-of-day drink: keep the proper Italian name (e.g. "Aperol Spritz",
-     "Chianti Classico DOCG") and the universal `type` enum, but overlay
+  /* End-of-day drink: keep the proper German name (e.g. "Hugo Spritz",
+     "Grüner Veltliner") and the universal `type` enum, but overlay
      the localized prose (`pairing`, optional `servingNote`). */
   const localizedDrink =
     d.drinkOfTheDay && he.drinkOfTheDay
@@ -100,7 +100,7 @@ export function localizeDay(d: Day, lang: "en" | "he"): Day {
     driveNotes: he.driveNotes,
     gear: localizedGear,
     dayTips: he.dayTips,
-    italianWords: localizedItalianWords,
+    germanWords: localizedGermanWords,
     drinkOfTheDay: localizedDrink
   });
   if (!he.activities) return baseMerged;

@@ -26,7 +26,7 @@ This skill refills an existing codebase — it does not build from scratch. Befo
 anything else, clone the reference repo:
 
 ```bash
-git clone https://github.com/tikel1/tuscany-2026.git <place>-<year>
+git clone https://github.com/talgreen/austria-2026.git <place>-<year>
 cd <place>-<year>
 npm install
 ```
@@ -105,7 +105,7 @@ section it cites when a step needs depth.
 
 ```
 Trip Companion build:
-- [ ] 1. Clone github.com/tikel1/tuscany-2026; keep the Vite+React+Tailwind shell
+- [ ] 1. Clone github.com/talgreen/austria-2026; keep the Vite+React+Tailwind shell
 - [ ] 2. Rename the shell (package, repo slug, vite base, Pages workflow,
          manifest, <title>, OG/Twitter, favicon/cover)
 - [ ] 3. Set the trip clock (start/end constants; use LOCAL YYYY-MM-DD)

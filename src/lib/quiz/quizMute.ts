@@ -9,7 +9,7 @@
  * to re-mute every time the kid opens it.
  */
 
-const KEY = "tuscany2026.quiz.mute.v1";
+const KEY = "austria2026.quiz.mute.v1";
 
 export function loadQuizMute(): boolean {
   if (typeof window === "undefined") return false;

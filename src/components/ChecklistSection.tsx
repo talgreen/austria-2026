@@ -7,7 +7,7 @@ import type { ChecklistItem } from "../data/types";
 import { useT } from "../lib/dict";
 import { useLocalizeChecklistItem } from "../data/i18n";
 
-const STORAGE_KEY = "tuscany-checklist-v1";
+const STORAGE_KEY = "austria-checklist-v1";
 
 function loadChecked(): Record<string, boolean> {
   try {

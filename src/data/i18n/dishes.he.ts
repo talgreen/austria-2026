@@ -1,6 +1,6 @@
 import type { Dish } from "../types";
 
-/** Hebrew overrides for dishes, keyed by id. The Italian name stays as-is
+/** Hebrew overrides for dishes, keyed by id. The German name stays as-is
  *  (still rendered in italics) — only the descriptive copy gets translated. */
 export const dishesHE: Record<
   string,

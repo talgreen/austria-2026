@@ -117,7 +117,7 @@ function useTripStateLive() {
  * every attraction with a photo (in itinerary order), plus the day's
  * explicit `leadImage` if it's not already in the set. Used during the
  * trip so the hero shows what the family is *actually doing today /
- * tomorrow* rather than the generic Tuscany screensavers used pre-trip. */
+ * tomorrow* rather than the generic Austria screensavers used pre-trip. */
 function buildDayHeroPhotos(day: Day, getPoi: (p: POI) => POI): HeroPhoto[] {
   const out: HeroPhoto[] = [];
   const seen = new Set<string>();

@@ -55,7 +55,7 @@ export default function TripStateCard() {
           <div className="relative">
             <div className="flex items-center justify-center gap-2 text-[10px] sm:text-xs uppercase tracking-[0.28em] font-medium opacity-90 mb-4 sm:mb-6">
               <Sparkles size={11} />
-              <span>Tuscany 2026 begins</span>
+              <span>Austria 2026 begins</span>
               <span className="opacity-60">·</span>
               <span>{formatDate("2026-08-17")}</span>
             </div>
@@ -64,9 +64,9 @@ export default function TripStateCard() {
 
             <div className="mt-5 sm:mt-7 text-center font-serif italic text-lg sm:text-2xl leading-snug opacity-95">
               {state.daysUntil <= 1
-                ? "Buon viaggio — almost there."
+                ? "Gute Reise — almost there."
                 : state.daysUntil <= 7
-                ? "One week to Tuscany. Time to pack."
+                ? "One week to Austria. Time to pack."
                 : state.daysUntil <= 30
                 ? "Less than a month to go."
                 : `${state.daysUntil} days of waiting…`}
@@ -136,7 +136,7 @@ export default function TripStateCard() {
             Trip complete
           </div>
           <div className="font-serif text-3xl sm:text-4xl mt-2">
-            That was Tuscany 2026
+            That was Austria 2026
           </div>
           <p className="font-serif italic text-base sm:text-lg opacity-90 mt-1">
             Until next time. Buon ritorno.

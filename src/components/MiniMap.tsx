@@ -44,7 +44,7 @@ function makePinIcon(color: string, n: number, isHero = false): L.DivIcon {
         </div>
       </div>
     `,
-    className: "tuscany-marker",
+    className: "austria-marker",
     iconSize: [size, size],
     iconAnchor: [size / 2, size - 2],
     popupAnchor: [0, -size + 4]

@@ -12,7 +12,7 @@
 
 import type { QuizMode } from "../../data/types";
 
-const KEY = "tuscany2026.quiz.mode.v1";
+const KEY = "austria2026.quiz.mode.v1";
 
 const DEFAULT_MODE: QuizMode = "offline";
 

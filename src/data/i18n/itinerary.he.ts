@@ -1,4 +1,4 @@
-import type { Day, DayDrink, ItalianWord } from "../types";
+import type { Day, DayDrink, GermanWord } from "../types";
 
 interface DayHEActivity {
   time?: string;
@@ -11,16 +11,16 @@ interface DayHEActivity {
 }
 
 /** Translatable parts of the per-day end-of-day drink card. The drink's
- *  proper name (e.g. "Aperol Spritz", "Chianti Classico DOCG") stays
+ *  proper name (e.g. "Hugo Spritz", "Grüner Veltliner") stays
  *  universal; only the prose gets translated. */
 type DrinkOfTheDayHE = Partial<Pick<DayDrink, "pairing" | "servingNote">>;
 
-/** Translatable fields of the per-day Italian word card. The Italian
+/** Translatable fields of the per-day German word card. The German
  *  `word` and `example` stay as-is; only the meaning + the example's
  *  translation get localized. We also let HE override `pronounce` so
  *  Hebrew speakers can read a Hebrew-letter transliteration. */
 type WordOfTheDayHE = Partial<
-  Pick<ItalianWord, "pronounce" | "meaning" | "exampleMeaning">
+  Pick<GermanWord, "pronounce" | "meaning" | "exampleMeaning">
 >;
 
 export interface DayHE
@@ -35,8 +35,8 @@ export interface DayHE
    *  the EN GearItem. The merge in `localizeDay` overlays these strings
    *  onto the EN objects by index. */
   gear?: string[];
-  /** Translated parts of each Italian word card (same order as EN). */
-  italianWords?: WordOfTheDayHE[];
+  /** Translated parts of each German word card (same order as EN). */
+  germanWords?: WordOfTheDayHE[];
   /** Translated parts of the end-of-day drink card. */
   drinkOfTheDay?: DrinkOfTheDayHE;
 }

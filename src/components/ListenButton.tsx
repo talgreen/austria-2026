@@ -9,7 +9,7 @@ type Variant = "default" | "compact";
 interface Props {
   /** Attraction id — maps to public/audio/attractions/<id>.mp3 */
   attractionId?: string;
-  /** Path under public/audio/ without .mp3, e.g. `italian-words/day-01-0` */
+  /** Path under public/audio/ without .mp3, e.g. `german-words/day-01-0` */
   audioAssetPath?: string;
   /** Label used for the tooltip + a11y; falls back to the dict copy. */
   label?: string;

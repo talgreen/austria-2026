@@ -23,12 +23,12 @@ const BASES: {
   {
     id: "north",
     key: "services_filter_north",
-    sub: { en: "Aug 17–21 · Larciano", he: "17–21 באוגוסט · לרצ'יאנו" }
+    sub: { en: "Aug 8–10 · Vienna & Salzburg", he: "8–10 באוגוסט · וינה וזלצבורג" }
   },
   {
     id: "south",
     key: "services_filter_south",
-    sub: { en: "Aug 21–26 · Cortevecchia", he: "21–26 באוגוסט · קורטווקיה" }
+    sub: { en: "Aug 11–25 · The Alps", he: "11–25 באוגוסט · האלפים" }
   }
 ];
 

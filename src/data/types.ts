@@ -44,8 +44,8 @@ export type Difficulty = "easy" | "moderate" | "challenging";
  * legend, signature feature, or unmissable historical detail.
  *
  * The offline fallback quiz turns these straight into multiple-choice
- * questions ("In the Devil's Bridge legend, what did the villagers
- * send across first to outsmart the devil?" → "A dog"), and the AI
+ * questions ("In Hallstatt, what did miners dig out of the mountain
+ * for thousands of years?" → "Salt"), and the AI
  * persona surfaces them in the day digest so Gemini also sees them
  * as priority question fodder when the network IS available — so the
  * AI and the fallback both ask substantive, story-driven questions
@@ -60,9 +60,9 @@ export type Difficulty = "easy" | "moderate" | "challenging";
  *     `distractors`.
  */
 export interface AttractionQuizFact {
-  /** Complete question text, ready to read aloud — e.g. "In the
-   *  Devil's Bridge legend, what did the villagers send across
-   *  first to outsmart the devil?". */
+  /** Complete question text, ready to read aloud — e.g. "In
+   *  Hallstatt, what did miners dig out of the mountain for
+   *  thousands of years?". */
   question: string;
   /** The single correct answer. The fallback randomizes which slot
    *  it lands in at runtime so the kid can't just tap the same
@@ -141,7 +141,7 @@ export interface DayActivity {
    *  activities, the 3rd-and-later ones are treated as optional (you can
    *  realistically only fit ~2 multi-hour stops in a day with drives).
    *  Set explicitly to `false` to opt a specific activity OUT of the
-   *  auto-rule (e.g. Day 9's Civita is always part of the plan). */
+   *  auto-rule (e.g. a day's must-do headline stop is always part of the plan). */
   optional?: boolean;
 }
 
@@ -156,17 +156,17 @@ export interface GearItem {
 }
 
 /** A small phrase-of-the-day flashcard, picked to fit the day's mood
- *  (water words on water days, "arrivederci" on departure day, etc.).
- *  Italian and the spoken pronunciation are universal; meaning + the
+ *  (water words on water days, "auf Wiedersehen" on departure day, etc.).
+ *  German and the spoken pronunciation are universal; meaning + the
  *  example translation get translated per language. */
-export interface ItalianWord {
-  /** The Italian word or short phrase, e.g. "Acqua". */
+export interface GermanWord {
+  /** The German word or short phrase, e.g. "Wasser". */
   word: string;
-  /** Pronunciation in plain phonetics, e.g. "AH-kwah". Universal. */
+  /** Pronunciation in plain phonetics, e.g. "VAH-ser". Universal. */
   pronounce: string;
   /** Plain-language meaning in the active language ("Water" / "מים"). */
   meaning: string;
-  /** Optional example sentence in Italian — "L'acqua è fresca!". */
+  /** Optional example sentence in German — "Das Wasser ist kalt!". */
   example?: string;
   /** Translation of the example in the active language. */
   exampleMeaning?: string;
@@ -174,7 +174,7 @@ export interface ItalianWord {
 
 /** Categories for the "drink of the day" closing flourish — drives the
  *  card's icon and accent color. `other` is the catch-all for anything
- *  exotic (grappa, vermouth, vin santo, etc.). */
+ *  exotic (Almdudler, Sturm, Schnaps, etc.). */
 export type DrinkType =
   | "wine"
   | "cocktail"
@@ -186,12 +186,12 @@ export type DrinkType =
 
 /** An adults-only "what to pour tonight" suggestion that closes each
  *  chapter — picked to match the day's mood and to lean into local
- *  Tuscan / Maremmano grapes & rituals where possible. */
+ *  Austrian / alpine grapes & rituals where possible. */
 export interface DayDrink {
-  /** The drink's name — "Aperol Spritz", "Chianti Classico DOCG". The
-   *  Italian / proper-noun part stays universal across languages. */
+  /** The drink's name — "Hugo Spritz", "Grüner Veltliner". The
+   *  German / proper-noun part stays universal across languages. */
   name: string;
-  /** Italian-friendly category — drives icon + chip color. */
+  /** German-friendly category — drives icon + chip color. */
   type: DrinkType;
   /** One or two sentences on why this drink fits this specific day. */
   pairing: string;
@@ -223,9 +223,9 @@ export interface Day {
   /** Day-specific advice (timing, money, mood) that doesn't belong to
    *  a single attraction — the things you'd whisper at breakfast. */
   dayTips?: string[];
-  /** Up to six Italian words or phrases for the day — shown in a carousel
+  /** Up to six German words or phrases for the day — shown in a carousel
    *  with audio for each clip. */
-  italianWords?: ItalianWord[];
+  germanWords?: GermanWord[];
   /** Curated list of `Service.id` values (restaurants only) that make
    *  sense to eat at on this day — typically the lunch spot mentioned
    *  in an activity, plus a dinner option near base. Looked up via
@@ -251,14 +251,14 @@ export interface Dish {
   /** English name of the dish. */
   name: string;
   /** The original German/Austrian name (rendered in italics on the card). */
-  italianName?: string;
+  germanName?: string;
   /** "north" = more an eastern / Vienna thing,
    *  "south" = more an alpine / Salzburg–Tyrol thing,
    *  "austria" = found everywhere we travel. */
   region: "north" | "south" | "austria";
   category: DishCategory;
   description: string;
-  /** Short hint at where to try it — "Trattoria Verdi in Manciano". */
+  /** Short hint at where to try it — "Gasthaus Auer in Zell am See". */
   tryIt?: string;
   /** Optional CC photo of the dish, served from /public/images/. */
   image?: string;
