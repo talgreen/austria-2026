@@ -291,7 +291,8 @@ export const itinerary: Day[] = [
       {
         time: "Lunch",
         title: "Lunch in Mayrhofen",
-        description: "Arrive Mayrhofen 12:16, grab a relaxed lunch in town, then catch the 13:35 steam service back to Jenbach (arr 15:04) — or the regular half-hourly train if nap timing slips."
+        description: "Arrive Mayrhofen 12:16, grab a relaxed lunch in town, then catch the 13:35 steam service back to Jenbach (arr 15:04) — or the regular half-hourly train if nap timing slips.",
+        link: "https://www.mayrhofen.at/en/"
       },
       {
         time: "Afternoon",
@@ -804,7 +805,8 @@ export const itinerary: Day[] = [
       {
         time: "Afternoon",
         title: "Drive to Vienna, settle into the apartment",
-        description: "About 4.5 hours on the A1 with a couple of stops. Arrive in the late afternoon, settle into the Vienna apartment, and grab an easy first dinner — maybe the Prater's huge family beer garden."
+        description: "About 4.5 hours on the A1 with a couple of stops. Arrive in the late afternoon, settle into the Vienna apartment, and grab an easy first dinner — maybe the Prater's huge family beer garden.",
+        link: "https://www.wien.info/en"
       }
     ],
     driveNotes: "Werfenweng → Vienna ≈ 4 h 30 via the A1. Break it with a lunch/leg-stretch stop.",
