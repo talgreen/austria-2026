@@ -1,21 +1,20 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { CalendarDays, Map, Compass, Utensils, MoreHorizontal, Download } from "lucide-react";
 import { useT, type DictKey } from "../lib/dict";
 import { useLang } from "../lib/i18n";
 import LanguageSwitcher from "./LanguageSwitcher";
 import { canShowInstallOption, triggerInstallPrompt } from "../lib/install";
+import { navigateTab, type TabKey } from "../lib/route";
 
-// Primary 4 tabs are the "exploring the trip" essentials; the rest of
-// the requested nav order lives in the More overlay below.
-const TABS: { id: string; key: DictKey; Icon: typeof CalendarDays }[] = [
-  { id: "trip",        key: "nav_plan",        Icon: CalendarDays },
-  { id: "attractions", key: "nav_attractions", Icon: Compass },
-  { id: "food",        key: "nav_food",        Icon: Utensils },
-  { id: "map",         key: "nav_map",         Icon: Map },
-  { id: "more",        key: "nav_attractions", Icon: MoreHorizontal } // label overridden below
+const TABS: { id: TabKey | "more"; key: DictKey; Icon: typeof CalendarDays }[] = [
+  { id: "plan",   key: "nav_plan",        Icon: CalendarDays },
+  { id: "places", key: "nav_attractions", Icon: Compass },
+  { id: "food",   key: "nav_food",        Icon: Utensils },
+  { id: "map",    key: "nav_map",         Icon: Map },
+  { id: "more",   key: "nav_attractions", Icon: MoreHorizontal }
 ];
 
-const MORE_LINKS: { id: string; key: DictKey }[] = [
+const MORE_LINKS: { id: TabKey; key: DictKey }[] = [
   { id: "stays",     key: "nav_stays" },
   { id: "tips",      key: "nav_tips" },
   { id: "checklist", key: "nav_checklist" },
@@ -23,40 +22,12 @@ const MORE_LINKS: { id: string; key: DictKey }[] = [
 ];
 
 const MORE_LABEL: Record<"en" | "he", string> = { en: "More", he: "עוד" };
+const MORE_TAB_IDS = new Set<TabKey>(["stays", "tips", "checklist", "emergency"]);
 
-// Every section that has an anchor on the home page (services has no
-// nav entry but still exists on the page, so we track it for active
-// highlight detection).
-const SECTION_IDS = [
-  "trip",
-  "map",
-  "attractions",
-  "services",
-  "food",
-  "stays",
-  "tips",
-  "checklist",
-  "emergency"
-];
-
-// Anything that isn't a primary tab collapses to the "More" tab when
-// it's the active section while scrolling.
-const MORE_SECTION_IDS = new Set([
-  "stays",
-  "services",
-  "tips",
-  "checklist",
-  "emergency"
-]);
-
-export default function MobileBottomNav() {
+export default function MobileBottomNav({ activeTab }: { activeTab: TabKey }) {
   const t = useT();
   const { lang } = useLang();
-  const [active, setActive] = useState<string>("trip");
   const [moreOpen, setMoreOpen] = useState(false);
-  /* Capture once on mount: whether this device/browser has a meaningful
-   * install path AND the app isn't already running standalone. Stable
-   * for the session — no point recomputing on every render. */
   const [showInstall] = useState<boolean>(() => canShowInstallOption());
 
   const handleInstallClick = () => {
@@ -64,26 +35,12 @@ export default function MobileBottomNav() {
     triggerInstallPrompt();
   };
 
-  useEffect(() => {
-    const onScroll = () => {
-      const fromTop = window.scrollY + window.innerHeight * 0.3;
-      let current = SECTION_IDS[0];
-      for (const id of SECTION_IDS) {
-        const el = document.getElementById(id);
-        if (el && el.offsetTop <= fromTop) current = id;
-      }
-      setActive(MORE_SECTION_IDS.has(current) ? "more" : current);
-    };
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
-
-  const goTo = (id: string) => {
+  const go = (id: TabKey) => {
     setMoreOpen(false);
-    const el = document.getElementById(id);
-    if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+    navigateTab(id);
   };
+
+  const activeIsMore = MORE_TAB_IDS.has(activeTab);
 
   return (
     <>
@@ -101,7 +58,7 @@ export default function MobileBottomNav() {
               {MORE_LINKS.map(l => (
                 <button
                   key={l.id}
-                  onClick={() => goTo(l.id)}
+                  onClick={() => go(l.id)}
                   className="text-start bg-cream-100 hover:bg-cream-200 active:bg-cream-300 transition-colors rounded-xl px-4 py-4 text-base font-medium text-ink-900"
                 >
                   {t(l.key)}
@@ -130,21 +87,17 @@ export default function MobileBottomNav() {
       >
         <ul className="grid grid-cols-5 h-16">
           {TABS.map(({ id, key, Icon }) => {
-            const isActive = active === id;
+            const isActive = id === "more" ? activeIsMore : activeTab === id;
             const label = id === "more" ? MORE_LABEL[lang] : t(key);
             return (
               <li key={id}>
                 <button
-                  onClick={() => (id === "more" ? setMoreOpen(o => !o) : goTo(id))}
+                  onClick={() => (id === "more" ? setMoreOpen(o => !o) : go(id))}
                   className={`w-full h-full flex flex-col items-center justify-center gap-1 text-[10px] font-medium transition-colors active:scale-[0.96] ${
                     isActive ? "text-terracotta-600" : "text-ink-700/70"
                   }`}
                 >
-                  <span
-                    className={`w-10 h-7 flex items-center justify-center rounded-full transition-colors ${
-                      isActive ? "bg-terracotta-500/12" : ""
-                    }`}
-                  >
+                  <span className={`w-10 h-7 flex items-center justify-center rounded-full transition-colors ${isActive ? "bg-terracotta-500/12" : ""}`}>
                     <Icon size={18} strokeWidth={isActive ? 2.4 : 1.8} />
                   </span>
                   {label}

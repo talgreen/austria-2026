@@ -44,7 +44,7 @@ import Quiz from "./Quiz";
 import { getTripState, isQuizUnlocked } from "../lib/tripState";
 import { activityIcon } from "../lib/activityIcon";
 import { tipsForDay } from "../lib/tipsForDay";
-import { navigateChapter, navigateHome, rememberChapter } from "../lib/route";
+import { navigateChapter, navigateTab, rememberChapter } from "../lib/route";
 import { useT, localizeShortDate, localizeWeekday, type DictKey } from "../lib/dict";
 import { useLang } from "../lib/i18n";
 import { useLocalizeDay, useLocalizePoi, useLocalizeService, useLocalizeTip } from "../data/i18n";
@@ -334,7 +334,7 @@ export default function ChapterDetailPage({ dayNumber }: { dayNumber: number }) 
           <div className="font-serif text-2xl text-ink-900">{lang === "he" ? "פרק לא נמצא" : "Chapter not found"}</div>
           <button
             type="button"
-            onClick={() => navigateHome({ scrollToTrip: true })}
+            onClick={() => navigateTab("plan")}
             className="mt-4 inline-flex items-center gap-2 text-terracotta-600 hover:text-terracotta-700"
           >
             {isRTL ? <ArrowRight size={16} /> : <ArrowLeft size={16} />} {t("back_to_plan")}
@@ -458,7 +458,7 @@ function ChapterDetailContent({ day }: { day: Day }) {
         <div className="max-w-5xl mx-auto px-4 sm:px-6 h-14 sm:h-16 flex items-center justify-between gap-3">
           <button
             type="button"
-            onClick={() => navigateHome({ scrollToTrip: true })}
+            onClick={() => navigateTab("plan")}
             className="inline-flex items-center gap-2 text-ink-800 hover:text-terracotta-600 transition-colors min-h-11 -ms-2 px-2 rounded-full"
           >
             {isRTL ? <ArrowRight size={18} /> : <ArrowLeft size={18} />}
