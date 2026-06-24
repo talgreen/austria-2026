@@ -15,6 +15,8 @@ interface AccentClasses {
   ring: string;
   /** Small filled dot / pill background. */
   dot: string;
+  /** Complete hover class for dot bg — must be a literal for Tailwind scanner. */
+  hoverDot: string;
   /** Raw hex for Leaflet pin markers (no Tailwind there). */
   pinHex: string;
 }
@@ -26,6 +28,7 @@ const MAP: Record<AreaAccent, AccentClasses> = {
     bgTint: "bg-terracotta-500/10",
     ring: "ring-terracotta-500/40",
     dot: "bg-terracotta-500",
+    hoverDot: "hover:bg-terracotta-500",
     pinHex: "#C0392B"
   },
   olive: {
@@ -34,6 +37,7 @@ const MAP: Record<AreaAccent, AccentClasses> = {
     bgTint: "bg-olive-500/10",
     ring: "ring-olive-500/40",
     dot: "bg-olive-500",
+    hoverDot: "hover:bg-olive-500",
     pinHex: "#2F5E3F"
   },
   lake: {
@@ -42,6 +46,7 @@ const MAP: Record<AreaAccent, AccentClasses> = {
     bgTint: "bg-lake-500/10",
     ring: "ring-lake-500/40",
     dot: "bg-lake-500",
+    hoverDot: "hover:bg-lake-500",
     pinHex: "#2E8B9E"
   },
   gold: {
@@ -50,6 +55,7 @@ const MAP: Record<AreaAccent, AccentClasses> = {
     bgTint: "bg-gold-500/12",
     ring: "ring-gold-500/40",
     dot: "bg-gold-500",
+    hoverDot: "hover:bg-gold-500",
     pinHex: "#B8862C"
   },
   sienna: {
@@ -58,6 +64,7 @@ const MAP: Record<AreaAccent, AccentClasses> = {
     bgTint: "bg-sienna-500/10",
     ring: "ring-sienna-500/40",
     dot: "bg-sienna-500",
+    hoverDot: "hover:bg-sienna-500",
     pinHex: "#8B5A2B"
   }
 };

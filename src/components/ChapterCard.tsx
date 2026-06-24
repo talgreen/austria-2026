@@ -174,7 +174,7 @@ export default function ChapterCard({ day }: { day: Day }) {
           type="button"
           whileTap={{ scale: 0.98 }}
           onClick={() => navigateChapter(day.dayNumber)}
-          className={`mt-5 sm:mt-6 group/cta inline-flex items-center justify-center gap-2 w-full sm:w-auto sm:self-stretch px-5 py-3 rounded-xl bg-ink-900 text-cream-50 hover:${a.dot} transition-colors`}
+          className={`mt-5 sm:mt-6 group/cta inline-flex items-center justify-center gap-2 w-full sm:w-auto sm:self-stretch px-5 py-3 rounded-xl bg-ink-900 text-cream-50 ${a.hoverDot} transition-colors`}
         >
           <span className="font-serif italic text-[15px]">{t("read_more")}</span>
           {lang === "he" ? (

@@ -633,29 +633,30 @@ function ChapterDetailContent({ day }: { day: Day }) {
           <section>
             <SectionLabel eyebrow={t("todays_plan")} title={t("hour_by_hour")} accentClass={a.text} />
             <ol className="mt-6 sm:mt-8 space-y-5 sm:space-y-8">
-              {localDay.activities.map((a, i, arr) => (
+              {localDay.activities.map((act, i, arr) => (
                 <Fragment key={i}>
                   {i === 0 && localDay.rideToFirst && localDay.departureTime && (
-                    <RideConnector 
+                    <RideConnector
                       departAt={localDay.departureTime}
                       duration={localDay.rideToFirst.duration}
                       note={localDay.rideToFirst.note}
                     />
                   )}
                   <ActivityRow
-                    activity={a}
+                    activity={act}
                     index={i}
                     isToday={isToday}
-                    optional={isActivityOptional(a, i, localDay)}
+                    optional={isActivityOptional(act, i, localDay)}
+                    accentText={a.text}
                   />
                   {/* Inline ride connector — rendered only when this stop
                       has a meaningful drive to the next one. Slips into
                       the ordered list between two activity rows. */}
-                  {a.rideToNext && i < arr.length - 1 && (
-                    <RideConnector 
-                      duration={a.rideToNext.duration ?? ""}
-                      note={a.rideToNext.note}
-                      departAt={a.rideToNext.departAt}
+                  {act.rideToNext && i < arr.length - 1 && (
+                    <RideConnector
+                      duration={act.rideToNext.duration ?? ""}
+                      note={act.rideToNext.note}
+                      departAt={act.rideToNext.departAt}
                     />
                   )}
                 </Fragment>
@@ -926,12 +927,14 @@ function ActivityRow({
   activity,
   index,
   isToday,
-  optional
+  optional,
+  accentText = "text-terracotta-600"
 }: {
   activity: DayActivity;
   index: number;
   isToday: boolean;
   optional: boolean;
+  accentText?: string;
 }) {
   const t = useT();
   const localizePoi = useLocalizePoi();
@@ -1021,7 +1024,7 @@ function ActivityRow({
             href={att?.website ?? activity.link}
             target="_blank"
             rel="noopener noreferrer"
-            className="mt-2 inline-flex items-center gap-1 text-[11px] uppercase tracking-[0.18em] font-medium text-terracotta-600 hover:text-terracotta-700 hover:underline transition-colors"
+            className={`mt-2 inline-flex items-center gap-1 text-[11px] uppercase tracking-[0.18em] font-medium ${accentText} hover:underline transition-colors`}
           >
             <ExternalLink size={11} strokeWidth={1.9} />
             {t("official_site")} ↗
@@ -1031,7 +1034,7 @@ function ActivityRow({
         {hasMoreInfo && (
           <button
             onClick={() => setOpen(o => !o)}
-            className="mt-3 inline-flex items-center gap-1.5 text-[11px] uppercase tracking-[0.18em] font-medium text-terracotta-600 hover:text-terracotta-700 transition-colors"
+            className={`mt-3 inline-flex items-center gap-1.5 text-[11px] uppercase tracking-[0.18em] font-medium ${accentText} hover:underline transition-colors`}
             aria-expanded={open}
           >
             {open ? <X size={12} /> : <Plus size={12} />}

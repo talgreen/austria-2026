@@ -76,7 +76,7 @@ export function TimelineStop({
         <span className={`w-3 h-3 rounded-full ${a.dot} ring-2 ring-cream-50 shrink-0`} />
         <span className={`w-px flex-1 ${a.border} border-s opacity-25`} />
       </div>
-      <div className={`pb-3 ${isCompact ? "" : "pb-5"} min-w-0`}>
+      <div className={`${isCompact ? "pb-3" : "pb-5"} min-w-0`}>
         <div className="flex items-center gap-2 flex-wrap">
           {activity.time && (
             <span className={`text-[12px] font-semibold ${a.text}`}>
