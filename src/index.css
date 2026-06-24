@@ -61,6 +61,25 @@ html[dir="rtl"] {
   --font-serif: "Frank Ruhl Libre", "Cormorant Garamond", "Georgia", ui-serif, serif;
 }
 
+/* Hebrew reads better with a touch more line-height and no Latin
+   negative tracking (which crowds Hebrew letterforms). Applied only
+   under RTL so the English layout is untouched. */
+html[dir="rtl"] body {
+  line-height: 1.7;
+}
+html[dir="rtl"] h1,
+html[dir="rtl"] h2,
+html[dir="rtl"] h3,
+html[dir="rtl"] h4 {
+  letter-spacing: 0;
+  font-weight: 700;
+}
+/* Frank Ruhl Libre at display sizes wants its heavier weights to read
+   as "editorial"; bump the largest titles to 900. */
+html[dir="rtl"] .section-title {
+  font-weight: 900;
+}
+
 /* Always-Latin serif. Use this on numerals and any glyphs that should
    keep their Cormorant Garamond rendering even when the page is in
    Hebrew (e.g. the live countdown digits — Frank Ruhl Libre's tabular

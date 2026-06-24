@@ -17,20 +17,20 @@ interface LangCtxValue {
 }
 
 const LangContext = createContext<LangCtxValue>({
-  lang: "en",
+  lang: "he",
   setLang: () => {},
-  dir: "ltr"
+  dir: "rtl"
 });
 
 function readInitialLang(): Lang {
-  if (typeof window === "undefined") return "en";
+  if (typeof window === "undefined") return "he";
   try {
     const saved = window.localStorage.getItem(STORAGE_KEY);
     if (saved === "he" || saved === "en") return saved;
   } catch {
     /* ignore */
   }
-  return "en";
+  return "he";
 }
 
 export function LangProvider({ children }: { children: ReactNode }) {
