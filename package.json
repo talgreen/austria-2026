@@ -7,6 +7,7 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
+    "images:austria": "node scripts/fetch-austria-images.mjs",
     "tts:german-words": "node scripts/fetch-german-word-audio.mjs",
     "tts:german-words:eleven": "node scripts/fetch-german-word-audio.mjs --elevenlabs",
     "tts:german-words-ex:eleven": "node scripts/fetch-german-word-audio.mjs --elevenlabs --examples-only",

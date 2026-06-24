@@ -65,10 +65,11 @@ Image fields point to `./images/<slug>.jpg`. Drop your own `.jpg` files into `pu
 
 ## Helper scripts
 
-`scripts/` holds local-only scripts for generating audio. Run from your machine, never from CI.
+`scripts/` holds local-only scripts for fetching photos and generating audio. Run from your machine, never from CI.
 
 | Command | What it does |
 | --- | --- |
+| `npm run images:austria` | Fetches CC-licensed photos for any cards still missing an image (searches Wikimedia Commons, writes attribution to `public/images/credits.austria.json`). Add `--force` to re-fetch. |
 | `npm run tts:german-words` | Word-of-the-day MP3s in DE/EN/HE (Gemini Flash by default). |
 | `npm run tts:german-words:eleven` | Same, via ElevenLabs. Add `--examples-only` to rebuild just the example clips. |
 | `npm run tts:attractions-he` | Hebrew narration for attractions (Gemini Flash by default; `:eleven` variant available). |
