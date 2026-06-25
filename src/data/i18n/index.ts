@@ -93,10 +93,16 @@ export function localizeDay(d: Day, lang: "en" | "he"): Day {
       ? { ...d.drinkOfTheDay, ...stripUndefined(he.drinkOfTheDay) }
       : d.drinkOfTheDay;
 
+  const localizedRideToFirst =
+    d.rideToFirst && he.rideToFirst
+      ? { ...d.rideToFirst, ...stripUndefined(he.rideToFirst) }
+      : d.rideToFirst;
+
   const baseMerged = mergeIfDefined(d, {
     title: he.title,
     subtitle: he.subtitle,
     base: he.base,
+    rideToFirst: localizedRideToFirst,
     driveNotes: he.driveNotes,
     gear: localizedGear,
     dayTips: he.dayTips,
