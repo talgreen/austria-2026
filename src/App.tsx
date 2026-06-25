@@ -1,31 +1,24 @@
 import { useCallback, useRef } from "react";
 import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
-import TripStats from "./components/TripStats";
-import ItinerarySection from "./components/ItinerarySection";
-import MapView from "./components/MapView";
-import AttractionsGrid from "./components/AttractionsGrid";
-import StaysSection from "./components/StaysSection";
-import ServicesSection from "./components/ServicesSection";
-import FoodAndWineSection from "./components/FoodAndWineSection";
-import ChecklistSection from "./components/ChecklistSection";
-import TipsSection from "./components/TipsSection";
-import EmergencySection from "./components/EmergencySection";
 import Footer from "./components/Footer";
 import MobileBottomNav from "./components/MobileBottomNav";
-import SectionOrnament from "./components/SectionOrnament";
 import ChapterDetailPage from "./components/ChapterDetailPage";
 import InstallPrompt from "./components/InstallPrompt";
 import Gemininio from "./components/Gemininio";
+import TabShell from "./components/TabShell";
 import { MapFocusContext } from "./lib/mapContext";
-import { useHashRoute } from "./lib/route";
+import { useHashRoute, navigateTab } from "./lib/route";
 
 export default function App() {
   const focusFnRef = useRef<((id: string) => void) | null>(null);
   const route = useHashRoute();
 
   const focusOn = useCallback((id: string) => {
-    if (focusFnRef.current) focusFnRef.current(id);
+    // Switching to the map tab before focusing guarantees the map is mounted.
+    navigateTab("map");
+    // Defer until MapView has registered its focus fn after mount.
+    setTimeout(() => focusFnRef.current?.(id), 350);
   }, []);
 
   const registerFocus = useCallback((fn: (id: string) => void) => {
@@ -36,8 +29,6 @@ export default function App() {
     return (
       <>
         <ChapterDetailPage dayNumber={route.day} />
-        {/* The Add-to-Home-Screen coachmark lives at the app root so it
-            shows regardless of which page the user landed on. */}
         <InstallPrompt />
         <Gemininio />
       </>
@@ -46,52 +37,13 @@ export default function App() {
 
   return (
     <MapFocusContext.Provider value={{ focusOn }}>
-      <Navbar />
-      <Hero />
-
-      {/* The Plan — the magazine's main feature, leads everything else */}
-      <ItinerarySection />
-
-      <SectionOrnament />
-      <MapView registerFocus={registerFocus} />
-
-      <SectionOrnament />
-      <AttractionsGrid />
-
-      <SectionOrnament />
-      <ServicesSection />
-
-      <SectionOrnament />
-      <FoodAndWineSection />
-
-      <SectionOrnament />
-      <StaysSection />
-
-      <SectionOrnament />
-      <TipsSection />
-
-      <SectionOrnament />
-      <ChecklistSection />
-
-      <SectionOrnament />
-      <EmergencySection />
-
-      {/* By the numbers — the trip in stats, as a closing flourish */}
-      <section className="relative py-14 sm:py-20 bg-cream-100/40">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6">
-          <TripStats />
-        </div>
-      </section>
-
+      <Navbar activeTab={route.tab} />
+      {route.tab === "plan" && <Hero />}
+      <TabShell tab={route.tab} registerFocus={registerFocus} />
       <Footer />
-
-      {/* Spacer so content above the bottom nav isn't hidden on mobile */}
       <div className="h-20 md:hidden" aria-hidden />
-
-      <MobileBottomNav />
+      <MobileBottomNav activeTab={route.tab} />
       <InstallPrompt />
-      {/* Gemininio occupies the floating-action slot that used to
-          host the "scroll to map" FAB — same position, more useful. */}
       <Gemininio />
     </MapFocusContext.Provider>
   );

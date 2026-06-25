@@ -128,6 +128,10 @@ export interface DayActivity {
   description: string;
   attractionId?: string;
   tag?: AttractionTag;
+  /** Optional official link for a place that is NOT a full attraction
+   *  entry (e.g. a town/tourism page). Attractions link via attractionId
+   *  → attractions.ts `website`. Prefer an English-language URL. */
+  link?: string;
   /** Drive time from this stop to the NEXT activity, rendered as a small
    *  inline connector on the chapter detail page. Only set when there's a
    *  meaningful drive between stops — skip for sub-5-minute hops or when

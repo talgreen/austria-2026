@@ -7,6 +7,9 @@ import { stays } from "../data/stays";
 import { services } from "../data/services";
 import { wineries } from "../data/wineries";
 import type { POI, Category } from "../data/types";
+import { itinerary } from "../data/itinerary";
+import { getAreaForDay } from "../data/areas";
+import { accentClasses, type AreaAccent } from "../lib/accent";
 import Section from "./Section";
 import NavigateLinks from "./NavigateLinks";
 import { useT, type DictKey } from "../lib/dict";
@@ -14,6 +17,18 @@ import { useLang } from "../lib/i18n";
 import { useLocalizePoi, useLocalizeWinery } from "../data/i18n";
 
 delete (L.Icon.Default.prototype as unknown as { _getIconUrl: unknown })._getIconUrl;
+
+/* Build a lookup from attractionId → AreaAccent once at module scope.
+   First itinerary occurrence of each attraction wins. */
+const accentByAttraction = new Map<string, AreaAccent>();
+for (const day of itinerary) {
+  const accent = getAreaForDay(day.dayNumber).accent;
+  for (const act of day.activities) {
+    if (act.attractionId && !accentByAttraction.has(act.attractionId)) {
+      accentByAttraction.set(act.attractionId, accent);
+    }
+  }
+}
 
 interface CategoryConfig {
   id: Category;
@@ -36,8 +51,9 @@ const CATEGORY_CONFIG: Record<Category, CategoryConfig> = {
   winery:      { id: "winery",      labelKey: "cat_winery",      color: "#7A2E3F", bg: "#7A2E3F", Icon: Grape }         // deep berry
 };
 
-function makeIcon(cat: Category, isHero = false): L.DivIcon {
+function makeIcon(cat: Category, isHero = false, colorOverride?: string): L.DivIcon {
   const cfg = CATEGORY_CONFIG[cat];
+  const pinColor = colorOverride ?? cfg.bg;
   const size = isHero ? 38 : 30;
   const html = `
     <div style="
@@ -48,7 +64,7 @@ function makeIcon(cat: Category, isHero = false): L.DivIcon {
         position:absolute;inset:0;
         border-radius:50% 50% 50% 0;
         transform:rotate(-45deg);
-        background:linear-gradient(135deg, ${cfg.bg} 0%, ${shade(cfg.bg, -15)} 100%);
+        background:linear-gradient(135deg, ${pinColor} 0%, ${shade(pinColor, -15)} 100%);
         border:2px solid #FBF7EC;
         box-shadow:0 6px 14px rgba(42,31,26,0.4);
         display:flex;align-items:center;justify-content:center;
@@ -587,11 +603,19 @@ export default function MapView({ registerFocus }: Props) {
           {visible.map(poi => {
             // mark the airport + stays as 'hero' (slightly bigger ringed pin)
             const isHero = poi.category === "stay" || poi.category === "airport";
+            // Colour attraction pins by the trip area they belong to.
+            const attractionAccent =
+              poi.category === "attraction"
+                ? accentByAttraction.get(poi.id)
+                : undefined;
+            const pinColorOverride = attractionAccent
+              ? accentClasses(attractionAccent).pinHex
+              : undefined;
             return (
               <Marker
                 key={poi.id}
                 position={poi.coords}
-                icon={makeIcon(poi.category, isHero)}
+                icon={makeIcon(poi.category, isHero, pinColorOverride)}
                 ref={ref => {
                   markersRef.current[poi.id] = ref;
                 }}

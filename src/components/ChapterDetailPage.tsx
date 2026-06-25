@@ -29,6 +29,9 @@ import {
 import { itinerary } from "../data/itinerary";
 import { getAttraction } from "../data/attractions";
 import { getService } from "../data/services";
+import { getAreaForDay } from "../data/areas";
+import { accentClasses } from "../lib/accent";
+import WhereYouSleep from "./WhereYouSleep";
 import type {
   Day,
   DayActivity,
@@ -44,7 +47,7 @@ import Quiz from "./Quiz";
 import { getTripState, isQuizUnlocked } from "../lib/tripState";
 import { activityIcon } from "../lib/activityIcon";
 import { tipsForDay } from "../lib/tipsForDay";
-import { navigateChapter, navigateHome, rememberChapter } from "../lib/route";
+import { navigateChapter, navigateTab, rememberChapter } from "../lib/route";
 import { useT, localizeShortDate, localizeWeekday, type DictKey } from "../lib/dict";
 import { useLang } from "../lib/i18n";
 import { useLocalizeDay, useLocalizePoi, useLocalizeService, useLocalizeTip } from "../data/i18n";
@@ -334,7 +337,7 @@ export default function ChapterDetailPage({ dayNumber }: { dayNumber: number }) 
           <div className="font-serif text-2xl text-ink-900">{lang === "he" ? "פרק לא נמצא" : "Chapter not found"}</div>
           <button
             type="button"
-            onClick={() => navigateHome({ scrollToTrip: true })}
+            onClick={() => navigateTab("plan")}
             className="mt-4 inline-flex items-center gap-2 text-terracotta-600 hover:text-terracotta-700"
           >
             {isRTL ? <ArrowRight size={16} /> : <ArrowLeft size={16} />} {t("back_to_plan")}
@@ -425,12 +428,11 @@ function ChapterDetailContent({ day }: { day: Day }) {
     if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
   };
 
-  const accent =
-    day.region === "south"
-      ? "text-gold-400"
-      : day.region === "transit"
-      ? "text-terracotta-300"
-      : "text-olive-300";
+  const area = getAreaForDay(day.dayNumber);
+  const a = accentClasses(area.accent);
+  // For the hero (dark background), we need a lighter version of the accent text.
+  // We derive a hero-safe colour using opacity rather than a parallel colour system.
+  const heroAccentClass = "text-cream-50/90";
 
   const prevDay = day.dayNumber > 1 ? itinerary[day.dayNumber - 2] : null;
   const nextDay =
@@ -458,7 +460,7 @@ function ChapterDetailContent({ day }: { day: Day }) {
         <div className="max-w-5xl mx-auto px-4 sm:px-6 h-14 sm:h-16 flex items-center justify-between gap-3">
           <button
             type="button"
-            onClick={() => navigateHome({ scrollToTrip: true })}
+            onClick={() => navigateTab("plan")}
             className="inline-flex items-center gap-2 text-ink-800 hover:text-terracotta-600 transition-colors min-h-11 -ms-2 px-2 rounded-full"
           >
             {isRTL ? <ArrowRight size={18} /> : <ArrowLeft size={18} />}
@@ -547,7 +549,7 @@ function ChapterDetailContent({ day }: { day: Day }) {
                   {ROMAN[day.dayNumber]}
                 </div>
                 <div className="hidden sm:block h-px w-16 bg-cream-50/40 mb-2" />
-                <div className={`text-[10px] sm:text-[11px] uppercase tracking-[0.28em] font-medium ${accent}`}>
+                <div className={`text-[10px] sm:text-[11px] uppercase tracking-[0.28em] font-medium ${heroAccentClass}`}>
                   {t("plan_chapter_x_of_y", { x: String(day.dayNumber).padStart(2, "0"), y: String(itinerary.length).padStart(2, "0") })}
                 </div>
                 {isToday && (
@@ -618,6 +620,9 @@ function ChapterDetailContent({ day }: { day: Day }) {
         </header>
 
         <div className="max-w-4xl mx-auto px-4 sm:px-6 py-10 sm:py-16 space-y-12 sm:space-y-16">
+          {/* Where you sleep — area lodging band */}
+          <WhereYouSleep area={area} variant="band" />
+
           {/* Italian words (carousel) — three themed flashcards per day;
               audio is on the pronunciation chip; progress is remembered. */}
           {italianWords.length > 0 && (
@@ -626,31 +631,32 @@ function ChapterDetailContent({ day }: { day: Day }) {
 
           {/* Activities */}
           <section>
-            <SectionLabel eyebrow={t("todays_plan")} title={t("hour_by_hour")} />
+            <SectionLabel eyebrow={t("todays_plan")} title={t("hour_by_hour")} accentClass={a.text} />
             <ol className="mt-6 sm:mt-8 space-y-5 sm:space-y-8">
-              {localDay.activities.map((a, i, arr) => (
+              {localDay.activities.map((act, i, arr) => (
                 <Fragment key={i}>
                   {i === 0 && localDay.rideToFirst && localDay.departureTime && (
-                    <RideConnector 
+                    <RideConnector
                       departAt={localDay.departureTime}
                       duration={localDay.rideToFirst.duration}
                       note={localDay.rideToFirst.note}
                     />
                   )}
                   <ActivityRow
-                    activity={a}
+                    activity={act}
                     index={i}
                     isToday={isToday}
-                    optional={isActivityOptional(a, i, localDay)}
+                    optional={isActivityOptional(act, i, localDay)}
+                    accentText={a.text}
                   />
                   {/* Inline ride connector — rendered only when this stop
                       has a meaningful drive to the next one. Slips into
                       the ordered list between two activity rows. */}
-                  {a.rideToNext && i < arr.length - 1 && (
-                    <RideConnector 
-                      duration={a.rideToNext.duration ?? ""}
-                      note={a.rideToNext.note}
-                      departAt={a.rideToNext.departAt}
+                  {act.rideToNext && i < arr.length - 1 && (
+                    <RideConnector
+                      duration={act.rideToNext.duration ?? ""}
+                      note={act.rideToNext.note}
+                      departAt={act.rideToNext.departAt}
                     />
                   )}
                 </Fragment>
@@ -677,7 +683,7 @@ function ChapterDetailContent({ day }: { day: Day }) {
           {/* Mini map */}
           {dayPois.length > 0 && (
             <section>
-              <SectionLabel eyebrow={t("on_the_map")} title={t("the_days_stops")} />
+              <SectionLabel eyebrow={t("on_the_map")} title={t("the_days_stops")} accentClass={a.text} />
               <p className="mt-2 mb-5 sm:mb-6 font-serif italic text-ink-700/70 text-[14.5px] sm:text-base">
                 {t("ordered_visit")}
               </p>
@@ -688,7 +694,7 @@ function ChapterDetailContent({ day }: { day: Day }) {
                     key={p.id}
                     className="flex items-start gap-3 p-3 rounded-xl bg-cream-50 ring-1 ring-cream-300/70"
                   >
-                    <span className="shrink-0 w-7 h-7 rounded-full bg-terracotta-500 text-cream-50 flex items-center justify-center text-xs font-semibold">
+                    <span className={`shrink-0 w-7 h-7 rounded-full ${a.dot} text-cream-50 flex items-center justify-center text-xs font-semibold`}>
                       {i + 1}
                     </span>
                     <div className="min-w-0">
@@ -715,7 +721,7 @@ function ChapterDetailContent({ day }: { day: Day }) {
               chip the reader can tap to scroll back up to that activity. */}
           {localDay.gear && localDay.gear.length > 0 && (
             <section>
-              <SectionLabel eyebrow={t("gear_eyebrow")} title={t("gear_title")} />
+              <SectionLabel eyebrow={t("gear_eyebrow")} title={t("gear_title")} accentClass={a.text} />
               <p className="mt-2 mb-5 sm:mb-6 font-serif italic text-ink-700/70 text-[14.5px] sm:text-base">
                 {t("gear_kicker")}
               </p>
@@ -774,7 +780,7 @@ function ChapterDetailContent({ day }: { day: Day }) {
               near-identical "tips" blocks on the detail page. */}
           {((localDay.dayTips && localDay.dayTips.length > 0) || tips.length > 0) && (
             <section>
-              <SectionLabel eyebrow={t("daytips_eyebrow")} title={t("daytips_title")} />
+              <SectionLabel eyebrow={t("daytips_eyebrow")} title={t("daytips_title")} accentClass={a.text} />
               <p className="mt-2 mb-5 sm:mb-6 font-serif italic text-ink-700/70 text-[14.5px] sm:text-base">
                 {t("daytips_kicker")}
               </p>
@@ -904,10 +910,10 @@ function ChapterDetailContent({ day }: { day: Day }) {
   );
 }
 
-function SectionLabel({ eyebrow, title }: { eyebrow: string; title: string }) {
+function SectionLabel({ eyebrow, title, accentClass = "text-terracotta-600/85" }: { eyebrow: string; title: string; accentClass?: string }) {
   return (
     <div>
-      <div className="text-[10px] uppercase tracking-[0.32em] text-terracotta-600/85 font-medium">
+      <div className={`text-[10px] uppercase tracking-[0.32em] font-medium ${accentClass}`}>
         {eyebrow}
       </div>
       <h2 className="mt-1 font-serif text-2xl sm:text-3xl text-ink-900 leading-tight">
@@ -921,12 +927,14 @@ function ActivityRow({
   activity,
   index,
   isToday,
-  optional
+  optional,
+  accentText = "text-terracotta-600"
 }: {
   activity: DayActivity;
   index: number;
   isToday: boolean;
   optional: boolean;
+  accentText?: string;
 }) {
   const t = useT();
   const localizePoi = useLocalizePoi();
@@ -1009,10 +1017,24 @@ function ActivityRow({
           </p>
         )}
 
+        {/* Official-site link: prefer attraction.website, fall back to
+            activity.link when there's no full attraction entry. */}
+        {(att?.website || (!att && activity.link)) && (
+          <a
+            href={att?.website ?? activity.link}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={`mt-2 inline-flex items-center gap-1 text-[11px] uppercase tracking-[0.18em] font-medium ${accentText} hover:underline transition-colors`}
+          >
+            <ExternalLink size={11} strokeWidth={1.9} />
+            {t("official_site")} ↗
+          </a>
+        )}
+
         {hasMoreInfo && (
           <button
             onClick={() => setOpen(o => !o)}
-            className="mt-3 inline-flex items-center gap-1.5 text-[11px] uppercase tracking-[0.18em] font-medium text-terracotta-600 hover:text-terracotta-700 transition-colors"
+            className={`mt-3 inline-flex items-center gap-1.5 text-[11px] uppercase tracking-[0.18em] font-medium ${accentText} hover:underline transition-colors`}
             aria-expanded={open}
           >
             {open ? <X size={12} /> : <Plus size={12} />}

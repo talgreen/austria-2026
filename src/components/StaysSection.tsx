@@ -1,8 +1,9 @@
 import { ExternalLink, MapPin, AlertTriangle, Check } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useMemo, useState, useCallback } from "react";
-import { stays } from "../data/stays";
 import type { Stay } from "../data/types";
+import { areas, getStayForArea } from "../data/areas";
+import { accentClasses } from "../lib/accent";
 import Section from "./Section";
 import { useMapFocus } from "../lib/mapContext";
 import { useT, localizeShortDate } from "../lib/dict";
@@ -140,10 +141,13 @@ export default function StaysSection() {
       intro={t("stays_intro")}
     >
       <div className="grid gap-5 lg:grid-cols-2">
-        {stays.map(rawStay => {
+        {areas.map(area => {
+          const rawStay = getStayForArea(area);
+          if (!rawStay) return null;
           const s = localizeStay(rawStay);
+          const a = accentClasses(area.accent);
           return (
-          <article key={s.id} className="card-paper card-paper-hover overflow-hidden flex flex-col">
+          <article key={s.id} className={`card-paper card-paper-hover overflow-hidden flex flex-col border-s-4 ${a.border}`}>
             <div className="relative aspect-[16/10] overflow-hidden bg-cream-200">
               <StayHero stay={s} />
               {s.image && s.imageCredit && (
@@ -155,13 +159,13 @@ export default function StaysSection() {
             <div className="p-5 flex-1 flex flex-col">
               <div className="flex items-start justify-between gap-3">
                 <h3 className="font-serif text-2xl text-ink-900 leading-tight">{s.name}</h3>
-                <span className={`shrink-0 ${s.region === "south" ? "pill-gold" : s.region === "north" ? "pill-olive" : "pill-ink"}`}>
+                <span className={`shrink-0 inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-xs font-medium ${a.bgTint} ${a.text}`}>
                   {s.nights === 1
                     ? t("stay_nights_one", { n: s.nights })
                     : t("stay_nights_many", { n: s.nights })}
                 </span>
               </div>
-              <div className="mt-1 text-sm text-terracotta-600 font-medium">
+              <div className={`mt-1 text-sm font-medium ${a.text}`}>
                 {localizeShortDate(s.checkIn, lang)} → {localizeShortDate(s.checkOut, lang)}
               </div>
               {s.address && (
@@ -192,13 +196,13 @@ export default function StaysSection() {
 
               {s.warnings && s.warnings.length > 0 && (
                 <>
-                  <div className="mt-4 text-[10px] uppercase tracking-[0.22em] text-terracotta-700/85 font-medium">
+                  <div className={`mt-4 text-[10px] uppercase tracking-[0.22em] font-medium ${a.text}`}>
                     {t("stay_warnings")}
                   </div>
                   <ul className="mt-1.5 space-y-1.5">
                     {s.warnings.map((w, i) => (
-                      <li key={i} className="flex gap-2 text-sm text-terracotta-700">
-                        <AlertTriangle size={14} className="text-terracotta-500 shrink-0 mt-0.5" />
+                      <li key={i} className={`flex gap-2 text-sm ${a.text}`}>
+                        <AlertTriangle size={14} className={`${a.text} shrink-0 mt-0.5`} />
                         <span>{w}</span>
                       </li>
                     ))}

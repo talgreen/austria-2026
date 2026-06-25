@@ -506,6 +506,15 @@ export const DICT = {
     he: "לבחירה — אפשר לדלג אם עייפים"
   },
 
+  /* ---------- Timeline & stops ---------- */
+  leave_by: { en: "Leave by", he: "יציאה עד" },
+  drive_label: { en: "Drive", he: "נסיעה" },
+  official_site: { en: "Official site", he: "אתר רשמי" },
+  where_you_sleep: { en: "Where you sleep", he: "איפה ישנים" },
+  moving_to: { en: "Moving to", he: "עוברים אל" },
+  nights_label: { en: "nights", he: "לילות" },
+  night_label: { en: "night", he: "לילה" },
+
   /* ---------- Install / Add to Home Screen ---------- */
   install_eyebrow: { en: "Take it with you", he: "קחו את זה איתכם" },
   install_title_ios: {

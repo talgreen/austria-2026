@@ -2,8 +2,10 @@ import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { itinerary } from "../data/itinerary";
+import { getAreaForDay } from "../data/areas";
 import { getAttraction } from "../data/attractions";
 import { getTripState } from "../lib/tripState";
+import { accentClasses } from "../lib/accent";
 import { useT, localizeWeekday } from "../lib/dict";
 import { useLang } from "../lib/i18n";
 import { useLocalizeDay } from "../data/i18n";
@@ -90,13 +92,7 @@ export default function TripStrip({ compact = false, activeDay, onSelect }: Prop
               const localDay = localizeDay(day);
               const isToday = day.dayNumber === todayNumber;
               const isActive = activeIdx === day.dayNumber;
-              const region = day.region;
-              const dot =
-                region === "south"
-                  ? "bg-gold-500"
-                  : region === "transit"
-                  ? "bg-terracotta-500"
-                  : "bg-olive-500";
+              const a = accentClasses(getAreaForDay(day.dayNumber).accent);
               return (
                 <li key={day.dayNumber}>
                   <button
@@ -104,14 +100,14 @@ export default function TripStrip({ compact = false, activeDay, onSelect }: Prop
                     onClick={() => jumpTo(day.dayNumber)}
                     className={`group relative inline-flex items-center gap-2 rounded-full px-3 py-1.5 text-[11px] font-medium transition-all whitespace-nowrap min-h-9 ${
                       isActive
-                        ? "bg-ink-900 text-cream-50 shadow-[0_4px_14px_rgba(58,28,15,0.25)]"
+                        ? `${a.dot} text-cream-50 shadow-[0_4px_14px_rgba(58,28,15,0.25)]`
                         : isToday
-                        ? "bg-terracotta-500/10 text-terracotta-700 ring-1 ring-terracotta-500/30 hover:bg-terracotta-500/20"
+                        ? `${a.bgTint} ${a.text} ring-1 ${a.ring} hover:opacity-80`
                         : "bg-cream-50 text-ink-700 ring-1 ring-cream-300 hover:bg-cream-100"
                     }`}
                     title={localDay.title}
                   >
-                    <span className={`w-1.5 h-1.5 rounded-full ${dot}`} aria-hidden />
+                    <span className={`w-1.5 h-1.5 rounded-full ${a.dot}`} aria-hidden />
                     <span className="font-serif text-[13px] leading-none">
                       {ROMAN[day.dayNumber]}
                     </span>
@@ -170,13 +166,7 @@ export default function TripStrip({ compact = false, activeDay, onSelect }: Prop
             const isToday = day.dayNumber === todayNumber;
             const isActive = activeIdx === day.dayNumber;
             const region = day.region;
-
-            const accentText =
-              region === "south"
-                ? "text-gold-400"
-                : region === "transit"
-                ? "text-terracotta-300"
-                : "text-olive-300";
+            const a = accentClasses(getAreaForDay(day.dayNumber).accent);
 
             return (
               <li key={day.dayNumber} className="snap-center shrink-0">
@@ -186,9 +176,9 @@ export default function TripStrip({ compact = false, activeDay, onSelect }: Prop
                   onClick={() => jumpTo(day.dayNumber)}
                   className={`relative w-[44vw] max-w-[180px] sm:w-44 aspect-[3/4] rounded-2xl overflow-hidden text-left bg-ink-900 group transition-shadow ${
                     isToday
-                      ? "ring-2 ring-terracotta-500 shadow-[0_18px_36px_-14px_rgba(196,90,61,0.6)]"
+                      ? `ring-2 ${a.border} shadow-[0_18px_36px_-14px_rgba(196,90,61,0.6)]`
                       : isActive
-                      ? "ring-2 ring-terracotta-500/60 shadow-[0_14px_28px_-14px_rgba(196,90,61,0.4)]"
+                      ? `ring-2 ${a.ring} shadow-[0_14px_28px_-14px_rgba(196,90,61,0.4)]`
                       : "ring-1 ring-cream-300/0 shadow-[0_8px_22px_-12px_rgba(58,28,15,0.25)] hover:shadow-[0_18px_36px_-14px_rgba(58,28,15,0.45)]"
                   }`}
                 >
@@ -206,7 +196,7 @@ export default function TripStrip({ compact = false, activeDay, onSelect }: Prop
                   <div className="absolute top-2.5 start-3 end-3 flex items-start justify-between text-cream-50">
                     <div>
                       <div
-                        className={`text-[9px] uppercase tracking-[0.28em] font-medium ${accentText}`}
+                        className={`text-[9px] uppercase tracking-[0.28em] font-medium ${a.text} opacity-80`}
                       >
                         {t("chapter_label")}
                       </div>
@@ -215,7 +205,7 @@ export default function TripStrip({ compact = false, activeDay, onSelect }: Prop
                       </div>
                     </div>
                     {isToday && (
-                      <span className="px-1.5 py-0.5 rounded-full bg-terracotta-500 text-cream-50 text-[8px] uppercase tracking-[0.2em] font-bold">
+                      <span className={`px-1.5 py-0.5 rounded-full ${a.dot} text-cream-50 text-[8px] uppercase tracking-[0.2em] font-bold`}>
                         {t("today")}
                       </span>
                     )}

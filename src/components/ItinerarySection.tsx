@@ -2,10 +2,12 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { itinerary } from "../data/itinerary";
+import { getAreaForDay } from "../data/areas";
 import { getCurrentOrUpcomingDayNumber } from "../lib/tripState";
 import { getRememberedChapter, rememberChapter } from "../lib/route";
 import { useT } from "../lib/dict";
 import { useLang } from "../lib/i18n";
+import AreaBand from "./AreaBand";
 import ChapterCard from "./ChapterCard";
 import TripStrip from "./TripStrip";
 
@@ -75,6 +77,7 @@ export default function ItinerarySection() {
   }, [activeDay]);
 
   const handleSelect = (n: number) => scrollToDay(n);
+  const activeArea = getAreaForDay(activeDay);
 
   const goPrev = () => activeDay > 1 && scrollToDay(activeDay - 1);
   const goNext = () => activeDay < days.length && scrollToDay(activeDay + 1);
@@ -98,6 +101,11 @@ export default function ItinerarySection() {
           <div className="max-w-6xl mx-auto">
             <TripStrip compact activeDay={activeDay} onSelect={handleSelect} />
           </div>
+        </div>
+
+        {/* Area band — shows current area name + lodging, tinted by accent */}
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 mt-3">
+          <AreaBand area={activeArea} />
         </div>
 
         {/* Eyebrow — desktop only, gives context */}
