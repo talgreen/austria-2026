@@ -30,8 +30,8 @@ export const DICT = {
   hero_after_lead: { en: "That summer in Austria", he: "אותו קיץ באוסטריה" },
   hero_after_title: { en: "Willkommen zurück", he: "ברוכים השבים" },
   hero_after_sub: {
-    en: "8 — 26 August 2026 · the family edition",
-    he: "8 — 26 באוגוסט 2026 · מהדורת המשפחה"
+    en: "9 — 26 August 2026 · the family edition",
+    he: "9 — 26 באוגוסט 2026 · מהדורת המשפחה"
   },
   hero_close_almost: {
     en: "Gute Reise — almost there",
@@ -51,7 +51,7 @@ export const DICT = {
   },
   hero_today_day: { en: "Day", he: "יום" },
   hero_tomorrow_day: { en: "Tomorrow", he: "מחר" },
-  hero_of_ten: { en: "of nineteen", he: "מתוך תשעה־עשר" },
+  hero_of_ten: { en: "of eighteen", he: "מתוך שמונה־עשר" },
   scroll_to_plan: { en: "the plan", he: "התוכנית" },
   hero_photo_day: { en: "Day {n}", he: "יום {n}" },
 
@@ -78,8 +78,8 @@ export const DICT = {
   /* ---------- Itinerary section ---------- */
   plan_eyebrow: { en: "The plan · day by day", he: "התוכנית · יום אחר יום" },
   plan_kicker: {
-    en: "Swipe through nineteen chapters · click Read more for the full chapter",
-    he: "החליקו בין תשעה־עשר פרקים · לחצו על 'קרא עוד' לפרק המלא"
+    en: "Swipe through eighteen chapters · click Read more for the full chapter",
+    he: "החליקו בין שמונה־עשר פרקים · לחצו על 'קרא עוד' לפרק המלא"
   },
   plan_chapter_x_of_y: {
     en: "Chapter {x} / {y}",

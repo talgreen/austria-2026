@@ -1,7 +1,7 @@
 import type { Day } from "./types";
 
 /**
- * Austria 2026 — 19 day-chapters, 8–26 August. A road loop from Vienna
+ * Austria 2026 — 18 day-chapters, 9–26 August. A road loop from Vienna
  * out to Salzburg, across Tyrol's Zillertal, into the Pinzgau lakes and
  * back to Vienna. Region uses the two-zone model ("north" = Vienna,
  * "south" = the Alps, "transit" = a big moving day). `italianWords`
@@ -12,51 +12,6 @@ import type { Day } from "./types";
 export const itinerary: Day[] = [
   {
     dayNumber: 1,
-    date: "2026-08-08",
-    weekday: "Saturday",
-    region: "north",
-    base: "Vienna",
-    title: "Land in Vienna",
-    subtitle: "Arrive VIE 18:40, transfer to the hotel, sleep off the flight",
-    leadImage: "./images/innere-stadt-stephansplatz.jpg",
-    activities: [
-      {
-        time: "18:40",
-        title: "Land at Vienna Airport (VIE)",
-        description: "Arrival in the evening. Grab the bags, sort the transfer to the hotel, and keep tonight gentle after a long day of flying with the kids.",
-        tag: "family"
-      },
-      {
-        time: "Evening",
-        title: "Settle in, light dinner, early night",
-        description: "A simple dinner near the hotel and an early bedtime. The real Vienna days come at the very end of the trip — tonight is just landing."
-      }
-    ],
-    driveNotes: "No driving today — pick up the rental car tomorrow morning for the run west to Salzburg.",
-    drinkOfTheDay: {
-      name: "Grüner Veltliner",
-      type: "wine",
-      pairing: "A crisp glass of Austria's signature white to toast 'we made it' once the kids are down — peppery, light, exactly right for a tired first night.",
-      servingNote: "Served well-chilled; ask for a 'G'spritzter' (with soda) for an even lighter pour."
-    },
-    gear: [
-      { item: "Comfortable travel layers (the plane is cold, the car will be warm)" },
-      { item: "Snacks & refillable bottles for the evening transfer" },
-      { item: "The baby carrier on top of the bag for the airport walk" }
-    ],
-    dayTips: [
-      "Confirm the rental car + child seats are ready for an early-ish pickup tomorrow",
-      "Sort the digital Vignette (motorway sticker) tonight or confirm the rental has one",
-      "Buy a few breakfast bits — tomorrow (Sunday) the shops are shut"
-    ],
-    italianWords: [
-      { word: "Servus", pronounce: "ZER-voos", meaning: "Hi / bye (the friendly Austrian all-rounder)", example: "Servus! Wie geht's?", exampleMeaning: "Hi! How's it going?" },
-      { word: "Grüß Gott", pronounce: "groos GOTT", meaning: "Hello (the standard Austrian greeting)", example: "Grüß Gott, ein Tisch für fünf bitte.", exampleMeaning: "Hello, a table for five please." },
-      { word: "Danke", pronounce: "DAHN-keh", meaning: "Thank you", example: "Danke schön!", exampleMeaning: "Thank you very much!" }
-    ]
-  },
-  {
-    dayNumber: 2,
     date: "2026-08-09",
     weekday: "Sunday",
     departureTime: "09:30",
@@ -108,7 +63,7 @@ export const itinerary: Day[] = [
     ]
   },
   {
-    dayNumber: 3,
+    dayNumber: 2,
     date: "2026-08-10",
     weekday: "Monday",
     region: "south",
@@ -165,7 +120,7 @@ export const itinerary: Day[] = [
     ]
   },
   {
-    dayNumber: 4,
+    dayNumber: 3,
     date: "2026-08-11",
     weekday: "Tuesday",
     departureTime: "09:30",
@@ -215,7 +170,7 @@ export const itinerary: Day[] = [
     ]
   },
   {
-    dayNumber: 5,
+    dayNumber: 4,
     date: "2026-08-12",
     weekday: "Wednesday",
     region: "south",
@@ -272,7 +227,7 @@ export const itinerary: Day[] = [
     ]
   },
   {
-    dayNumber: 6,
+    dayNumber: 5,
     date: "2026-08-13",
     weekday: "Thursday",
     region: "south",
@@ -325,7 +280,7 @@ export const itinerary: Day[] = [
     ]
   },
   {
-    dayNumber: 7,
+    dayNumber: 6,
     date: "2026-08-14",
     weekday: "Friday",
     region: "south",
@@ -375,7 +330,7 @@ export const itinerary: Day[] = [
     ]
   },
   {
-    dayNumber: 8,
+    dayNumber: 7,
     date: "2026-08-15",
     weekday: "Saturday",
     departureTime: "09:30",
@@ -425,7 +380,7 @@ export const itinerary: Day[] = [
     ]
   },
   {
-    dayNumber: 9,
+    dayNumber: 8,
     date: "2026-08-16",
     weekday: "Sunday",
     region: "south",
@@ -471,7 +426,7 @@ export const itinerary: Day[] = [
     ]
   },
   {
-    dayNumber: 10,
+    dayNumber: 9,
     date: "2026-08-17",
     weekday: "Monday",
     region: "south",
@@ -517,7 +472,7 @@ export const itinerary: Day[] = [
     ]
   },
   {
-    dayNumber: 11,
+    dayNumber: 10,
     date: "2026-08-18",
     weekday: "Tuesday",
     region: "south",
@@ -563,7 +518,7 @@ export const itinerary: Day[] = [
     ]
   },
   {
-    dayNumber: 12,
+    dayNumber: 11,
     date: "2026-08-19",
     weekday: "Wednesday",
     region: "south",
@@ -621,7 +576,7 @@ export const itinerary: Day[] = [
     ]
   },
   {
-    dayNumber: 13,
+    dayNumber: 12,
     date: "2026-08-20",
     weekday: "Thursday",
     departureTime: "10:00",
@@ -675,7 +630,7 @@ export const itinerary: Day[] = [
     ]
   },
   {
-    dayNumber: 14,
+    dayNumber: 13,
     date: "2026-08-21",
     weekday: "Friday",
     region: "south",
@@ -729,7 +684,7 @@ export const itinerary: Day[] = [
     ]
   },
   {
-    dayNumber: 15,
+    dayNumber: 14,
     date: "2026-08-22",
     weekday: "Saturday",
     region: "south",
@@ -786,7 +741,7 @@ export const itinerary: Day[] = [
     ]
   },
   {
-    dayNumber: 16,
+    dayNumber: 15,
     date: "2026-08-23",
     weekday: "Sunday",
     departureTime: "10:00",
@@ -834,7 +789,7 @@ export const itinerary: Day[] = [
     ]
   },
   {
-    dayNumber: 17,
+    dayNumber: 16,
     date: "2026-08-24",
     weekday: "Monday",
     region: "north",
@@ -890,7 +845,7 @@ export const itinerary: Day[] = [
     ]
   },
   {
-    dayNumber: 18,
+    dayNumber: 17,
     date: "2026-08-25",
     weekday: "Tuesday",
     region: "north",
@@ -948,14 +903,14 @@ export const itinerary: Day[] = [
     ]
   },
   {
-    dayNumber: 19,
+    dayNumber: 18,
     date: "2026-08-26",
     weekday: "Wednesday",
-    departureTime: "10:00",
+    departureTime: "07:30",
     region: "transit",
     base: "Vienna → home",
     title: "Fly home",
-    subtitle: "A calm last morning, then the 13:20 flight from VIE",
+    subtitle: "An early start, then the 10:10 flight from VIE",
     leadImage: "./images/innere-stadt-stephansplatz.jpg",
     activities: [
       {
@@ -965,9 +920,9 @@ export const itinerary: Day[] = [
         rideToNext: { duration: "30 min", note: "Vienna → VIE airport" }
       },
       {
-        time: "13:20",
+        time: "10:10",
         title: "Flight home",
-        description: "Wheels up at 13:20. Servus, Österreich — until next time."
+        description: "Wheels up at 10:10. Servus, Österreich — until next time."
       }
     ],
     driveNotes: "Allow plenty of time at the airport with three little ones; return the rental with a full tank if required.",

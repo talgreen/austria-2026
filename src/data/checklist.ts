@@ -10,12 +10,6 @@ export const bookingChecklist: ChecklistItem[] = [
     urgent: true
   },
   {
-    id: "book-vienna-arrival-hotel",
-    text: "Book the Vienna arrival-night hotel (8 Aug)",
-    detail: "A hotel with breakfast near the centre, easy for a late landing and an early car pickup.",
-    urgent: true
-  },
-  {
     id: "rental-car-seats",
     text: "Confirm the rental car + 2 child seats + 1 infant seat",
     detail: "Pickup in Vienna. Make sure the right car seats for two kids and a baby are on the booking, and that the Vignette is sorted (see below).",

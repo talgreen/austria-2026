@@ -33,7 +33,7 @@ export function parseHash(hash: string): Route {
   const chapter = hash.match(/^#chapter\/(\d+)$/);
   if (chapter) {
     const day = parseInt(chapter[1], 10);
-    if (day >= 1 && day <= 19) return { kind: "chapter", day };
+    if (day >= 1 && day <= 18) return { kind: "chapter", day };
   }
   const tab = hash.match(/^#\/?([a-z]+)$/);
   if (tab && isTabKey(tab[1])) return { kind: "tab", tab: tab[1] };
@@ -76,7 +76,7 @@ export function getRememberedChapter(): number | null {
     const v = sessionStorage.getItem(REMEMBERED_KEY);
     if (!v) return null;
     const n = parseInt(v, 10);
-    return n >= 1 && n <= 19 ? n : null;
+    return n >= 1 && n <= 18 ? n : null;
   } catch {
     return null;
   }
