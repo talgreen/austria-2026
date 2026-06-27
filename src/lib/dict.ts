@@ -288,14 +288,14 @@ export const DICT = {
   },
   /* ---------- Stays section ---------- */
   stays_eyebrow: { en: "Where we sleep", he: "איפה נישן" },
-  stays_title: { en: "Six bases, one big loop", he: "שישה בסיסים, לולאה אחת גדולה" },
+  stays_title: { en: "Five bases, one big loop", he: "חמישה בסיסים, לולאה אחת גדולה" },
   stays_kicker: {
     en: "Vienna, Salzburg, Tyrol, the Pinzgau lakes and back",
     he: "וינה, זלצבורג, טירול, אגמי הפינצגאו ובחזרה"
   },
   stays_intro: {
-    en: "The trip is a road loop with six bases — a quick Vienna landing, two nights in Salzburg, four in the Zillertal, five in the Pinzgau lakes, three with friends in Werfenweng, and three more in Vienna to finish.",
-    he: "הטיול הוא לולאת נסיעה עם שישה בסיסים — לילה נחיתה בווינה, שני לילות בזלצבורג, ארבעה בצילרטל, חמישה באגמי הפינצגאו, שלושה עם חברים בוֶרפֶנוֶנג, ועוד שלושה בווינה לסיום."
+    en: "The trip is a road loop with five bases — two nights in Salzburg, four in the Zillertal, five in the Pinzgau lakes, three with friends in Werfenweng, and three more in Vienna to finish.",
+    he: "הטיול הוא לולאת נסיעה עם חמישה בסיסים — שני לילות בזלצבורג, ארבעה בצילרטל, חמישה באגמי הפינצגאו, שלושה עם חברים בוֶרפֶנוֶנג, ועוד שלושה בווינה לסיום."
   },
   stay_check_in: { en: "Check in", he: "צ'ק־אין" },
   stay_check_out: { en: "Check out", he: "צ'ק־אאוט" },
