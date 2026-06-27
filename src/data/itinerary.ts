@@ -14,18 +14,23 @@ export const itinerary: Day[] = [
     dayNumber: 1,
     date: "2026-08-09",
     weekday: "Sunday",
-    departureTime: "09:30",
     region: "transit",
     base: "Salzburg",
-    title: "Drive west to Salzburg",
-    subtitle: "Lunch by a Salzkammergut lake, then the fortress over the old town",
+    title: "Land in Vienna, drive west to Salzburg",
+    subtitle: "Land at VIE 08:45, drive west with a lakeside lunch at Mondsee, then the fortress",
     leadImage: "./images/hohensalzburg-fortress.jpg",
-    rideToFirst: { duration: "3 h 25", note: "Vienna → Salzburg via the A1" },
     activities: [
       {
-        time: "Morning",
-        title: "Pick up the car, drive the A1 toward Salzburg",
-        description: "Roughly 3.5 hours west. Break the drive at Mondsee — it sits right off the A1 with its own exit, a flat lakeside promenade and a beach for a leg-stretch lunch.",
+        time: "08:45",
+        title: "Land at Vienna Airport (VIE)",
+        description: "Touch down at VIE on the morning flight, collect the bags and pick up the rental car. Sort the digital Vignette (motorway sticker) if it isn't included, then point the car west onto the A1.",
+        tag: "family",
+        rideToNext: { duration: "1 h 15", note: "Vienna → Mondsee via the A1", departAt: "10:00" }
+      },
+      {
+        time: "Lunch",
+        title: "Lakeside lunch at Mondsee",
+        description: "Break the drive at Mondsee — it sits right off the A1 with its own exit, a flat lakeside promenade and a beach for a leg-stretch lunch.",
         attractionId: "mondsee",
         tag: "water",
         rideToNext: { duration: "30 min", note: "Mondsee → Salzburg", departAt: "14:00" }
@@ -38,7 +43,7 @@ export const itinerary: Day[] = [
         tag: "view"
       }
     ],
-    driveNotes: "Vienna → Salzburg ≈ 3 h 25 via the A1 (Vignette required). Mondsee is the natural lunch break.",
+    driveNotes: "Land VIE 08:45; on the road by ~10:00. Vienna → Salzburg ≈ 3 h 25 via the A1 (Vignette required), with Mondsee the natural lunch break.",
     restaurants: ["salzburg-sternbraeu"],
     drinkOfTheDay: {
       name: "Stiegl",
@@ -52,6 +57,7 @@ export const itinerary: Day[] = [
       { item: "Sun hats & sunscreen for the fortress courtyards" }
     ],
     dayTips: [
+      "Land 08:45 — clearing the airport and the rental car takes ~1–1.5 h, so realistically on the road by ~10:00",
       "It's Sunday — shops are closed; rely on what you packed plus lakeside restaurants",
       "Stock the apartment Monday morning for the days ahead",
       "Buy the fortress all-inclusive ticket online to skip the funicular queue"
