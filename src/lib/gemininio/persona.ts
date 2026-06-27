@@ -25,12 +25,11 @@ import { formatRecentChatBlock, type ChatTurn } from "./chatHistory";
 /* ------------------------------------------------------------------ */
 
 const TRIP_FACTS = {
-  startDate: "2026-08-08",
+  startDate: "2026-08-09",
   endDate: "2026-08-26",
   travellers: "One family — two parents, two young kids, and a baby",
   cars: "1 rental car (picked up in Vienna; the whole trip is a road loop)",
   bases: [
-    "Vienna (arrival night)",
     "Salzburg",
     "Zillertal, Tyrol",
     "Zell am See / Pinzgau (Habachklause)",
@@ -329,7 +328,7 @@ export function buildSystemPrompt(lang: Lang): string {
     FAMILY_PROFILES,
     "",
     trip,
-    `  - Dates: ${TRIP_FACTS.startDate} to ${TRIP_FACTS.endDate} (19 days, 18 nights)`,
+    `  - Dates: ${TRIP_FACTS.startDate} to ${TRIP_FACTS.endDate} (18 days, 17 nights)`,
     `  - Travellers: ${TRIP_FACTS.travellers}`,
     `  - Wheels: ${TRIP_FACTS.cars}`,
     `  - Bases: ${TRIP_FACTS.bases.join(" + ")}`,

@@ -158,7 +158,7 @@ const AIRPORT_POI: POI = {
   name: "Vienna Airport — VIE",
   category: "airport",
   region: "transit",
-  description: "Vienna International Airport, Schwechat. Arrival 8 Aug 18:40; departure 26 Aug 13:20.",
+  description: "Vienna International Airport, Schwechat. Arrival 9 Aug (morning drive); departure 26 Aug 10:10.",
   shortDescription: "Arrival & departure airport.",
   coords: [48.1103, 16.5697]
 };
@@ -166,7 +166,7 @@ const AIRPORT_POI: POI = {
 const AIRPORT_POI_HE: POI = {
   ...AIRPORT_POI,
   name: "נמל התעופה וינה — VIE",
-  description: "נמל התעופה הבינלאומי של וינה (שווכאט). נחיתה ב־8.8 בשעה 18:40; המראה ב־26.8 בשעה 13:20.",
+  description: "נמל התעופה הבינלאומי של וינה (שווכאט). נסיעה מוינה ב־9.8 בבוקר; המראה ב־26.8 בשעה 10:10.",
   shortDescription: "שדה התעופה — נחיתה והמראה."
 };
 

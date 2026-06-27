@@ -5,9 +5,6 @@ export const checklistHE: Record<string, Partial<Pick<ChecklistItem, "text" | "d
   "book-salzburg-stay": {
     text: "להזמין את הדירה בזלצבורג (9–11 באוג׳)"
   },
-  "book-vienna-arrival-hotel": {
-    text: "להזמין את מלון לילת הנחיתה בוינה (8 באוג׳)"
-  },
   "rental-car-seats": {
     text: "לאשר רכב השכרה + 2 מושבי ילד + מושב תינוק"
   },

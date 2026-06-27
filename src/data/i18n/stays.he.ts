@@ -9,10 +9,6 @@ export const staysHE: Record<
     >
   >
 > = {
-  "stay-vienna-arrival": {
-    name: "וינה — לילת הנחיתה",
-    shortDescription: "לילה אחד ליד מרכז וינה כדי לנחות, לישון ולהתאפס"
-  },
   "stay-salzburg": {
     name: "דירה בזלצבורג",
     shortDescription: "שני לילות בזלצבורג — העיר העתיקה, המצודה וטיולי יום"

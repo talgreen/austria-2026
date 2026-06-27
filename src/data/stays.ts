@@ -9,27 +9,6 @@ import type { Stay } from "./types";
  */
 export const stays: Stay[] = [
   {
-    id: "stay-vienna-arrival",
-    name: "Vienna — arrival night",
-    category: "stay",
-    region: "north",
-    shortDescription: "One night near central Vienna to land, sleep and reset",
-    description:
-      "A single night in Vienna after the evening landing — a hotel with breakfast near the centre, just to sleep off the flight before the morning drive west to Salzburg. (Exact hotel to be booked.)",
-    address: "Vienna, Austria",
-    coords: [48.2082, 16.3738],
-    checkIn: "2026-08-08",
-    checkOut: "2026-08-09",
-    nights: 1,
-    highlights: [
-      "Land VIE 18:40, taxi/transfer straight to the hotel",
-      "Breakfast included, then pick up the rental car for the drive to Salzburg",
-      "Keep it simple — the real Vienna days come at the end of the trip"
-    ],
-    warnings: ["Exact hotel not booked yet — pick one with breakfast and easy car access."],
-    image: "./images/stay-vienna-arrival.jpg"
-  },
-  {
     id: "stay-salzburg",
     name: "Salzburg apartment",
     category: "stay",
@@ -133,7 +112,7 @@ export const stays: Stay[] = [
     highlights: [
       "Central apartment for the Prater, Schönbrunn and the old town",
       "Stroller-friendly city — flat squares, U-Bahn lifts, big parks",
-      "Fly home 26 Aug at 13:20, so the last morning is a calm pack-and-go"
+      "Fly home 26 Aug at 10:10, so the last morning is an early start and pack-and-go"
     ],
     image: "./images/stay-vienna.jpg"
   }

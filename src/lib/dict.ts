@@ -30,8 +30,8 @@ export const DICT = {
   hero_after_lead: { en: "That summer in Austria", he: "אותו קיץ באוסטריה" },
   hero_after_title: { en: "Willkommen zurück", he: "ברוכים השבים" },
   hero_after_sub: {
-    en: "8 — 26 August 2026 · the family edition",
-    he: "8 — 26 באוגוסט 2026 · מהדורת המשפחה"
+    en: "9 — 26 August 2026 · the family edition",
+    he: "9 — 26 באוגוסט 2026 · מהדורת המשפחה"
   },
   hero_close_almost: {
     en: "Gute Reise — almost there",
@@ -51,7 +51,7 @@ export const DICT = {
   },
   hero_today_day: { en: "Day", he: "יום" },
   hero_tomorrow_day: { en: "Tomorrow", he: "מחר" },
-  hero_of_ten: { en: "of nineteen", he: "מתוך תשעה־עשר" },
+  hero_of_ten: { en: "of eighteen", he: "מתוך שמונה־עשר" },
   scroll_to_plan: { en: "the plan", he: "התוכנית" },
   hero_photo_day: { en: "Day {n}", he: "יום {n}" },
 
@@ -78,8 +78,8 @@ export const DICT = {
   /* ---------- Itinerary section ---------- */
   plan_eyebrow: { en: "The plan · day by day", he: "התוכנית · יום אחר יום" },
   plan_kicker: {
-    en: "Swipe through nineteen chapters · click Read more for the full chapter",
-    he: "החליקו בין תשעה־עשר פרקים · לחצו על 'קרא עוד' לפרק המלא"
+    en: "Swipe through eighteen chapters · click Read more for the full chapter",
+    he: "החליקו בין שמונה־עשר פרקים · לחצו על 'קרא עוד' לפרק המלא"
   },
   plan_chapter_x_of_y: {
     en: "Chapter {x} / {y}",
@@ -288,14 +288,14 @@ export const DICT = {
   },
   /* ---------- Stays section ---------- */
   stays_eyebrow: { en: "Where we sleep", he: "איפה נישן" },
-  stays_title: { en: "Six bases, one big loop", he: "שישה בסיסים, לולאה אחת גדולה" },
+  stays_title: { en: "Five bases, one big loop", he: "חמישה בסיסים, לולאה אחת גדולה" },
   stays_kicker: {
     en: "Vienna, Salzburg, Tyrol, the Pinzgau lakes and back",
     he: "וינה, זלצבורג, טירול, אגמי הפינצגאו ובחזרה"
   },
   stays_intro: {
-    en: "The trip is a road loop with six bases — a quick Vienna landing, two nights in Salzburg, four in the Zillertal, five in the Pinzgau lakes, three with friends in Werfenweng, and three more in Vienna to finish.",
-    he: "הטיול הוא לולאת נסיעה עם שישה בסיסים — לילה נחיתה בווינה, שני לילות בזלצבורג, ארבעה בצילרטל, חמישה באגמי הפינצגאו, שלושה עם חברים בוֶרפֶנוֶנג, ועוד שלושה בווינה לסיום."
+    en: "The trip is a road loop with five bases — two nights in Salzburg, four in the Zillertal, five in the Pinzgau lakes, three with friends in Werfenweng, and three more in Vienna to finish.",
+    he: "הטיול הוא לולאת נסיעה עם חמישה בסיסים — שני לילות בזלצבורג, ארבעה בצילרטל, חמישה באגמי הפינצגאו, שלושה עם חברים בוֶרפֶנוֶנג, ועוד שלושה בווינה לסיום."
   },
   stay_check_in: { en: "Check in", he: "צ'ק־אין" },
   stay_check_out: { en: "Check out", he: "צ'ק־אאוט" },

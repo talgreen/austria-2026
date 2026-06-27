@@ -23,21 +23,10 @@ export interface Area {
 
 export const areas: Area[] = [
   {
-    id: "vienna-arrival",
-    name: { en: "Vienna — arrival", he: "וינה — נחיתה" },
-    shortName: { en: "Vienna", he: "וינה" },
-    dayNumbers: [1],
-    startDate: "2026-08-08",
-    endDate: "2026-08-09",
-    nights: 1,
-    stayId: "stay-vienna-arrival",
-    accent: "terracotta"
-  },
-  {
     id: "salzburg",
     name: { en: "Salzburg", he: "זלצבורג" },
     shortName: { en: "Salzburg", he: "זלצבורג" },
-    dayNumbers: [2, 3],
+    dayNumbers: [1, 2],
     startDate: "2026-08-09",
     endDate: "2026-08-11",
     nights: 2,
@@ -48,7 +37,7 @@ export const areas: Area[] = [
     id: "tyrol",
     name: { en: "Tyrol · Zillertal", he: "טירול · צילרטל" },
     shortName: { en: "Tyrol", he: "טירול" },
-    dayNumbers: [4, 5, 6, 7],
+    dayNumbers: [3, 4, 5, 6],
     startDate: "2026-08-11",
     endDate: "2026-08-15",
     nights: 4,
@@ -59,7 +48,7 @@ export const areas: Area[] = [
     id: "zell",
     name: { en: "Zell am See · Pinzgau", he: "צל אם זה · פינצגאו" },
     shortName: { en: "Zell am See", he: "צל אם זה" },
-    dayNumbers: [8, 9, 10, 11, 12],
+    dayNumbers: [7, 8, 9, 10, 11],
     startDate: "2026-08-15",
     endDate: "2026-08-20",
     nights: 5,
@@ -70,7 +59,7 @@ export const areas: Area[] = [
     id: "werfenweng",
     name: { en: "Werfenweng", he: "וורפנונג" },
     shortName: { en: "Werfenweng", he: "וורפנונג" },
-    dayNumbers: [13, 14, 15],
+    dayNumbers: [12, 13, 14],
     startDate: "2026-08-20",
     endDate: "2026-08-23",
     nights: 3,
@@ -81,7 +70,7 @@ export const areas: Area[] = [
     id: "vienna-finale",
     name: { en: "Vienna — finale", he: "וינה — סיום" },
     shortName: { en: "Vienna", he: "וינה" },
-    dayNumbers: [16, 17, 18, 19],
+    dayNumbers: [15, 16, 17, 18],
     startDate: "2026-08-23",
     endDate: "2026-08-26",
     nights: 3,
@@ -92,7 +81,7 @@ export const areas: Area[] = [
 
 export function getAreaForDay(dayNumber: number): Area {
   const found = areas.find(a => a.dayNumbers.includes(dayNumber));
-  // Day numbers 1..19 are all covered; fall back to the first area defensively.
+  // Day numbers 1..18 are all covered; fall back to the first area defensively.
   return found ?? areas[0];
 }
 

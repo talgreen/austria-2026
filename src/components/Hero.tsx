@@ -35,70 +35,70 @@ const HERO_PHOTOS: HeroPhoto[] = [
     place: "Hallstatt · the lakeside village",
     credit: "C.Stadler/Bwag · CC BY-SA 4.0",
     source: "https://commons.wikimedia.org/wiki/File:Hallstatt_-_Zentrum_.JPG",
-    dayNumber: 14
+    dayNumber: 13
   },
   {
     src: "./images/vorderer-gosausee.jpg",
     place: "Vorderer Gosausee · Dachstein mirror",
     credit: "Tigerente · CC BY-SA 3.0",
     source: "https://commons.wikimedia.org/wiki/File:Gosauseen20100912.jpg",
-    dayNumber: 13
+    dayNumber: 12
   },
   {
     src: "./images/achensee-schifffahrt.jpg",
     place: "Achensee · the turquoise lake",
     credit: "Friedrich Böhringer · CC BY-SA 2.5",
     source: "https://commons.wikimedia.org/wiki/File:Achensee_Pertisau.JPG",
-    dayNumber: 7
+    dayNumber: 6
   },
   {
     src: "./images/krimml-waterfalls.jpg",
     place: "Krimml Waterfalls · Europe's tallest",
     credit: "Adrian Pingstone · Public domain",
     source: "https://commons.wikimedia.org/wiki/File:Austrian.waterfall.at.krimml.arp.jpg",
-    dayNumber: 8
+    dayNumber: 7
   },
   {
     src: "./images/zell-am-see-strandbad-promenade.jpg",
     place: "Zell am See · the lakefront",
     credit: "Steffs88 · CC BY-SA 4.0",
     source: "https://commons.wikimedia.org/wiki/File:Seepromenade_Zell_am_See_(AUT).JPG",
-    dayNumber: 12
+    dayNumber: 11
   },
   {
     src: "./images/kitzsteinhorn.jpg",
     place: "Kitzsteinhorn · the glacier",
     credit: "Spiderfox · CC BY 3.0",
     source: "https://commons.wikimedia.org/wiki/File:Kitzsteinhorn3.jpg",
-    dayNumber: 12
+    dayNumber: 11
   },
   {
     src: "./images/hohensalzburg-fortress.jpg",
     place: "Hohensalzburg · over Salzburg",
     credit: "C.Stadler/Bwag · CC BY-SA 4.0",
     source: "https://commons.wikimedia.org/wiki/File:Salzburg_-_Festung_Hohensalzburg.JPG",
-    dayNumber: 2
+    dayNumber: 1
   },
   {
     src: "./images/swarovski-kristallwelten.jpg",
     place: "Swarovski Kristallwelten · Wattens",
     credit: "Marek Śliwecki · CC BY-SA 4.0",
     source: "https://commons.wikimedia.org/wiki/File:Wattens_-_Swarovski_Kristallwelten.jpg",
-    dayNumber: 5
+    dayNumber: 4
   },
   {
     src: "./images/schoenbrunn-palace.jpg",
     place: "Schönbrunn Palace · Vienna",
     credit: "Thomas Wolf · CC BY-SA 3.0 DE",
     source: "https://commons.wikimedia.org/wiki/File:Schloss_Sch%C3%B6nbrunn_Wien_2014_(Zuschnitt_2).jpg",
-    dayNumber: 18
+    dayNumber: 17
   },
   {
     src: "./images/wiener-riesenrad.jpg",
     place: "Wiener Riesenrad · the Prater",
     credit: "Thomas Ledl · CC BY-SA 4.0",
     source: "https://commons.wikimedia.org/wiki/File:Wien_Riesenrad.jpg",
-    dayNumber: 17
+    dayNumber: 16
   }
 ];
 

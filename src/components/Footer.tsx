@@ -25,7 +25,7 @@ export default function Footer() {
             <span className="font-serif">{t("brand_short")}</span>
             <span className="font-serif italic text-terracotta-600">{t("brand_year")}</span>
             <span aria-hidden>·</span>
-            <span>{lang === "he" ? "17 — 26 באוגוסט 2026" : "17 — 26 August 2026"}</span>
+            <span>{lang === "he" ? "9 — 26 באוגוסט 2026" : "9 — 26 August 2026"}</span>
             <span aria-hidden>·</span>
             <span className="inline-flex items-center gap-1">
               {lang === "he" ? "נבנה ב" : "built with"}{" "}
