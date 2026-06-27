@@ -299,7 +299,7 @@ export default function MapView({ registerFocus }: Props) {
   const localizedPOIs = useMemo(
     () =>
       allPOIs.map(p => {
-        if (p.id === "fco") return lang === "he" ? AIRPORT_POI_HE : p;
+        if (p.id === "vie") return lang === "he" ? AIRPORT_POI_HE : p;
         return localizePoi(p);
       }),
     [allPOIs, localizePoi, lang]
@@ -532,7 +532,7 @@ export default function MapView({ registerFocus }: Props) {
           className="h-[70svh] sm:h-[600px] w-full"
         >
           {/* CartoDB Voyager — warm, editorial off-cream tiles that pair
-              nicely with the Tuscan palette. Free for low-traffic personal
+              nicely with the Austrian palette. Free for low-traffic personal
               use, no API key required (Stadia's Stamen Watercolor blocks
               non-localhost without an account, which is why we moved off it). */}
           <TileLayer

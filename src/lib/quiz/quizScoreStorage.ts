@@ -10,7 +10,7 @@
 
 import type { Lang } from "../lang";
 
-const KEY_PREFIX = "tuscany2026.quiz.lastScore.v1";
+const KEY_PREFIX = "austria2026.quiz.lastScore.v1";
 
 export interface LastScore {
   score: number;

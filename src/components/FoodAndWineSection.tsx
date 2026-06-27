@@ -23,7 +23,7 @@ import type { DishCategory } from "../data/types";
 type RegionFilter = "north" | "south" | "austria";
 
 const REGION_TABS: { id: RegionFilter; key: DictKey }[] = [
-  { id: "austria", key: "food_filter_tuscany" },
+  { id: "austria", key: "food_filter_austria" },
   { id: "north", key: "food_filter_north" },
   { id: "south", key: "food_filter_south" }
 ];
@@ -147,9 +147,9 @@ export default function FoodAndWineSection() {
                       <h4 className="font-serif text-[20px] sm:text-[22px] text-ink-900 leading-tight">
                         {dish.name}
                       </h4>
-                      {dish.italianName && (
+                      {dish.germanName && (
                         <div className="mt-0.5 font-serif italic text-terracotta-700/85 text-[13.5px]">
-                          {dish.italianName}
+                          {dish.germanName}
                         </div>
                       )}
                       <p className="mt-2.5 text-[13.5px] sm:text-[14.5px] text-ink-700/85 leading-relaxed">

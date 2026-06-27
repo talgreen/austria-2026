@@ -55,7 +55,7 @@ import PoiImage from "./PoiImage";
 import PhotoCredit from "./PhotoCredit";
 import MiniMap from "./MiniMap";
 import ListenButton from "./ListenButton";
-import ItalianWordCarousel from "./ItalianWordCarousel";
+import GermanWordCarousel from "./GermanWordCarousel";
 import { useCarouselSwipe } from "../lib/useCarouselSwipe";
 
 const ROMAN = ["", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X"];
@@ -82,8 +82,8 @@ const REGION_KEY: Record<string, DictKey> = {
  *
  *  Source-of-truth waterfall:
  *   1. If the data sets `activity.optional` explicitly (true OR false), honor
- *      it — that's the curator's intent (e.g. Day 9's Civita is the headline,
- *      so it sets optional:false to opt OUT of the auto-rule).
+ *      it — that's the curator's intent (e.g. a day's must-do headline stop
+ *      sets optional:false to opt OUT of the auto-rule).
  *   2. Otherwise apply a rule of thumb: a day full of multi-hour stops can
  *      realistically only fit ~2 of them with drives in between. So once a
  *      day has more than 2 activities tied to a real attraction (anything
@@ -399,7 +399,7 @@ function ChapterDetailContent({ day }: { day: Day }) {
   const heroSlideMeta =
     currentSlide ??
     ({ place: undefined, credit: lead.credit } as Pick<ChapterSlide, "place" | "credit">);
-  const italianWords = localDay.italianWords ?? [];
+  const germanWords = localDay.germanWords ?? [];
   const tips = tipsForDay(day.dayNumber).map(localizeTip);
 
   // POIs visited this day, in order, localized
@@ -623,10 +623,10 @@ function ChapterDetailContent({ day }: { day: Day }) {
           {/* Where you sleep — area lodging band */}
           <WhereYouSleep area={area} variant="band" />
 
-          {/* Italian words (carousel) — three themed flashcards per day;
+          {/* German words (carousel) — three themed flashcards per day;
               audio is on the pronunciation chip; progress is remembered. */}
-          {italianWords.length > 0 && (
-            <ItalianWordCarousel dayNumber={day.dayNumber} words={italianWords} />
+          {germanWords.length > 0 && (
+            <GermanWordCarousel dayNumber={day.dayNumber} words={germanWords} />
           )}
 
           {/* Activities */}
@@ -852,7 +852,7 @@ function ChapterDetailContent({ day }: { day: Day }) {
 
           {/* Drink of the day — closing flourish, the literal end of the
               chapter (after all the practical info). Adults-only nightcap
-              suggestion that mirrors the Italian word card opening. */}
+              suggestion that mirrors the German word card opening. */}
           {localDay.drinkOfTheDay && (
             <DrinkOfTheDay drink={localDay.drinkOfTheDay} />
           )}
@@ -1084,7 +1084,7 @@ function ActivityRow({
                   <p className="mt-2 text-[13.5px] sm:text-[14.5px] text-ink-700/85 leading-relaxed">
                     {att.description}
                   </p>
-                  {/* Italian-accented narration of the description.
+                  {/* German-accented narration of the description.
                       Audio is pre-generated as a static asset, so no
                       runtime API key or call is needed. */}
                   <div className="mt-3">
@@ -1241,9 +1241,9 @@ function RestaurantsForDay({ restaurants }: { restaurants: Service[] }) {
 
 /* ---------- Drink of the day ---------- */
 
-/* The closing flourish — visually echoes the Italian word card opener but
+/* The closing flourish — visually echoes the German word card opener but
  * with a per-drink palette and a wine/cocktail/etc. icon. Keeps the
- * proper Italian name as a serif headline; the prose underneath gets
+ * proper German name as a serif headline; the prose underneath gets
  * translated. Adults-only — that part is the kicker copy. */
 function DrinkOfTheDay({ drink }: { drink: DayDrink }) {
   const t = useT();
@@ -1256,7 +1256,7 @@ function DrinkOfTheDay({ drink }: { drink: DayDrink }) {
         className={`relative overflow-hidden rounded-3xl bg-gradient-to-br ${style.gradient} ring-1 ring-cream-300/70 shadow-[0_18px_50px_-30px_rgba(151,109,76,0.45)]`}
       >
         {/* Oversized decorative glass icon in the corner, mirroring the
-            quote glyph on the Italian word card. RTL flips it so it
+            quote glyph on the German word card. RTL flips it so it
             still reads as a "watermark" on the trailing edge. */}
         <Icon
           size={140}

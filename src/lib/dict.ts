@@ -58,8 +58,8 @@ export const DICT = {
   /* ---------- Navbar ---------- */
   nav_plan: { en: "Plan", he: "תוכנית" },
   nav_map: { en: "Map", he: "מפה" },
-  // The two stays — Larciano & Cortevecchia — are the trip's two
-  // "neighborhoods", which is what we surface in the nav.
+  // The stays are the trip's bases (Vienna, Salzburg, the Alps) —
+  // the trip's "neighborhoods", which is what we surface in the nav.
   nav_stays: { en: "Stays", he: "לינות" },
   nav_attractions: { en: "Places", he: "מקומות" },
   // Services (gas / supermarket / nearby restaurants) is no longer in
@@ -443,7 +443,7 @@ export const DICT = {
   food_wineries_label: { en: "Drinks", he: "משקאות" },
   food_filter_north: { en: "Vienna", he: "וינה" },
   food_filter_south: { en: "The Alps", he: "האלפים" },
-  food_filter_tuscany: { en: "All Austria", he: "כל אוסטריה" },
+  food_filter_austria: { en: "All Austria", he: "כל אוסטריה" },
   food_try_it: { en: "Try it at", he: "לטעום ב" },
   food_appellation: { en: "Appellation", he: "ייעוד יין" },
   food_book_visit: { en: "Book the visit", he: "הזמן ביקור" },
@@ -574,8 +574,8 @@ export const DICT = {
     he: "הקישו על \u05F4הוסף\u05F4 בפינה העליונה"
   },
   install_step_confirm_hint: {
-    en: "The Tuscany icon lands on your home screen",
-    he: "הסמל של טוסקנה מופיע במסך הבית"
+    en: "The Austria icon lands on your home screen",
+    he: "הסמל של אוסטריה מופיע במסך הבית"
   },
 
   /* iOS – not Safari (Chrome / Firefox / Edge on iOS) */

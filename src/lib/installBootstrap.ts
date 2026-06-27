@@ -5,7 +5,7 @@
  */
 
 /** Non-colliding global key consumed by `install.ts` after mount */
-export const DEFERRED_BIP_GLOBAL = "__tuscanyDeferredBip";
+export const DEFERRED_BIP_GLOBAL = "__austriaDeferredBip";
 
 interface BeforeInstallPromptEvent extends Event {
   readonly platforms: string[];
@@ -29,7 +29,7 @@ export function bootstrapInstallPromptCapture(): void {
     (e: Event) => {
       e.preventDefault();
       setDeferredBip(e as BeforeInstallPromptEvent);
-      window.dispatchEvent(new Event("tuscany:bip-deferred-ready"));
+      window.dispatchEvent(new Event("austria:bip-deferred-ready"));
     },
     { passive: false }
   );

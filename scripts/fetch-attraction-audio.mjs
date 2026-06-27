@@ -1,4 +1,4 @@
-// One-shot script: pre-generate Italian-accented English narration for
+// One-shot script: pre-generate German-accented English narration for
 // each attraction's description using ElevenLabs TTS, and save the
 // resulting MP3s into public/audio/attractions/<id>.mp3.
 //
@@ -36,10 +36,10 @@ const OUT_DIR = resolve(REPO_ROOT, "public", "audio", "attractions");
 /* Voice + model config                                                */
 /* ------------------------------------------------------------------ */
 
-/** "Paolo - Dynamic Italian Radio Voice" — public ElevenLabs library
- *  voice. Native Italian speaker, warm broadcast tone. We use the
+/** "Paolo - Dynamic German Radio Voice" — public ElevenLabs library
+ *  voice. Native German speaker, warm broadcast tone. We use the
  *  multilingual_v2 model so the voice can speak English text while
- *  carrying its native Italian accent — exactly the "Italian tour
+ *  carrying its native German accent — exactly the "German tour
  *  guide who speaks English" effect we want for Gemininio. */
 const VOICE_ID = "mcMi8FJDhg35bMpWHv2R";
 const MODEL_ID = "eleven_multilingual_v2";

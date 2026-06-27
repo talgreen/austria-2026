@@ -44,7 +44,7 @@ function startOfDayLocal(d: Date): Date {
  *  done — dinner is starting, the family is winding down — so the hero
  *  flips from "Today" to "Tomorrow" so you wake up to the next chapter
  *  already on screen. The local hour matches what the family experiences
- *  on the ground (in Italy during the trip; "before"/"after" never use
+ *  on the ground (in Austria during the trip; "before"/"after" never use
  *  this anyway). */
 function isAfterEveningCutoff(now: Date): boolean {
   return now.getHours() >= 20;

@@ -1,7 +1,7 @@
 /**
  * One-shot Gemini `generateContent`. Optionally attaches the Google
  * Search tool — only the REST path supports that; Gemini Live cannot
- * use the same tool bundle, which is why "Italian voice" and "web search"
+ * use the same tool bundle, which is why "German voice" and "web search"
  * are separate actions in the UI.
  *
  * Docs: https://ai.google.dev/gemini-api/docs/google-search

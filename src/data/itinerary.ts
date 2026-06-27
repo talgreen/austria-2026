@@ -4,7 +4,7 @@ import type { Day } from "./types";
  * Austria 2026 — 18 day-chapters, 9–26 August. A road loop from Vienna
  * out to Salzburg, across Tyrol's Zillertal, into the Pinzgau lakes and
  * back to Vienna. Region uses the two-zone model ("north" = Vienna,
- * "south" = the Alps, "transit" = a big moving day). `italianWords`
+ * "south" = the Alps, "transit" = a big moving day). `germanWords`
  * carries the German word-of-the-day (the field name is a leftover from
  * the shell; the content is German). Activity `attractionId`s link to
  * attractions.ts so the map and hero photos stay in sync.
@@ -56,7 +56,7 @@ export const itinerary: Day[] = [
       "Stock the apartment Monday morning for the days ahead",
       "Buy the fortress all-inclusive ticket online to skip the funicular queue"
     ],
-    italianWords: [
+    germanWords: [
       { word: "der See", pronounce: "dair ZAY", meaning: "the lake", example: "Der See ist so blau!", exampleMeaning: "The lake is so blue!" },
       { word: "die Burg", pronounce: "dee BOORG", meaning: "the castle / fortress", example: "Die Burg ist hoch oben.", exampleMeaning: "The fortress is high up." },
       { word: "Eis", pronounce: "ICE", meaning: "ice cream", example: "Ein Eis, bitte!", exampleMeaning: "An ice cream, please!" }
@@ -100,7 +100,7 @@ export const itinerary: Day[] = [
     drinkOfTheDay: {
       name: "Hugo Spritz",
       type: "aperitif",
-      pairing: "Elderflower, prosecco, mint and soda — light and floral, the perfect early-evening sip on an old-town terrace while the kids finish their gelato.",
+      pairing: "Elderflower, Sekt, mint and soda — light and floral, the perfect early-evening sip on an old-town terrace while the kids finish their ice cream.",
       servingNote: "Tall glass over ice with a sprig of mint and a lime wheel."
     },
     gear: [
@@ -113,7 +113,7 @@ export const itinerary: Day[] = [
       "Park outside the old-town core and walk in to Getreidegasse",
       "The Mirabell gardens are free — a good budget afternoon"
     ],
-    italianWords: [
+    germanWords: [
       { word: "die Gasse", pronounce: "dee GAH-seh", meaning: "the lane / alley", example: "Eine schöne Gasse.", exampleMeaning: "A pretty lane." },
       { word: "der Garten", pronounce: "dair GAR-ten", meaning: "the garden", example: "Der Garten ist gratis.", exampleMeaning: "The garden is free." },
       { word: "schön", pronounce: "shurn", meaning: "beautiful / nice", example: "Wie schön!", exampleMeaning: "How lovely!" }
@@ -163,7 +163,7 @@ export const itinerary: Day[] = [
       "MPREIS Mayrhofen is the main re-stock; it shuts Sundays",
       "Tomorrow's steam train runs Tue–Thu — plan around Thursday"
     ],
-    italianWords: [
+    germanWords: [
       { word: "der Berg", pronounce: "dair BAIRG", meaning: "the mountain", example: "Auf den Berg, hinauf!", exampleMeaning: "Up the mountain we go!" },
       { word: "die Seilbahn", pronounce: "dee ZILE-bahn", meaning: "the cable car", example: "Wir fahren mit der Seilbahn.", exampleMeaning: "We're taking the cable car." },
       { word: "der Drache", pronounce: "dair DRAH-kheh", meaning: "the dragon", example: "Wo ist der Drache?", exampleMeaning: "Where is the dragon?" }
@@ -220,7 +220,7 @@ export const itinerary: Day[] = [
       "The Kirchberg pool is heated — warmer than any alpine lake",
       "Free parking at Swarovski"
     ],
-    italianWords: [
+    germanWords: [
       { word: "der Kristall", pronounce: "dair kris-TAHL", meaning: "the crystal", example: "So viele Kristalle!", exampleMeaning: "So many crystals!" },
       { word: "das Wasser", pronounce: "dass VAH-ser", meaning: "the water", example: "Das Wasser ist warm.", exampleMeaning: "The water is warm." },
       { word: "baden", pronounce: "BAH-den", meaning: "to swim / bathe", example: "Gehen wir baden!", exampleMeaning: "Let's go for a swim!" }
@@ -273,7 +273,7 @@ export const itinerary: Day[] = [
       "Reserve heritage-coach seats ahead for August",
       "Sit a row back from the open windows with the baby"
     ],
-    italianWords: [
+    germanWords: [
       { word: "der Zug", pronounce: "dair TSOOK", meaning: "the train", example: "Der Zug fährt um 10:44.", exampleMeaning: "The train leaves at 10:44." },
       { word: "der Dampf", pronounce: "dair DAHMPF", meaning: "the steam", example: "So viel Dampf!", exampleMeaning: "So much steam!" },
       { word: "schnell", pronounce: "shnell", meaning: "fast", example: "Nicht so schnell!", exampleMeaning: "Not so fast!" }
@@ -323,7 +323,7 @@ export const itinerary: Day[] = [
       "The short Pertisau→Seespitz hop is the right length for young kids",
       "Pack up tonight — tomorrow you move bases"
     ],
-    italianWords: [
+    germanWords: [
       { word: "der Käse", pronounce: "dair KAY-zeh", meaning: "the cheese", example: "Frischer Käse!", exampleMeaning: "Fresh cheese!" },
       { word: "die Kuh", pronounce: "dee KOO", meaning: "the cow", example: "Schau, eine Kuh!", exampleMeaning: "Look, a cow!" },
       { word: "das Boot", pronounce: "dass BOAT", meaning: "the boat", example: "Wir fahren mit dem Boot.", exampleMeaning: "We're going by boat." }
@@ -373,7 +373,7 @@ export const itinerary: Day[] = [
       "Krimml's lowest viewpoint is the realistic turnaround with little ones",
       "Five nights at Habachklause — the comfortable heart of the trip"
     ],
-    italianWords: [
+    germanWords: [
       { word: "der Wasserfall", pronounce: "dair VAH-ser-fahl", meaning: "the waterfall", example: "Der höchste Wasserfall!", exampleMeaning: "The tallest waterfall!" },
       { word: "hoch", pronounce: "hohkh", meaning: "high / tall", example: "So hoch!", exampleMeaning: "So high!" },
       { word: "der Bauernhof", pronounce: "dair BOW-ern-hofe", meaning: "the farm", example: "Tiere am Bauernhof.", exampleMeaning: "Animals on the farm." }
@@ -419,7 +419,7 @@ export const itinerary: Day[] = [
       "Half-board means dinner's handled; just show up",
       "Tomorrow ramps back up with the family mountain"
     ],
-    italianWords: [
+    germanWords: [
       { word: "die Pause", pronounce: "dee POW-zeh", meaning: "a break / rest", example: "Wir machen Pause.", exampleMeaning: "We're taking a break." },
       { word: "müde", pronounce: "MUE-deh", meaning: "tired", example: "Ich bin müde.", exampleMeaning: "I'm tired." },
       { word: "der Kaffee", pronounce: "dair KAH-feh", meaning: "the coffee", example: "Einen Kaffee, bitte.", exampleMeaning: "A coffee, please." }
@@ -450,10 +450,10 @@ export const itinerary: Day[] = [
     ],
     restaurants: ["kaprun-dorfkrug"],
     drinkOfTheDay: {
-      name: "Aperol Spritz",
+      name: "Sommerspritzer",
       type: "aperitif",
-      pairing: "A bittersweet orange spritz on the terrace as the kids burn off the last energy — low and fizzy, the classic mountain sundowner.",
-      servingNote: "Tall glass over ice, orange wheel."
+      pairing: "A crisp white-wine spritzer on the terrace as the kids burn off the last energy — light and fizzy, the classic Austrian mountain sundowner.",
+      servingNote: "Tall glass over ice, lemon wheel."
     },
     gear: [
       { item: "Carrier for the Feuertaufe adventure trail", for: "schmittenhoehe" },
@@ -465,7 +465,7 @@ export const itinerary: Day[] = [
       "Skip the over-6s 'Rocket Bike' with little ones",
       "The trail is a mountain circuit, not stroller terrain — carry the baby"
     ],
-    italianWords: [
+    germanWords: [
       { word: "der Gipfel", pronounce: "dair GIP-fel", meaning: "the summit / peak", example: "Wir sind am Gipfel!", exampleMeaning: "We're at the summit!" },
       { word: "die Aussicht", pronounce: "dee OWS-zikht", meaning: "the view", example: "Was für eine Aussicht!", exampleMeaning: "What a view!" },
       { word: "spielen", pronounce: "SHPEE-len", meaning: "to play", example: "Die Kinder spielen.", exampleMeaning: "The children are playing." }
@@ -511,7 +511,7 @@ export const itinerary: Day[] = [
       "Free parking; on-site restaurant at ~1,150 m",
       "The Großglockner road toll is separate from the Vignette"
     ],
-    italianWords: [
+    germanWords: [
       { word: "der Bär", pronounce: "dair BAIR", meaning: "the bear", example: "Schau, ein Bär!", exampleMeaning: "Look, a bear!" },
       { word: "der Wolf", pronounce: "dair VOLF", meaning: "the wolf", example: "Der Wolf schläft.", exampleMeaning: "The wolf is sleeping." },
       { word: "das Tier", pronounce: "dass TEER", meaning: "the animal", example: "So viele Tiere!", exampleMeaning: "So many animals!" }
@@ -569,7 +569,7 @@ export const itinerary: Day[] = [
       "Maisi Flitzer: solo from age 8/1.25 m, no under-3s at all",
       "Picnic at the Klammsee playground at the top of the gorge"
     ],
-    italianWords: [
+    germanWords: [
       { word: "die Klamm", pronounce: "dee KLAHM", meaning: "the gorge / ravine", example: "Durch die Klamm.", exampleMeaning: "Through the gorge." },
       { word: "kalt", pronounce: "kahlt", meaning: "cold", example: "Das Wasser ist kalt!", exampleMeaning: "The water is cold!" },
       { word: "der Schnee", pronounce: "dair SHNAY", meaning: "the snow", example: "Schnee im August!", exampleMeaning: "Snow in August!" }
@@ -611,7 +611,7 @@ export const itinerary: Day[] = [
     drinkOfTheDay: {
       name: "Hugo Spritz",
       type: "aperitif",
-      pairing: "A relaxed reunion drink with friends on arrival — elderflower, prosecco and mint, light enough to keep the evening easy.",
+      pairing: "A relaxed reunion drink with friends on arrival — elderflower, Sekt and mint, light enough to keep the evening easy.",
       servingNote: "Over ice with mint and lime."
     },
     gear: [
@@ -623,7 +623,7 @@ export const itinerary: Day[] = [
       "Coordinate the next two days' outings with the friends",
       "It's a short drive day; keep it light"
     ],
-    italianWords: [
+    germanWords: [
       { word: "die Freunde", pronounce: "dee FROYN-deh", meaning: "the friends", example: "Unsere Freunde sind da!", exampleMeaning: "Our friends are here!" },
       { word: "zusammen", pronounce: "tsoo-ZAH-men", meaning: "together", example: "Alle zusammen!", exampleMeaning: "All together!" },
       { word: "der Spielplatz", pronounce: "dair SHPEEL-plahts", meaning: "the playground", example: "Zum Spielplatz!", exampleMeaning: "To the playground!" }
@@ -677,7 +677,7 @@ export const itinerary: Day[] = [
       "If you do Hallstatt, go before 10:00 or after 16:00",
       "No under-3s on the coaster — one parent stays with the baby at the play park"
     ],
-    italianWords: [
+    germanWords: [
       { word: "das Dorf", pronounce: "dass DORF", meaning: "the village", example: "Ein schönes Dorf.", exampleMeaning: "A pretty village." },
       { word: "schnell fahren", pronounce: "shnell FAH-ren", meaning: "to go fast", example: "Wir fahren schnell!", exampleMeaning: "We're going fast!" },
       { word: "der Schwan", pronounce: "dair SHVAHN", meaning: "the swan", example: "Schwäne am See.", exampleMeaning: "Swans on the lake." }
@@ -734,7 +734,7 @@ export const itinerary: Day[] = [
       "With young kids the salt mine is the gentler underground pick over the ice cave",
       "Book the salt-mine tour slot ahead for August"
     ],
-    italianWords: [
+    germanWords: [
       { word: "der Adler", pronounce: "dair AH-dler", meaning: "the eagle", example: "Der Adler fliegt!", exampleMeaning: "The eagle is flying!" },
       { word: "das Salz", pronounce: "dass ZAHLTS", meaning: "the salt", example: "Das Salz aus dem Berg.", exampleMeaning: "The salt from the mountain." },
       { word: "das Eis", pronounce: "dass ICE", meaning: "the ice (also: ice cream)", example: "Eis im Berg!", exampleMeaning: "Ice inside the mountain!" }
@@ -782,7 +782,7 @@ export const itinerary: Day[] = [
       "Luftburg in the Prater is the easiest first-night dinner with kids",
       "The Vienna apartment is your base for the final three nights"
     ],
-    italianWords: [
+    germanWords: [
       { word: "die Stadt", pronounce: "dee SHTAHT", meaning: "the city", example: "Die große Stadt!", exampleMeaning: "The big city!" },
       { word: "weit", pronounce: "vite", meaning: "far", example: "Noch weit?", exampleMeaning: "Still far?" },
       { word: "fast da", pronounce: "fahst DAH", meaning: "almost there", example: "Wir sind fast da!", exampleMeaning: "We're almost there!" }
@@ -825,7 +825,7 @@ export const itinerary: Day[] = [
     drinkOfTheDay: {
       name: "Hugo Spritz",
       type: "aperitif",
-      pairing: "A floral spritz as the wheel lights up at dusk — elderflower and prosecco, the city evening's easy companion.",
+      pairing: "A floral spritz as the wheel lights up at dusk — elderflower and Sekt, the city evening's easy companion.",
       servingNote: "Over ice with mint and a lime wheel."
     },
     gear: [
@@ -838,7 +838,7 @@ export const itinerary: Day[] = [
       "Go to the wheel at opening or early evening to dodge queues",
       "Stadtpark playgrounds are on the 3rd-district side across the river"
     ],
-    italianWords: [
+    germanWords: [
       { word: "das Riesenrad", pronounce: "dass REE-zen-raht", meaning: "the Ferris wheel", example: "Hoch im Riesenrad!", exampleMeaning: "High up in the Ferris wheel!" },
       { word: "der Park", pronounce: "dair PARK", meaning: "the park", example: "Im Park spielen.", exampleMeaning: "Playing in the park." },
       { word: "der Abend", pronounce: "dair AH-bent", meaning: "the evening", example: "Am Abend.", exampleMeaning: "In the evening." }
@@ -896,7 +896,7 @@ export const itinerary: Day[] = [
       "Tiergarten Schönbrunn (the zoo) is on the same grounds — easy to combine",
       "The Schmetterlinghaus is a quick, magical 20–40 min stop in the Burggarten"
     ],
-    italianWords: [
+    germanWords: [
       { word: "das Schloss", pronounce: "dass SHLOSS", meaning: "the palace / castle", example: "Das gelbe Schloss.", exampleMeaning: "The yellow palace." },
       { word: "der Schmetterling", pronounce: "dair SHMET-er-ling", meaning: "the butterfly", example: "Ein Schmetterling!", exampleMeaning: "A butterfly!" },
       { word: "das Labyrinth", pronounce: "dass lah-bee-RINT", meaning: "the maze", example: "Verloren im Labyrinth!", exampleMeaning: "Lost in the maze!" }
@@ -942,7 +942,7 @@ export const itinerary: Day[] = [
       "Strollers can go to the gate, then get gate-checked",
       "Fill the rental's tank if the contract requires full-to-full"
     ],
-    italianWords: [
+    germanWords: [
       { word: "Auf Wiedersehen", pronounce: "owf VEE-der-zane", meaning: "Goodbye (formal)", example: "Auf Wiedersehen, Österreich!", exampleMeaning: "Goodbye, Austria!" },
       { word: "Pfiat di", pronounce: "FEE-at dee", meaning: "Bye (warm Austrian dialect)", example: "Pfiat di, bis bald!", exampleMeaning: "Bye, see you soon!" },
       { word: "der Flug", pronounce: "dair FLOOK", meaning: "the flight", example: "Unser Flug nach Hause.", exampleMeaning: "Our flight home." }

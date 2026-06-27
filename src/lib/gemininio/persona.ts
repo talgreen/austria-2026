@@ -191,8 +191,8 @@ function digestItinerary(lang: Lang): string {
         (acts ? `    Activities:\n${acts}\n` : "") +
         (d.driveNotes ? `    Drive: ${d.driveNotes}\n` : "") +
         (d.drinkOfTheDay ? `    Drink of the day: ${d.drinkOfTheDay.name} (${d.drinkOfTheDay.type})\n` : "") +
-        (d.italianWords?.length
-          ? d.italianWords
+        (d.germanWords?.length
+          ? d.germanWords
               .map(
                 (w, i) =>
                   `    German word ${i + 1}: "${w.word}" — "${w.meaning}"` +

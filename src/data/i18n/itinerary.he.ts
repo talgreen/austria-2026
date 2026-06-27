@@ -1,4 +1,4 @@
-import type { Day, DayDrink, ItalianWord } from "../types";
+import type { Day, DayDrink, GermanWord } from "../types";
 
 interface DayHEActivity {
   time?: string;
@@ -11,16 +11,16 @@ interface DayHEActivity {
 }
 
 /** Translatable parts of the per-day end-of-day drink card. The drink's
- *  proper name (e.g. "Aperol Spritz", "Chianti Classico DOCG") stays
+ *  proper name (e.g. "Hugo Spritz", "Grüner Veltliner") stays
  *  universal; only the prose gets translated. */
 type DrinkOfTheDayHE = Partial<Pick<DayDrink, "pairing" | "servingNote">>;
 
-/** Translatable fields of the per-day Italian word card. The Italian
+/** Translatable fields of the per-day German word card. The German
  *  `word` and `example` stay as-is; only the meaning + the example's
  *  translation get localized. We also let HE override `pronounce` so
  *  Hebrew speakers can read a Hebrew-letter transliteration. */
 type WordOfTheDayHE = Partial<
-  Pick<ItalianWord, "pronounce" | "meaning" | "exampleMeaning">
+  Pick<GermanWord, "pronounce" | "meaning" | "exampleMeaning">
 >;
 
 export interface DayHE
@@ -35,8 +35,8 @@ export interface DayHE
    *  the EN GearItem. The merge in `localizeDay` overlays these strings
    *  onto the EN objects by index. */
   gear?: string[];
-  /** Translated parts of each Italian word card (same order as EN). */
-  italianWords?: WordOfTheDayHE[];
+  /** Translated parts of each German word card (same order as EN). */
+  germanWords?: WordOfTheDayHE[];
   /** Translated parts of the end-of-day drink card. */
   drinkOfTheDay?: DrinkOfTheDayHE;
 }
@@ -74,7 +74,7 @@ export const itineraryHE: Record<number, DayHE> = {
       "ציוד לפיקניק / ארוחת צהריים (יום ראשון — החנויות סגורות)",
       "כובעים וקרם הגנה לחצרות המצודה"
     ],
-    italianWords: [
+    germanWords: [
       {
         pronounce: "דֵייר זַיי",
         meaning: "האגם",
@@ -132,7 +132,7 @@ export const itineraryHE: Record<number, DayHE> = {
       "הגנה מהשמש ומים לפארק השעשועים הפתוח",
       "מעט מזומן למכונות החניה"
     ],
-    italianWords: [
+    germanWords: [
       {
         pronounce: "די גָא-סֶה",
         meaning: "הסמטה / המשעול",
@@ -187,7 +187,7 @@ export const itineraryHE: Record<number, DayHE> = {
       "שכבה חמה לפסגת ההר",
       "שקיות לשימוש חוזר לקניות הגדולות במאיירהופן"
     ],
-    italianWords: [
+    germanWords: [
       {
         pronounce: "דֵייר בַּאירג",
         meaning: "ההר",
@@ -245,7 +245,7 @@ export const itineraryHE: Record<number, DayHE> = {
       "עגלה — Swarovski נוח לחלוטין לעגלה",
       "כובעים למדשאות הפתוחות"
     ],
-    italianWords: [
+    germanWords: [
       {
         pronounce: "דֵייר קריס-טָאל",
         meaning: "הקריסטל",
@@ -304,7 +304,7 @@ export const itineraryHE: Record<number, DayHE> = {
       "שכבה קלה לבקרים הקרירים בעמק",
       "מגבונים לחים (זו רכבת פחם אמיתית — קצת פיח הוא חלק מהקסם)"
     ],
-    italianWords: [
+    germanWords: [
       {
         pronounce: "דֵייר צוּוק",
         meaning: "הרכבת",
@@ -358,7 +358,7 @@ export const itineraryHE: Record<number, DayHE> = {
       "מנשא לעלייה לסירה (קפלו את העגלה)",
       "תיאבון לטעימת גבינות"
     ],
-    italianWords: [
+    germanWords: [
       {
         pronounce: "דֵייר קַיי-זֶה",
         meaning: "הגבינה",
@@ -413,7 +413,7 @@ export const itineraryHE: Record<number, DayHE> = {
       "שכבת גשם קלה לרסס המפל",
       "נעליים עם אחיזה טובה לילדים על השביל הרטוב"
     ],
-    italianWords: [
+    germanWords: [
       {
         pronounce: "דֵייר וָא-סֶר-פָאל",
         meaning: "המפל",
@@ -463,7 +463,7 @@ export const itineraryHE: Record<number, DayHE> = {
       "בגדי ים לבריכת המלון",
       "ספר ואפס שאיפות"
     ],
-    italianWords: [
+    germanWords: [
       {
         pronounce: "די פָּאוּ-זֶה",
         meaning: "הפסקה / מנוחה",
@@ -514,7 +514,7 @@ export const itineraryHE: Record<number, DayHE> = {
       "שכבה חמה לפסגה",
       "הגנה מהשמש — חשוף למעלה"
     ],
-    italianWords: [
+    germanWords: [
       {
         pronounce: "דֵייר גִיפ-פֶל",
         meaning: "הפסגה",
@@ -565,7 +565,7 @@ export const itineraryHE: Record<number, DayHE> = {
       "פיקניק או חטיפים (יש גם מסעדה במקום)",
       "שכבות אם נוסעים במעלה כביש הגלוקנר"
     ],
-    italianWords: [
+    germanWords: [
       {
         pronounce: "דֵייר בַּאיר",
         meaning: "הדוב",
@@ -625,7 +625,7 @@ export const itineraryHE: Record<number, DayHE> = {
       "בגדי ים ומגבות לאגם",
       "שכבות חמות אם עולים לקרחון"
     ],
-    italianWords: [
+    germanWords: [
       {
         pronounce: "די קְלָאם",
         meaning: "הנקיק / הערוץ",
@@ -684,7 +684,7 @@ export const itineraryHE: Record<number, DayHE> = {
       "בגדי ים לבריכות המלון",
       "ציוד בסיסי למועדון הילדים (בקבוקי מים עם שם, כובעים)"
     ],
-    italianWords: [
+    germanWords: [
       {
         pronounce: "די פְרוֹיְנ-דֶה",
         meaning: "החברים",
@@ -741,7 +741,7 @@ export const itineraryHE: Record<number, DayHE> = {
       "עגלה או מנשא לרחובות המרוצפים של האלשטאט",
       "הגנה מהשמש"
     ],
-    italianWords: [
+    germanWords: [
       {
         pronounce: "דָאס דוֹרף",
         meaning: "הכפר",
@@ -800,7 +800,7 @@ export const itineraryHE: Record<number, DayHE> = {
       "שכבה חמה לתת־הקרקע (כ־10°C במכרה, כ־0°C במערה)",
       "נעליים סגורות למדרגות המערה"
     ],
-    italianWords: [
+    germanWords: [
       {
         pronounce: "דֵייר אָה-דְלֶר",
         meaning: "הנשר",
@@ -854,7 +854,7 @@ export const itineraryHE: Record<number, DayHE> = {
       "בקבוקי מים למילוי חוזר",
       "סבלנות — זו הנסיעה הארוכה ביותר בטיול"
     ],
-    italianWords: [
+    germanWords: [
       {
         pronounce: "די שְטָאט",
         meaning: "העיר",
@@ -911,7 +911,7 @@ export const itineraryHE: Record<number, DayHE> = {
       "כובעים לפארק של הבוקר",
       "שכבה קלה לגלגל של הערב"
     ],
-    italianWords: [
+    germanWords: [
       {
         pronounce: "דָאס רִי-זֶן-רָאט",
         meaning: "הגלגל הענק",
@@ -971,7 +971,7 @@ export const itineraryHE: Record<number, DayHE> = {
       "מנשא לאולמות המדינה של Schönbrunn",
       "כרטיסים מתוזמנים שהוזמנו מראש בטלפון"
     ],
-    italianWords: [
+    germanWords: [
       {
         pronounce: "דָאס שְלוֹס",
         meaning: "הארמון / הטירה",
@@ -1025,7 +1025,7 @@ export const itineraryHE: Record<number, DayHE> = {
       "חטיפים ובידור לטיסה",
       "תיק למזכרות של הרגע האחרון שבטוח יהיו"
     ],
-    italianWords: [
+    germanWords: [
       {
         pronounce: "אוֹף ווי-דֶר-זֵיין",
         meaning: "להתראות (רשמי)",

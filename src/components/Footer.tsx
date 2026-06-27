@@ -33,7 +33,7 @@ export default function Footer() {
             </span>
           </div>
           <div className="mt-3 text-[11px] uppercase tracking-[0.22em] text-ink-700/45 font-serif italic">
-            Buon viaggio.
+            Gute Reise.
           </div>
           <div className="mt-6 flex items-center justify-center gap-3">
             <span className="text-[10px] uppercase tracking-[0.22em] text-ink-700/55">

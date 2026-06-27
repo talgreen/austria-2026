@@ -4,7 +4,7 @@ A static, mobile-first trip companion for our family road trip across Austria, *
 
 Deployed to GitHub Pages: **https://talgreen.github.io/austria-2026/**
 
-Cloned from the [tuscany-2026](https://github.com/tikel1/tuscany-2026) pattern and refilled for Austria. For the full design rationale and the playbook, see [`docs/HOW_TO_BUILD_A_VACATION_WEBSITE.md`](docs/HOW_TO_BUILD_A_VACATION_WEBSITE.md).
+Built on a reusable trip-companion pattern. For the full design rationale and the playbook, see [`docs/HOW_TO_BUILD_A_VACATION_WEBSITE.md`](docs/HOW_TO_BUILD_A_VACATION_WEBSITE.md).
 
 ## Stack
 
@@ -27,7 +27,7 @@ npm run preview  # preview the production build locally
 npm run lint     # ESLint flat config
 ```
 
-`vite.config.ts` switches the `base` path between local dev (`/`) and the GitHub Pages deploy (`/tuscany-2026/`) automatically.
+`vite.config.ts` switches the `base` path between local dev (`/`) and the GitHub Pages deploy (`/austria-2026/`) automatically.
 
 ## Environment variables
 
@@ -46,12 +46,12 @@ All content lives in plain TypeScript files under `src/data/` — no CMS, no dat
 
 | File | What's in it |
 | --- | --- |
-| `src/data/itinerary.ts` | The 10-day plan (`dayTips`, gear, drink/word of the day, etc.) |
+| `src/data/itinerary.ts` | The 19-day plan (`dayTips`, gear, drink/word of the day, etc.) |
 | `src/data/attractions.ts` | All sights with description, coords, official link, image path |
-| `src/data/stays.ts` | The two Tuscany stays + the Fiumicino airport hotel |
+| `src/data/stays.ts` | The six stays across Vienna, Salzburg, the Zillertal, Pinzgau & Werfenweng |
 | `src/data/services.ts` | Restaurants, supermarkets, gas stations near each base |
 | `src/data/dishes.ts` / `wineries.ts` | Food & wine catalog (own section + map layer) |
-| `src/data/tips.ts` | Local know-how and warnings (ZTL, Saturnia, etc.) |
+| `src/data/tips.ts` | Local know-how and warnings (the motorway Vignette, alpine passes, etc.) |
 | `src/data/emergency.ts` | Emergency numbers, hospitals, embassy |
 | `src/data/checklist.ts` | Pre-trip booking + packing checklists |
 | `src/data/i18n/*.he.ts` | Partial Hebrew overlays for every English data module |
@@ -65,25 +65,21 @@ Image fields point to `./images/<slug>.jpg`. Drop your own `.jpg` files into `pu
 
 ## Helper scripts
 
-`scripts/` holds local-only scripts for fetching photos and generating audio. Run from your machine, never from CI.
+`scripts/` holds local-only scripts for generating audio. Run from your machine, never from CI.
 
 | Command | What it does |
 | --- | --- |
-| `node scripts/fetch-images.mjs` | Pulls POI/attraction images from Wikipedia / Commons / Unsplash. |
-| `node scripts/fetch-hero-images.mjs` | Same idea, scoped to home-page hero shots. |
-| `node scripts/fetch-food-wine-images.mjs` | Same idea, scoped to dishes + wineries. |
-| `node scripts/find-hotel-images.mjs` | Helper to discover lead images for stays. |
-| `npm run tts:italian-words` | Word-of-the-day MP3s in IT/EN/HE (Gemini Flash by default). |
-| `npm run tts:italian-words:eleven` | Same, via ElevenLabs. Add `--examples-only` to rebuild just the example clips. |
+| `npm run tts:german-words` | Word-of-the-day MP3s in DE/EN/HE (Gemini Flash by default). |
+| `npm run tts:german-words:eleven` | Same, via ElevenLabs. Add `--examples-only` to rebuild just the example clips. |
 | `npm run tts:attractions-he` | Hebrew narration for attractions (Gemini Flash by default; `:eleven` variant available). |
-| `npm run repair:italian-words-audio` | Re-encodes any partially-truncated MP3 returned by a TTS provider. |
+| `npm run repair:german-words-audio` | Re-encodes any partially-truncated MP3 returned by a TTS provider. |
 | `node scripts/smoke-test-gemini-live.mjs` | Opens a one-shot Live WebSocket to verify your Gemini key works. |
 
 ## Deploy (auto)
 
 `.github/workflows/deploy.yml` builds and publishes to GitHub Pages on every push to `main`. To enable on a new fork:
 
-1. Push the repo to `tikel1/tuscany-2026` (or whichever slug — update `vite.config.ts`'s prod `base` to match).
+1. Push the repo to `talgreen/austria-2026` (or whichever slug — update `vite.config.ts`'s prod `base` to match).
 2. In **Settings → Pages**, set **Source = GitHub Actions**.
 3. Add `VITE_GEMINI_API_KEY` as a repository secret if you want the chat enabled by default.
 4. The first push triggers the workflow; the live URL appears in the Actions log.
@@ -97,7 +93,7 @@ src/
     i18n/          Partial Hebrew overlays for every data module
   lib/             Helpers (i18n, dict, hash routing, install, swipe, audio bus)
     gemininio/     AI assistant — persona, Live WS, REST search, history, audio
-  index.css        Tailwind + Tuscan design tokens
+  index.css        Tailwind + Austrian design tokens
 public/
   images/          Drop-in attraction & stay photos
   audio/           Pre-generated narration MP3s
@@ -109,4 +105,4 @@ docs/
   deploy.yml       GitHub Pages CI
 ```
 
-Buon viaggio.
+Gute Reise.
