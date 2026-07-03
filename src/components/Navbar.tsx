@@ -7,6 +7,7 @@ const links: { id: TabKey; key: DictKey }[] = [
   { id: "plan",      key: "nav_plan" },
   { id: "places",    key: "nav_attractions" },
   { id: "food",      key: "nav_food" },
+  { id: "kids",      key: "nav_kids" },
   { id: "map",       key: "nav_map" },
   { id: "stays",     key: "nav_stays" },
   { id: "tips",      key: "nav_tips" },

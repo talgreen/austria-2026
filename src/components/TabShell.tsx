@@ -9,6 +9,7 @@ import EmergencySection from "./EmergencySection";
 import ServicesSection from "./ServicesSection";
 import ItinerarySection from "./ItinerarySection";
 import TripStats from "./TripStats";
+import KidsSection from "./KidsSection";
 
 /** Renders exactly ONE tab view at a time. Heavy views (Map/Leaflet,
  *  image grids) only mount when their tab is active — this is the core
@@ -50,6 +51,12 @@ export default function TabShell({
       return (
         <div className="pt-20">
           <FoodAndWineSection />
+        </div>
+      );
+    case "kids":
+      return (
+        <div className="pt-20">
+          <KidsSection />
         </div>
       );
     case "stays":

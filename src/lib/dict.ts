@@ -67,9 +67,56 @@ export const DICT = {
   // label here in case it returns later.
   nav_services: { en: "Local", he: "מקומי" },
   nav_food: { en: "Food", he: "אוכל" },
+  nav_kids: { en: "Kids", he: "ילדים" },
   nav_tips: { en: "Tips", he: "טיפים" },
   nav_checklist: { en: "Lists", he: "רשימות" },
   nav_emergency: { en: "Emergency", he: "חירום" },
+
+  /* ---------- Kids fun pack (riddles, jokes & road games) ---------- */
+  // The kids *content* itself is Hebrew-only (see src/data/kids.ts);
+  // these keys are only the surrounding chrome.
+  kids_eyebrow: { en: "For the kids", he: "לילדים" },
+  kids_title: { en: "Road fun", he: "כיף בדרכים" },
+  kids_kicker: {
+    en: "Riddles, jokes and car games for every drive of the trip",
+    he: "חידות, בדיחות ומשחקים לכל נסיעה בטיול"
+  },
+  funpack_title: { en: "Today's fun pack", he: "חבילת הכיף של היום" },
+  kids_pick_day: { en: "Pick a day", he: "בוחרים יום" },
+  kids_today_chip: { en: "Today", he: "היום" },
+  kids_today_pack: { en: "Today · Day {n}", he: "היום · יום {n}" },
+  kids_riddles: { en: "Riddles", he: "חידות" },
+  kids_jokes: { en: "Jokes", he: "בדיחות" },
+  kids_twisters: { en: "Tongue twisters", he: "שוברי שיניים" },
+  kids_twister_hint: {
+    en: "Say it three times, fast!",
+    he: "אמרו שלוש פעמים, מהר!"
+  },
+  kids_challenge: { en: "Today's challenge", he: "אתגר היום" },
+  kids_suggested_games: {
+    en: "Games for today's drive",
+    he: "משחקים לנסיעה של היום"
+  },
+  kids_all_games_link: { en: "All road games", he: "לכל משחקי הדרך" },
+  kids_reveal: { en: "Tap for the answer", he: "לחצו לתשובה" },
+  kids_hide: { en: "Tap to hide", he: "לחצו להסתרה" },
+  kids_how_to_play: { en: "How to play", he: "איך משחקים" },
+  kids_difficulty_easy: { en: "Easy", he: "קל" },
+  kids_difficulty_medium: { en: "Tricky", he: "מאתגר" },
+  kids_road_games: { en: "Road games", he: "משחקי דרך" },
+  kids_road_games_title: { en: "The games shelf", he: "מדף המשחקים" },
+  kids_road_games_kicker: {
+    en: "No equipment needed — just mouths and imagination",
+    he: "בלי ציוד — רק פה ודמיון"
+  },
+  kids_games_footnote: {
+    en: "Every day's pack suggests games that fit that day's drives.",
+    he: "בחבילה של כל יום מחכות הצעות למשחקים שמתאימים לנסיעות של אותו יום."
+  },
+  kids_hebrew_note: {
+    en: "Kids content is in Hebrew",
+    he: ""
+  },
 
   badge_done: { en: "Done", he: "סיום" },
   badge_day_n: { en: "Day {n}", he: "יום {n}" },

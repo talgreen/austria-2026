@@ -341,6 +341,90 @@ export interface Quiz {
  *    when the kid wants to keep going and there's wifi handy. */
 export type QuizMode = "offline" | "live";
 
+/* ---------- Kids fun pack (חבילת הכיף — riddles, jokes & road games) ---------- */
+
+/** Two tiers only — the audience is 3–7. `easy` targets the youngest
+ *  (3–4, no reading required, parent reads aloud); `medium` gives the
+ *  older kid (6–7) something to chew on. */
+export type KidsDifficulty = "easy" | "medium";
+
+/** A Hebrew riddle with a tap-to-reveal answer. Content is Hebrew-only
+ *  by design — riddles are wordplay and don't translate; the family is
+ *  Hebrew-speaking. Rendered inside an explicit `dir="rtl"` container
+ *  so it reads correctly even when the UI language is English. */
+export interface KidsRiddle {
+  /** The riddle text, read-aloud ready (no markdown). */
+  q: string;
+  /** The answer, revealed on tap. */
+  a: string;
+  difficulty: KidsDifficulty;
+  /** Optional emoji shown with the *answer* — a visual payoff that
+   *  helps pre-readers confirm they guessed right. Never shown with
+   *  the question (it would give it away). */
+  emoji?: string;
+}
+
+/** A kid-friendly Hebrew joke, "למה… כי…" style. Same tap-to-reveal
+ *  interaction as riddles: setup visible, punchline hidden. */
+export interface KidsJoke {
+  setup: string;
+  punchline: string;
+  difficulty: KidsDifficulty;
+}
+
+/** A Hebrew tongue twister (שובר שיניים). Always fully visible —
+ *  the challenge is saying it three times fast, not guessing. */
+export interface KidsTongueTwister {
+  text: string;
+  difficulty: KidsDifficulty;
+}
+
+/** A spotting/counting mini-mission for the car window, themed to the
+ *  actual day's route (lake days count sailboats, transit days count
+ *  tunnels, Vienna days spot Fiaker horses…). */
+export interface KidsChallenge {
+  /** Short punchy name — "צייד הטרקטורים". */
+  title: string;
+  /** The mission itself — "מי מוצא 5 טרקטורים ראשון?" */
+  description: string;
+}
+
+/** A day-independent, no-equipment car game, reusable across the whole
+ *  trip. Lives in a shared library; day packs point at 1–2 suggested
+ *  games via `KidsDayPack.gameIds`. */
+export interface KidsRoadGame {
+  id: string;
+  /** Game name — "עשרים שאלות". */
+  name: string;
+  /** One-line pitch shown on the collapsed card. */
+  tagline: string;
+  /** 3–5 short numbered steps in simple Hebrew, read-aloud ready. */
+  howToPlay: string[];
+  /** Youngest age that can genuinely play — rendered as a "3+" chip. */
+  minAge?: number;
+  difficulty: KidsDifficulty;
+}
+
+/** One day's worth of road fun, keyed by `Day.dayNumber` (external to
+ *  the `Day` type, exactly like the quiz). Authored so nothing repeats
+ *  across the 18 days. */
+export interface KidsDayPack {
+  dayNumber: number;
+  /** Optional Hebrew theme line tying the pack to the day ("יום אגמים!"). */
+  theme?: string;
+  /** ~3 per day, mostly easy with one medium for the older kid. */
+  riddles: KidsRiddle[];
+  /** ~3 per day. */
+  jokes: KidsJoke[];
+  /** 1–2 per day. */
+  tongueTwisters: KidsTongueTwister[];
+  /** Exactly one, themed to the day's actual route. */
+  challenge: KidsChallenge;
+  /** 1–2 suggested road-game ids for today's drives (long-drive days
+   *  get the meatier games). Looked up in `roadGames`. */
+  gameIds?: string[];
+}
+
 export interface ChecklistItem {
   id: string;
   text: string;
