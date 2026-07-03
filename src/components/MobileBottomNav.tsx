@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { CalendarDays, Map, Compass, Utensils, MoreHorizontal, Download } from "lucide-react";
+import { CalendarDays, Map, Compass, Baby, MoreHorizontal, Download } from "lucide-react";
 import { useT, type DictKey } from "../lib/dict";
 import { useLang } from "../lib/i18n";
 import LanguageSwitcher from "./LanguageSwitcher";
@@ -9,12 +9,15 @@ import { navigateTab, type TabKey } from "../lib/route";
 const TABS: { id: TabKey | "more"; key: DictKey; Icon: typeof CalendarDays }[] = [
   { id: "plan",   key: "nav_plan",        Icon: CalendarDays },
   { id: "places", key: "nav_attractions", Icon: Compass },
-  { id: "food",   key: "nav_food",        Icon: Utensils },
+  // Kids gets a main-bar slot — it's the tab the family reaches for in
+  // the car, so it must be one tap away. Food moved to the More sheet.
+  { id: "kids",   key: "nav_kids",        Icon: Baby },
   { id: "map",    key: "nav_map",         Icon: Map },
   { id: "more",   key: "nav_attractions", Icon: MoreHorizontal }
 ];
 
 const MORE_LINKS: { id: TabKey; key: DictKey }[] = [
+  { id: "food",      key: "nav_food" },
   { id: "stays",     key: "nav_stays" },
   { id: "tips",      key: "nav_tips" },
   { id: "checklist", key: "nav_checklist" },
@@ -22,7 +25,7 @@ const MORE_LINKS: { id: TabKey; key: DictKey }[] = [
 ];
 
 const MORE_LABEL: Record<"en" | "he", string> = { en: "More", he: "עוד" };
-const MORE_TAB_IDS = new Set<TabKey>(["stays", "tips", "checklist", "emergency"]);
+const MORE_TAB_IDS = new Set<TabKey>(["food", "stays", "tips", "checklist", "emergency"]);
 
 export default function MobileBottomNav({ activeTab }: { activeTab: TabKey }) {
   const t = useT();

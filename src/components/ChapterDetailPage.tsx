@@ -56,6 +56,7 @@ import PhotoCredit from "./PhotoCredit";
 import MiniMap from "./MiniMap";
 import ListenButton from "./ListenButton";
 import GermanWordCarousel from "./GermanWordCarousel";
+import DayFunPack from "./DayFunPack";
 import { useCarouselSwipe } from "../lib/useCarouselSwipe";
 
 const ROMAN = ["", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X"];
@@ -831,6 +832,13 @@ function ChapterDetailContent({ day }: { day: Day }) {
               </ul>
             </section>
           )}
+
+          {/* Kids fun pack — Hebrew riddles, jokes, tongue twisters and
+              the day's spotting challenge (src/data/kids.ts). Sits just
+              before Quizzo so the chapter's kids block reads fun-pack →
+              quiz. Unlike Quizzo it is never date-locked: this content
+              is for the drive *to* the day's stops. */}
+          <DayFunPack dayNumber={day.dayNumber} />
 
           {/* Quiz with Quizzo — kid-friendly recap (or pre-trip
               preview) of the day. Mounted on every chapter, sandwiched

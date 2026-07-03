@@ -5,6 +5,7 @@ export type TabKey =
   | "map"
   | "places"
   | "food"
+  | "kids"
   | "stays"
   | "tips"
   | "checklist"
@@ -15,6 +16,7 @@ export const TAB_KEYS: TabKey[] = [
   "map",
   "places",
   "food",
+  "kids",
   "stays",
   "tips",
   "checklist",
