@@ -232,7 +232,7 @@ do the talking.
 | Icons | **Lucide React** | Hairline weight, huge catalog, easy to tint. |
 | Weather | **Open-Meteo** | Free, no key, accurate enough for casual planning. |
 | Hosting | **GitHub Pages** via Actions | Zero ops, custom domain optional, deploys on push. |
-| Fonts | **Google Fonts** — Cormorant Garamond, Inter, Rubik (HE), Frank Ruhl Libre (HE) | Editorial pairing in both scripts. *Avoid David Libre — it reads as "old school cheap" the way Times/Arial do.* |
+| Fonts | **Google Fonts** — Cormorant Garamond, Inter, Assistant (HE), Suez One (HE) | Editorial pairing in both scripts. *Avoid David Libre / Frank Ruhl Libre — they read as "old newspaper / Office 2003" next to a modern layout.* |
 | Lint | **ESLint 9** (`eslint.config.js`, flat config) + TypeScript ESLint + `eslint-plugin-react-hooks` (React Compiler rules) + `eslint-plugin-react-refresh` | Run `npm run lint` locally before merging; keeps hooks valid and aligns with Vite Fast Refresh expectations. |
 
 What we deliberately **didn't** add:
@@ -284,8 +284,8 @@ naturally land on Aegean blue + whitewash + bougainvillea pink.)
 --font-serif: "Cormorant Garamond", "Georgia", ui-serif, serif;
 
 html[dir="rtl"] {
-  --font-sans: "Rubik", "Inter", ...;
-  --font-serif: "Frank Ruhl Libre", "Cormorant Garamond", ...;
+  --font-sans: "Assistant", "Inter", ...;
+  --font-serif: "Suez One", "Cormorant Garamond", ...;
 }
 ```
 
@@ -294,10 +294,13 @@ html[dir="rtl"] {
 - One Hebrew serif + one Hebrew sans, swapped automatically by
   `[dir="rtl"]`. This is a one-line change with massive payoff —
   Hebrew rendered in default browser fonts looks alien on a magazine.
-- **Frank Ruhl Libre** is the right Hebrew serif: contemporary
-  proportions, real italic weight. Avoid David Libre / Times / Arial-
-  style Hebrew faces — they read as "default Office document, 2003"
-  and undercut the magazine feel.
+- **Suez One** is the right Hebrew display face: the bold, modern
+  editorial voice of current Israeli media. It ships a single
+  already-heavy 400 weight and no italic, so neutralize bold/italic
+  utilities on serif elements under RTL to avoid synthesized faux
+  styles. Avoid David Libre / Frank Ruhl Libre / Times-style Hebrew
+  faces — they read as "old newspaper / default Office document" and
+  undercut the magazine feel.
 
 ### Mobile font scaling
 
@@ -968,7 +971,7 @@ const Chevron = dir === "rtl" ? ChevronLeft : ChevronRight;
 
 ### Pin elements that should NOT swap fonts per language
 
-The Hebrew serif (Frank Ruhl Libre) and the Latin serif (Cormorant
+The Hebrew display face (Suez One) and the Latin serif (Cormorant
 Garamond) have noticeably different tabular numerals and italic
 shapes. Most prose should swap — that's the whole point — but a few
 elements look better staying in the Latin serif regardless of

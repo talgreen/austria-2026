@@ -50,15 +50,15 @@
 }
 
 /* Hebrew typography — applied automatically when <html dir="rtl">.
-   Rubik is a warm, humanist Hebrew sans (used by many Israeli editorial
-   sites). Frank Ruhl Libre is the modern (2014) redrawing of the classic
-   1908 Frank-Ruhl Hebrew typeface — Haaretz uses it, and it's the
-   contemporary editorial serif of choice. It carries the same warmth as
-   Cormorant on the Latin side, without the "Word 2003 default" baggage
-   of older system serifs (David, Times, Arial). */
+   Assistant is the crisp geometric-humanist sans that contemporary
+   Israeli sites standardized on — fresher than the rounded Rubik and
+   far from the David/Arial "office document" look. Suez One fills the
+   display slot: the bold modern editorial Hebrew face (the current
+   Israeli-news-headline voice), replacing Frank Ruhl Libre whose
+   1908 newspaper letterforms read as old-fashioned. */
 html[dir="rtl"] {
-  --font-sans: "Rubik", "Inter", ui-sans-serif, system-ui, sans-serif;
-  --font-serif: "Frank Ruhl Libre", "Cormorant Garamond", "Georgia", ui-serif, serif;
+  --font-sans: "Assistant", "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-serif: "Suez One", "Cormorant Garamond", "Georgia", ui-serif, serif;
 }
 
 /* Hebrew reads better with a touch more line-height and no Latin
@@ -67,23 +67,37 @@ html[dir="rtl"] {
 html[dir="rtl"] body {
   line-height: 1.7;
 }
+/* Suez One ships a single (already-heavy) 400 weight — forcing 700/900
+   here would make the browser synthesize a smeared faux-bold, so
+   headings explicitly stay at 400. */
 html[dir="rtl"] h1,
 html[dir="rtl"] h2,
 html[dir="rtl"] h3,
 html[dir="rtl"] h4 {
   letter-spacing: 0;
-  font-weight: 700;
+  font-weight: 400;
 }
-/* Frank Ruhl Libre at display sizes wants its heavier weights to read
-   as "editorial"; bump the largest titles to 900. */
 html[dir="rtl"] .section-title {
-  font-weight: 900;
+  font-weight: 400;
+}
+/* Same reason: Tailwind font-bold/font-semibold on serif display text
+   (hero titles, card headings) would faux-bold Suez One. Neutralize
+   weight utilities on serif elements under RTL only. */
+html[dir="rtl"] .font-serif {
+  font-weight: 400 !important;
+}
+/* Suez One has no italic and synthesized oblique distorts Hebrew
+   letterforms; keep serif accents upright under RTL. */
+html[dir="rtl"] .font-serif.italic,
+html[dir="rtl"] h1 em, html[dir="rtl"] h2 em,
+html[dir="rtl"] h3 em, html[dir="rtl"] h4 em {
+  font-style: normal;
 }
 
 /* Always-Latin serif. Use this on numerals and any glyphs that should
    keep their Cormorant Garamond rendering even when the page is in
-   Hebrew (e.g. the live countdown digits — Frank Ruhl Libre's tabular
-   numerals are noticeably different and break the design's continuity
+   Hebrew (e.g. the live countdown digits — Suez One's slab numerals
+   are noticeably different and break the design's continuity
    between EN and HE). The unit labels next to those numerals can still
    be translated; only the digits stay Latin-serif. */
 .font-latin-serif {
