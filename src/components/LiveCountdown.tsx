@@ -30,8 +30,8 @@ interface DigitCellProps {
 
 function DigitCell({ value, size }: DigitCellProps) {
   /* Numerals always render in the Latin serif (Cormorant Garamond)
-     even when the page is in Hebrew. Frank Ruhl Libre's tabular
-     numerals are visually quite different from Cormorant's, and the
+     even when the page is in Hebrew. Suez One's slab numerals are
+     visually quite different from Cormorant's, and the
      design depends on the countdown looking the same across languages.
      Only the unit labels (days/hrs/min/sec) below switch language. */
   const digitCls =

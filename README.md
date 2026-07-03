@@ -10,7 +10,7 @@ Built on a reusable trip-companion pattern. For the full design rationale and th
 
 - Vite + React 19 + TypeScript
 - Tailwind CSS v4 (alpine palette: pine green, lake teal, alpine red, warm cream)
-- Cormorant Garamond + Inter (LTR), Frank Ruhl Libre + Rubik (RTL) — Google Fonts
+- Cormorant Garamond + Inter (LTR), Suez One + Assistant (RTL) — Google Fonts
 - React Leaflet + CartoDB Voyager tiles (no API key)
 - Open-Meteo for live weather (no API key)
 - Lucide icons + Framer Motion for subtle animation
