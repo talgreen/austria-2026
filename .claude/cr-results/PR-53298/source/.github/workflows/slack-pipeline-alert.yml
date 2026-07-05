@@ -1,0 +1,400 @@
+name: Slack Pipeline Failure Alert
+
+on:
+  workflow_run:
+    workflows:
+      - "MovieCreatorConsole K8s Build and Deploy"
+      - "MovieCreatorDispatcherConsole K8s Build and Deploy"
+      - "MovieCreatorValidationMonitor K8s Build and Deploy"
+      - "MovieCreatorService App Service Build and Deploy"
+      - "MovieCreatorComplexActions nuget build and upload to Azure Artifacts"
+      - "MovieCreatorDAL nuget build and upload to Azure Artifacts"
+      - "MovieCreatorGameParts nuget build and upload to Azure Artifacts"
+      - "MovieCreatorLogic nuget build and upload to Azure Artifacts"
+      - "AvGenService App Service Build and Deploy"
+      - "ContentManagerConsole K8s Build and Deploy"
+    types: [completed]
+
+permissions:
+  actions: read
+  checks: read
+  contents: read
+
+jobs:
+  notify:
+    if: github.event.workflow_run.conclusion == 'failure'
+    runs-on: ubuntu-k8s
+    steps:
+      - name: Get failed job details
+        id: get-details
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const run = context.payload.workflow_run;
+
+            let jobs;
+            try {
+              ({ data: { jobs } } = await github.rest.actions.listJobsForWorkflowRun({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                run_id: run.id,
+                filter: 'latest',
+                per_page: 100
+              }));
+            } catch (e) {
+              core.error(`Failed to list jobs for run ${run.id}: ${e.message}`);
+              core.setOutput('has_failures', 'false');
+              return;
+            }
+
+            const failedJobs = jobs.filter(j =>
+              j.conclusion && !['success', 'skipped', 'neutral', 'cancelled'].includes(j.conclusion)
+            );
+
+            // Skip approval gate timeouts — GitHub auto-fails these after 30 days of no approval
+            if (failedJobs.length > 0 && failedJobs.every(j => j.name.toLowerCase().includes('approval gate'))) {
+              core.info(`Skipping notification — all failures are approval gate timeouts`);
+              core.setOutput('has_failures', 'false');
+              return;
+            }
+
+            const jobDetails = [];
+
+            for (const job of failedJobs) {
+              const failedSteps = job.steps
+                .filter(s => s.conclusion === 'failure')
+                .map(s => s.name);
+
+              let annotations = [];
+              try {
+                const checkRunId = job.check_run_url
+                  ? parseInt(job.check_run_url.split('/').pop(), 10)
+                  : job.id;
+                const { data: annos } = await github.rest.checks.listAnnotations({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  check_run_id: checkRunId
+                });
+                annotations = annos.slice(0, 3).map(a => a.message).filter(Boolean);
+              } catch (e) {
+                if (e.status !== 404 && e.status !== 422) {
+                  core.warning(`Could not fetch annotations for job ${job.id}: ${e.message}`);
+                }
+              }
+
+              jobDetails.push({ id: job.id, name: job.name, failedSteps, annotations });
+            }
+
+            core.setOutput('failed_jobs_json', JSON.stringify(jobDetails));
+            core.setOutput('has_failures', String(failedJobs.length > 0));
+
+            let workflowName = run.name.split('\n')[0].trim().slice(0, 100);
+            try {
+              const { data: wf } = await github.rest.actions.getWorkflow({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                workflow_id: run.workflow_id
+              });
+              workflowName = wf.name.slice(0, 100);
+            } catch (e) {
+              core.warning(`getWorkflow fallback — could not fetch static workflow name: ${e.message}`);
+            }
+            core.setOutput('workflow_name', workflowName);
+
+      - name: Get deployer email
+        id: get-deployer
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const run = context.payload.workflow_run;
+            const actor = (run.triggering_actor && run.triggering_actor.login)
+                        || (run.actor && run.actor.login)
+                        || 'unknown';
+            let email = '';
+
+            if (!actor.endsWith('[bot]')) {
+              try {
+                const { data: commits } = await github.rest.repos.listCommits({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  author: actor,
+                  per_page: 10
+                });
+                const wscRegex = /@wsc-sports\.com$/i;
+                for (const commit of commits) {
+                  const commitEmail = commit.commit.author?.email;
+                  if (commitEmail && wscRegex.test(commitEmail)) {
+                    email = commitEmail;
+                    break;
+                  }
+                }
+              } catch (e) {
+                core.warning(`Commit scan failed for '${actor}': ${e.message}`);
+              }
+            }
+
+            if (!email && !actor.endsWith('[bot]')) email = `${actor}@wsc-sports.com`;
+            core.setOutput('github_username', actor);
+            core.setOutput('email', email);
+
+      - name: Look up Slack user
+        id: slack-lookup
+        uses: actions/github-script@v7
+        env:
+          SLACK_API_TOKEN: ${{ secrets.SLACK_API_TOKEN }}
+          EMAIL: ${{ steps.get-deployer.outputs.email }}
+        with:
+          script: |
+            const token = process.env.SLACK_API_TOKEN;
+            const email = process.env.EMAIL || '';
+            if (!email) { core.setOutput('slack_user_id', ''); return; }
+
+            try {
+              const r = await fetch(`https://slack.com/api/users.lookupByEmail?email=${encodeURIComponent(email)}`, {
+                headers: { Authorization: `Bearer ${token}` }
+              });
+              const d = await r.json();
+              if (d.ok && d.user?.id) {
+                core.setOutput('slack_user_id', d.user.id);
+              } else {
+                core.warning(`Slack lookup failed for '${email}': ${d.error || 'unknown'}`);
+                core.setOutput('slack_user_id', '');
+              }
+            } catch (e) {
+              core.warning(`lookupByEmail request failed: ${e.message}`);
+              core.setOutput('slack_user_id', '');
+            }
+
+      - name: Determine environment
+        id: env
+        env:
+          BRANCH: ${{ github.event.workflow_run.head_branch }}
+        run: |
+          if [[ "$BRANCH" == "master" ]]; then
+            echo "label=PROD 🔴" >> "$GITHUB_OUTPUT"
+          elif [[ "$BRANCH" == "staging.AvgenAndMc" ]]; then
+            echo "label=UAT 🟡" >> "$GITHUB_OUTPUT"
+          else
+            echo "label=${BRANCH:-unknown}" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Send Slack notification
+        if: steps.get-details.outputs.has_failures == 'true'
+        uses: actions/github-script@v7
+        env:
+          SLACK_API_TOKEN: ${{ secrets.SLACK_API_TOKEN }}
+          SLACK_CHANNEL: '#mc-pipeline-alerts'
+          FAILED_JOBS_JSON: ${{ steps.get-details.outputs.failed_jobs_json }}
+          SLACK_USER_ID: ${{ steps.slack-lookup.outputs.slack_user_id }}
+          GITHUB_USERNAME: ${{ steps.get-deployer.outputs.github_username }}
+          ENV_LABEL: ${{ steps.env.outputs.label }}
+          WORKFLOW_NAME: ${{ steps.get-details.outputs.workflow_name }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          script: |
+            const token = process.env.SLACK_API_TOKEN;
+            const channel = process.env.SLACK_CHANNEL;
+            const run = context.payload.workflow_run;
+            const owner = context.repo.owner;
+            const repo = context.repo.repo;
+
+            const userDisplay = process.env.SLACK_USER_ID
+              ? `<@${process.env.SLACK_USER_ID}>`
+              : `@${process.env.GITHUB_USERNAME}`;
+
+            const failedJobs = JSON.parse(process.env.FAILED_JOBS_JSON || '[]');
+
+            const PIPELINE_CONFIG = {
+              'MovieCreatorConsole K8s Build and Deploy':                             { display: 'Movie Creator Console',            allureDir: 'MovieCreatorConsole',   multi: true  },
+              'MovieCreatorDispatcherConsole K8s Build and Deploy':                   { display: 'Movie Creator Dispatcher Console', allureDir: null,                    multi: true  },
+              'MovieCreatorValidationMonitor K8s Build and Deploy':                   { display: 'Movie Creator Validation Monitor', allureDir: null,                    multi: true  },
+              'MovieCreatorService App Service Build and Deploy':                     { display: 'Movie Creator Service',            allureDir: null,                    multi: false },
+              'MovieCreatorComplexActions nuget build and upload to Azure Artifacts': { display: 'Movie Creator ComplexActions',     allureDir: null,                    multi: false },
+              'MovieCreatorDAL nuget build and upload to Azure Artifacts':            { display: 'Movie Creator DAL',                allureDir: null,                    multi: false },
+              'MovieCreatorGameParts nuget build and upload to Azure Artifacts':      { display: 'Movie Creator GameParts',          allureDir: null,                    multi: false },
+              'MovieCreatorLogic nuget build and upload to Azure Artifacts':          { display: 'Movie Creator Logic',              allureDir: null,                    multi: false },
+              'AvGenService App Service Build and Deploy':                            { display: 'AvGen Service',                    allureDir: 'AvGenService',          multi: false },
+              'ContentManagerConsole K8s Build and Deploy':                          { display: 'Content Manager Console',          allureDir: 'ContentManagerConsole', multi: true  },
+            };
+
+            const pipelineName = process.env.WORKFLOW_NAME || run.name;
+            const config = PIPELINE_CONFIG[pipelineName] ?? { display: pipelineName, allureDir: null, multi: false };
+
+            const SINGLE_STAGE_KEY = '_single_';
+            const ALLURE_BASE_URL = 'https://wscsportsengineering.github.io/zoomincloud/allure';
+            const FAILURE_DISPLAY_LIMIT = 10;
+
+            const post = async (body) => {
+              const res = await fetch('https://slack.com/api/chat.postMessage', {
+                method: 'POST',
+                headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
+                body: JSON.stringify(body)
+              });
+              if (!res.ok) throw new Error(`Slack returned HTTP ${res.status}`);
+              let data;
+              try {
+                data = await res.json();
+              } catch (e) {
+                throw new Error(`Slack response was not valid JSON (HTTP ${res.status}): ${e.message}`);
+              }
+              if (!data.ok) throw new Error(`Slack API error: ${data.error}`);
+              return data;
+            };
+
+            // Group failed jobs by stage name
+            // Multi-stage: stage extracted from parent job name pattern deploy-{env}-{stage}-eus{n}
+            // Single-stage: all jobs merged under one sentinel key
+            const stageRegex = /^deploy-(?:prod|uat|staging[^-]*)-(.+)-eus\d+$/;
+            const stageMap = new Map();
+
+            for (const job of failedJobs) {
+              const parent = job.name.split(' / ')[0].trim();
+              const stageMatch = config.multi ? parent.match(stageRegex) : null;
+              const stageName = stageMatch ? stageMatch[1] : (config.multi ? parent : SINGLE_STAGE_KEY);
+
+              if (!stageMap.has(stageName)) {
+                stageMap.set(stageName, { failedSteps: new Set(), annotations: [], automationEnvName: null, automationJobId: null });
+              }
+              const entry = stageMap.get(stageName);
+              job.failedSteps.forEach(s => entry.failedSteps.add(s));
+              entry.annotations.push(...job.annotations);
+
+              const envMatch = job.name.match(/Automation Tests - (.+?)(?:\s*\/|$)/);
+              if (envMatch && !entry.automationEnvName && job.failedSteps.some(s => s.includes('Automation Tests'))) {
+                entry.automationEnvName = envMatch[1].trim();
+                entry.automationJobId = job.id;
+              }
+            }
+
+            // Derive a short failure reason for single-stage pipelines
+            const deriveReason = (steps) => {
+              const s = [...steps].join(' ').toLowerCase();
+              if (s.includes('automation tests')) return 'automation tests failed';
+              if (s.includes('build'))            return 'build failed';
+              if (s.includes('deploy') || s.includes('publish')) return 'deployment failed';
+              return 'pipeline failed';
+            };
+
+            // Build main message fields
+            const mainFields = [
+              { title: 'Branch',      value: `\`${run.head_branch}\``, short: true },
+              { title: 'Deployed by', value: userDisplay,              short: true },
+            ];
+
+            if (config.multi) {
+              mainFields.push({ title: 'Failed stages', value: [...stageMap.keys()].join(' · '), short: false });
+            } else {
+              mainFields.push({ title: 'Reason', value: deriveReason(stageMap.get(SINGLE_STAGE_KEY).failedSteps), short: false });
+            }
+
+            mainFields.push({ title: 'Run', value: `<${run.html_url}|View Failed Run>`, short: false });
+
+            // Post main message
+            let mainData;
+            try {
+              mainData = await post({
+                channel,
+                text: `*${config.display}* | ${process.env.ENV_LABEL} — Deployment Failed`,
+                attachments: [{
+                  color: 'danger',
+                  fields: mainFields,
+                  footer: 'GitHub Actions',
+                  ts: Math.floor(Date.now() / 1000).toString()
+                }]
+              });
+            } catch (e) {
+              core.setFailed(`Slack main message failed: ${e.message}`);
+              return;
+            }
+
+            const threadTs = mainData.ts;
+
+            // Parse specific test failures from job logs
+            const parseTestFailures = (logText) => {
+              const seen = new Set();
+              const failures = [];
+              const lines = logText.split('\n').map(l => l.replace(/^\d{4}-\d{2}-\d{2}T[\d:.]+Z\s*/, '').trim());
+              for (let i = 0; i < lines.length; i++) {
+                if (!lines[i].includes('Test failed after')) continue;
+                const nameMatch = lines[i].match(/'([^']+)'\s+Test failed/);
+                if (!nameMatch || seen.has(nameMatch[1])) continue;
+                seen.add(nameMatch[1]);
+                const prevLineEnvMatch = (i > 0 ? lines[i - 1] : '').match(/CURRENT AUTOMATION ENV\s*:\s*(\S+)/);
+                let errorMsg = '', ruleId = '', actionItem = '';
+                for (let j = i + 1; j < Math.min(i + 6, lines.length); j++) {
+                  const l = lines[j];
+                  if (l.startsWith('Error:') && !errorMsg) {
+                    const rm = l.match(/RuleId:\s*([^\s,]+)/);
+                    if (rm) ruleId = rm[1];
+                    errorMsg = l.replace(/^Error:\s*/, '').replace(/\s*RuleId:.*/, '').replace(/,?\s*Time Waited:.*/, '').trim();
+                  }
+                  if (l.startsWith('ActionItem:') && !actionItem) actionItem = l.replace(/^ActionItem:\s*/, '').trim();
+                }
+                failures.push({ name: nameMatch[1], env: prevLineEnvMatch ? prevLineEnvMatch[1] : '', errorMsg, ruleId, actionItem });
+              }
+              return failures;
+            };
+
+            // Post one thread reply per stage
+            for (const [stageName, entry] of stageMap) {
+              const stepsArr = [...entry.failedSteps];
+              const stepsText = stepsArr.slice(0, 3).map(s => `\`${s}\``).join(', ') || '—';
+              const errorText = entry.annotations.slice(0, 3)
+                .map(a => `• ${a.length > 250 ? a.slice(0, 247) + '...' : a}`)
+                .join('\n') || '_(no annotations available)_';
+
+              const replyFields = [
+                { title: 'Failed steps', value: stepsText, short: false },
+              ];
+
+              // Fetch and parse test failure details from logs
+              const hasAutomation = stepsArr.some(s => s.includes('Automation Tests'));
+              if (hasAutomation && entry.automationJobId) {
+                try {
+                  const logRes = await fetch(
+                    `https://api.github.com/repos/${owner}/${repo}/actions/jobs/${entry.automationJobId}/logs`,
+                    { headers: { Authorization: `Bearer ${process.env.GITHUB_TOKEN}`, Accept: 'application/vnd.github+json' }, redirect: 'follow' }
+                  );
+                  if (logRes.ok) {
+                    const failures = parseTestFailures(await logRes.text());
+                    if (failures.length) {
+                      const shown = failures.slice(0, FAILURE_DISPLAY_LIMIT);
+                      const extra = failures.length - FAILURE_DISPLAY_LIMIT;
+                      let value = shown.map(f =>
+                        `• ${f.env ? `ENV: ${f.env} | ` : ''}\`${f.name}\`\n  ${f.errorMsg || '—'}${f.ruleId ? `\n  RuleId: ${f.ruleId}` : ''}${f.actionItem ? `\n  ActionItem: ${f.actionItem}` : ''}`
+                      ).join('\n\n');
+                      if (extra > 0) value += `\n\n_(+${extra} more failures — <${run.html_url}|view full run>)_`;
+                      replyFields.push({ title: `Test Failures (${failures.length} failed)`, value, short: false });
+                    }
+                  } else {
+                    core.warning(`Log fetch for stage '${stageName}' returned HTTP ${logRes.status} — test failure details unavailable`);
+                  }
+                } catch (e) {
+                  core.warning(`Could not fetch test logs for stage '${stageName}': ${e.message}`);
+                }
+              }
+
+              replyFields.push({ title: 'Error', value: errorText, short: false });
+
+              // Allure link — direct URL construction, no gh-pages API lookup
+              if (hasAutomation && config.allureDir && entry.automationEnvName) {
+                const runFolder = `${run.run_number}-${run.run_attempt ?? 1}`;
+                const allureUrl = `${ALLURE_BASE_URL}/${config.allureDir}/${entry.automationEnvName}/${runFolder}`;
+                replyFields.push({ title: 'Allure Report', value: `<${allureUrl}|View Test Results>`, short: false });
+              }
+
+              const replyTitle = config.multi
+                ? `:x: *${stageName}*`
+                : `:x: *${config.display}*`;
+
+              try {
+                await post({
+                  channel,
+                  thread_ts: threadTs,
+                  text: replyTitle,
+                  attachments: [{ color: 'danger', fields: replyFields }]
+                });
+              } catch (e) {
+                core.warning(`Thread reply failed for stage '${stageName}': ${e.message}`);
+              }
+            }

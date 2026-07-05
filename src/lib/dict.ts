@@ -131,6 +131,13 @@ export const DICT = {
     en: "Swipe through eighteen chapters · click Read more for the full chapter",
     he: "החליקו בין שמונה־עשר פרקים · לחצו על 'קרא עוד' לפרק המלא"
   },
+  /* ---------- Route timeline (2026 redesign) ---------- */
+  route_eyebrow: { en: "The route · day by day", he: "המסלול · יום אחר יום" },
+  route_title: { en: "The whole journey", he: "כל המסע" },
+  route_kicker: {
+    en: "Five bases, eighteen days — tap any day to open its chapter",
+    he: "חמישה בסיסים, שמונה־עשר ימים — הקישו על יום כדי לפתוח את הפרק"
+  },
   plan_chapter_x_of_y: {
     en: "Chapter {x} / {y}",
     he: "פרק {x} / {y}"

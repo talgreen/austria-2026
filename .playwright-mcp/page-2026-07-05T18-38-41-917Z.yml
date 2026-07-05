@@ -1,0 +1,96 @@
+- generic [ref=f2e2]:
+  - navigation [ref=f2e3]:
+    - generic [ref=f2e4]:
+      - button "אוסטריה '26" [ref=f2e5]:
+        - generic [ref=f2e6]: אוסטריה
+        - generic [ref=f2e7]: "'26"
+      - group "Language" [ref=f2e9]:
+        - img [ref=f2e10]
+        - button "EN" [ref=f2e14]
+        - button "עב" [pressed] [ref=f2e15]
+  - generic [ref=f2e17]:
+    - generic [ref=f2e18]:
+      - generic [ref=f2e19]: עוד 35 ימים
+      - heading "אוסטריה מחכה ✈️" [level=1] [ref=f2e20]
+    - generic [ref=f2e21]:
+      - generic [ref=f2e22]:
+        - img [ref=f2e23]
+        - text: יציאה
+      - generic [ref=f2e25]: תל אביב → וינה
+      - generic [ref=f2e26]: נחיתה 08:45 · יוצאים לדרך ~10:00
+      - generic [ref=f2e28]:
+        - generic [ref=f2e29]:
+          - generic [ref=f2e31]:
+            - generic [ref=f2e33]: "3"
+            - generic [ref=f2e35]: "4"
+          - generic [ref=f2e36]: ימים
+        - generic [ref=f2e37]: ":"
+        - generic [ref=f2e38]:
+          - generic [ref=f2e40]:
+            - generic [ref=f2e42]: "0"
+            - generic [ref=f2e44]: "3"
+          - generic [ref=f2e45]: שעות
+        - generic [ref=f2e46]: ":"
+        - generic [ref=f2e47]:
+          - generic [ref=f2e49]:
+            - generic [ref=f2e51]: "2"
+            - generic [ref=f2e53]: "1"
+          - generic [ref=f2e54]: דקות
+    - button "מתכוננים 0 מתוך 19 מוכן" [ref=f2e55]:
+      - generic [ref=f2e56]:
+        - img [ref=f2e57]
+        - text: מתכוננים
+      - generic [ref=f2e60]: 0 מתוך 19 מוכן
+    - generic [ref=f2e62]:
+      - button "יום 1 · הצצה" [ref=f2e63]:
+        - generic [ref=f2e64]:
+          - img [ref=f2e65]
+          - text: יום 1 · הצצה
+      - generic [ref=f2e68]:
+        - img [ref=f2e69]
+        - text: טוען…
+  - contentinfo [ref=f2e71]:
+    - generic [ref=f2e73]:
+      - generic [ref=f2e74]: קולופון
+      - heading "נבנה למשפחה · אוגוסט 2026" [level=3] [ref=f2e75]
+      - paragraph [ref=f2e76]: אתר אחד קטן, קיץ אחד גדול.
+      - generic [ref=f2e77]:
+        - generic [ref=f2e78]: אוסטריה
+        - generic [ref=f2e79]: "'26"
+        - generic [ref=f2e80]: ·
+        - generic [ref=f2e81]: 9 — 26 באוגוסט 2026
+        - generic [ref=f2e82]: ·
+        - generic [ref=f2e83]:
+          - text: נבנה ב
+          - img [ref=f2e84]
+      - generic [ref=f2e86]: Gute Reise.
+      - generic [ref=f2e87]:
+        - generic [ref=f2e88]: שפה
+        - group "Language" [ref=f2e89]:
+          - button "EN" [ref=f2e90]
+          - button "עב" [pressed] [ref=f2e91]
+      - generic [ref=f2e92]: צילומים בקרדיט ליוצריהם. מפה © OpenStreetMap ו־CARTO.
+  - navigation [ref=f2e94]:
+    - list [ref=f2e95]:
+      - listitem [ref=f2e96]:
+        - button "היום" [ref=f2e97]:
+          - img [ref=f2e99]
+          - text: היום
+      - listitem [ref=f2e103]:
+        - button "לגלות" [ref=f2e104]:
+          - img [ref=f2e106]
+          - text: לגלות
+      - listitem [ref=f2e109]:
+        - button "ילדים" [ref=f2e110]:
+          - img [ref=f2e112]
+          - text: ילדים
+      - listitem [ref=f2e115]:
+        - button "מפה" [ref=f2e116]:
+          - img [ref=f2e118]
+          - text: מפה
+      - listitem [ref=f2e120]:
+        - button "עוד" [ref=f2e121]:
+          - img [ref=f2e123]
+          - text: עוד
+  - button "שוחחו עם פליקס" [ref=f2e127]:
+    - img [ref=f2e129]

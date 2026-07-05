@@ -1,0 +1,445 @@
+diff --git a/.github/workflows/slack-pipeline-alert.yml b/.github/workflows/slack-pipeline-alert.yml
+index 884b28e029cf..ca2ad5c0d5a9 100644
+--- a/.github/workflows/slack-pipeline-alert.yml
++++ b/.github/workflows/slack-pipeline-alert.yml
+@@ -25,18 +25,6 @@ jobs:
+     if: github.event.workflow_run.conclusion == 'failure'
+     runs-on: ubuntu-k8s
+     steps:
+-      # Spread simultaneous triggers to reduce cache race window
+-      - name: Anti-race delay
+-        run: sleep $((RANDOM % 9 + 2))
+-
+-      # Restore Slack thread ts cached by the first pipeline that failed for this SHA
+-      - name: Restore thread cache
+-        id: restore-cache
+-        uses: actions/cache/restore@v4
+-        with:
+-          path: /tmp/slack-thread
+-          key: slack-thread-${{ github.event.workflow_run.head_sha }}
+-
+       - name: Get failed job details
+         id: get-details
+         uses: actions/github-script@v7
+@@ -50,7 +38,8 @@ jobs:
+                 owner: context.repo.owner,
+                 repo: context.repo.repo,
+                 run_id: run.id,
+-                filter: 'latest'
++                filter: 'latest',
++                per_page: 100
+               }));
+             } catch (e) {
+               core.error(`Failed to list jobs for run ${run.id}: ${e.message}`);
+@@ -88,13 +77,12 @@ jobs:
+                 });
+                 annotations = annos.slice(0, 3).map(a => a.message).filter(Boolean);
+               } catch (e) {
+-                // annotations unavailable for some job types (e.g. reusable workflows — job.id != check_run_id)
+                 if (e.status !== 404 && e.status !== 422) {
+                   core.warning(`Could not fetch annotations for job ${job.id}: ${e.message}`);
+                 }
+               }
+ 
+-              jobDetails.push({ name: job.name, failedSteps, annotations });
++              jobDetails.push({ id: job.id, name: job.name, failedSteps, annotations });
+             }
+ 
+             core.setOutput('failed_jobs_json', JSON.stringify(jobDetails));
+@@ -113,18 +101,10 @@ jobs:
+             }
+             core.setOutput('workflow_name', workflowName);
+ 
+-      - name: Generate GitHub App token
+-        id: app-token
+-        uses: actions/create-github-app-token@v3
+-        with:
+-          app-id: ${{ secrets.WSC_DEVOPS_CICD_BOT_APP_ID }}
+-          private-key: ${{ secrets.WSC_DEVOPS_CICD_BOT_PRIVATE_KEY }}
+-
+       - name: Get deployer email
+         id: get-deployer
+         uses: actions/github-script@v7
+         with:
+-          github-token: ${{ steps.app-token.outputs.token }}
+           script: |
+             const run = context.payload.workflow_run;
+             const actor = (run.triggering_actor && run.triggering_actor.login)
+@@ -134,31 +114,26 @@ jobs:
+ 
+             if (!actor.endsWith('[bot]')) {
+               try {
+-                const { data: user } = await github.rest.users.getByUsername({ username: actor });
+-
+-                // Best: SAML/SSO identity via org membership (requires app token)
+-                try {
+-                  const { data: membership } = await github.rest.orgs.getMembershipForUser({
+-                    org: context.repo.owner,
+-                    username: actor
+-                  });
+-                  if (membership.user?.email) email = membership.user.email;
+-                } catch (e) {
+-                  core.info(`No SAML identity for '${actor}': ${e.message}`);
+-                }
+-
+-                // Fallbacks: public profile email, then first.last from real name
+-                if (!email && user.email) email = user.email;
+-                else if (!email && user.name) {
+-                  const parts = user.name.trim().toLowerCase().split(/\s+/);
+-                  if (parts.length >= 2) email = `${parts[0]}.${parts[parts.length - 1]}@wsc-sports.com`;
++                const { data: commits } = await github.rest.repos.listCommits({
++                  owner: context.repo.owner,
++                  repo: context.repo.repo,
++                  author: actor,
++                  per_page: 10
++                });
++                const wscRegex = /@wsc-sports\.com$/i;
++                for (const commit of commits) {
++                  const commitEmail = commit.commit.author?.email;
++                  if (commitEmail && wscRegex.test(commitEmail)) {
++                    email = commitEmail;
++                    break;
++                  }
+                 }
+               } catch (e) {
+-                core.warning(`GitHub user lookup failed for '${actor}': ${e.message} — using fallback email`);
++                core.warning(`Commit scan failed for '${actor}': ${e.message}`);
+               }
+             }
+ 
+-            if (!email) email = `${actor}@wsc-sports.com`;
++            if (!email && !actor.endsWith('[bot]')) email = `${actor}@wsc-sports.com`;
+             core.setOutput('github_username', actor);
+             core.setOutput('email', email);
+ 
+@@ -214,13 +189,14 @@ jobs:
+           GITHUB_USERNAME: ${{ steps.get-deployer.outputs.github_username }}
+           ENV_LABEL: ${{ steps.env.outputs.label }}
+           WORKFLOW_NAME: ${{ steps.get-details.outputs.workflow_name }}
+-          CACHE_HIT: ${{ steps.restore-cache.outputs.cache-hit }}
++          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+         with:
+           script: |
+-            const fs = require('fs');
+             const token = process.env.SLACK_API_TOKEN;
+             const channel = process.env.SLACK_CHANNEL;
+             const run = context.payload.workflow_run;
++            const owner = context.repo.owner;
++            const repo = context.repo.repo;
+ 
+             const userDisplay = process.env.SLACK_USER_ID
+               ? `<@${process.env.SLACK_USER_ID}>`
+@@ -228,149 +204,197 @@ jobs:
+ 
+             const failedJobs = JSON.parse(process.env.FAILED_JOBS_JSON || '[]');
+ 
++            const PIPELINE_CONFIG = {
++              'MovieCreatorConsole K8s Build and Deploy':                             { display: 'Movie Creator Console',            allureDir: 'MovieCreatorConsole',   multi: true  },
++              'MovieCreatorDispatcherConsole K8s Build and Deploy':                   { display: 'Movie Creator Dispatcher Console', allureDir: null,                    multi: true  },
++              'MovieCreatorValidationMonitor K8s Build and Deploy':                   { display: 'Movie Creator Validation Monitor', allureDir: null,                    multi: true  },
++              'MovieCreatorService App Service Build and Deploy':                     { display: 'Movie Creator Service',            allureDir: null,                    multi: false },
++              'MovieCreatorComplexActions nuget build and upload to Azure Artifacts': { display: 'Movie Creator ComplexActions',     allureDir: null,                    multi: false },
++              'MovieCreatorDAL nuget build and upload to Azure Artifacts':            { display: 'Movie Creator DAL',                allureDir: null,                    multi: false },
++              'MovieCreatorGameParts nuget build and upload to Azure Artifacts':      { display: 'Movie Creator GameParts',          allureDir: null,                    multi: false },
++              'MovieCreatorLogic nuget build and upload to Azure Artifacts':          { display: 'Movie Creator Logic',              allureDir: null,                    multi: false },
++              'AvGenService App Service Build and Deploy':                            { display: 'AvGen Service',                    allureDir: 'AvGenService',          multi: false },
++              'ContentManagerConsole K8s Build and Deploy':                          { display: 'Content Manager Console',          allureDir: 'ContentManagerConsole', multi: true  },
++            };
++
++            const pipelineName = process.env.WORKFLOW_NAME || run.name;
++            const config = PIPELINE_CONFIG[pipelineName] ?? { display: pipelineName, allureDir: null, multi: false };
++
++            const SINGLE_STAGE_KEY = '_single_';
++            const ALLURE_BASE_URL = 'https://wscsportsengineering.github.io/zoomincloud/allure';
++            const FAILURE_DISPLAY_LIMIT = 10;
++
+             const post = async (body) => {
+-              let res;
++              const res = await fetch('https://slack.com/api/chat.postMessage', {
++                method: 'POST',
++                headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
++                body: JSON.stringify(body)
++              });
++              if (!res.ok) throw new Error(`Slack returned HTTP ${res.status}`);
++              let data;
+               try {
+-                res = await fetch('https://slack.com/api/chat.postMessage', {
+-                  method: 'POST',
+-                  headers: {
+-                    'Authorization': `Bearer ${token}`,
+-                    'Content-Type': 'application/json'
+-                  },
+-                  body: JSON.stringify(body)
+-                });
++                data = await res.json();
+               } catch (e) {
+-                throw new Error(`Slack HTTP request failed: ${e.message}`);
++                throw new Error(`Slack response was not valid JSON (HTTP ${res.status}): ${e.message}`);
+               }
+-              if (!res.ok) {
+-                throw new Error(`Slack returned HTTP ${res.status}`);
++              if (!data.ok) throw new Error(`Slack API error: ${data.error}`);
++              return data;
++            };
++
++            // Group failed jobs by stage name
++            // Multi-stage: stage extracted from parent job name pattern deploy-{env}-{stage}-eus{n}
++            // Single-stage: all jobs merged under one sentinel key
++            const stageRegex = /^deploy-(?:prod|uat|staging[^-]*)-(.+)-eus\d+$/;
++            const stageMap = new Map();
++
++            for (const job of failedJobs) {
++              const parent = job.name.split(' / ')[0].trim();
++              const stageMatch = config.multi ? parent.match(stageRegex) : null;
++              const stageName = stageMatch ? stageMatch[1] : (config.multi ? parent : SINGLE_STAGE_KEY);
++
++              if (!stageMap.has(stageName)) {
++                stageMap.set(stageName, { failedSteps: new Set(), annotations: [], automationEnvName: null, automationJobId: null });
+               }
+-              try {
+-                return await res.json();
+-              } catch (e) {
+-                throw new Error(`Slack response was not valid JSON (HTTP ${res.status})`);
++              const entry = stageMap.get(stageName);
++              job.failedSteps.forEach(s => entry.failedSteps.add(s));
++              entry.annotations.push(...job.annotations);
++
++              const envMatch = job.name.match(/Automation Tests - (.+?)(?:\s*\/|$)/);
++              if (envMatch && !entry.automationEnvName && job.failedSteps.some(s => s.includes('Automation Tests'))) {
++                entry.automationEnvName = envMatch[1].trim();
++                entry.automationJobId = job.id;
+               }
++            }
++
++            // Derive a short failure reason for single-stage pipelines
++            const deriveReason = (steps) => {
++              const s = [...steps].join(' ').toLowerCase();
++              if (s.includes('automation tests')) return 'automation tests failed';
++              if (s.includes('build'))            return 'build failed';
++              if (s.includes('deploy') || s.includes('publish')) return 'deployment failed';
++              return 'pipeline failed';
+             };
+ 
+-            // Get thread ts from cache, or create a new main message
+-            const tsFile = '/tmp/slack-thread/ts';
+-            let threadTs = null;
++            // Build main message fields
++            const mainFields = [
++              { title: 'Branch',      value: `\`${run.head_branch}\``, short: true },
++              { title: 'Deployed by', value: userDisplay,              short: true },
++            ];
+ 
+-            if (process.env.CACHE_HIT === 'true' && fs.existsSync(tsFile)) {
+-              try {
+-                threadTs = fs.readFileSync(tsFile, 'utf8').trim();
+-              } catch (e) {
+-                core.warning(`Could not read cached thread ts: ${e.message} — will create new main message`);
+-              }
++            if (config.multi) {
++              mainFields.push({ title: 'Failed stages', value: [...stageMap.keys()].join(' · '), short: false });
++            } else {
++              mainFields.push({ title: 'Reason', value: deriveReason(stageMap.get(SINGLE_STAGE_KEY).failedSteps), short: false });
+             }
+ 
+-            if (!threadTs) {
+-              const mainData = await post({
++            mainFields.push({ title: 'Run', value: `<${run.html_url}|View Failed Run>`, short: false });
++
++            // Post main message
++            let mainData;
++            try {
++              mainData = await post({
+                 channel,
+-                text: `*Deployment Failed* | ${process.env.ENV_LABEL}`,
++                text: `*${config.display}* | ${process.env.ENV_LABEL} — Deployment Failed`,
+                 attachments: [{
+                   color: 'danger',
+-                  fields: [
+-                    { title: 'Branch',      value: `\`${run.head_branch}\``,         short: true  },
+-                    { title: 'Deployed by', value: userDisplay,                      short: true  },
+-                    { title: 'Commit',      value: run.head_sha.slice(0, 7),         short: true  }
+-                  ],
++                  fields: mainFields,
+                   footer: 'GitHub Actions',
+                   ts: Math.floor(Date.now() / 1000).toString()
+                 }]
+               });
++            } catch (e) {
++              core.setFailed(`Slack main message failed: ${e.message}`);
++              return;
++            }
+ 
+-              if (!mainData.ok) {
+-                core.setFailed(`Slack main message failed: ${mainData.error}`);
+-                return;
++            const threadTs = mainData.ts;
++
++            // Parse specific test failures from job logs
++            const parseTestFailures = (logText) => {
++              const seen = new Set();
++              const failures = [];
++              const lines = logText.split('\n').map(l => l.replace(/^\d{4}-\d{2}-\d{2}T[\d:.]+Z\s*/, '').trim());
++              for (let i = 0; i < lines.length; i++) {
++                if (!lines[i].includes('Test failed after')) continue;
++                const nameMatch = lines[i].match(/'([^']+)'\s+Test failed/);
++                if (!nameMatch || seen.has(nameMatch[1])) continue;
++                seen.add(nameMatch[1]);
++                const prevLineEnvMatch = (i > 0 ? lines[i - 1] : '').match(/CURRENT AUTOMATION ENV\s*:\s*(\S+)/);
++                let errorMsg = '', ruleId = '', actionItem = '';
++                for (let j = i + 1; j < Math.min(i + 6, lines.length); j++) {
++                  const l = lines[j];
++                  if (l.startsWith('Error:') && !errorMsg) {
++                    const rm = l.match(/RuleId:\s*([^\s,]+)/);
++                    if (rm) ruleId = rm[1];
++                    errorMsg = l.replace(/^Error:\s*/, '').replace(/\s*RuleId:.*/, '').replace(/,?\s*Time Waited:.*/, '').trim();
++                  }
++                  if (l.startsWith('ActionItem:') && !actionItem) actionItem = l.replace(/^ActionItem:\s*/, '').trim();
++                }
++                failures.push({ name: nameMatch[1], env: prevLineEnvMatch ? prevLineEnvMatch[1] : '', errorMsg, ruleId, actionItem });
+               }
++              return failures;
++            };
+ 
+-              threadTs = mainData.ts;
+-              fs.mkdirSync('/tmp/slack-thread', { recursive: true });
+-              fs.writeFileSync(tsFile, threadTs);
+-            }
+-
+-            // Thread reply for this pipeline
+-            const cleanJobName = name => name.split(' / ')[0].trim();
+-            const jobNames = failedJobs.map(j => `\`${cleanJobName(j.name)}\``);
+-            const jobsSummary = jobNames.length > 3
+-              ? jobNames.slice(0, 3).join(', ') + ` _(+${jobNames.length - 3} more)_`
+-              : jobNames.join(', ') || '—';
+-
+-            const uniqueSteps = [...new Set(failedJobs.flatMap(j => j.failedSteps))];
+-            const stepsText = uniqueSteps.slice(0, 3).map(s => `\`${s}\``).join(', ') || '—';
+-
+-            const errorText = failedJobs.flatMap(j => j.annotations).slice(0, 3)
+-              .map(a => `• ${a.length > 250 ? a.slice(0, 247) + '...' : a}`)
+-              .join('\n') || '_(no annotations available)_';
+-
+-            const hasAutomationFailure = uniqueSteps.some(s => s.includes('Automation Tests'));
+-            const allureFields = [];
+-            if (hasAutomationFailure) {
+-              const owner = context.repo.owner;
+-              const repo = context.repo.repo;
+-              const runFolder = `${run.run_number}-${run.run_attempt ?? 1}`;
+-              const automationJobs = failedJobs.filter(j => j.failedSteps.some(s => s.includes('Automation Tests')));
+-
+-              for (const j of automationJobs) {
+-                const match = j.name.match(/Automation Tests - (.+?)(?:\s*\/|$)/);
+-                const envName = match ? match[1].trim() : null;
+-                if (!envName) continue;
+-
+-                let reportPath = null;
++            // Post one thread reply per stage
++            for (const [stageName, entry] of stageMap) {
++              const stepsArr = [...entry.failedSteps];
++              const stepsText = stepsArr.slice(0, 3).map(s => `\`${s}\``).join(', ') || '—';
++              const errorText = entry.annotations.slice(0, 3)
++                .map(a => `• ${a.length > 250 ? a.slice(0, 247) + '...' : a}`)
++                .join('\n') || '_(no annotations available)_';
++
++              const replyFields = [
++                { title: 'Failed steps', value: stepsText, short: false },
++              ];
++
++              // Fetch and parse test failure details from logs
++              const hasAutomation = stepsArr.some(s => s.includes('Automation Tests'));
++              if (hasAutomation && entry.automationJobId) {
+                 try {
+-                  const { data: services } = await github.rest.repos.getContent({
+-                    owner, repo, path: 'allure', ref: 'gh-pages'
+-                  });
+-                  for (const svc of services.filter(e => e.type === 'dir')) {
+-                    try {
+-                      await github.rest.repos.getContent({
+-                        owner, repo,
+-                        path: `${svc.path}/${envName}/${runFolder}`,
+-                        ref: 'gh-pages'
+-                      });
+-                      reportPath = `${svc.path}/${envName}/${runFolder}`;
+-                      break;
+-                    } catch (e) {
+-                      if (e.status !== 404) core.warning(`gh-pages lookup error for ${svc.name}: ${e.message}`);
++                  const logRes = await fetch(
++                    `https://api.github.com/repos/${owner}/${repo}/actions/jobs/${entry.automationJobId}/logs`,
++                    { headers: { Authorization: `Bearer ${process.env.GITHUB_TOKEN}`, Accept: 'application/vnd.github+json' }, redirect: 'follow' }
++                  );
++                  if (logRes.ok) {
++                    const failures = parseTestFailures(await logRes.text());
++                    if (failures.length) {
++                      const shown = failures.slice(0, FAILURE_DISPLAY_LIMIT);
++                      const extra = failures.length - FAILURE_DISPLAY_LIMIT;
++                      let value = shown.map(f =>
++                        `• ${f.env ? `ENV: ${f.env} | ` : ''}\`${f.name}\`\n  ${f.errorMsg || '—'}${f.ruleId ? `\n  RuleId: ${f.ruleId}` : ''}${f.actionItem ? `\n  ActionItem: ${f.actionItem}` : ''}`
++                      ).join('\n\n');
++                      if (extra > 0) value += `\n\n_(+${extra} more failures — <${run.html_url}|view full run>)_`;
++                      replyFields.push({ title: `Test Failures (${failures.length} failed)`, value, short: false });
+                     }
++                  } else {
++                    core.warning(`Log fetch for stage '${stageName}' returned HTTP ${logRes.status} — test failure details unavailable`);
+                   }
+                 } catch (e) {
+-                  core.warning(`Could not list allure/ in gh-pages: ${e.message}`);
++                  core.warning(`Could not fetch test logs for stage '${stageName}': ${e.message}`);
+                 }
++              }
+ 
+-                if (reportPath) {
+-                  const url = `https://${owner.toLowerCase()}.github.io/${repo.toLowerCase()}/${reportPath}`;
+-                  allureFields.push({ title: `Allure Report (${envName})`, value: `<${url}|View Test Results>`, short: false });
+-                }
++              replyFields.push({ title: 'Error', value: errorText, short: false });
++
++              // Allure link — direct URL construction, no gh-pages API lookup
++              if (hasAutomation && config.allureDir && entry.automationEnvName) {
++                const runFolder = `${run.run_number}-${run.run_attempt ?? 1}`;
++                const allureUrl = `${ALLURE_BASE_URL}/${config.allureDir}/${entry.automationEnvName}/${runFolder}`;
++                replyFields.push({ title: 'Allure Report', value: `<${allureUrl}|View Test Results>`, short: false });
+               }
+-            }
+ 
+-            const replyData = await post({
+-              channel,
+-              thread_ts: threadTs,
+-              text: `:x: *Pipeline failed:* ${process.env.WORKFLOW_NAME || run.name}`,
+-              attachments: [{
+-                color: 'danger',
+-                fields: [
+-                  { title: 'Failed Jobs',  value: jobsSummary,                         short: false },
+-                  { title: 'Failed Steps', value: stepsText,                           short: false },
+-                  { title: 'Error',        value: errorText,                           short: false },
+-                  ...allureFields,
+-                  { title: 'Run Link',     value: `<${run.html_url}|View Failed Run>`, short: false }
+-                ]
+-              }]
+-            });
+-
+-            if (!replyData.ok) {
+-              core.setFailed(`Slack thread reply failed: ${replyData.error}`);
+-            }
++              const replyTitle = config.multi
++                ? `:x: *${stageName}*`
++                : `:x: *${config.display}*`;
+ 
+-      # Only save when this is the first failure for this SHA (cache was empty)
+-      - name: Save thread cache
+-        if: steps.restore-cache.outputs.cache-hit != 'true' && steps.get-details.outputs.has_failures == 'true'
+-        continue-on-error: true
+-        uses: actions/cache/save@v4
+-        with:
+-          path: /tmp/slack-thread
+-          key: slack-thread-${{ github.event.workflow_run.head_sha }}
++              try {
++                await post({
++                  channel,
++                  thread_ts: threadTs,
++                  text: replyTitle,
++                  attachments: [{ color: 'danger', fields: replyFields }]
++                });
++              } catch (e) {
++                core.warning(`Thread reply failed for stage '${stageName}': ${e.message}`);
++              }
++            }

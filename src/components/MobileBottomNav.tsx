@@ -78,6 +78,9 @@ export default function MobileBottomNav({ activeTab }: { activeTab: TabKey }) {
             <div className="mt-3 flex justify-center">
               <LanguageSwitcher variant="minimal" />
             </div>
+            <p className="mt-4 text-center text-[10px] leading-relaxed text-ink-700/45">
+              {t("footer_attribution")}
+            </p>
           </div>
         </div>
       )}
