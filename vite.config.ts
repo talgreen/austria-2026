@@ -2,10 +2,9 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
 
-// https://vite.dev/config/
-// GitHub Pages needs `/austria-2026/`; local dev uses `/` so opening
-// http://localhost:5173/ works (same as default Vite UX).
-export default defineConfig(({ command }) => ({
+// Vercel serves from the domain root, so no base-path juggling is needed
+// (unlike GitHub Pages, which required "/austria-2026/").
+export default defineConfig({
   plugins: [react(), tailwindcss()],
-  base: command === "serve" ? "/" : "/austria-2026/",
-}))
+  base: "/",
+})

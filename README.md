@@ -2,7 +2,9 @@
 
 A static, mobile-first trip companion for our family road trip across Austria, **8 – 26 August 2026** (Vienna → Salzburg → Tyrol → the Pinzgau lakes → Vienna). Itinerary, interactive map, attractions, stays, restaurants/supermarkets, weather, food & drink, packing/booking checklists, and an in-app AI tour-guide chat (**Felix**, a warm Austrian alpine guide). Bilingual Hebrew + English. Built to be opened on the phone during the trip.
 
-Deployed to GitHub Pages: **https://talgreen.github.io/austria-2026/**
+Deployed on **Vercel** (framework preset: Vite). Pushes to `main` deploy to
+production; every branch/PR gets a preview URL. Set `VITE_GEMINI_API_KEY` in the
+Vercel project's Environment Variables for the in-app Felix chat.
 
 Built on a reusable trip-companion pattern. For the full design rationale and the playbook, see [`docs/HOW_TO_BUILD_A_VACATION_WEBSITE.md`](docs/HOW_TO_BUILD_A_VACATION_WEBSITE.md).
 
@@ -27,7 +29,7 @@ npm run preview  # preview the production build locally
 npm run lint     # ESLint flat config
 ```
 
-`vite.config.ts` switches the `base` path between local dev (`/`) and the GitHub Pages deploy (`/austria-2026/`) automatically.
+The app uses a root base path (`/`) for both local development and Vercel production.
 
 ## Environment variables
 
@@ -61,7 +63,7 @@ All content lives in plain TypeScript files under `src/data/` — no CMS, no dat
 
 ### Adding photos
 
-Image fields point to `./images/<slug>.jpg`. Drop your own `.jpg` files into `public/images/` with matching names and they will appear automatically. Until then, each card shows a colour-coded fallback with the place name. Always use **relative** paths (`./images/...`, not `/images/...`) so they resolve correctly under the GH Pages base path.
+Image fields point to `./images/<slug>.jpg`. Drop your own `.jpg` files into `public/images/` with matching names and they will appear automatically. Until then, each card shows a colour-coded fallback with the place name. Always use **relative** paths (`./images/...`, not `/images/...`) so they resolve correctly.
 
 ## Helper scripts
 
@@ -75,14 +77,9 @@ Image fields point to `./images/<slug>.jpg`. Drop your own `.jpg` files into `pu
 | `npm run repair:german-words-audio` | Re-encodes any partially-truncated MP3 returned by a TTS provider. |
 | `node scripts/smoke-test-gemini-live.mjs` | Opens a one-shot Live WebSocket to verify your Gemini key works. |
 
-## Deploy (auto)
+## Deploy
 
-`.github/workflows/deploy.yml` builds and publishes to GitHub Pages on every push to `main`. To enable on a new fork:
-
-1. Push the repo to `talgreen/austria-2026` (or whichever slug — update `vite.config.ts`'s prod `base` to match).
-2. In **Settings → Pages**, set **Source = GitHub Actions**.
-3. Add `VITE_GEMINI_API_KEY` as a repository secret if you want the chat enabled by default.
-4. The first push triggers the workflow; the live URL appears in the Actions log.
+Connect the GitHub repo to Vercel via **vercel.com → Add New → Project → Import Git Repository** (or use `npx vercel link` from the CLI). Vercel auto-detects the Vite framework from `vercel.json`. Set `VITE_GEMINI_API_KEY` in the project's **Environment Variables** for the in-app chat. Every push to `main` triggers a production deployment; pull requests and other branches get preview URLs.
 
 ## Project layout
 
