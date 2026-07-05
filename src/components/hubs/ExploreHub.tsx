@@ -36,7 +36,7 @@ export default function ExploreHub() {
               <div className="font-bold text-ink-900">{t(title)}</div>
               <div className="text-sm text-ink-700/75 truncate">{t(sub)}</div>
             </div>
-            <ChevronRight size={20} className="text-ink-700/40 shrink-0" />
+            <ChevronRight size={20} className="text-ink-700/40 shrink-0 rtl:scale-x-[-1]" />
           </button>
         ))}
       </div>

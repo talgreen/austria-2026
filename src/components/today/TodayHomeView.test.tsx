@@ -20,21 +20,27 @@ describe("TodayHomeView", () => {
   });
 
   it("during phase shows the featured day title and the 'now' card", () => {
-    const today = itinerary[5]; // Day 6
+    // `today` and `featured` are deliberately DIFFERENT days here so this
+    // test actually catches a regression where DuringTrip reads
+    // `state.today` instead of `state.featured` (which is what it should
+    // render — see DuringTrip.tsx).
+    const today = itinerary[6]; // Day 7 — the actual calendar day
+    const featured = itinerary[5]; // Day 6 — the day being featured (e.g. evening cutoff)
     const state: TripState = {
       phase: "during",
       today,
-      tomorrow: itinerary[6],
-      featured: today,
+      tomorrow: itinerary[7],
+      featured,
       isFeaturingTomorrow: false,
-      dayIndex: 5,
+      dayIndex: 6,
       elapsed: partsFromMs(0),
     };
     renderWithLang(<TodayHomeView state={state} />);
     // renderWithLang defaults to Hebrew, and this day has a Hebrew title
     // override in itinerary.he.ts, so assert against the localized title
-    // (same string DuringTrip actually renders via useLocalizeDay).
-    expect(screen.getByText(localizeDay(today, "he").title)).toBeInTheDocument();
+    // (same string DuringTrip actually renders via useLocalizeDay). This
+    // must be the FEATURED day's title, not today's.
+    expect(screen.getByText(localizeDay(featured, "he").title)).toBeInTheDocument();
   });
 
   it("after phase shows the welcome-back title", () => {

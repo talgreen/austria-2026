@@ -44,7 +44,7 @@ Copy `.env.example` to `.env.local` and fill in the keys you need. None of these
 
 ## Updating content
 
-All content lives in plain TypeScript files under `src/data/` — no CMS, no database. Edit the file, push to `main`, and GitHub Actions rebuilds and redeploys automatically.
+All content lives in plain TypeScript files under `src/data/` — no CMS, no database. Edit the file, push to `main`, and Vercel rebuilds and redeploys automatically.
 
 | File | What's in it |
 | --- | --- |

@@ -789,7 +789,6 @@ export const DICT = {
     en: "{done} of {total} ready",
     he: "{done} מתוך {total} מוכן"
   },
-  today_open_lists: { en: "Open the lists", he: "פתחו את הרשימות" },
   today_day1_preview: { en: "Day 1 · preview", he: "יום 1 · הצצה" },
   today_now_label: { en: "Right now", he: "עכשיו" },
   today_next_label: { en: "Up next", he: "הבא בתור" },

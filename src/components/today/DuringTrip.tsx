@@ -45,7 +45,7 @@ export default function DuringTrip({ state }: { state: Extract<TripState, { phas
       {/* Up next — pine practical card */}
       <div className="rounded-[var(--radius-card)] p-4 bg-surface-next">
         <div className="flex items-center gap-2 text-[11px] font-extrabold uppercase tracking-wide text-pine-600">
-          <ArrowRight size={14} /> {t("today_next_label")}
+          <ArrowRight size={14} className="rtl:scale-x-[-1]" /> {t("today_next_label")}
         </div>
         {next ? (
           <>
