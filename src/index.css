@@ -45,6 +45,34 @@
   --color-lake-500: #2E8B9E;
   --color-lake-600: #226E7E;
 
+  /* ---------- Style C — Warm Minimal palette (2026 redesign) ----------
+     Coral = "now / urgent", pine = "next / practical", gold = ambient.
+     Coral intentionally echoes the Austrian-red terracotta family so the
+     app keeps a heritage thread. Named semantically so a future dark
+     theme can remap them in one place. */
+  --color-coral-50: #FDEEE8;
+  --color-coral-100: #FAD9CC;
+  --color-coral-400: #EC6A45;
+  --color-coral-500: #E4572E;
+  --color-coral-600: #C8431F;
+  --color-coral-700: #A5361A;
+  --color-pine-50: #EAF2ED;
+  --color-pine-100: #D6E6DC;
+  --color-pine-500: #3B7A57;
+  --color-pine-600: #2C6043;
+  --color-pine-700: #224B34;
+
+  /* Semantic surfaces + accents (map onto the palette above). */
+  --color-surface: #F7F5F2;       /* neutral card */
+  --color-surface-next: #F0F4F1;  /* pine-tinted "next/practical" card */
+  --color-now: var(--color-coral-500);
+  --color-next: var(--color-pine-500);
+  --color-ambient: var(--color-gold-500);
+
+  /* Larger radii + roomier touch targets for the app-like feel. */
+  --radius-card: 1rem;    /* rounded-2xl-ish, used via rounded-[var(--radius-card)] */
+  --radius-pill: 999px;
+
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
   --font-serif: "Cormorant Garamond", "Georgia", ui-serif, serif;
 }
