@@ -1,0 +1,225 @@
+- generic [ref=e2]:
+  - navigation [ref=e3]:
+    - generic [ref=e4]:
+      - button "אוסטריה '26" [ref=e5]:
+        - generic [ref=e6]: אוסטריה
+        - generic [ref=e7]: "'26"
+      - group "Language" [ref=e19]:
+        - img [ref=e20]
+        - button "EN" [ref=e24]
+        - button "עב" [pressed] [ref=e25]
+  - generic [ref=e26]:
+    - generic [ref=e1099]:
+      - generic [ref=e1100]:
+        - generic [ref=e1103]: לילדים
+        - heading "כיף בדרכים" [level=2] [ref=e1104]
+        - paragraph [ref=e1105]: חידות, בדיחות ומשחקים לכל נסיעה בטיול
+      - generic [ref=e1106]:
+        - generic [ref=e1107]: בוחרים יום
+        - generic [ref=e1108]:
+          - button "1" [ref=e1109] [cursor=pointer]:
+            - generic [ref=e1110]: "1"
+          - button "2" [ref=e1111] [cursor=pointer]:
+            - generic [ref=e1112]: "2"
+          - button "3" [ref=e1113] [cursor=pointer]:
+            - generic [ref=e1114]: "3"
+          - button "4" [ref=e1115] [cursor=pointer]:
+            - generic [ref=e1116]: "4"
+          - button "5" [ref=e1117] [cursor=pointer]:
+            - generic [ref=e1118]: "5"
+          - button "6" [ref=e1119] [cursor=pointer]:
+            - generic [ref=e1120]: "6"
+          - button "7" [ref=e1121] [cursor=pointer]:
+            - generic [ref=e1122]: "7"
+          - button "8" [ref=e1123] [cursor=pointer]:
+            - generic [ref=e1124]: "8"
+          - button "9" [ref=e1125] [cursor=pointer]:
+            - generic [ref=e1126]: "9"
+          - button "10" [ref=e1127] [cursor=pointer]:
+            - generic [ref=e1128]: "10"
+          - button "11" [ref=e1129] [cursor=pointer]:
+            - generic [ref=e1130]: "11"
+          - button "12" [ref=e1131] [cursor=pointer]:
+            - generic [ref=e1132]: "12"
+          - button "13" [ref=e1133] [cursor=pointer]:
+            - generic [ref=e1134]: "13"
+          - button "14" [ref=e1135] [cursor=pointer]:
+            - generic [ref=e1136]: "14"
+          - button "15" [ref=e1137] [cursor=pointer]:
+            - generic [ref=e1138]: "15"
+          - button "16" [ref=e1139] [cursor=pointer]:
+            - generic [ref=e1140]: "16"
+          - button "17" [ref=e1141] [cursor=pointer]:
+            - generic [ref=e1142]: "17"
+          - button "18" [ref=e1143] [cursor=pointer]:
+            - generic [ref=e1144]: "18"
+        - generic [ref=e1145]: יום 1
+      - generic [ref=e1146]:
+        - paragraph [ref=e1148]: יום ההמראה הגדול! ✈️
+        - generic [ref=e1149]:
+          - generic [ref=e1150]:
+            - img [ref=e1151]
+            - text: חידות
+          - generic [ref=e1153]:
+            - button "יש לי כנפיים אבל אני לא ציפור, ואני טס גבוה-גבוה מעל העננים. מי אני? קל לחצו לתשובה" [ref=e1154] [cursor=pointer]:
+              - generic [ref=e1155]:
+                - paragraph [ref=e1156]: יש לי כנפיים אבל אני לא ציפור, ואני טס גבוה-גבוה מעל העננים. מי אני?
+                - generic [ref=e1157]: קל
+              - generic [ref=e1158]:
+                - img [ref=e1159]
+                - text: לחצו לתשובה
+            - button "יש בי המון מים מתוקים, הרים מסביבי, ואפשר לשוט עליי בסירה. מי אני? קל לחצו לתשובה" [ref=e1162] [cursor=pointer]:
+              - generic [ref=e1163]:
+                - paragraph [ref=e1164]: יש בי המון מים מתוקים, הרים מסביבי, ואפשר לשוט עליי בסירה. מי אני?
+                - generic [ref=e1165]: קל
+              - generic [ref=e1166]:
+                - img [ref=e1167]
+                - text: לחצו לתשובה
+            - button "יש לי ערים אבל אין בי בתים, יש לי הרים אבל אין בי אבנים, ויש בי מים שאי אפשר לשתות. מי אני? מאתגר לחצו לתשובה" [ref=e1170] [cursor=pointer]:
+              - generic [ref=e1171]:
+                - paragraph [ref=e1172]: יש לי ערים אבל אין בי בתים, יש לי הרים אבל אין בי אבנים, ויש בי מים שאי אפשר לשתות. מי אני?
+                - generic [ref=e1173]: מאתגר
+              - generic [ref=e1174]:
+                - img [ref=e1175]
+                - text: לחצו לתשובה
+        - generic [ref=e1178]:
+          - generic [ref=e1179]:
+            - img [ref=e1180]
+            - text: בדיחות
+          - generic [ref=e1183]:
+            - button "למה הדג לא משחק כדורסל? קל לחצו לתשובה" [ref=e1184] [cursor=pointer]:
+              - generic [ref=e1185]:
+                - paragraph [ref=e1186]: למה הדג לא משחק כדורסל?
+                - generic [ref=e1187]: קל
+              - generic [ref=e1188]:
+                - img [ref=e1189]
+                - text: לחצו לתשובה
+            - button "מה אמר קיר לקיר? קל לחצו לתשובה" [ref=e1192] [cursor=pointer]:
+              - generic [ref=e1193]:
+                - paragraph [ref=e1194]: מה אמר קיר לקיר?
+                - generic [ref=e1195]: קל
+              - generic [ref=e1196]:
+                - img [ref=e1197]
+                - text: לחצו לתשובה
+            - button "מה אמר האפס לשמונה? מאתגר לחצו לתשובה" [ref=e1200] [cursor=pointer]:
+              - generic [ref=e1201]:
+                - paragraph [ref=e1202]: מה אמר האפס לשמונה?
+                - generic [ref=e1203]: מאתגר
+              - generic [ref=e1204]:
+                - img [ref=e1205]
+                - text: לחצו לתשובה
+        - generic [ref=e1208]:
+          - generic [ref=e1209]:
+            - img [ref=e1210]
+            - text: שוברי שיניים
+          - generic [ref=e1215]:
+            - generic [ref=e1216]:
+              - paragraph [ref=e1217]: גנן גידל דגן בגן, דגן גדול גדל בגן
+              - generic [ref=e1218]: קל
+            - generic [ref=e1219]: אמרו שלוש פעמים, מהר!
+        - article [ref=e1220]:
+          - img
+          - generic [ref=e1221]:
+            - generic [ref=e1222]: אתגר היום
+            - heading "צייד הדגלים" [level=3] [ref=e1224]
+            - paragraph [ref=e1225]: הגענו לאוסטריה! מי מוצא ראשון 3 דגלים אדום-לבן-אדום בדרך לזלצבורג?
+        - generic [ref=e1226]:
+          - generic [ref=e1227]:
+            - img [ref=e1228]
+            - text: משחקים לנסיעה של היום
+          - generic [ref=e1230]:
+            - button "אני רואה — מהדורת אוסטריה" [ref=e1231] [cursor=pointer]:
+              - img [ref=e1232]
+              - text: אני רואה — מהדורת אוסטריה
+            - button "בינגו מכונית" [ref=e1234] [cursor=pointer]:
+              - img [ref=e1235]
+              - text: בינגו מכונית
+    - generic [ref=e1238]:
+      - generic [ref=e1239]:
+        - generic [ref=e1242]: משחקי דרך
+        - heading "מדף המשחקים" [level=2] [ref=e1243]
+        - paragraph [ref=e1244]: בלי ציוד — רק פה ודמיון
+      - generic [ref=e1245]:
+        - 'button "אני רואה — מהדורת אוסטריה 3+ קל המשחק הקלאסי, עם כל מה שרואים רק כאן: פרות, פסגות ומנהרות" [ref=e1247] [cursor=pointer]':
+          - generic [ref=e1248]:
+            - heading "אני רואה — מהדורת אוסטריה" [level=3] [ref=e1249]
+            - generic [ref=e1250]:
+              - generic [ref=e1251]: 3+
+              - generic [ref=e1252]: קל
+              - img [ref=e1254]
+          - paragraph [ref=e1256]: "המשחק הקלאסי, עם כל מה שרואים רק כאן: פרות, פסגות ומנהרות"
+        - button "בינגו מכונית 3+ קל רשימת חיפוש בלי דף ובלי עיפרון — רק עיניים חדות" [ref=e1258] [cursor=pointer]:
+          - generic [ref=e1259]:
+            - heading "בינגו מכונית" [level=3] [ref=e1260]
+            - generic [ref=e1261]:
+              - generic [ref=e1262]: 3+
+              - generic [ref=e1263]: קל
+              - img [ref=e1265]
+          - paragraph [ref=e1267]: רשימת חיפוש בלי דף ובלי עיפרון — רק עיניים חדות
+        - button "מי אני? 3+ קל מחקים חיה — והשאר מנחשים" [ref=e1269] [cursor=pointer]:
+          - generic [ref=e1270]:
+            - heading "מי אני?" [level=3] [ref=e1271]
+            - generic [ref=e1272]:
+              - generic [ref=e1273]: 3+
+              - generic [ref=e1274]: קל
+              - img [ref=e1276]
+          - paragraph [ref=e1278]: מחקים חיה — והשאר מנחשים
+        - button "מלך ההד 3+ קל שיר-הד לקטנטנים — שרים שורה וכולם חוזרים" [ref=e1280] [cursor=pointer]:
+          - generic [ref=e1281]:
+            - heading "מלך ההד" [level=3] [ref=e1282]
+            - generic [ref=e1283]:
+              - generic [ref=e1284]: 3+
+              - generic [ref=e1285]: קל
+              - img [ref=e1287]
+          - paragraph [ref=e1289]: שיר-הד לקטנטנים — שרים שורה וכולם חוזרים
+        - button "מה הייתם מעדיפים? 4+ קל שאלות מצחיקות עם שתי אפשרויות בלתי אפשריות" [ref=e1291] [cursor=pointer]:
+          - generic [ref=e1292]:
+            - heading "מה הייתם מעדיפים?" [level=3] [ref=e1293]
+            - generic [ref=e1294]:
+              - generic [ref=e1295]: 4+
+              - generic [ref=e1296]: קל
+              - img [ref=e1298]
+          - paragraph [ref=e1300]: שאלות מצחיקות עם שתי אפשרויות בלתי אפשריות
+        - button "עשרים שאלות 5+ מאתגר חושבים על משהו — והשאר חוקרים עד שמגלים" [ref=e1302] [cursor=pointer]:
+          - generic [ref=e1303]:
+            - heading "עשרים שאלות" [level=3] [ref=e1304]
+            - generic [ref=e1305]:
+              - generic [ref=e1306]: 5+
+              - generic [ref=e1307]: מאתגר
+              - img [ref=e1309]
+          - paragraph [ref=e1311]: חושבים על משהו — והשאר חוקרים עד שמגלים
+        - button "שרשרת מילים 5+ מאתגר כל מילה מתחילה באות שבה נגמרה הקודמת" [ref=e1313] [cursor=pointer]:
+          - generic [ref=e1314]:
+            - heading "שרשרת מילים" [level=3] [ref=e1315]
+            - generic [ref=e1316]:
+              - generic [ref=e1317]: 5+
+              - generic [ref=e1318]: מאתגר
+              - img [ref=e1320]
+          - paragraph [ref=e1322]: כל מילה מתחילה באות שבה נגמרה הקודמת
+      - generic [ref=e1323]:
+        - img [ref=e1324]
+        - text: בחבילה של כל יום מחכות הצעות למשחקים שמתאימים לנסיעות של אותו יום.
+  - navigation [ref=e837]:
+    - list [ref=e838]:
+      - listitem [ref=e839]:
+        - button "היום" [ref=e840]:
+          - img [ref=e842]
+          - text: היום
+      - listitem [ref=e846]:
+        - button "לגלות" [ref=e847]:
+          - img [ref=e849]
+          - text: לגלות
+      - listitem [ref=e852]:
+        - button "ילדים" [ref=e853]:
+          - img [ref=e855]
+          - text: ילדים
+      - listitem [ref=e858]:
+        - button "מפה" [ref=e859]:
+          - img [ref=e861]
+          - text: מפה
+      - listitem [ref=e863]:
+        - button "עוד" [ref=e864]:
+          - img [ref=e866]
+          - text: עוד
+  - button "שוחחו עם פליקס" [ref=e831]:
+    - img [ref=e833]

@@ -61,12 +61,12 @@ export default function AttractionsGrid() {
               onClick={() => setRegion(tab.id)}
               className={`px-4 py-2 rounded-full text-sm font-medium transition-all whitespace-nowrap min-h-10 ${
                 region === tab.id
-                  ? "bg-ink-900 text-cream-50"
+                  ? "bg-terracotta-500 text-cream-50"
                   : "bg-cream-50 border border-cream-300 text-ink-800 hover:border-terracotta-500/40"
               }`}
             >
               {t(tab.key)}
-              <span className={`ms-2 text-xs ${region === tab.id ? "text-cream-200" : "text-ink-700/60"}`}>
+              <span className={`ms-2 text-xs ${region === tab.id ? "text-cream-50/70" : "text-ink-700/60"}`}>
                 {tab.count}
               </span>
             </button>
@@ -76,16 +76,14 @@ export default function AttractionsGrid() {
 
       <div className="-mx-4 sm:mx-0 px-4 sm:px-0 overflow-x-auto scrollbar-hide mb-6 sm:mb-8">
         <div className="flex items-center gap-2 min-w-max sm:min-w-0 sm:flex-wrap">
-          <button
-            onClick={() => setTag(null)}
-            className={`px-3 py-1.5 rounded-full text-xs font-medium transition-colors whitespace-nowrap min-h-9 ${
-              !tag
-                ? "bg-terracotta-500 text-cream-50"
-                : "bg-cream-50 border border-cream-300 text-ink-700 hover:border-terracotta-500/40"
-            }`}
-          >
-            {t("attr_filter_all")}
-          </button>
+          {tag && (
+            <button
+              onClick={() => setTag(null)}
+              className="px-3 py-1.5 rounded-full text-xs font-medium whitespace-nowrap min-h-9 bg-cream-50 border border-cream-300 text-ink-700 hover:border-terracotta-500/40 inline-flex items-center gap-1"
+            >
+              {t("attr_filter_clear")} ✕
+            </button>
+          )}
           {ALL_TAGS.map(at => (
             <button
               key={at}
@@ -101,6 +99,8 @@ export default function AttractionsGrid() {
           ))}
         </div>
       </div>
+
+      <div className="text-xs font-medium text-ink-700/55 mb-4">{t("attr_count", { n: filtered.length })}</div>
 
       <AnimatePresence mode="popLayout">
         <motion.div

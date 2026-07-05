@@ -1,0 +1,616 @@
+- generic [ref=e2]:
+  - navigation [ref=e3]:
+    - generic [ref=e4]:
+      - button "אוסטריה '26" [ref=e5]:
+        - generic [ref=e6]: אוסטריה
+        - generic [ref=e7]: "'26"
+      - generic [ref=e8]:
+        - button "היום" [ref=e9]
+        - button "לגלות" [ref=e10]
+        - button "ילדים" [ref=e11]
+        - button "מפה" [ref=e12]
+        - button "מסלול" [ref=e13]
+        - button "לינות" [ref=e14]
+        - button "טיפים" [ref=e15]
+        - button "רשימות" [ref=e16]
+        - button "חירום" [ref=e17]
+      - group "Language" [ref=e19]:
+        - img [ref=e20]
+        - button "EN" [ref=e24]
+        - button "עב" [pressed] [ref=e25]
+  - generic [ref=e28]:
+    - generic [ref=e29]:
+      - generic [ref=e32]: לאן נלך
+      - heading "מקומות שנתאהב בהם" [level=2] [ref=e33]
+      - paragraph [ref=e34]: אגמים, טירות, רכבלים, מערות, מערת קרח ורכבת קיטור
+    - generic [ref=e36]:
+      - button "הכול41" [ref=e37]
+      - button "וינה10" [ref=e38]
+      - button "אלפים31" [ref=e39]
+    - generic [ref=e41]:
+      - button "הכול" [ref=e42]
+      - button "מים" [ref=e43]
+      - button "אדרנלין" [ref=e44]
+      - button "טבע" [ref=e45]
+      - button "תרבות" [ref=e46]
+      - button "משפחה" [ref=e47]
+      - button "נוף" [ref=e48]
+      - button "מערה" [ref=e49]
+      - button "כפר" [ref=e50]
+    - generic [ref=e51]:
+      - article [ref=e53]:
+        - img "מצודת הוהנזלצבורג" [ref=e56]
+        - generic [ref=e57]: אלפים
+        - generic [ref=e60]: תרבות
+        - generic [ref=e61]:
+          - heading "מצודת הוהנזלצבורג" [level=3] [ref=e62]
+          - paragraph [ref=e63]: מצודת ימי ביניים על צוק, מגיעים אליה ברכבל משעשע, עם נוף נרחב על פני זלצבורג
+          - generic [ref=e64]:
+            - button "קרא עוד" [ref=e65]:
+              - img [ref=e66]
+              - text: קרא עוד
+            - 'button "הצג על המפה: מצודת הוהנזלצבורג" [ref=e67]':
+              - img [ref=e68]
+              - text: על המפה
+      - article [ref=e72]:
+        - img "רחוב גטריידהגאסה" [ref=e75]
+        - generic [ref=e76]: אלפים
+        - generic [ref=e79]: תרבות
+        - generic [ref=e80]:
+          - heading "רחוב גטריידהגאסה" [level=3] [ref=e81]
+          - paragraph [ref=e82]: הסמטה המפורסמת של העיר העתיקה בזלצבורג, עם שלטי ברזל מעוטרים ובית הולדתו של מוצרט
+          - generic [ref=e83]:
+            - button "קרא עוד" [ref=e84]:
+              - img [ref=e85]
+              - text: קרא עוד
+            - 'button "הצג על המפה: רחוב גטריידהגאסה" [ref=e86]':
+              - img [ref=e87]
+              - text: על המפה
+      - article [ref=e91]:
+        - img "ארמון וגני מירבל" [ref=e94]
+        - generic [ref=e95]: אלפים
+        - generic [ref=e98]: טבע
+        - generic [ref=e99]:
+          - heading "ארמון וגני מירבל" [level=3] [ref=e100]
+          - paragraph [ref=e101]: גני ארמון בארוקיים חינמיים עם מזרקות, ערוגות פרחים ונוף למצודה (וגם פינות מ׳צלילי המוזיקה׳)
+          - generic [ref=e102]:
+            - button "קרא עוד" [ref=e103]:
+              - img [ref=e104]
+              - text: קרא עוד
+            - 'button "הצג על המפה: ארמון וגני מירבל" [ref=e105]':
+              - img [ref=e106]
+              - text: על המפה
+      - article [ref=e110]:
+        - img "פארק השעשועים פנטסיאנה, שטראסוואלכן" [ref=e113]
+        - generic [ref=e114]: אלפים
+        - generic [ref=e117]: משפחה
+        - generic [ref=e118]:
+          - heading "פארק השעשועים פנטסיאנה, שטראסוואלכן" [level=3] [ref=e119]
+          - paragraph [ref=e120]: פארק השעשועים הגדול באוסטריה — מתקנים עדינים בנושא אגדות, מושלמים לילדים קטנים
+          - generic [ref=e121]:
+            - button "קרא עוד" [ref=e122]:
+              - img [ref=e123]
+              - text: קרא עוד
+            - 'button "הצג על המפה: פארק השעשועים פנטסיאנה, שטראסוואלכן" [ref=e124]':
+              - img [ref=e125]
+              - text: על המפה
+      - article [ref=e129]:
+        - img "פארק הטיפוס ולדבאד אניף" [ref=e132]
+        - generic [ref=e133]: אלפים
+        - generic [ref=e136]: אדרנלין
+        - generic [ref=e137]:
+          - heading "פארק הטיפוס ולדבאד אניף" [level=3] [ref=e138]
+          - paragraph [ref=e139]: פארק חבלים ביער מעל אגם רחצה, עם מסלול מיני לקטנטנים
+          - generic [ref=e140]:
+            - button "קרא עוד" [ref=e141]:
+              - img [ref=e142]
+              - text: קרא עוד
+            - 'button "הצג על המפה: פארק הטיפוס ולדבאד אניף" [ref=e143]':
+              - img [ref=e144]
+              - text: על המפה
+      - article [ref=e148]:
+        - img "מונדזה" [ref=e151]
+        - generic [ref=e152]: אלפים
+        - generic [ref=e155]: מים
+        - generic [ref=e156]:
+          - heading "מונדזה" [level=3] [ref=e157]
+          - paragraph [ref=e158]: עיירת אגם חמימה בסלצקאמרגוט עם כנסיית ׳צלילי המוזיקה׳, טיילת שטוחה וחוף משפחתי
+          - generic [ref=e159]:
+            - button "קרא עוד" [ref=e160]:
+              - img [ref=e161]
+              - text: קרא עוד
+            - 'button "הצג על המפה: מונדזה" [ref=e162]':
+              - img [ref=e163]
+              - text: על המפה
+      - article [ref=e167]:
+        - img "ארמון הלברון ומזרקות ההפתעה" [ref=e170]
+        - generic [ref=e171]: אלפים
+        - generic [ref=e174]: מים
+        - generic [ref=e175]:
+          - heading "ארמון הלברון ומזרקות ההפתעה" [level=3] [ref=e176]
+          - paragraph [ref=e177]: ארמון בארוקי עם מזרקות נסתרות שמתיזות על המבקרים — הילדים מתים על זה
+          - generic [ref=e178]:
+            - button "קרא עוד" [ref=e179]:
+              - img [ref=e180]
+              - text: קרא עוד
+            - 'button "הצג על המפה: ארמון הלברון ומזרקות ההפתעה" [ref=e181]':
+              - img [ref=e182]
+              - text: על המפה
+      - article [ref=e186]:
+        - img "גן החיות של זלצבורג (הלברון)" [ref=e189]
+        - generic [ref=e190]: אלפים
+        - generic [ref=e193]: טבע
+        - generic [ref=e194]:
+          - heading "גן החיות של זלצבורג (הלברון)" [level=3] [ref=e195]
+          - paragraph [ref=e196]: גן חיות משפחתי למרגלות מצוק, ממש ליד ארמון הלברון
+          - generic [ref=e197]:
+            - button "קרא עוד" [ref=e198]:
+              - img [ref=e199]
+              - text: קרא עוד
+            - 'button "הצג על המפה: גן החיות של זלצבורג (הלברון)" [ref=e200]':
+              - img [ref=e201]
+              - text: על המפה
+      - article [ref=e205]:
+        - img "עולמות הקריסטל של סברובסקי" [ref=e208]
+        - generic [ref=e209]: אלפים
+        - generic [ref=e212]: תרבות
+        - generic [ref=e213]:
+          - heading "עולמות הקריסטל של סברובסקי" [level=3] [ref=e214]
+          - paragraph [ref=e215]: עולם אמנות נוצץ של קריסטלים עם גן משחקים ענק בחוץ, הכל נגיש לעגלה
+          - generic [ref=e216]:
+            - button "קרא עוד" [ref=e217]:
+              - img [ref=e218]
+              - text: קרא עוד
+            - 'button "הצג על המפה: עולמות הקריסטל של סברובסקי" [ref=e219]':
+              - img [ref=e220]
+              - text: על המפה
+      - article [ref=e224]:
+        - img "עולם הקסם של אלמי על ההרטקייזר" [ref=e227]
+        - generic [ref=e228]: אלפים
+        - generic [ref=e231]: משפחה
+        - generic [ref=e232]:
+          - heading "עולם הקסם של אלמי על ההרטקייזר" [level=3] [ref=e233]
+          - paragraph [ref=e234]: גן משחקים הררי לילדים בנושא דרקונים, בקצה הרכבל של ההרטקייזר
+          - generic [ref=e235]:
+            - button "קרא עוד" [ref=e236]:
+              - img [ref=e237]
+              - text: קרא עוד
+            - 'button "הצג על המפה: עולם הקסם של אלמי על ההרטקייזר" [ref=e238]':
+              - img [ref=e239]
+              - text: על המפה
+      - article [ref=e243]:
+        - img "העיר העתיקה של קיצביהל" [ref=e246]
+        - generic [ref=e247]: אלפים
+        - generic [ref=e250]: כפר
+        - generic [ref=e251]:
+          - heading "העיר העתיקה של קיצביהל" [level=3] [ref=e252]
+          - paragraph [ref=e253]: עיר עתיקה פסטלית, ברובה ללא תנועה, שנעשתה לטיול משפחתי נינוח
+          - generic [ref=e254]:
+            - button "קרא עוד" [ref=e255]:
+              - img [ref=e256]
+              - text: קרא עוד
+            - 'button "הצג על המפה: העיר העתיקה של קיצביהל" [ref=e257]':
+              - img [ref=e258]
+              - text: על המפה
+      - article [ref=e262]:
+        - img "אגם הרחצה והפנאי של קירכברג" [ref=e265]
+        - generic [ref=e266]: אלפים
+        - generic [ref=e269]: מים
+        - generic [ref=e270]:
+          - heading "אגם הרחצה והפנאי של קירכברג" [level=3] [ref=e271]
+          - paragraph [ref=e272]: אגם רחצה משפחתי עם בריכה מחוממת, פינת ילדים רדודה ומדשאה גדולה ליד קיצביהל
+          - generic [ref=e273]:
+            - button "קרא עוד" [ref=e274]:
+              - img [ref=e275]
+              - text: קרא עוד
+            - 'button "הצג על המפה: אגם הרחצה והפנאי של קירכברג" [ref=e276]':
+              - img [ref=e277]
+              - text: על המפה
+      - article [ref=e281]:
+        - img "פארק ההרפתקאות פיכטנשלוס, רוזנאלם" [ref=e284]
+        - generic [ref=e285]: אלפים
+        - generic [ref=e288]: משפחה
+        - generic [ref=e289]:
+          - heading "פארק ההרפתקאות פיכטנשלוס, רוזנאלם" [level=3] [ref=e290]
+          - paragraph [ref=e291]: טירת עץ הררית להרפתקאות ואגם, מגיעים אליה ברכבל רוזנאלם
+          - generic [ref=e292]:
+            - button "קרא עוד" [ref=e293]:
+              - img [ref=e294]
+              - text: קרא עוד
+            - 'button "הצג על המפה: פארק ההרפתקאות פיכטנשלוס, רוזנאלם" [ref=e295]':
+              - img [ref=e296]
+              - text: על המפה
+      - article [ref=e300]:
+        - img "רכבת הקיטור הנוסטלגית של צילרטל" [ref=e303]
+        - generic [ref=e304]: אלפים
+        - generic [ref=e307]: משפחה
+        - generic [ref=e308]:
+          - heading "רכבת הקיטור הנוסטלגית של צילרטל" [level=3] [ref=e309]
+          - paragraph [ref=e310]: רכבת קיטור בת כ־100 שנה שחוצה את עמק צילרטל בימי קיץ נבחרים
+          - generic [ref=e311]:
+            - button "קרא עוד" [ref=e312]:
+              - img [ref=e313]
+              - text: קרא עוד
+            - 'button "הצג על המפה: רכבת הקיטור הנוסטלגית של צילרטל" [ref=e314]':
+              - img [ref=e315]
+              - text: על המפה
+      - article [ref=e319]:
+        - img "מחלבת החוויה של צילרטל" [ref=e322]
+        - generic [ref=e323]: אלפים
+        - generic [ref=e326]: אוכל
+        - generic [ref=e327]:
+          - heading "מחלבת החוויה של צילרטל" [level=3] [ref=e328]
+          - paragraph [ref=e329]: מחלבת ראווה עם ייצור גבינה חי, חיות משק ומסעדה משפחתית ליד מאיירהופן
+          - generic [ref=e330]:
+            - button "קרא עוד" [ref=e331]:
+              - img [ref=e332]
+              - text: קרא עוד
+            - 'button "הצג על המפה: מחלבת החוויה של צילרטל" [ref=e333]':
+              - img [ref=e334]
+              - text: על המפה
+      - article [ref=e338]:
+        - img "רכבל קארוונדל, פרטיזאו" [ref=e341]
+        - generic [ref=e342]: אלפים
+        - generic [ref=e345]: נוף
+        - generic [ref=e346]:
+          - heading "רכבל קארוונדל, פרטיזאו" [level=3] [ref=e347]
+          - paragraph [ref=e348]: רכבל לתצפית פסגה ידידותית לעגלה מעל אגם אכנזה
+          - generic [ref=e349]:
+            - button "קרא עוד" [ref=e350]:
+              - img [ref=e351]
+              - text: קרא עוד
+            - 'button "הצג על המפה: רכבל קארוונדל, פרטיזאו" [ref=e352]':
+              - img [ref=e353]
+              - text: על המפה
+      - article [ref=e357]:
+        - img "שייט באגם אכנזה" [ref=e360]
+        - generic [ref=e361]: אלפים
+        - generic [ref=e364]: מים
+        - generic [ref=e365]:
+          - heading "שייט באגם אכנזה" [level=3] [ref=e366]
+          - paragraph [ref=e367]: שייט ציורי על פני אכנזה הטורקיזי, עם מקטעים קצרים וידידותיים למשפחה
+          - generic [ref=e368]:
+            - button "קרא עוד" [ref=e369]:
+              - img [ref=e370]
+              - text: קרא עוד
+            - 'button "הצג על המפה: שייט באגם אכנזה" [ref=e371]':
+              - img [ref=e372]
+              - text: על המפה
+      - article [ref=e376]:
+        - img "מפלי קרימל" [ref=e379]
+        - generic [ref=e380]: אלפים
+        - generic [ref=e383]: מים
+        - generic [ref=e384]:
+          - heading "מפלי קרימל" [level=3] [ref=e385]
+          - paragraph [ref=e386]: המפל הגבוה באירופה — מפל שלוש קומות רועם שמגיעים אליו בשביל תלול אפוף רסס
+          - generic [ref=e387]:
+            - button "קרא עוד" [ref=e388]:
+              - img [ref=e389]
+              - text: קרא עוד
+            - 'button "הצג על המפה: מפלי קרימל" [ref=e390]':
+              - img [ref=e391]
+              - text: על המפה
+      - article [ref=e395]:
+        - img "שמיטנהה" [ref=e398]
+        - generic [ref=e399]: אלפים
+        - generic [ref=e402]: טבע
+        - generic [ref=e403]:
+          - heading "שמיטנהה" [level=3] [ref=e404]
+          - paragraph [ref=e405]: הר רכבל משפחתי מעל צל אם זה עם מסלול הרפתקאות לילדים בנושא דרקון
+          - generic [ref=e406]:
+            - button "קרא עוד" [ref=e407]:
+              - img [ref=e408]
+              - text: קרא עוד
+            - 'button "הצג על המפה: שמיטנהה" [ref=e409]':
+              - img [ref=e410]
+              - text: על המפה
+      - article [ref=e414]:
+        - img "פארק חיות הבר פרלייטן" [ref=e417]
+        - generic [ref=e418]: אלפים
+        - generic [ref=e421]: טבע
+        - generic [ref=e422]:
+          - heading "פארק חיות הבר פרלייטן" [level=3] [ref=e423]
+          - paragraph [ref=e424]: פארק חיות בר אלפיני ידידותי לעגלה עם גן שעשועים גדול, למרגלות כביש הגלוקנר
+          - generic [ref=e425]:
+            - button "קרא עוד" [ref=e426]:
+              - img [ref=e427]
+              - text: קרא עוד
+            - 'button "הצג על המפה: פארק חיות הבר פרלייטן" [ref=e428]':
+              - img [ref=e429]
+              - text: על המפה
+      - article [ref=e433]:
+        - img "מגלשת ההרים מאיזי פליצר" [ref=e436]
+        - generic [ref=e437]: אלפים
+        - generic [ref=e440]: משפחה
+        - generic [ref=e441]:
+          - heading "מגלשת ההרים מאיזי פליצר" [level=3] [ref=e442]
+          - paragraph [ref=e443]: מגלשת הרים דו־מושבית לכל מזג אוויר מתחנת העמק של המאיסקוגל בקאפרון
+          - generic [ref=e444]:
+            - button "קרא עוד" [ref=e445]:
+              - img [ref=e446]
+              - text: קרא עוד
+            - 'button "הצג על המפה: מגלשת ההרים מאיזי פליצר" [ref=e447]':
+              - img [ref=e448]
+              - text: על המפה
+      - article [ref=e452]:
+        - img "קיצשטיינהורן — גיפלוולט 3000" [ref=e455]
+        - generic [ref=e456]: אלפים
+        - generic [ref=e459]: טבע
+        - generic [ref=e460]:
+          - heading "קיצשטיינהורן — גיפלוולט 3000" [level=3] [ref=e461]
+          - paragraph [ref=e462]: רכבל קרחון לעולם תצפית בגובה 3,029 מ׳ מעל קאפרון, עם זירת משחקי שלג קיצית
+          - generic [ref=e463]:
+            - button "קרא עוד" [ref=e464]:
+              - img [ref=e465]
+              - text: קרא עוד
+            - 'button "הצג על המפה: קיצשטיינהורן — גיפלוולט 3000" [ref=e466]':
+              - img [ref=e467]
+              - text: על המפה
+      - article [ref=e471]:
+        - img "נקיק זיגמונד־תון" [ref=e474]
+        - generic [ref=e475]: אלפים
+        - generic [ref=e478]: טבע
+        - generic [ref=e479]:
+          - heading "נקיק זיגמונד־תון" [level=3] [ref=e480]
+          - paragraph [ref=e481]: נקיק עם שבילי עץ ליד קאפרון שמוביל אל אגם הקלאמזה וגן שעשועים
+          - generic [ref=e482]:
+            - button "קרא עוד" [ref=e483]:
+              - img [ref=e484]
+              - text: קרא עוד
+            - 'button "הצג על המפה: נקיק זיגמונד־תון" [ref=e485]':
+              - img [ref=e486]
+              - text: על המפה
+      - article [ref=e490]:
+        - img "טיילת האגם של צל אם זה" [ref=e493]
+        - generic [ref=e494]: אלפים
+        - generic [ref=e497]: מים
+        - generic [ref=e498]:
+          - heading "טיילת האגם של צל אם זה" [level=3] [ref=e499]
+          - paragraph [ref=e500]: חוף הרחצה, הטיילת, סירות הדוושה וגן השעשועים של צל אם זה במרכז העיר
+          - generic [ref=e501]:
+            - button "קרא עוד" [ref=e502]:
+              - img [ref=e503]
+              - text: קרא עוד
+            - 'button "הצג על המפה: טיילת האגם של צל אם זה" [ref=e504]':
+              - img [ref=e505]
+              - text: על המפה
+      - article [ref=e509]:
+        - img "מגלשת ההרים לאקי פליצר" [ref=e512]
+        - generic [ref=e513]: אלפים
+        - generic [ref=e516]: אדרנלין
+        - generic [ref=e517]:
+          - heading "מגלשת ההרים לאקי פליצר" [level=3] [ref=e518]
+          - paragraph [ref=e519]: מגלשת הרים דו־מושבית באורך 1,100 מ׳ במרכז פלאכאו, בהפעלת מלון לאקנרהוף
+          - generic [ref=e520]:
+            - button "קרא עוד" [ref=e521]:
+              - img [ref=e522]
+              - text: קרא עוד
+            - 'button "הצג על המפה: מגלשת ההרים לאקי פליצר" [ref=e523]':
+              - img [ref=e524]
+              - text: על המפה
+      - article [ref=e528]:
+        - img "טירת הוהנוורפן" [ref=e531]
+        - generic [ref=e532]: אלפים
+        - generic [ref=e535]: תרבות
+        - generic [ref=e536]:
+          - heading "טירת הוהנוורפן" [level=3] [ref=e537]
+          - paragraph [ref=e538]: טירת ימי ביניים על צוק מעל וורפן עם מופע עפיפת עופות דורסים יומי
+          - generic [ref=e539]:
+            - button "קרא עוד" [ref=e540]:
+              - img [ref=e541]
+              - text: קרא עוד
+            - 'button "הצג על המפה: טירת הוהנוורפן" [ref=e542]':
+              - img [ref=e543]
+              - text: על המפה
+      - article [ref=e547]:
+        - img "מכרה המלח זלצוולטן זלצבורג" [ref=e550]
+        - generic [ref=e551]: אלפים
+        - generic [ref=e554]: תרבות
+        - generic [ref=e555]:
+          - heading "מכרה המלח זלצוולטן זלצבורג" [level=3] [ref=e556]
+          - paragraph [ref=e557]: מכרה מלח ראווה מתקופת הקלטים עם מגלשות כורים ואגם מלח תת־קרקעי
+          - generic [ref=e558]:
+            - button "קרא עוד" [ref=e559]:
+              - img [ref=e560]
+              - text: קרא עוד
+            - 'button "הצג על המפה: מכרה המלח זלצוולטן זלצבורג" [ref=e561]':
+              - img [ref=e562]
+              - text: על המפה
+      - article [ref=e566]:
+        - img "מערת הקרח אייסריזנוולט" [ref=e569]
+        - generic [ref=e570]: אלפים
+        - generic [ref=e573]: מערה
+        - generic [ref=e574]:
+          - heading "מערת הקרח אייסריזנוולט" [level=3] [ref=e575]
+          - paragraph [ref=e576]: מערת הקרח הגדולה בעולם, מגיעים אליה ברכבל גבוה מעל וורפן
+          - generic [ref=e577]:
+            - button "קרא עוד" [ref=e578]:
+              - img [ref=e579]
+              - text: קרא עוד
+            - 'button "הצג על המפה: מערת הקרח אייסריזנוולט" [ref=e580]':
+              - img [ref=e581]
+              - text: על המפה
+      - article [ref=e585]:
+        - img "האלשטאט" [ref=e588]
+        - generic [ref=e589]: אלפים
+        - generic [ref=e592]: כפר
+        - generic [ref=e593]:
+          - heading "האלשטאט" [level=3] [ref=e594]
+          - paragraph [ref=e595]: כפר אגם מושלם כמו מגלויה, ללא תנועת רכב, בלב הסלצקאמרגוט
+          - generic [ref=e596]:
+            - button "קרא עוד" [ref=e597]:
+              - img [ref=e598]
+              - text: קרא עוד
+            - 'button "הצג על המפה: האלשטאט" [ref=e599]':
+              - img [ref=e600]
+              - text: על המפה
+      - article [ref=e604]:
+        - img "אגם גוזאו הקדמי ורכבל גוזאוקאם" [ref=e607]
+        - generic [ref=e608]: אלפים
+        - generic [ref=e611]: מים
+        - generic [ref=e612]:
+          - heading "אגם גוזאו הקדמי ורכבל גוזאוקאם" [level=3] [ref=e613]
+          - paragraph [ref=e614]: אגם אלפיני אזמרגדי שמשקף את הדכשטיין, עם רכבל ממש בקו המים
+          - generic [ref=e615]:
+            - button "קרא עוד" [ref=e616]:
+              - img [ref=e617]
+              - text: קרא עוד
+            - 'button "הצג על המפה: אגם גוזאו הקדמי ורכבל גוזאוקאם" [ref=e618]':
+              - img [ref=e619]
+              - text: על המפה
+      - article [ref=e623]:
+        - img "מגלשת הקיץ קארקוגל, אבטנאו" [ref=e626]
+        - generic [ref=e627]: אלפים
+        - generic [ref=e630]: משפחה
+        - generic [ref=e631]:
+          - heading "מגלשת הקיץ קארקוגל, אבטנאו" [level=3] [ref=e632]
+          - paragraph [ref=e633]: רכבל ועוד מגלשת קיץ באורך כ־2 ק״מ על הר משפחתי מעל אבטנאו
+          - generic [ref=e634]:
+            - button "קרא עוד" [ref=e635]:
+              - img [ref=e636]
+              - text: קרא עוד
+            - 'button "הצג על המפה: מגלשת הקיץ קארקוגל, אבטנאו" [ref=e637]':
+              - img [ref=e638]
+              - text: על המפה
+      - article [ref=e642]:
+        - img "שטאטפארק" [ref=e645]
+        - generic [ref=e646]: וינה
+        - generic [ref=e649]: טבע
+        - generic [ref=e650]:
+          - heading "שטאטפארק" [level=3] [ref=e651]
+          - paragraph [ref=e652]: הפארק העירוני החינמי של וינה עם פסל שטראוס המוזהב, שבילים ידידותיים לעגלה וגן שעשועים לפעוטות
+          - generic [ref=e653]:
+            - button "קרא עוד" [ref=e654]:
+              - img [ref=e655]
+              - text: קרא עוד
+            - 'button "הצג על המפה: שטאטפארק" [ref=e656]':
+              - img [ref=e657]
+              - text: על המפה
+      - article [ref=e661]:
+        - img "הגלגל הענק של וינה" [ref=e664]
+        - generic [ref=e665]: וינה
+        - generic [ref=e668]: נוף
+        - generic [ref=e669]:
+          - heading "הגלגל הענק של וינה" [level=3] [ref=e670]
+          - paragraph [ref=e671]: הגלגל הענק האייקוני של וינה משנת 1897, עם תאים מרווחים שנכנסים אליהם עם עגלה ונוף נרחב
+          - generic [ref=e672]:
+            - button "קרא עוד" [ref=e673]:
+              - img [ref=e674]
+              - text: קרא עוד
+            - 'button "הצג על המפה: הגלגל הענק של וינה" [ref=e675]':
+              - img [ref=e676]
+              - text: על המפה
+      - article [ref=e680]:
+        - img "ארמון שנברון" [ref=e683]
+        - generic [ref=e684]: וינה
+        - generic [ref=e687]: תרבות
+        - generic [ref=e688]:
+          - heading "ארמון שנברון" [level=3] [ref=e689]
+          - paragraph [ref=e690]: ארמון הקיץ הבארוקי המפואר של מריה תרזה, עם גנים חינמיים ידידותיים לעגלה ומוזיאון ילדים
+          - generic [ref=e691]:
+            - button "קרא עוד" [ref=e692]:
+              - img [ref=e693]
+              - text: קרא עוד
+            - 'button "הצג על המפה: ארמון שנברון" [ref=e694]':
+              - img [ref=e695]
+              - text: על המפה
+      - article [ref=e699]:
+        - img "המבוך והלבירינת של שנברון" [ref=e702]
+        - generic [ref=e703]: וינה
+        - generic [ref=e706]: טבע
+        - generic [ref=e707]:
+          - heading "המבוך והלבירינת של שנברון" [level=3] [ref=e708]
+          - paragraph [ref=e709]: מבוך גדרות חי ועוד גן השעשועים החווייתי לבירינתיקון בגני שנברון
+          - generic [ref=e710]:
+            - button "קרא עוד" [ref=e711]:
+              - img [ref=e712]
+              - text: קרא עוד
+            - 'button "הצג על המפה: המבוך והלבירינת של שנברון" [ref=e713]':
+              - img [ref=e714]
+              - text: על המפה
+      - article [ref=e718]:
+        - img "גן החיות של שנברון" [ref=e721]
+        - generic [ref=e722]: וינה
+        - generic [ref=e725]: טבע
+        - generic [ref=e726]:
+          - heading "גן החיות של שנברון" [level=3] [ref=e727]
+          - paragraph [ref=e728]: גן החיות העתיק בעולם, בגני שנברון — ידידותי לעגלה, מעל 500 מינים, כניסה חינם עד גיל 6
+          - generic [ref=e729]:
+            - button "קרא עוד" [ref=e730]:
+              - img [ref=e731]
+              - text: קרא עוד
+            - 'button "הצג על המפה: גן החיות של שנברון" [ref=e732]':
+              - img [ref=e733]
+              - text: על המפה
+      - article [ref=e737]:
+        - img "מוזיאון הילדים זום" [ref=e740]
+        - generic [ref=e741]: וינה
+        - generic [ref=e744]: תרבות
+        - generic [ref=e745]:
+          - heading "מוזיאון הילדים זום" [level=3] [ref=e746]
+          - paragraph [ref=e747]: מוזיאון הילדים החווייתי של וינה, עם פינת משחק רכה ׳אושן׳ לתינוקות וסטודיו לילדים הגדולים
+          - generic [ref=e748]:
+            - button "קרא עוד" [ref=e749]:
+              - img [ref=e750]
+              - text: קרא עוד
+            - 'button "הצג על המפה: מוזיאון הילדים זום" [ref=e751]':
+              - img [ref=e752]
+              - text: על המפה
+      - article [ref=e756]:
+        - img "מוזיאון האשליות וינה" [ref=e759]
+        - generic [ref=e760]: וינה
+        - generic [ref=e763]: תרבות
+        - generic [ref=e764]:
+          - heading "מוזיאון האשליות וינה" [level=3] [ref=e765]
+          - paragraph [ref=e766]: אשליות אופטיות חווייתיות בתוך ארמון בארוקי — כשעה של כיף משפחתי
+          - generic [ref=e767]:
+            - button "קרא עוד" [ref=e768]:
+              - img [ref=e769]
+              - text: קרא עוד
+            - 'button "הצג על המפה: מוזיאון האשליות וינה" [ref=e770]':
+              - img [ref=e771]
+              - text: על המפה
+      - article [ref=e775]:
+        - img "בית הפרפרים (שמטרלינגהאוס)" [ref=e778]
+        - generic [ref=e779]: וינה
+        - generic [ref=e782]: טבע
+        - generic [ref=e783]:
+          - heading "בית הפרפרים (שמטרלינגהאוס)" [level=3] [ref=e784]
+          - paragraph [ref=e785]: בית זכוכית בגן הבורג שבו כ־400 פרפרים טרופיים מעופפים חופשי
+          - generic [ref=e786]:
+            - button "קרא עוד" [ref=e787]:
+              - img [ref=e788]
+              - text: קרא עוד
+            - 'button "הצג על המפה: בית הפרפרים (שמטרלינגהאוס)" [ref=e789]':
+              - img [ref=e790]
+              - text: על המפה
+      - article [ref=e794]:
+        - img "העיר הפנימית / כיכר שטפן" [ref=e797]
+        - generic [ref=e798]: וינה
+        - generic [ref=e801]: תרבות
+        - generic [ref=e802]:
+          - heading "העיר הפנימית / כיכר שטפן" [level=3] [ref=e803]
+          - paragraph [ref=e804]: הכיכר המרכזית בעיר העתיקה של וינה, למרגלות צריח קתדרלת שטפן הגותי — שטוחה וללא תנועה
+          - generic [ref=e805]:
+            - button "קרא עוד" [ref=e806]:
+              - img [ref=e807]
+              - text: קרא עוד
+            - 'button "הצג על המפה: העיר הפנימית / כיכר שטפן" [ref=e808]':
+              - img [ref=e809]
+              - text: על המפה
+      - article [ref=e813]:
+        - img "אולם הטיפוס של וינה" [ref=e816]
+        - generic [ref=e817]: וינה
+        - generic [ref=e820]: אדרנלין
+        - generic [ref=e821]:
+          - heading "אולם הטיפוס של וינה" [level=3] [ref=e822]
+          - paragraph [ref=e823]: אולם הטיפוס הגדול באוסטריה, עם פינת טיפוס ייעודית לילדים ובלוק בולדרינג בחוץ
+          - generic [ref=e824]:
+            - button "קרא עוד" [ref=e825]:
+              - img [ref=e826]
+              - text: קרא עוד
+            - 'button "הצג על המפה: אולם הטיפוס של וינה" [ref=e827]':
+              - img [ref=e828]
+              - text: על המפה
+  - button "שוחחו עם פליקס" [ref=e831]:
+    - img [ref=e833]

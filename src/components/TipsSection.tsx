@@ -40,7 +40,7 @@ export default function TipsSection() {
           return (
             <div
               key={tip.id}
-              className={`card-paper border-s-4 ${s.border} p-5`}
+              className="card-paper p-5"
             >
               <div className="flex items-start gap-3">
                 <div className={`p-2 rounded-lg ${s.accent} shrink-0`}>
@@ -50,7 +50,7 @@ export default function TipsSection() {
                   <h3 className="font-serif text-lg text-ink-900 leading-snug">
                     {tip.title}
                   </h3>
-                  <p className="mt-2 text-sm text-ink-700/85 leading-relaxed">
+                  <p dir="auto" className="mt-2 text-sm text-ink-700/85 leading-relaxed">
                     {tip.body}
                   </p>
                 </div>

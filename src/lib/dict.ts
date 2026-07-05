@@ -377,6 +377,8 @@ export const DICT = {
     he: "אגמים, טירות, רכבלים, מערות, מערת קרח ורכבת קיטור"
   },
   attr_filter_all: { en: "All", he: "הכול" },
+  attr_count: { en: "{n} places", he: "{n} מקומות" },
+  attr_filter_clear: { en: "All types", he: "כל הסוגים" },
   attr_filter_north: { en: "Vienna", he: "וינה" },
   attr_filter_south: { en: "Alps", he: "אלפים" },
   attr_filter_water: { en: "Water", he: "מים" },
@@ -826,7 +828,10 @@ export const DICT = {
   explore_card_food_sub: {
     en: "Schnitzel, strudel — and what to drink",
     he: "שניצל, שטרודל — ומה שותים"
-  }
+  },
+  explore_count_places: { en: "{n} places to see", he: "{n} מקומות לראות" },
+  explore_count_food: { en: "{n} dishes & drinks", he: "{n} מנות ומשקאות" },
+  explore_open_map: { en: "See it all on the map", he: "לראות הכול על המפה" }
 } as const;
 
 export type DictKey = keyof typeof DICT;

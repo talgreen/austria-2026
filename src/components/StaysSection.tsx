@@ -147,7 +147,7 @@ export default function StaysSection() {
           const s = localizeStay(rawStay);
           const a = accentClasses(area.accent);
           return (
-          <article key={s.id} className={`card-paper card-paper-hover overflow-hidden flex flex-col border-s-4 ${a.border}`}>
+          <article key={s.id} className="card-paper card-paper-hover overflow-hidden flex flex-col">
             <div className="relative aspect-[16/10] overflow-hidden bg-cream-200">
               <StayHero stay={s} />
               {s.image && s.imageCredit && (
@@ -174,7 +174,7 @@ export default function StaysSection() {
                 </div>
               )}
 
-              <p className="mt-3 text-sm text-ink-700/85 leading-relaxed">
+              <p dir="auto" className="mt-3 text-sm text-ink-700/85 leading-relaxed">
                 {s.description}
               </p>
 

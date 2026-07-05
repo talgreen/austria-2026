@@ -211,7 +211,7 @@ export default function AttractionCard({ poi: rawPoi }: { poi: POI }) {
                   <span>{t(DIFFICULTY_STYLE[poi.difficulty].key)}</span>
                 </div>
               )}
-              <p className="text-[14px] leading-relaxed text-ink-700/90">
+              <p dir="auto" className="text-[14px] leading-relaxed text-ink-700/90">
                 {poi.description}
               </p>
               {/* German-accented narration of the description above.

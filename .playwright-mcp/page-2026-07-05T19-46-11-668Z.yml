@@ -1,0 +1,214 @@
+- generic [ref=e2]:
+  - navigation [ref=e3]:
+    - generic [ref=e4]:
+      - button "אוסטריה '26" [ref=e5]:
+        - generic [ref=e6]: אוסטריה
+        - generic [ref=e7]: "'26"
+      - group "Language" [ref=e19]:
+        - img [ref=e20]
+        - button "EN" [ref=e24]
+        - button "עב" [pressed] [ref=e25]
+  - generic [ref=e871]:
+    - generic [ref=e872]:
+      - generic [ref=e875]: ליד השולחן
+      - heading "הטעם של אוסטריה" [level=2] [ref=e876]
+      - paragraph [ref=e877]: שניצל, גבינות אלפיניות, שטרודל — ומה שותים לצידם
+    - generic [ref=e879]:
+      - button "כל אוסטריה" [ref=e880]
+      - button "וינה" [ref=e881]
+      - button "האלפים" [ref=e882]
+    - generic [ref=e884]:
+      - generic [ref=e885]:
+        - img [ref=e887]
+        - heading "אוכל ושתייה" [level=3] [ref=e892]
+        - generic [ref=e893]: "15"
+      - list [ref=e894]:
+        - listitem [ref=e895]:
+          - generic [ref=e896]:
+            - img "שניצל וינאי" [ref=e897]
+            - generic [ref=e898]:
+              - img [ref=e899]
+              - generic [ref=e904]: מנה עיקרית
+          - generic [ref=e905]:
+            - heading "שניצל וינאי" [level=4] [ref=e906]
+            - generic [ref=e907]: Wiener Schnitzel
+            - paragraph [ref=e908]: "The national dish: a thin veal cutlet pounded flat, breaded and fried to a crisp golden cloud, served with a lemon wedge and potato salad or parsley potatoes. Kids almost always love it (ask for the pork 'Schnitzel vom Schwein' version, which is cheaper and just as good). Vienna is the spiritual home."
+            - generic [ref=e909]: לטעום בSternbräu in Salzburg, or any Viennese Gasthaus
+        - listitem [ref=e910]:
+          - generic [ref=e911]:
+            - img "קֵזֶשְפֵּצְלֶה (אטריות גבינה)" [ref=e912]
+            - generic [ref=e913]:
+              - img [ref=e914]
+              - generic [ref=e919]: מנה עיקרית
+          - generic [ref=e920]:
+            - heading "קֵזֶשְפֵּצְלֶה (אטריות גבינה)" [level=4] [ref=e921]
+            - generic [ref=e922]: Kasspatzln
+            - paragraph [ref=e923]: Soft egg-noodle dumplings tossed with mountain cheese and crowned with sweet fried onions — the Tyrolean answer to mac-and-cheese, and a reliable hit with small kids after a cable-car day. Rich, gooey alpine comfort food.
+            - generic [ref=e924]: לטעום בAny Zillertal or Pinzgau mountain hut
+        - listitem [ref=e925]:
+          - generic [ref=e926]:
+            - img "טאפלשפיץ (בקר בציר)" [ref=e927]
+            - generic [ref=e928]:
+              - img [ref=e929]
+              - generic [ref=e934]: מנה עיקרית
+          - generic [ref=e935]:
+            - heading "טאפלשפיץ (בקר בציר)" [level=4] [ref=e936]
+            - generic [ref=e937]: Tafelspitz
+            - paragraph [ref=e938]: Tender beef simmered in broth and served with apple-horseradish and chive sauce — Emperor Franz Joseph's favourite and a Viennese institution. A gentler, less-fried alternative to schnitzel for a sit-down dinner.
+            - generic [ref=e939]: לטעום בA traditional Viennese Beisl
+        - listitem [ref=e940]:
+          - generic [ref=e941]:
+            - img "קזנוקן פינצגאואי" [ref=e942]
+            - generic [ref=e943]:
+              - img [ref=e944]
+              - generic [ref=e949]: מנה עיקרית
+          - generic [ref=e950]:
+            - heading "קזנוקן פינצגאואי" [level=4] [ref=e951]
+            - generic [ref=e952]: Kasnocken
+            - paragraph [ref=e953]: The Pinzgau's own cheese-dumpling dish — soft Nocken baked with pungent local cheese and onions, usually served in a little iron pan. The signature plate of the Zell am See / Kaprun week.
+            - generic [ref=e954]: לטעום בDorfkrug Kaprun or a mountain hut near Zell am See
+        - listitem [ref=e955]:
+          - generic [ref=e956]:
+            - img "קייזרשמארן (פנקייק קרוע)" [ref=e957]
+            - generic [ref=e958]:
+              - img [ref=e959]
+              - generic [ref=e961]: קינוח
+          - generic [ref=e962]:
+            - heading "קייזרשמארן (פנקייק קרוע)" [level=4] [ref=e963]
+            - generic [ref=e964]: Kaiserschmarrn
+            - paragraph [ref=e965]: A fluffy shredded pancake dusted with icing sugar and served with plum or apple sauce — half dessert, half lunch, and a guaranteed kid-pleaser on a mountain terrace. 'The Emperor's mess'. Order one to share; the portions are huge.
+            - generic [ref=e966]: לטעום בAny alpine hut — best with a lake or mountain view
+        - listitem [ref=e967]:
+          - generic [ref=e968]:
+            - img "שטרודל תפוחים" [ref=e969]
+            - generic [ref=e970]:
+              - img [ref=e971]
+              - generic [ref=e973]: קינוח
+          - generic [ref=e974]:
+            - heading "שטרודל תפוחים" [level=4] [ref=e975]
+            - generic [ref=e976]: Apfelstrudel
+            - paragraph [ref=e977]: Wafer-thin pastry rolled around spiced apples, raisins and breadcrumbs, served warm with vanilla sauce or cream. The cornerstone of the Austrian coffee house and an easy treat to share between the kids.
+            - generic [ref=e978]: לטעום בA Vienna Kaffeehaus, with a Melange
+        - listitem [ref=e979]:
+          - generic [ref=e980]:
+            - img "עוגת זאכר" [ref=e981]
+            - generic [ref=e982]:
+              - img [ref=e983]
+              - generic [ref=e985]: קינוח
+          - generic [ref=e986]:
+            - heading "עוגת זאכר" [level=4] [ref=e987]
+            - generic [ref=e988]: Original Sacher-Torte
+            - paragraph [ref=e989]: Vienna's famous dense chocolate cake with a thin layer of apricot jam under a dark chocolate glaze, served with unsweetened whipped cream. A grown-up treat and a fun 'we were really in Vienna' moment.
+            - generic [ref=e990]: לטעום בCafé Sacher / Demel in Vienna
+        - listitem [ref=e991]:
+          - generic [ref=e992]:
+            - img "נוקרל מזלצבורג" [ref=e993]
+            - generic [ref=e994]:
+              - img [ref=e995]
+              - generic [ref=e997]: קינוח
+          - generic [ref=e998]:
+            - heading "נוקרל מזלצבורג" [level=4] [ref=e999]
+            - generic [ref=e1000]: Salzburger Nockerl
+            - paragraph [ref=e1001]: A giant, cloud-like baked soufflé shaped into three peaks said to mirror Salzburg's hills, dusted with icing sugar. Sweet, airy and theatrical — order one for the table on the Salzburg days.
+            - generic [ref=e1002]: לטעום בA traditional Salzburg restaurant
+        - listitem [ref=e1003]:
+          - generic [ref=e1004]:
+            - img "בייגלה וארוחת בוקר מהמאפייה" [ref=e1005]
+            - generic [ref=e1006]:
+              - img [ref=e1007]
+              - generic [ref=e1009]: נשנוש
+          - generic [ref=e1010]:
+            - heading "בייגלה וארוחת בוקר מהמאפייה" [level=4] [ref=e1011]
+            - generic [ref=e1012]: Brezel / Semmel
+            - paragraph [ref=e1013]: Austrian bakeries (Bäckerei) are everywhere and brilliant — soft pretzels, crusty Semmel rolls, poppy-seed pastries. The easiest, cheapest, kid-friendly breakfast and picnic fuel for the road. Open early, but closed Sundays.
+            - generic [ref=e1014]: לטעום בAny village Bäckerei, first thing
+        - listitem [ref=e1015]:
+          - generic [ref=e1016]:
+            - img "גלידה (Eis)" [ref=e1017]
+            - generic [ref=e1018]:
+              - img [ref=e1019]
+              - generic [ref=e1021]: נשנוש
+          - generic [ref=e1022]:
+            - heading "גלידה (Eis)" [level=4] [ref=e1023]
+            - generic [ref=e1024]: Eis
+            - paragraph [ref=e1025]: Every town square and lakefront has a gelateria-style Eissalon, and an ice cream is the universal currency of a good family day. A scoop on the Getreidegasse, the Zell am See promenade or a Vienna square is non-negotiable.
+            - generic [ref=e1026]: לטעום בLakefronts and old-town squares everywhere
+        - listitem [ref=e1027]:
+          - generic [ref=e1028]:
+            - img "אלמדודלר" [ref=e1029]
+            - generic [ref=e1030]:
+              - img [ref=e1031]
+              - generic [ref=e1033]: משקה
+          - generic [ref=e1034]:
+            - heading "אלמדודלר" [level=4] [ref=e1035]
+            - generic [ref=e1036]: Almdudler
+            - paragraph [ref=e1037]: "Austria's beloved herbal lemonade — fizzy, golden, a little like elderflower-meets-ginger-ale, and totally kid-friendly. The unofficial national soft drink: order it everywhere and let the kids feel local."
+            - generic [ref=e1038]: לטעום בEvery restaurant and hut
+        - listitem [ref=e1039]:
+          - generic [ref=e1040]:
+            - img "מיץ תפוחים עם סודה" [ref=e1041]
+            - generic [ref=e1042]:
+              - img [ref=e1043]
+              - generic [ref=e1045]: משקה
+          - generic [ref=e1046]:
+            - heading "מיץ תפוחים עם סודה" [level=4] [ref=e1047]
+            - generic [ref=e1048]: Apfelsaft g'spritzt
+            - paragraph [ref=e1049]: Cloudy apple juice cut with sparkling water — the default refreshing kids' (and grown-ups') drink on a hot terrace. 'Gespritzt' just means topped with soda; ask for it 'gespritzt' to make a juice last longer in the heat.
+            - generic [ref=e1050]: לטעום בAny terrace on a hot day
+        - listitem [ref=e1051]:
+          - generic [ref=e1052]:
+            - img "גרינר וֶלטלינר" [ref=e1053]
+            - generic [ref=e1054]:
+              - img [ref=e1055]
+              - generic [ref=e1057]: משקה
+          - generic [ref=e1058]:
+            - heading "גרינר וֶלטלינר" [level=4] [ref=e1059]
+            - generic [ref=e1060]: Grüner Veltliner
+            - paragraph [ref=e1061]: Austria's signature crisp white wine — peppery, citrusy and easy-drinking, the perfect grown-up glass with a schnitzel dinner. Adults only. A spritzer ('G'spritzter') is the lighter, lower-alcohol version locals drink in summer.
+            - generic [ref=e1062]: לטעום בA Viennese Heuriger or any Gasthaus
+        - listitem [ref=e1063]:
+          - generic [ref=e1064]:
+            - img "שטיגל ובירה אלפינית" [ref=e1065]
+            - generic [ref=e1066]:
+              - img [ref=e1067]
+              - generic [ref=e1069]: משקה
+          - generic [ref=e1070]:
+            - heading "שטיגל ובירה אלפינית" [level=4] [ref=e1071]
+            - generic [ref=e1072]: Stiegl / Gösser
+            - paragraph [ref=e1073]: Salzburg's own Stiegl (and Styria's Gösser) are the everyday Austrian lagers — crisp and refreshing after a mountain day. A 'Radler' (beer cut with lemonade) is the lighter, sessionable summer option. Adults only.
+            - generic [ref=e1074]: לטעום בA beer garden or mountain hut terrace
+        - listitem [ref=e1075]:
+          - generic [ref=e1076]:
+            - img "מלאנז׳ וינאי" [ref=e1077]
+            - generic [ref=e1078]:
+              - img [ref=e1079]
+              - generic [ref=e1081]: משקה
+          - generic [ref=e1082]:
+            - heading "מלאנז׳ וינאי" [level=4] [ref=e1083]
+            - generic [ref=e1084]: Melange
+            - paragraph [ref=e1085]: "Vienna's signature coffee — espresso softened with steamed milk and a cap of foam, served with a glass of water and ideally a slice of strudel. The coffee-house ritual is half the point: sit, linger, let the kids share a cake."
+            - generic [ref=e1086]: לטעום בA Vienna Kaffeehaus, unhurried
+  - navigation [ref=e837]:
+    - list [ref=e838]:
+      - listitem [ref=e839]:
+        - button "היום" [ref=e840]:
+          - img [ref=e842]
+          - text: היום
+      - listitem [ref=e846]:
+        - button "לגלות" [ref=e847]:
+          - img [ref=e849]
+          - text: לגלות
+      - listitem [ref=e852]:
+        - button "ילדים" [ref=e853]:
+          - img [ref=e855]
+          - text: ילדים
+      - listitem [ref=e858]:
+        - button "מפה" [ref=e859]:
+          - img [ref=e861]
+          - text: מפה
+      - listitem [ref=e863]:
+        - button "עוד" [ref=e864]:
+          - img [ref=e866]
+          - text: עוד
+  - button "שוחחו עם פליקס" [ref=e831]:
+    - img [ref=e833]

@@ -76,7 +76,7 @@ export default function FoodAndWineSection() {
               onClick={() => setRegion(tab.id)}
               className={`px-4 py-2.5 rounded-full text-sm font-medium transition-all whitespace-nowrap min-h-11 ${
                 region === tab.id
-                  ? "bg-ink-900 text-cream-50"
+                  ? "bg-terracotta-500 text-cream-50"
                   : "bg-cream-50 border border-cream-300 text-ink-800 hover:border-terracotta-500/40"
               }`}
             >
@@ -152,7 +152,7 @@ export default function FoodAndWineSection() {
                           {dish.germanName}
                         </div>
                       )}
-                      <p className="mt-2.5 text-[13.5px] sm:text-[14.5px] text-ink-700/85 leading-relaxed">
+                      <p dir="auto" className="mt-2.5 text-[13.5px] sm:text-[14.5px] text-ink-700/85 leading-relaxed">
                         {dish.description}
                       </p>
                       {dish.tryIt && (
@@ -184,7 +184,7 @@ export default function FoodAndWineSection() {
                 return (
                   <li
                     key={w.id}
-                    className="card-paper overflow-hidden border-s-4 border-terracotta-500/45 grid sm:grid-cols-[140px_1fr]"
+                    className="card-paper overflow-hidden grid sm:grid-cols-[140px_1fr]"
                   >
                     {/* Side photo on sm+, top photo on mobile.
                         The PoiImage component falls back to the styled
@@ -213,7 +213,7 @@ export default function FoodAndWineSection() {
                           </div>
                         </div>
                       </div>
-                      <p className="mt-3 text-[13.5px] sm:text-[14px] text-ink-700/85 leading-relaxed">
+                      <p dir="auto" className="mt-3 text-[13.5px] sm:text-[14px] text-ink-700/85 leading-relaxed">
                         {w.description}
                       </p>
                       {w.address && (

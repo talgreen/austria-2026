@@ -50,7 +50,7 @@ function ChecklistList({
                   )}
                 </div>
                 {item.detail && (
-                  <p className="text-xs text-ink-700/80 mt-1 leading-relaxed">{item.detail}</p>
+                  <p dir="auto" className="text-xs text-ink-700/80 mt-1 leading-relaxed">{item.detail}</p>
                 )}
                 {item.link && (
                   <a
@@ -104,7 +104,7 @@ export default function ChecklistSection() {
             onClick={() => setTab("booking")}
             className={`px-4 py-2.5 rounded-full text-sm font-medium transition-all flex items-center gap-2 whitespace-nowrap min-h-11 ${
               tab === "booking"
-                ? "bg-ink-900 text-cream-50"
+                ? "bg-terracotta-500 text-cream-50"
                 : "bg-cream-50 border border-cream-300 text-ink-800 hover:border-terracotta-500/40"
             }`}
           >
@@ -118,7 +118,7 @@ export default function ChecklistSection() {
             onClick={() => setTab("packing")}
             className={`px-4 py-2.5 rounded-full text-sm font-medium transition-all flex items-center gap-2 whitespace-nowrap min-h-11 ${
               tab === "packing"
-                ? "bg-ink-900 text-cream-50"
+                ? "bg-terracotta-500 text-cream-50"
                 : "bg-cream-50 border border-cream-300 text-ink-800 hover:border-terracotta-500/40"
             }`}
           >

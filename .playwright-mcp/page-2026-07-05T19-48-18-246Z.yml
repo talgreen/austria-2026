@@ -1,0 +1,206 @@
+- generic [ref=e2]:
+  - navigation [ref=e3]:
+    - generic [ref=e4]:
+      - button "אוסטריה '26" [ref=e5]:
+        - generic [ref=e6]: אוסטריה
+        - generic [ref=e7]: "'26"
+      - group "Language" [ref=e19]:
+        - img [ref=e20]
+        - button "EN" [ref=e24]
+        - button "עב" [pressed] [ref=e25]
+  - generic [ref=e26]:
+    - generic [ref=e1872]:
+      - generic [ref=e1873]:
+        - generic [ref=e1876]: מודיעין מקומי
+        - heading "טיפים ואזהרות שקטות" [level=2] [ref=e1877]
+        - paragraph [ref=e1878]: מה שלמדנו בדרך הקשה — כדי שלא תצטרכו
+      - generic [ref=e1879]:
+        - generic [ref=e1881]:
+          - img [ref=e1883]
+          - generic [ref=e1885]:
+            - heading "לקנות מדבקת אוטוסטרדה (Vignette) לפני שנוסעים" [level=3] [ref=e1886]
+            - paragraph [ref=e1887]: Austria's motorways (Autobahn/Schnellstraße) require a Vignette toll sticker — drive without one and the fine is steep. For a rental, check whether one is already on the windscreen; if not, buy a digital 10-day Vignette online (asfinag.at) tied to the licence plate before you hit the first motorway out of Vienna. It is separate from the special toll roads below.
+        - generic [ref=e1889]:
+          - img [ref=e1891]
+          - generic [ref=e1893]:
+            - heading "כמה כבישים נופיים עולים תוספת (גלוקנר, אכנזה)" [level=3] [ref=e1894]
+            - paragraph [ref=e1895]: A handful of spectacular routes are NOT covered by the Vignette and charge their own toll — most notably the Großglockner High Alpine Road near Wildpark Ferleiten. Budget cash/card for these separately and check whether your day's drive uses one.
+        - generic [ref=e1897]:
+          - img [ref=e1899]
+          - generic [ref=e1901]:
+            - heading "החנויות סגורות בימי ראשון — להצטייד בשבת" [level=3] [ref=e1902]
+            - paragraph [ref=e1903]: Austrian supermarkets and most shops shut on Sundays and public holidays (15 August, Assumption, is a holiday and falls mid-trip). Restaurants and attractions stay open, but for groceries, nappies and picnic food, buy ahead on Saturday. In Vienna the BILLA Corso on Neuer Markt is a rare Sunday-open lifesaver.
+        - generic [ref=e1905]:
+          - img [ref=e1907]
+          - generic [ref=e1909]:
+            - heading "מזג האוויר בהרים מתהפך מהר — לארוז שכבות" [level=3] [ref=e1910]
+            - paragraph [ref=e1911]: Even in August the high cable-car stations (Kitzsteinhorn at ~3,000 m, the Schmitten, the glacier platforms) are cold and windy, and afternoon thunderstorms build over the peaks. Pack a warm layer and a rain shell for everyone every day, do exposed summits in the morning, and check the day's mountain forecast before committing to a cable car.
+        - generic [ref=e1913]:
+          - img [ref=e1915]
+          - generic [ref=e1917]:
+            - heading "חלק מהאתרים דורשים מנשא בלבד (בלי עגלה)" [level=3] [ref=e1918]
+            - paragraph [ref=e1919]: "The big 'wow' stops on stairs and narrow walkways do NOT take a stroller: the Eisriesenwelt ice cave (~700 steps), the Salzwelten salt mine, the Sigmund-Thun gorge and the Krimml Waterfalls trail. Bring the baby carrier on those days and leave the pram in the car. Plenty of other days (Wildpark Ferleiten, Swarovski, the lakes, Vienna) are fully stroller-friendly."
+        - generic [ref=e1921]:
+          - img [ref=e1923]
+          - generic [ref=e1925]:
+            - heading "להחזיק קצת מזומן לפינות האלפיניות הקטנות" [level=3] [ref=e1926]
+            - paragraph [ref=e1927]: Cards work almost everywhere, but smaller mountain huts, parking machines, the odd climbing park (Anif is cash-only) and village bakeries still prefer or require cash. Keep €100–150 in small notes and coins for parking and snacks.
+        - generic [ref=e1929]:
+          - img [ref=e1931]
+          - generic [ref=e1933]:
+            - 'heading "טיפ: לעגל כלפי מעלה כ־5–10%, ולתת ישירות" [level=3] [ref=e1934]'
+            - paragraph [ref=e1935]: In restaurants and cafés you tip by rounding up the bill — roughly 5–10% — and you hand it to the server (or say the total you want to pay) rather than leaving coins on the table. A coffee gets the change rounded up; a full dinner about 10%.
+        - generic [ref=e1937]:
+          - img [ref=e1939]
+          - generic [ref=e1941]:
+            - heading "האגמים האלפיניים יפהפיים — וקרים" [level=3] [ref=e1942]
+            - paragraph [ref=e1943]: The turquoise lakes (Achensee, Zell am See, the Gosausee) look tropical but the water is bracing. For actual swimming with little ones, the heated lidos — Kirchberg's heated pool, the Zell am See Strandbad, Mondsee's Alpenseebad — are the comfortable bet. Bring water shoes for stony shores.
+        - generic [ref=e1945]:
+          - img [ref=e1947]
+          - generic [ref=e1949]:
+            - heading "להזמין מראש את האתרים עם כניסה בשעות קבועות" [level=3] [ref=e1950]
+            - paragraph [ref=e1951]: August is peak season. Schönbrunn Palace, the ZOOM children's museum, the Salzwelten salt mine and the Eisriesenwelt ice cave all run on timed slots that sell out — book these online in advance. For the Zillertal steam train, reserve heritage-coach seats ahead too.
+        - generic [ref=e1953]:
+          - img [ref=e1955]
+          - generic [ref=e1957]:
+            - heading "מושבי בטיחות לילדים ונהיגה באלפים" [level=3] [ref=e1958]
+            - paragraph [ref=e1959]: Austria requires height/age-appropriate child seats — confirm the rental provides the right seats for two kids plus an infant when you book. Alpine roads are well-built but winding; plan drive times generously with stops, and keep the dashcam-worthy passes (Gerlos, Glockner) for daytime.
+    - generic [ref=e1961]:
+      - generic [ref=e1962]:
+        - generic [ref=e1965]: סביבכם
+        - heading "אוכל, קניות, תדלוק" [level=2] [ref=e1966]
+        - paragraph [ref=e1967]: מקומות שנבחרו בקפידה ליד שני הבסיסים — חוסכים חיפושי גוגל בלחץ
+      - generic [ref=e1969]:
+        - button "וינה וזלצבורג· 8–10 באוגוסט · וינה וזלצבורג" [ref=e1970]:
+          - text: וינה וזלצבורג
+          - generic [ref=e1971]: · 8–10 באוגוסט · וינה וזלצבורג
+        - button "האלפים· 11–25 באוגוסט · האלפים" [ref=e1972]:
+          - text: האלפים
+          - generic [ref=e1973]: · 11–25 באוגוסט · האלפים
+      - generic [ref=e1974]:
+        - generic [ref=e1975]:
+          - generic [ref=e1976]:
+            - img [ref=e1977]
+            - heading "מסעדות" [level=3] [ref=e1980]
+            - generic [ref=e1981]: "2"
+          - list [ref=e1982]:
+            - listitem [ref=e1983]:
+              - generic [ref=e1984]: Sternbräu
+              - paragraph [ref=e1985]: אולם בירה אוסטרי היסטורי (מאז 1542) עם חדר משחקים ייעודי לילדים
+              - generic [ref=e1986]:
+                - img [ref=e1987]
+                - generic [ref=e1990]: Griesgasse 23, 5020 Salzburg
+              - generic [ref=e1991]: Sun–Thu 11:30–23:00, Fri–Sat 11:30–24:00
+              - generic [ref=e1992]:
+                - generic [ref=e1993]:
+                  - link "פתחו ב־Google Maps והתחילו ניווט" [ref=e1994] [cursor=pointer]:
+                    - /url: https://www.google.com/maps/search/?api=1&query=Sternbr%C3%A4u%2C%20Griesgasse%2023%2C%205020%20Salzburg
+                    - img [ref=e1995]
+                    - generic [ref=e1997]: מפות
+                  - generic [ref=e1998]: ·
+                  - link "פתחו ב־Waze והתחילו ניווט" [ref=e1999] [cursor=pointer]:
+                    - /url: https://waze.com/ul?q=Sternbr%C3%A4u%2C%20Griesgasse%2023%2C%205020%20Salzburg&navigate=no
+                    - img [ref=e2000]
+                    - generic [ref=e2004]: וויז
+                - button "על המפה" [ref=e2005]:
+                  - img [ref=e2006]
+                  - text: על המפה
+            - listitem [ref=e2009]:
+              - generic [ref=e2010]: Luftburg – Kolarik im Prater
+              - paragraph [ref=e2011]: גן בירה משפחתי בפראטר עם עולם טירות מתנפחות מקורה בשטח 1,000 מ״ר
+              - generic [ref=e2012]:
+                - img [ref=e2013]
+                - generic [ref=e2016]: Waldsteingartenstraße 128, 1020 Wien
+              - generic [ref=e2017]: Mon–Thu 16:00–23:00, Fri–Sun 11:00–23:00 (seasonal)
+              - generic [ref=e2018]:
+                - generic [ref=e2019]:
+                  - link "פתחו ב־Google Maps והתחילו ניווט" [ref=e2020] [cursor=pointer]:
+                    - /url: https://www.google.com/maps/search/?api=1&query=Luftburg%20%E2%80%93%20Kolarik%20im%20Prater%2C%20Waldsteingartenstra%C3%9Fe%20128%2C%201020%20Wien
+                    - img [ref=e2021]
+                    - generic [ref=e2023]: מפות
+                  - generic [ref=e2024]: ·
+                  - link "פתחו ב־Waze והתחילו ניווט" [ref=e2025] [cursor=pointer]:
+                    - /url: https://waze.com/ul?q=Luftburg%20%E2%80%93%20Kolarik%20im%20Prater%2C%20Waldsteingartenstra%C3%9Fe%20128%2C%201020%20Wien&navigate=no
+                    - img [ref=e2026]
+                    - generic [ref=e2030]: וויז
+                - button "על המפה" [ref=e2031]:
+                  - img [ref=e2032]
+                  - text: על המפה
+        - generic [ref=e2035]:
+          - generic [ref=e2036]:
+            - img [ref=e2037]
+            - heading "סופרמרקטים" [level=3] [ref=e2041]
+            - generic [ref=e2042]: "2"
+          - list [ref=e2043]:
+            - listitem [ref=e2044]:
+              - generic [ref=e2045]: Spar (Getreidegasse)
+              - paragraph [ref=e2046]: סופר ספאר קטן ברחוב הקניות הראשי של העיר העתיקה, ליד בית הולדתו של מוצרט
+              - generic [ref=e2047]:
+                - img [ref=e2048]
+                - generic [ref=e2051]: Getreidegasse 9, 5020 Salzburg
+              - generic [ref=e2052]: Mon–Fri 08:00–20:00, Sat 08:00–18:00; closed Sun
+              - generic [ref=e2053]:
+                - generic [ref=e2054]:
+                  - link "פתחו ב־Google Maps והתחילו ניווט" [ref=e2055] [cursor=pointer]:
+                    - /url: https://www.google.com/maps/search/?api=1&query=Spar%20(Getreidegasse)%2C%20Getreidegasse%209%2C%205020%20Salzburg
+                    - img [ref=e2056]
+                    - generic [ref=e2058]: מפות
+                  - generic [ref=e2059]: ·
+                  - link "פתחו ב־Waze והתחילו ניווט" [ref=e2060] [cursor=pointer]:
+                    - /url: https://waze.com/ul?q=Spar%20(Getreidegasse)%2C%20Getreidegasse%209%2C%205020%20Salzburg&navigate=no
+                    - img [ref=e2061]
+                    - generic [ref=e2065]: וויז
+                - button "על המפה" [ref=e2066]:
+                  - img [ref=e2067]
+                  - text: על המפה
+            - listitem [ref=e2070]:
+              - generic [ref=e2071]: BILLA Corso (Neuer Markt)
+              - paragraph [ref=e2072]: סופר BILLA דגל יוקרתי בן 3 קומות ברובע הראשון — פתוח גם בימי ראשון (נדיר)
+              - generic [ref=e2073]:
+                - img [ref=e2074]
+                - generic [ref=e2077]: Neuer Markt 17, 1010 Wien
+              - generic [ref=e2078]: Mon–Sat 08:00–20:00, Sun/hol 10:00–20:00
+              - generic [ref=e2079]:
+                - generic [ref=e2080]:
+                  - link "פתחו ב־Google Maps והתחילו ניווט" [ref=e2081] [cursor=pointer]:
+                    - /url: https://www.google.com/maps/search/?api=1&query=BILLA%20Corso%20(Neuer%20Markt)%2C%20Neuer%20Markt%2017%2C%201010%20Wien
+                    - img [ref=e2082]
+                    - generic [ref=e2084]: מפות
+                  - generic [ref=e2085]: ·
+                  - link "פתחו ב־Waze והתחילו ניווט" [ref=e2086] [cursor=pointer]:
+                    - /url: https://waze.com/ul?q=BILLA%20Corso%20(Neuer%20Markt)%2C%20Neuer%20Markt%2017%2C%201010%20Wien&navigate=no
+                    - img [ref=e2087]
+                    - generic [ref=e2091]: וויז
+                - button "על המפה" [ref=e2092]:
+                  - img [ref=e2093]
+                  - text: על המפה
+        - generic [ref=e2096]:
+          - generic [ref=e2097]:
+            - img [ref=e2098]
+            - heading "דלק" [level=3] [ref=e2101]
+            - generic [ref=e2102]: "0"
+          - list
+  - navigation [ref=e837]:
+    - list [ref=e838]:
+      - listitem [ref=e839]:
+        - button "היום" [ref=e840]:
+          - img [ref=e842]
+          - text: היום
+      - listitem [ref=e846]:
+        - button "לגלות" [ref=e847]:
+          - img [ref=e849]
+          - text: לגלות
+      - listitem [ref=e852]:
+        - button "ילדים" [ref=e853]:
+          - img [ref=e855]
+          - text: ילדים
+      - listitem [ref=e858]:
+        - button "מפה" [ref=e859]:
+          - img [ref=e861]
+          - text: מפה
+      - listitem [ref=e863]:
+        - button "עוד" [ref=e864]:
+          - img [ref=e866]
+          - text: עוד
+  - button "שוחחו עם פליקס" [ref=e831]:
+    - img [ref=e833]
