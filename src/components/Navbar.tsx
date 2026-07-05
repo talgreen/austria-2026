@@ -41,10 +41,10 @@ export default function Navbar({ activeTab }: { activeTab: TabKey }) {
           onClick={() => navigateTab("today")}
           className="flex items-baseline gap-2 group min-h-11"
         >
-          <span className={`font-serif text-xl sm:text-2xl text-ink-900 group-hover:text-coral-600 transition-colors`}>
+          <span className={`font-serif text-xl sm:text-2xl text-ink-900 group-hover:text-terracotta-600 transition-colors`}>
             {t("brand_short")}
           </span>
-          <span className="font-serif italic text-coral-600 text-base sm:text-lg">{t("brand_year")}</span>
+          <span className="font-serif italic text-terracotta-600 text-base sm:text-lg">{t("brand_year")}</span>
         </button>
 
         <div className="hidden md:flex items-center gap-1">
@@ -54,8 +54,8 @@ export default function Navbar({ activeTab }: { activeTab: TabKey }) {
               onClick={() => navigateTab(l.id)}
               className={`px-3 py-2 text-sm font-medium transition-colors ${
                 activeTab === l.id
-                  ? "text-coral-600"
-                  : "text-ink-700 hover:text-coral-600"
+                  ? "text-terracotta-600"
+                  : "text-ink-700 hover:text-terracotta-600"
               }`}
             >
               {t(l.key)}

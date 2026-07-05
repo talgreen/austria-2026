@@ -1,0 +1,85 @@
+- generic [ref=e2]:
+  - navigation [ref=e3]:
+    - generic [ref=e4]:
+      - button "אוסטריה '26" [ref=e5]:
+        - generic [ref=e6]: אוסטריה
+        - generic [ref=e7]: "'26"
+      - group "Language" [ref=e9]:
+        - img [ref=e10]
+        - button "EN" [ref=e14]
+        - button "עב" [pressed] [ref=e15]
+  - generic [ref=e17]:
+    - generic [ref=e18]:
+      - generic [ref=e19]: עוד 35 ימים
+      - heading "אוסטריה מחכה ✈️" [level=1] [ref=e20]
+    - generic [ref=e21]:
+      - generic [ref=e22]:
+        - img [ref=e23]
+        - text: יציאה
+      - generic [ref=e25]: תל אביב → וינה
+      - generic [ref=e26]: נחיתה 08:45 · יוצאים לדרך ~10:00
+      - generic [ref=e28]:
+        - generic [ref=e29]:
+          - generic [ref=e31]:
+            - generic [ref=e33]: "3"
+            - generic [ref=e35]: "4"
+          - generic [ref=e36]: ימים
+        - generic [ref=e37]: ":"
+        - generic [ref=e38]:
+          - generic [ref=e40]:
+            - generic [ref=e42]: "0"
+            - generic [ref=e44]: "2"
+          - generic [ref=e45]: שעות
+        - generic [ref=e46]: ":"
+        - generic [ref=e47]:
+          - generic [ref=e49]:
+            - generic [ref=e51]: "2"
+            - generic [ref=e53]: "1"
+          - generic [ref=e54]: דקות
+    - button "מתכוננים 0 מתוך 19 מוכן" [ref=e55]:
+      - generic [ref=e56]:
+        - img [ref=e57]
+        - text: מתכוננים
+      - generic [ref=e60]: 0 מתוך 19 מוכן
+    - generic [ref=e62]:
+      - button "יום 1 · הצצה" [ref=e63]:
+        - generic [ref=e64]:
+          - img [ref=e65]
+          - text: יום 1 · הצצה
+      - button "וינה 25° 25°/19° צל אם זה 20° 23°/16°" [ref=e69]:
+        - generic [ref=e70]:
+          - generic [ref=e71]:
+            - img [ref=e72]
+            - generic [ref=e74]: וינה
+            - generic [ref=e75]: 25°
+            - generic [ref=e76]: 25°/19°
+          - generic [ref=e77]:
+            - img [ref=e78]
+            - generic [ref=e80]: צל אם זה
+            - generic [ref=e81]: 20°
+            - generic [ref=e82]: 23°/16°
+        - generic [ref=e83]: ▾
+  - navigation [ref=e85]:
+    - list [ref=e86]:
+      - listitem [ref=e87]:
+        - button "היום" [ref=e88]:
+          - img [ref=e90]
+          - text: היום
+      - listitem [ref=e94]:
+        - button "לגלות" [ref=e95]:
+          - img [ref=e97]
+          - text: לגלות
+      - listitem [ref=e100]:
+        - button "ילדים" [ref=e101]:
+          - img [ref=e103]
+          - text: ילדים
+      - listitem [ref=e106]:
+        - button "מפה" [ref=e107]:
+          - img [ref=e109]
+          - text: מפה
+      - listitem [ref=e111]:
+        - button "עוד" [ref=e112]:
+          - img [ref=e114]
+          - text: עוד
+  - button "שוחחו עם פליקס" [ref=e118]:
+    - img [ref=e120]

@@ -98,10 +98,10 @@ export default function MobileBottomNav({ activeTab }: { activeTab: TabKey }) {
                 <button
                   onClick={() => (id === "more" ? setMoreOpen(o => !o) : go(id))}
                   className={`w-full h-full flex flex-col items-center justify-center gap-1 text-[10px] font-medium transition-colors active:scale-[0.96] ${
-                    isActive ? "text-coral-600" : "text-ink-700/70"
+                    isActive ? "text-terracotta-600" : "text-ink-700/70"
                   }`}
                 >
-                  <span className={`w-10 h-7 flex items-center justify-center rounded-full transition-colors ${isActive ? "bg-coral-500/12" : ""}`}>
+                  <span className={`w-10 h-7 flex items-center justify-center rounded-full transition-colors ${isActive ? "bg-terracotta-500/12" : ""}`}>
                     <Icon size={18} strokeWidth={isActive ? 2.4 : 1.8} />
                   </span>
                   {label}

@@ -10,19 +10,16 @@ const CARDS: {
   tint: string;
   iconColor: string;
 }[] = [
-  { tab: "places", title: "explore_card_places", sub: "explore_card_places_sub", Icon: Compass, tint: "bg-surface", iconColor: "text-coral-500" },
-  { tab: "food", title: "explore_card_food", sub: "explore_card_food_sub", Icon: UtensilsCrossed, tint: "bg-surface-next", iconColor: "text-pine-600" }
+  { tab: "places", title: "explore_card_places", sub: "explore_card_places_sub", Icon: Compass, tint: "bg-surface", iconColor: "text-terracotta-500" },
+  { tab: "food", title: "explore_card_food", sub: "explore_card_food_sub", Icon: UtensilsCrossed, tint: "bg-surface-next", iconColor: "text-olive-600" }
 ];
 
 export default function ExploreHub() {
   const t = useT();
   return (
     <div className="mx-auto max-w-lg px-4 pt-6 pb-8">
-      <div className="text-xs font-extrabold uppercase tracking-[0.16em] text-coral-500">
-        {t("explore_eyebrow")}
-      </div>
-      <h1 className="mt-1 text-2xl font-extrabold text-ink-900">{t("explore_title")}</h1>
-      <p className="mt-1 text-ink-700/80">{t("explore_kicker")}</p>
+      <h1 className="font-serif text-3xl sm:text-4xl leading-tight text-ink-900">{t("explore_title")}</h1>
+      <p className="mt-2 font-serif italic text-ink-700/70 text-base">{t("explore_kicker")}</p>
 
       <div className="mt-5 space-y-3">
         {CARDS.map(({ tab, title, sub, Icon, tint, iconColor }) => (

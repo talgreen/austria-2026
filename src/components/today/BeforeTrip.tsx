@@ -18,16 +18,16 @@ export default function BeforeTrip({ state }: { state: Extract<TripState, { phas
   return (
     <div className="mx-auto max-w-lg px-4 pb-8 space-y-3">
       <div className="pt-2">
-        <div className="text-xs font-extrabold uppercase tracking-[0.16em] text-coral-500">
+        <div className="text-xs font-extrabold uppercase tracking-[0.16em] text-terracotta-500">
           {t("today_before_eyebrow", { n: state.daysUntil })}
         </div>
-        <h1 className="mt-1 text-2xl font-extrabold text-ink-900">
+        <h1 className="mt-1 font-serif text-3xl leading-tight text-ink-900">
           {t("today_before_title")} ✈️
         </h1>
       </div>
 
-      {/* Departure — the coral "headline" card */}
-      <div className="rounded-[var(--radius-card)] p-4 text-cream-50 bg-gradient-to-br from-coral-500 to-coral-600">
+      {/* Departure — the Austrian-red "headline" card */}
+      <div className="rounded-[var(--radius-card)] p-4 text-cream-50 bg-gradient-to-br from-terracotta-500 to-terracotta-600">
         <div className="flex items-center gap-2 text-[11px] font-extrabold uppercase tracking-wide opacity-90">
           <Plane size={14} /> {t("today_departure_label")}
         </div>
@@ -43,15 +43,15 @@ export default function BeforeTrip({ state }: { state: Extract<TripState, { phas
         onClick={() => navigateTab("checklist")}
         className="w-full text-start rounded-[var(--radius-card)] p-4 bg-surface-next active:scale-[0.99] transition-transform"
       >
-        <div className="flex items-center gap-2 text-[11px] font-extrabold uppercase tracking-wide text-pine-600">
+        <div className="flex items-center gap-2 text-[11px] font-extrabold uppercase tracking-wide text-olive-600">
           <ListChecks size={14} /> {t("today_packing_label")}
         </div>
         <div className="mt-1 font-bold text-ink-900">
           {t("today_packing_progress", { done, total })}
         </div>
-        <div className="mt-2 h-2 rounded-pill bg-pine-100 overflow-hidden">
+        <div className="mt-2 h-2 rounded-pill bg-olive-500/15 overflow-hidden">
           <div
-            className="h-full bg-pine-500 transition-[width] duration-500"
+            className="h-full bg-olive-500 transition-[width] duration-500"
             style={{ width: `${total === 0 ? 0 : (done / total) * 100}%` }}
           />
         </div>
@@ -62,7 +62,7 @@ export default function BeforeTrip({ state }: { state: Extract<TripState, { phas
           onClick={() => navigateChapter(1)}
           className="text-start rounded-[var(--radius-card)] p-4 bg-surface active:scale-[0.99] transition-transform"
         >
-          <div className="flex items-center gap-2 text-[11px] font-extrabold uppercase tracking-wide text-coral-500">
+          <div className="flex items-center gap-2 text-[11px] font-extrabold uppercase tracking-wide text-terracotta-500">
             <CalendarDays size={14} /> {t("today_day1_preview")}
           </div>
         </button>
