@@ -4,11 +4,11 @@ import LanguageSwitcher from "./LanguageSwitcher";
 import { navigateTab, type TabKey } from "../lib/route";
 
 const links: { id: TabKey; key: DictKey }[] = [
-  { id: "plan",      key: "nav_plan" },
-  { id: "places",    key: "nav_attractions" },
-  { id: "food",      key: "nav_food" },
+  { id: "today",     key: "nav_today" },
+  { id: "explore",   key: "nav_explore" },
   { id: "kids",      key: "nav_kids" },
   { id: "map",       key: "nav_map" },
+  { id: "plan",      key: "nav_itinerary" },
   { id: "stays",     key: "nav_stays" },
   { id: "tips",      key: "nav_tips" },
   { id: "checklist", key: "nav_checklist" },
@@ -38,13 +38,13 @@ export default function Navbar({ activeTab }: { activeTab: TabKey }) {
     >
       <div className="max-w-6xl mx-auto px-4 sm:px-6 h-14 sm:h-16 flex items-center justify-between gap-3">
         <button
-          onClick={() => navigateTab("plan")}
+          onClick={() => navigateTab("today")}
           className="flex items-baseline gap-2 group min-h-11"
         >
-          <span className={`font-serif text-xl sm:text-2xl text-ink-900 group-hover:text-terracotta-600 transition-colors`}>
+          <span className={`font-serif text-xl sm:text-2xl text-ink-900 group-hover:text-coral-600 transition-colors`}>
             {t("brand_short")}
           </span>
-          <span className="font-serif italic text-terracotta-600 text-base sm:text-lg">{t("brand_year")}</span>
+          <span className="font-serif italic text-coral-600 text-base sm:text-lg">{t("brand_year")}</span>
         </button>
 
         <div className="hidden md:flex items-center gap-1">
@@ -54,8 +54,8 @@ export default function Navbar({ activeTab }: { activeTab: TabKey }) {
               onClick={() => navigateTab(l.id)}
               className={`px-3 py-2 text-sm font-medium transition-colors ${
                 activeTab === l.id
-                  ? "text-terracotta-600"
-                  : "text-ink-700 hover:text-terracotta-600"
+                  ? "text-coral-600"
+                  : "text-ink-700 hover:text-coral-600"
               }`}
             >
               {t(l.key)}
