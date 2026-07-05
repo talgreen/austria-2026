@@ -799,7 +799,25 @@ export const DICT = {
     he: "אותו קיץ באוסטריה · לחיות את הטיול מחדש"
   },
   today_after_itinerary: { en: "Browse the itinerary", he: "לדפדף במסלול" },
-  today_after_quiz: { en: "Play Quizzo", he: "לשחק עם קוויצו" }
+  today_after_quiz: { en: "Play Quizzo", he: "לשחק עם קוויצו" },
+
+  /* ---------- Explore hub (2026 redesign) ---------- */
+  explore_eyebrow: { en: "Explore", he: "לגלות" },
+  explore_title: { en: "What to see & taste", he: "מה לראות ולטעום" },
+  explore_kicker: {
+    en: "The places we'll fall for and the food we'll eat",
+    he: "המקומות שנתאהב בהם והאוכל שנאכל"
+  },
+  explore_card_places: { en: "Attractions", he: "אטרקציות" },
+  explore_card_places_sub: {
+    en: "Lakes, castles, cable cars, caves",
+    he: "אגמים, טירות, רכבלים, מערות"
+  },
+  explore_card_food: { en: "Food & wine", he: "אוכל ויין" },
+  explore_card_food_sub: {
+    en: "Schnitzel, strudel — and what to drink",
+    he: "שניצל, שטרודל — ומה שותים"
+  }
 } as const;
 
 export type DictKey = keyof typeof DICT;
