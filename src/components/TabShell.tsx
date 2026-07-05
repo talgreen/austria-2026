@@ -1,4 +1,6 @@
 import type { TabKey } from "../lib/route";
+import TodayHome from "./today/TodayHome";
+import ExploreHub from "./hubs/ExploreHub";
 import MapView from "./MapView";
 import AttractionsGrid from "./AttractionsGrid";
 import FoodAndWineSection from "./FoodAndWineSection";
@@ -24,6 +26,14 @@ export default function TabShell({
   registerFocus: (fn: (id: string) => void) => void;
 }) {
   switch (tab) {
+    case "today":
+      return <TodayHome />;
+    case "explore":
+      return (
+        <div className="pt-20">
+          <ExploreHub />
+        </div>
+      );
     case "plan":
       return (
         <>
