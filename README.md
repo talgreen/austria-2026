@@ -99,7 +99,7 @@ scripts/           Local-only image and audio generation scripts
 docs/
   HOW_TO_BUILD_A_VACATION_WEBSITE.md   Full design playbook + new-trip guide
 .github/workflows/
-  deploy.yml       GitHub Pages CI
+  deploy.yml       legacy GitHub Pages CI — superseded by Vercel; remove when cutover is complete
 ```
 
 Gute Reise.
