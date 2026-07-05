@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 
 export type TabKey =
+  | "today"
+  | "explore"
   | "plan"
   | "map"
   | "places"
@@ -12,6 +14,8 @@ export type TabKey =
   | "emergency";
 
 export const TAB_KEYS: TabKey[] = [
+  "today",
+  "explore",
   "plan",
   "map",
   "places",
@@ -37,14 +41,20 @@ export function parseHash(hash: string): Route {
     const day = parseInt(chapter[1], 10);
     if (day >= 1 && day <= 18) return { kind: "chapter", day };
   }
+  // Legacy: the old default tab was "plan" (itinerary). It now lives at
+  // "#/itinerary"; a bare "#/plan" or "#/" lands on the new Today home.
   const tab = hash.match(/^#\/?([a-z]+)$/);
-  if (tab && isTabKey(tab[1])) return { kind: "tab", tab: tab[1] };
-  return { kind: "tab", tab: "plan" };
+  if (tab) {
+    if (tab[1] === "itinerary") return { kind: "tab", tab: "plan" };
+    if (tab[1] === "plan") return { kind: "tab", tab: "today" };
+    if (isTabKey(tab[1])) return { kind: "tab", tab: tab[1] };
+  }
+  return { kind: "tab", tab: "today" };
 }
 
 export function useHashRoute(): Route {
   const [route, setRoute] = useState<Route>(() =>
-    typeof window !== "undefined" ? parseHash(window.location.hash) : { kind: "tab", tab: "plan" }
+    typeof window !== "undefined" ? parseHash(window.location.hash) : { kind: "tab", tab: "today" }
   );
   useEffect(() => {
     const onChange = () => setRoute(parseHash(window.location.hash));
@@ -55,7 +65,9 @@ export function useHashRoute(): Route {
 }
 
 export function navigateTab(tab: TabKey) {
-  window.location.hash = tab === "plan" ? "/plan" : `/${tab}`;
+  const hash =
+    tab === "today" ? "/today" : tab === "plan" ? "/itinerary" : `/${tab}`;
+  window.location.hash = hash;
   window.scrollTo({ top: 0 });
 }
 
