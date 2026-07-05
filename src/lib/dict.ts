@@ -770,7 +770,36 @@ export const DICT = {
     he: "פרקים הבאים"
   },
   chapter_label: { en: "Chapter", he: "פרק" },
-  month_aug_short: { en: "Aug", he: "באוגוסט" }
+  month_aug_short: { en: "Aug", he: "באוגוסט" },
+
+  /* ---------- TodayHome (2026 redesign) ---------- */
+  today_before_eyebrow: { en: "{n} days to go", he: "עוד {n} ימים" },
+  today_before_title: { en: "Austria awaits", he: "אוסטריה מחכה" },
+  today_departure_label: { en: "Departure", he: "יציאה" },
+  today_departure_route: { en: "Tel Aviv → Vienna", he: "תל אביב → וינה" },
+  today_departure_note: {
+    en: "Land 08:45 · drive departs ~10:00",
+    he: "נחיתה 08:45 · יוצאים לדרך ~10:00"
+  },
+  today_packing_label: { en: "Getting ready", he: "מתכוננים" },
+  today_packing_progress: {
+    en: "{done} of {total} ready",
+    he: "{done} מתוך {total} מוכן"
+  },
+  today_open_lists: { en: "Open the lists", he: "פתחו את הרשימות" },
+  today_day1_preview: { en: "Day 1 · preview", he: "יום 1 · הצצה" },
+  today_now_label: { en: "Right now", he: "עכשיו" },
+  today_next_label: { en: "Up next", he: "הבא בתור" },
+  today_see_full_day: { en: "See the full day", he: "לכל היום" },
+  today_open_map: { en: "Open the map", he: "פתחו מפה" },
+  today_no_next: { en: "That's the day — enjoy the evening.", he: "זה היום — תיהנו מהערב." },
+  today_after_title: { en: "Willkommen zurück", he: "ברוכים השבים" },
+  today_after_sub: {
+    en: "That summer in Austria · relive the trip",
+    he: "אותו קיץ באוסטריה · לחיות את הטיול מחדש"
+  },
+  today_after_itinerary: { en: "Browse the itinerary", he: "לדפדף במסלול" },
+  today_after_quiz: { en: "Play Quizzo", he: "לשחק עם קוויצו" }
 } as const;
 
 export type DictKey = keyof typeof DICT;
