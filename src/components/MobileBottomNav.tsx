@@ -1,23 +1,21 @@
 import { useState } from "react";
-import { CalendarDays, Map, Compass, Baby, MoreHorizontal, Download } from "lucide-react";
+import { CalendarClock, Compass, Baby, Map, MoreHorizontal, Download } from "lucide-react";
 import { useT, type DictKey } from "../lib/dict";
 import { useLang } from "../lib/i18n";
 import LanguageSwitcher from "./LanguageSwitcher";
 import { canShowInstallOption, triggerInstallPrompt } from "../lib/install";
 import { navigateTab, type TabKey } from "../lib/route";
 
-const TABS: { id: TabKey | "more"; key: DictKey; Icon: typeof CalendarDays }[] = [
-  { id: "plan",   key: "nav_plan",        Icon: CalendarDays },
-  { id: "places", key: "nav_attractions", Icon: Compass },
-  // Kids gets a main-bar slot — it's the tab the family reaches for in
-  // the car, so it must be one tap away. Food moved to the More sheet.
-  { id: "kids",   key: "nav_kids",        Icon: Baby },
-  { id: "map",    key: "nav_map",         Icon: Map },
-  { id: "more",   key: "nav_attractions", Icon: MoreHorizontal }
+const TABS: { id: TabKey | "more"; key: DictKey; Icon: typeof CalendarClock }[] = [
+  { id: "today",   key: "nav_today",   Icon: CalendarClock },
+  { id: "explore", key: "nav_explore", Icon: Compass },
+  { id: "kids",    key: "nav_kids",    Icon: Baby },
+  { id: "map",     key: "nav_map",     Icon: Map },
+  { id: "more",    key: "nav_today",   Icon: MoreHorizontal } // label overridden below
 ];
 
 const MORE_LINKS: { id: TabKey; key: DictKey }[] = [
-  { id: "food",      key: "nav_food" },
+  { id: "plan",      key: "nav_itinerary" },
   { id: "stays",     key: "nav_stays" },
   { id: "tips",      key: "nav_tips" },
   { id: "checklist", key: "nav_checklist" },
@@ -25,7 +23,7 @@ const MORE_LINKS: { id: TabKey; key: DictKey }[] = [
 ];
 
 const MORE_LABEL: Record<"en" | "he", string> = { en: "More", he: "עוד" };
-const MORE_TAB_IDS = new Set<TabKey>(["food", "stays", "tips", "checklist", "emergency"]);
+const MORE_TAB_IDS = new Set<TabKey>(["plan", "stays", "tips", "checklist", "emergency"]);
 
 export default function MobileBottomNav({ activeTab }: { activeTab: TabKey }) {
   const t = useT();
@@ -97,10 +95,10 @@ export default function MobileBottomNav({ activeTab }: { activeTab: TabKey }) {
                 <button
                   onClick={() => (id === "more" ? setMoreOpen(o => !o) : go(id))}
                   className={`w-full h-full flex flex-col items-center justify-center gap-1 text-[10px] font-medium transition-colors active:scale-[0.96] ${
-                    isActive ? "text-terracotta-600" : "text-ink-700/70"
+                    isActive ? "text-coral-600" : "text-ink-700/70"
                   }`}
                 >
-                  <span className={`w-10 h-7 flex items-center justify-center rounded-full transition-colors ${isActive ? "bg-terracotta-500/12" : ""}`}>
+                  <span className={`w-10 h-7 flex items-center justify-center rounded-full transition-colors ${isActive ? "bg-coral-500/12" : ""}`}>
                     <Icon size={18} strokeWidth={isActive ? 2.4 : 1.8} />
                   </span>
                   {label}

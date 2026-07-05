@@ -56,6 +56,9 @@ export const DICT = {
   hero_photo_day: { en: "Day {n}", he: "יום {n}" },
 
   /* ---------- Navbar ---------- */
+  nav_today: { en: "Today", he: "היום" },
+  nav_explore: { en: "Explore", he: "לגלות" },
+  nav_itinerary: { en: "Itinerary", he: "מסלול" },
   nav_plan: { en: "Plan", he: "תוכנית" },
   nav_map: { en: "Map", he: "מפה" },
   // The stays are the trip's bases (Vienna, Salzburg, the Alps) —
