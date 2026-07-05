@@ -6,16 +6,7 @@ import Section from "./Section";
 import type { ChecklistItem } from "../data/types";
 import { useT } from "../lib/dict";
 import { useLocalizeChecklistItem } from "../data/i18n";
-
-const STORAGE_KEY = "austria-checklist-v1";
-
-function loadChecked(): Record<string, boolean> {
-  try {
-    return JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}");
-  } catch {
-    return {};
-  }
-}
+import { CHECKLIST_STORAGE_KEY, loadChecklistChecked, countDone } from "../lib/checklistProgress";
 
 function ChecklistList({
   items,
@@ -83,13 +74,13 @@ function ChecklistList({
 export default function ChecklistSection() {
   const t = useT();
   const [tab, setTab] = useState<"booking" | "packing">("booking");
-  const [checked, setChecked] = useState<Record<string, boolean>>(() => loadChecked());
+  const [checked, setChecked] = useState<Record<string, boolean>>(() => loadChecklistChecked());
 
   const toggle = (id: string) => {
     setChecked(prev => {
       const next = { ...prev, [id]: !prev[id] };
       try {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(next));
+        localStorage.setItem(CHECKLIST_STORAGE_KEY, JSON.stringify(next));
       } catch {
         /* ignore */
       }
@@ -98,7 +89,7 @@ export default function ChecklistSection() {
   };
 
   const list = tab === "booking" ? bookingChecklist : packingChecklist;
-  const doneCount = list.filter(i => checked[i.id]).length;
+  const doneCount = countDone(list, checked);
 
   return (
     <Section
@@ -120,7 +111,7 @@ export default function ChecklistSection() {
             <ClipboardCheck size={14} />
             {t("checklist_booking")}
             <span className={`text-xs ${tab === "booking" ? "text-cream-200" : "text-ink-700/60"}`}>
-              {bookingChecklist.filter(i => checked[i.id]).length}/{bookingChecklist.length}
+              {countDone(bookingChecklist, checked)}/{bookingChecklist.length}
             </span>
           </button>
           <button
@@ -134,7 +125,7 @@ export default function ChecklistSection() {
             <Briefcase size={14} />
             {t("checklist_packing")}
             <span className={`text-xs ${tab === "packing" ? "text-cream-200" : "text-ink-700/60"}`}>
-              {packingChecklist.filter(i => checked[i.id]).length}/{packingChecklist.length}
+              {countDone(packingChecklist, checked)}/{packingChecklist.length}
             </span>
           </button>
         </div>

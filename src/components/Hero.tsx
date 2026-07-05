@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronDown } from "lucide-react";
-import { getTripState, TRIP_START } from "../lib/tripState";
+import { TRIP_START } from "../lib/tripState";
 import type { TripState } from "../lib/tripState";
 import { formatDate } from "../lib/nav";
 import { useT } from "../lib/dict";
@@ -12,6 +12,7 @@ import type { Day, POI } from "../data/types";
 import LiveCountdown from "./LiveCountdown";
 import WeatherStrip from "./WeatherStrip";
 import { useCarouselSwipe } from "../lib/useCarouselSwipe";
+import { useTripStateLive } from "../lib/useTripStateLive";
 
 interface HeroPhoto {
   src: string;
@@ -103,15 +104,6 @@ const HERO_PHOTOS: HeroPhoto[] = [
 ];
 
 const PHOTO_DURATION_MS = 7000;
-
-function useTripStateLive() {
-  const [state, setState] = useState<TripState>(() => getTripState());
-  useEffect(() => {
-    const id = window.setInterval(() => setState(getTripState()), 30_000);
-    return () => window.clearInterval(id);
-  }, []);
-  return state;
-}
 
 /* Build the hero photo carousel from a single day's actual content:
  * every attraction with a photo (in itinerary order), plus the day's
