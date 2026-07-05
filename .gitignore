@@ -31,3 +31,6 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# impeccable design tool — generated cache (config.json is committed intentionally)
+.impeccable/hook.cache.json
