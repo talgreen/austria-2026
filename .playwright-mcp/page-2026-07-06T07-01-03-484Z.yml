@@ -1,0 +1,243 @@
+- generic [ref=f1e3]:
+  - banner [ref=f1e4]:
+    - generic [ref=f1e5]: Avgen · AVGen 2 — Q3 2026 Goal Approval
+    - button "Toggle light or dark theme" [ref=f1e6] [cursor=pointer]:
+      - img [ref=f1e8]
+      - generic [ref=f1e10]: Dark
+  - generic [ref=f1e11]:
+    - heading "Nine of eleven Q3 goals approved — and they fit our capacity." [level=1] [ref=f1e12]
+    - paragraph [ref=f1e13]: Every P0 is already approved; the two still pending are both P1s. The plan lands with a small buffer on frontend and backend — the one pressure point is AVGen 2 backend, two days over, worth a conscious call before we commit.
+    - generic [ref=f1e14]:
+      - generic [ref=f1e15]:
+        - generic [ref=f1e16]: Approved
+        - generic [ref=f1e17]: 9 / 11
+        - generic [ref=f1e18]: 2 pending approval
+      - generic [ref=f1e19]:
+        - generic [ref=f1e20]: Frontend · group
+        - generic [ref=f1e21]: "+2"
+        - generic [ref=f1e22]: 91 planned of 93
+      - generic [ref=f1e23]:
+        - generic [ref=f1e24]: Backend · group
+        - generic [ref=f1e25]: "+4"
+        - generic [ref=f1e26]: 150 planned of 154
+      - generic [ref=f1e27]:
+        - generic [ref=f1e28]: AVGen 2 · backend
+        - generic [ref=f1e29]: −2
+        - generic [ref=f1e30]: 80 planned of 78
+  - heading "Capacity" [level=2] [ref=f1e32]
+  - generic [ref=f1e34]:
+    - generic [ref=f1e35]:
+      - generic [ref=f1e36]:
+        - generic [ref=f1e38]: Avgen
+        - generic [ref=f1e39]: 7 goals committed
+      - generic [ref=f1e41]:
+        - generic [ref=f1e42]: Frontend
+        - generic [ref=f1e43]: 44 / 46+2
+      - generic [ref=f1e48]:
+        - generic [ref=f1e49]: Backend
+        - generic [ref=f1e50]: 70 / 76+6
+    - generic [ref=f1e54]:
+      - generic [ref=f1e55]:
+        - generic [ref=f1e57]: AVGen 2
+        - generic [ref=f1e58]: 4 goals committed
+      - generic [ref=f1e60]:
+        - generic [ref=f1e61]: Frontend
+        - generic [ref=f1e62]: 47 / 470
+      - generic [ref=f1e66]:
+        - generic [ref=f1e67]: Backend
+        - generic [ref=f1e68]: 80 / 78−2 over
+  - heading "What we're committing to" [level=2] [ref=f1e72]
+  - paragraph [ref=f1e74]:
+    - text: Toggle a goal to model its impact — the capacity above updates live.
+    - button "Reset plan" [ref=f1e75] [cursor=pointer]
+  - generic [ref=f1e76]:
+    - generic [ref=f1e77]:
+      - generic [ref=f1e79]: Avgen
+      - generic [ref=f1e80]: 7 goals · FE 44 · BE 70
+    - table [ref=f1e81]:
+      - rowgroup [ref=f1e82]:
+        - row "Goal FE BE" [ref=f1e83]:
+          - columnheader [ref=f1e84]
+          - columnheader "Goal" [ref=f1e85]
+          - columnheader "FE" [ref=f1e86]
+          - columnheader "BE" [ref=f1e87]
+      - rowgroup [ref=f1e88]:
+        - 'row "Include Main DB Teams Implementation P0 Main DB — multiple DBs: Teams Implementation ⚠ Intake – 13" [ref=f1e89]':
+          - cell "Include Main DB Teams Implementation" [ref=f1e90]:
+            - checkbox "Include Main DB Teams Implementation" [checked] [ref=f1e91] [cursor=pointer]
+          - 'cell "P0 Main DB — multiple DBs: Teams Implementation ⚠ Intake" [ref=f1e92]':
+            - generic [ref=f1e93]:
+              - generic [ref=f1e94]: P0
+              - generic [ref=f1e95]:
+                - generic [ref=f1e96]:
+                  - 'link "Main DB — multiple DBs: Teams Implementation" [ref=f1e97] [cursor=pointer]':
+                    - /url: https://wsc-sports.atlassian.net/browse/DEV-285948
+                  - text: ⚠
+                - generic [ref=f1e98]: Intake
+          - cell "–" [ref=f1e99]
+          - cell "13" [ref=f1e100]
+        - row "Include Backoffice Ops Support P0 Backoffice Ops Support for Studio VideoProject / Output Backoffice · approach & estimate still being decided – 10*" [ref=f1e101]:
+          - cell "Include Backoffice Ops Support" [ref=f1e102]:
+            - checkbox "Include Backoffice Ops Support" [checked] [ref=f1e103] [cursor=pointer]
+          - cell "P0 Backoffice Ops Support for Studio VideoProject / Output Backoffice · approach & estimate still being decided" [ref=f1e104]:
+            - generic [ref=f1e105]:
+              - generic [ref=f1e106]: P0
+              - generic [ref=f1e107]:
+                - link "Backoffice Ops Support for Studio VideoProject / Output" [ref=f1e109] [cursor=pointer]:
+                  - /url: https://wsc-sports.atlassian.net/browse/DEV-286696
+                - generic [ref=f1e110]: Backoffice · approach & estimate still being decided
+          - cell "–" [ref=f1e111]
+          - cell "10*" [ref=f1e112]
+        - row "Include Vertical Top Moments P0 Vertical Top Moments — Dedicated User Flow AVGen 2 · Tech Review 30 20" [ref=f1e113]:
+          - cell "Include Vertical Top Moments" [ref=f1e114]:
+            - checkbox "Include Vertical Top Moments" [checked] [ref=f1e115] [cursor=pointer]
+          - cell "P0 Vertical Top Moments — Dedicated User Flow AVGen 2 · Tech Review" [ref=f1e116]:
+            - generic [ref=f1e117]:
+              - generic [ref=f1e118]: P0
+              - generic [ref=f1e119]:
+                - link "Vertical Top Moments — Dedicated User Flow" [ref=f1e121] [cursor=pointer]:
+                  - /url: https://wsc-sports.atlassian.net/browse/DEV-284793
+                - generic [ref=f1e122]: AVGen 2 · Tech Review
+          - cell "30" [ref=f1e123]
+          - cell "20" [ref=f1e124]
+        - row "Include Multi-Mongo Ph3 P0 Multi-Mongo Support for Streams DB — Ph 3 Video Infra · Product Review – 5" [ref=f1e125]:
+          - cell "Include Multi-Mongo Ph3" [ref=f1e126]:
+            - checkbox "Include Multi-Mongo Ph3" [checked] [ref=f1e127] [cursor=pointer]
+          - cell "P0 Multi-Mongo Support for Streams DB — Ph 3 Video Infra · Product Review" [ref=f1e128]:
+            - generic [ref=f1e129]:
+              - generic [ref=f1e130]: P0
+              - generic [ref=f1e131]:
+                - link "Multi-Mongo Support for Streams DB — Ph 3" [ref=f1e133] [cursor=pointer]:
+                  - /url: https://wsc-sports.atlassian.net/browse/DEV-283952
+                - generic [ref=f1e134]: Video Infra · Product Review
+          - cell "–" [ref=f1e135]
+          - cell "5" [ref=f1e136]
+        - row "Include A2V Evaluator P0 A2V — Evaluator's Output for Clients Article 2 Video · Tech Review – 2" [ref=f1e137]:
+          - cell "Include A2V Evaluator" [ref=f1e138]:
+            - checkbox "Include A2V Evaluator" [checked] [ref=f1e139] [cursor=pointer]
+          - cell "P0 A2V — Evaluator's Output for Clients Article 2 Video · Tech Review" [ref=f1e140]:
+            - generic [ref=f1e141]:
+              - generic [ref=f1e142]: P0
+              - generic [ref=f1e143]:
+                - link "A2V — Evaluator's Output for Clients" [ref=f1e145] [cursor=pointer]:
+                  - /url: https://wsc-sports.atlassian.net/browse/DEV-275750
+                - generic [ref=f1e146]: Article 2 Video · Tech Review
+          - cell "–" [ref=f1e147]
+          - cell "2" [ref=f1e148]
+        - row "Include Hermes Quality P1 Hermes Quality — Robustness & Output Accuracy Story X · approval pending 11 15" [ref=f1e149]:
+          - cell "Include Hermes Quality" [ref=f1e150]:
+            - checkbox "Include Hermes Quality" [checked] [ref=f1e151] [cursor=pointer]
+          - cell "P1 Hermes Quality — Robustness & Output Accuracy Story X · approval pending" [ref=f1e152]:
+            - generic [ref=f1e153]:
+              - generic [ref=f1e154]: P1
+              - generic [ref=f1e155]:
+                - link "Hermes Quality — Robustness & Output Accuracy" [ref=f1e157] [cursor=pointer]:
+                  - /url: https://wsc-sports.atlassian.net/browse/DEV-289180
+                - generic [ref=f1e158]: Story X · approval pending
+          - cell "11" [ref=f1e159]
+          - cell "15" [ref=f1e160]
+        - row "Include Captions Integration Ph 2 P1 Studio 2.0 <> AVgen — Captions Integration Ph 2 Avgen · approval pending 3 5" [ref=f1e161]:
+          - cell "Include Captions Integration Ph 2" [ref=f1e162]:
+            - checkbox "Include Captions Integration Ph 2" [checked] [ref=f1e163] [cursor=pointer]
+          - cell "P1 Studio 2.0 <> AVgen — Captions Integration Ph 2 Avgen · approval pending" [ref=f1e164]:
+            - generic [ref=f1e165]:
+              - generic [ref=f1e166]: P1
+              - generic [ref=f1e167]:
+                - link "Studio 2.0 <> AVgen — Captions Integration Ph 2" [ref=f1e169] [cursor=pointer]:
+                  - /url: https://wsc-sports.atlassian.net/browse/DEV-285476
+                - generic [ref=f1e170]: Avgen · approval pending
+          - cell "3" [ref=f1e171]
+          - cell "5" [ref=f1e172]
+    - generic [ref=f1e173]: "* Backoffice Ops estimate is a placeholder — the approach is still being decided."
+  - generic [ref=f1e174]:
+    - generic [ref=f1e175]:
+      - generic [ref=f1e177]: AVGen 2
+      - generic [ref=f1e178]: 4 goals · FE 47 · BE 80
+    - table [ref=f1e179]:
+      - rowgroup [ref=f1e180]:
+        - row "Goal FE BE" [ref=f1e181]:
+          - columnheader [ref=f1e182]
+          - columnheader "Goal" [ref=f1e183]
+          - columnheader "FE" [ref=f1e184]
+          - columnheader "BE" [ref=f1e185]
+      - rowgroup [ref=f1e186]:
+        - row "Include Recommendations MVP P0 Recommendations Engine — MVP ⚠ In progress · Narrative · carried from Q2 27 35" [ref=f1e187]:
+          - cell "Include Recommendations MVP" [ref=f1e188]:
+            - checkbox "Include Recommendations MVP" [checked] [ref=f1e189] [cursor=pointer]
+          - cell "P0 Recommendations Engine — MVP ⚠ In progress · Narrative · carried from Q2" [ref=f1e190]:
+            - generic [ref=f1e191]:
+              - generic [ref=f1e192]: P0
+              - generic [ref=f1e193]:
+                - generic [ref=f1e194]:
+                  - link "Recommendations Engine — MVP" [ref=f1e195] [cursor=pointer]:
+                    - /url: https://wsc-sports.atlassian.net/browse/DEV-279323
+                  - text: ⚠
+                - generic [ref=f1e196]: In progress · Narrative · carried from Q2
+          - cell "27" [ref=f1e197]
+          - cell "35" [ref=f1e198]
+        - 'row "Include Role-Permission P0 Phase 2: Role-Permission Mapping & Rollout Backoffice – 15" [ref=f1e199]':
+          - cell "Include Role-Permission" [ref=f1e200]:
+            - checkbox "Include Role-Permission" [checked] [ref=f1e201] [cursor=pointer]
+          - 'cell "P0 Phase 2: Role-Permission Mapping & Rollout Backoffice" [ref=f1e202]':
+            - generic [ref=f1e203]:
+              - generic [ref=f1e204]: P0
+              - generic [ref=f1e205]:
+                - 'link "Phase 2: Role-Permission Mapping & Rollout" [ref=f1e207] [cursor=pointer]':
+                  - /url: https://wsc-sports.atlassian.net/browse/DEV-282258
+                - generic [ref=f1e208]: Backoffice
+          - cell "–" [ref=f1e209]
+          - cell "15" [ref=f1e210]
+        - row "Include Identity-Based Auth P0 Migrate Services to Identity-Based Auth ⚠ DevOps – 10" [ref=f1e211]:
+          - cell "Include Identity-Based Auth" [ref=f1e212]:
+            - checkbox "Include Identity-Based Auth" [checked] [ref=f1e213] [cursor=pointer]
+          - cell "P0 Migrate Services to Identity-Based Auth ⚠ DevOps" [ref=f1e214]:
+            - generic [ref=f1e215]:
+              - generic [ref=f1e216]: P0
+              - generic [ref=f1e217]:
+                - generic [ref=f1e218]:
+                  - link "Migrate Services to Identity-Based Auth" [ref=f1e219] [cursor=pointer]:
+                    - /url: https://wsc-sports.atlassian.net/browse/DEV-269380
+                  - text: ⚠
+                - generic [ref=f1e220]: DevOps
+          - cell "–" [ref=f1e221]
+          - cell "10" [ref=f1e222]
+        - row "Include Recommendations Q3 P1 Recommendations Q3 — content-gap UX & more content types ⚠ Narrative 20 20" [ref=f1e223]:
+          - cell "Include Recommendations Q3" [ref=f1e224]:
+            - checkbox "Include Recommendations Q3" [checked] [ref=f1e225] [cursor=pointer]
+          - cell "P1 Recommendations Q3 — content-gap UX & more content types ⚠ Narrative" [ref=f1e226]:
+            - generic [ref=f1e227]:
+              - generic [ref=f1e228]: P1
+              - generic [ref=f1e229]:
+                - generic [ref=f1e230]:
+                  - link "Recommendations Q3 — content-gap UX & more content types" [ref=f1e231] [cursor=pointer]:
+                    - /url: https://wsc-sports.atlassian.net/browse/DEV-287323
+                  - text: ⚠
+                - generic [ref=f1e232]: Narrative
+          - cell "20" [ref=f1e233]
+          - cell "20" [ref=f1e234]
+  - heading "Carried over from Q2" [level=2] [ref=f1e236]
+  - generic [ref=f1e238]:
+    - generic [ref=f1e239]:
+      - generic [ref=f1e241]:
+        - generic [ref=f1e242]: Recommendations Engine
+        - generic [ref=f1e243]: Started late in Q2, so the spill was baked in — MVP in progress → Q3 completion + content-gap phase
+      - generic [ref=f1e244]: 47 FE · 55 BE
+    - generic [ref=f1e245]:
+      - generic [ref=f1e247]:
+        - generic [ref=f1e248]: Main DB — large columns
+        - generic [ref=f1e249]: nvarchar(max) refactor mostly done, rolled out gradually to reduce risk; small remainder + Teams Implementation continue
+      - generic [ref=f1e250]: – FE · 13 BE
+    - generic [ref=f1e251]:
+      - generic [ref=f1e253]:
+        - generic [ref=f1e254]: Captions
+        - generic [ref=f1e255]: Overlays & captions work → Captions Integration Phase 2
+      - generic [ref=f1e256]: 3 FE · 5 BE
+  - heading "Q2 in review" [level=2] [ref=f1e258]
+  - paragraph [ref=f1e260]: A heavy build quarter — one goal shipped clean, the rest of the group's work carried into Q3 as the three tracks above.
+  - group [ref=f1e261]:
+    - generic "Q2 detail — shipped & in-flight" [ref=f1e262] [cursor=pointer]: Q2 detail — shipped & in-flight
+  - group [ref=f1e264]:
+    - generic "Lessons learned" [ref=f1e265] [cursor=pointer]: Lessons learned
+  - contentinfo [ref=f1e267]:
+    - generic [ref=f1e268]: Jira 2026Q2Goal / 2026Q3Goal · filtered to Squad or Involved = Avgen / AVGen 2 · approval = Dani_Approved_Goal · capacity from planning tool
+    - generic [ref=f1e269]: Effort in days · FE / BE

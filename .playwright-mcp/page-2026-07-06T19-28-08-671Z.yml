@@ -1,0 +1,174 @@
+- generic [ref=e2]:
+  - navigation [ref=e3]:
+    - generic [ref=e4]:
+      - button "אוסטריה '26" [ref=e5]:
+        - generic [ref=e6]: אוסטריה
+        - generic [ref=e7]: "'26"
+      - generic [ref=e8]:
+        - button "היום" [ref=e9]
+        - button "לגלות" [ref=e10]
+        - button "ילדים" [ref=e11]
+        - button "מפה" [ref=e12]
+        - button "מסלול" [ref=e13]
+        - button "לינות" [ref=e14]
+        - button "טיפים" [ref=e15]
+        - button "רשימות" [ref=e16]
+        - button "חירום" [ref=e17]
+      - group "Language" [ref=e19]:
+        - img [ref=e20]
+        - button "EN" [ref=e24]
+        - button "עב" [pressed] [ref=e25]
+  - generic [ref=e27]:
+    - generic [ref=e28]:
+      - generic:
+        - generic:
+          - img
+        - generic:
+          - button "⌂" [ref=e29] [cursor=pointer]:
+            - generic [ref=e32]: ⌂
+          - button "⌂" [ref=e34] [cursor=pointer]:
+            - generic [ref=e37]: ⌂
+          - button "⌂" [ref=e39] [cursor=pointer]:
+            - generic [ref=e42]: ⌂
+          - button "⌂" [ref=e44] [cursor=pointer]:
+            - generic [ref=e47]: ⌂
+          - button "⌂" [ref=e49] [cursor=pointer]:
+            - generic [ref=e52]: ⌂
+          - button "★" [ref=e54] [cursor=pointer]:
+            - generic [ref=e57]: ★
+          - button "★" [ref=e58] [cursor=pointer]:
+            - generic [ref=e61]: ★
+          - button "★" [ref=e62] [cursor=pointer]:
+            - generic [ref=e65]: ★
+          - button "★" [ref=e66] [cursor=pointer]:
+            - generic [ref=e69]: ★
+          - button "★" [ref=e70] [cursor=pointer]:
+            - generic [ref=e73]: ★
+          - button "★" [ref=e74] [cursor=pointer]:
+            - generic [ref=e77]: ★
+          - button "★" [ref=e78] [cursor=pointer]:
+            - generic [ref=e81]: ★
+          - button "★" [ref=e82] [cursor=pointer]:
+            - generic [ref=e85]: ★
+          - button "★" [ref=e86] [cursor=pointer]:
+            - generic [ref=e89]: ★
+          - button "★" [ref=e90] [cursor=pointer]:
+            - generic [ref=e93]: ★
+          - button "★" [ref=e94] [cursor=pointer]:
+            - generic [ref=e97]: ★
+          - button "★" [ref=e98] [cursor=pointer]:
+            - generic [ref=e101]: ★
+          - button "★" [ref=e102] [cursor=pointer]:
+            - generic [ref=e105]: ★
+          - button "★" [ref=e106] [cursor=pointer]:
+            - generic [ref=e109]: ★
+          - button "★" [ref=e110] [cursor=pointer]:
+            - generic [ref=e113]: ★
+          - button "★" [ref=e114] [cursor=pointer]:
+            - generic [ref=e117]: ★
+          - button "★" [ref=e118] [cursor=pointer]:
+            - generic [ref=e121]: ★
+          - button "★" [ref=e122] [cursor=pointer]:
+            - generic [ref=e125]: ★
+          - button "★" [ref=e126] [cursor=pointer]:
+            - generic [ref=e129]: ★
+          - button "★" [ref=e130] [cursor=pointer]:
+            - generic [ref=e133]: ★
+          - button "★" [ref=e134] [cursor=pointer]:
+            - generic [ref=e137]: ★
+          - button "★" [ref=e138] [cursor=pointer]:
+            - generic [ref=e141]: ★
+          - button "★" [ref=e142] [cursor=pointer]:
+            - generic [ref=e145]: ★
+          - button "★" [ref=e146] [cursor=pointer]:
+            - generic [ref=e149]: ★
+          - button "★" [ref=e150] [cursor=pointer]:
+            - generic [ref=e153]: ★
+          - button "★" [ref=e154] [cursor=pointer]:
+            - generic [ref=e157]: ★
+          - button "★" [ref=e158] [cursor=pointer]:
+            - generic [ref=e161]: ★
+          - button "★" [ref=e162] [cursor=pointer]:
+            - generic [ref=e165]: ★
+          - button "★" [ref=e166] [cursor=pointer]:
+            - generic [ref=e169]: ★
+          - button "★" [ref=e170] [cursor=pointer]:
+            - generic [ref=e173]: ★
+          - button "★" [ref=e174] [cursor=pointer]:
+            - generic [ref=e177]: ★
+          - button "★" [ref=e178] [cursor=pointer]:
+            - generic [ref=e181]: ★
+          - button "★" [ref=e182] [cursor=pointer]:
+            - generic [ref=e185]: ★
+          - button "★" [ref=e186] [cursor=pointer]:
+            - generic [ref=e189]: ★
+          - button "★" [ref=e190] [cursor=pointer]:
+            - generic [ref=e193]: ★
+          - button "★" [ref=e194] [cursor=pointer]:
+            - generic [ref=e197]: ★
+          - button "★" [ref=e198] [cursor=pointer]:
+            - generic [ref=e201]: ★
+          - button "★" [ref=e202] [cursor=pointer]:
+            - generic [ref=e205]: ★
+          - button "★" [ref=e206] [cursor=pointer]:
+            - generic [ref=e209]: ★
+          - button "★" [ref=e210] [cursor=pointer]:
+            - generic [ref=e213]: ★
+          - button "★" [ref=e214] [cursor=pointer]:
+            - generic [ref=e217]: ★
+          - button "✈" [ref=e218] [cursor=pointer]:
+            - generic [ref=e221]: ✈
+      - generic [ref=e223]:
+        - link "Leaflet" [ref=e224] [cursor=pointer]:
+          - /url: https://leafletjs.com
+          - img [ref=e225]
+          - text: Leaflet
+        - text: "| ©"
+        - link "OpenStreetMap" [ref=e229] [cursor=pointer]:
+          - /url: https://www.openstreetmap.org/copyright
+        - text: contributors ©
+        - link "CARTO" [ref=e230] [cursor=pointer]:
+          - /url: https://carto.com/attributions
+    - generic [ref=e232]:
+      - button "לינה 5" [pressed] [ref=e233]:
+        - img [ref=e234]
+        - text: לינה
+        - generic [ref=e237]: "5"
+      - button "אטרקציות 41" [pressed] [ref=e238]:
+        - img [ref=e239]
+        - text: אטרקציות
+        - generic [ref=e241]: "41"
+      - button "מסעדות 5" [ref=e242]:
+        - img [ref=e243]
+        - text: מסעדות
+        - generic [ref=e246]: "5"
+      - button "יקבים 0" [ref=e247]:
+        - img [ref=e248]
+        - text: יקבים
+        - generic [ref=e258]: "0"
+      - button "סופרמרקטים 5" [ref=e259]:
+        - img [ref=e260]
+        - text: סופרמרקטים
+        - generic [ref=e264]: "5"
+      - button "דלק 0" [ref=e265]:
+        - img [ref=e266]
+        - text: דלק
+        - generic [ref=e269]: "0"
+      - button "שדה תעופה 1" [pressed] [ref=e270]:
+        - img [ref=e271]
+        - text: שדה תעופה
+        - generic [ref=e273]: "1"
+    - generic [ref=e274]:
+      - button "טיולי יום מוצגים" [pressed] [ref=e275]:
+        - img [ref=e276]
+        - text: טיולי יום מוצגים
+      - button "מסלול מוצג" [pressed] [ref=e279]:
+        - img [ref=e280]
+        - text: מסלול מוצג
+    - generic [ref=e284]:
+      - button "התאם תצוגה לכל המיקומים" [ref=e285]:
+        - img [ref=e286]
+      - button "הצג את המיקום שלי" [ref=e291]:
+        - img [ref=e292]
+  - button "שוחחו עם פליקס" [ref=e294]:
+    - img [ref=e296]

@@ -1,0 +1,369 @@
+- generic [active] [ref=e1]:
+  - banner [ref=e2]:
+    - text: Working tool Â· not the final deck
+    - heading "Q3 Goal Deck â€” mark up the data" [level=1] [ref=e3]
+    - paragraph [ref=e4]: Every data point in the current draft is a row below â€” now filtered to Jira goals where Squad = Avgen / AVGen 2 or Involved-teams lists them. Tag each one, note any change, then export. Nothing here is styled for the meeting yet â€” we polish UI/UX after the content is locked.
+    - generic [ref=e5]: "How: click Stay / Change / Remove on each row (untouched rows count as \"Stay\"). For Change, type what to fix. Hit Copy decisions and paste the result back to me. Your marks auto-save in this browser."
+  - generic [ref=e7]:
+    - generic [ref=e8]:
+      - generic [ref=e9]:
+        - text: Stay
+        - generic [ref=e10]: "0"
+      - generic [ref=e11]:
+        - text: Change
+        - generic [ref=e12]: "0"
+      - generic [ref=e13]:
+        - text: Remove
+        - generic [ref=e14]: "0"
+      - generic [ref=e15]:
+        - text: Untouched
+        - generic [ref=e16]: "35"
+    - button "Toggle light or dark theme" [ref=e17] [cursor=pointer]: Theme
+    - button "Reset" [ref=e18] [cursor=pointer]
+    - button "Copy decisions â–¸" [ref=e19] [cursor=pointer]
+  - generic [ref=e20]:
+    - generic [ref=e21]:
+      - generic [ref=e22]:
+        - heading "Framing & sections All stay All change All remove" [level=2] [ref=e23]:
+          - generic [ref=e24]: Framing & sections
+          - generic [ref=e25]:
+            - button "All stay" [ref=e26] [cursor=pointer]
+            - button "All change" [ref=e27] [cursor=pointer]
+            - button "All remove" [ref=e28] [cursor=pointer]
+        - generic [ref=e29]:
+          - generic [ref=e30]:
+            - generic [ref=e31]:
+              - generic [ref=e32]: TL;DR verdict bar â€” Approved 9/11, FE +2, BE +4, AVGen 2 BE âˆ’2
+              - generic [ref=e33]: top tiles (approval-led)
+            - group "decision" [ref=e34]:
+              - button "Stay" [ref=e35] [cursor=pointer]
+              - button "Change" [ref=e36] [cursor=pointer]
+              - button "Remove" [ref=e37] [cursor=pointer]
+          - generic [ref=e38]:
+            - generic [ref=e39]:
+              - generic [ref=e40]: "Section: Q3 capacity meters"
+              - generic [ref=e41]: whole section
+            - group "decision" [ref=e42]:
+              - button "Stay" [ref=e43] [cursor=pointer]
+              - button "Change" [ref=e44] [cursor=pointer]
+              - button "Remove" [ref=e45] [cursor=pointer]
+          - generic [ref=e46]:
+            - generic [ref=e47]:
+              - generic [ref=e48]: "Section: Q3 goals tables"
+              - generic [ref=e49]: whole section
+            - group "decision" [ref=e50]:
+              - button "Stay" [ref=e51] [cursor=pointer]
+              - button "Change" [ref=e52] [cursor=pointer]
+              - button "Remove" [ref=e53] [cursor=pointer]
+          - generic [ref=e54]:
+            - generic [ref=e55]:
+              - generic [ref=e56]: "Section: Carried over from Q2 (spillover)"
+              - generic [ref=e57]: whole section
+            - group "decision" [ref=e58]:
+              - button "Stay" [ref=e59] [cursor=pointer]
+              - button "Change" [ref=e60] [cursor=pointer]
+              - button "Remove" [ref=e61] [cursor=pointer]
+          - generic [ref=e62]:
+            - generic [ref=e63]:
+              - generic [ref=e64]: "Section: Q2 in review + detail toggle"
+              - generic [ref=e65]: whole section
+            - group "decision" [ref=e66]:
+              - button "Stay" [ref=e67] [cursor=pointer]
+              - button "Change" [ref=e68] [cursor=pointer]
+              - button "Remove" [ref=e69] [cursor=pointer]
+          - generic [ref=e70]:
+            - generic [ref=e71]:
+              - generic [ref=e72]: "Section: Lessons learned (2 cards)"
+              - generic [ref=e73]: whole section â€” inferred
+            - group "decision" [ref=e74]:
+              - button "Stay" [ref=e75] [cursor=pointer]
+              - button "Change" [ref=e76] [cursor=pointer]
+              - button "Remove" [ref=e77] [cursor=pointer]
+          - generic [ref=e78]:
+            - generic [ref=e79]:
+              - generic [ref=e80]: Interactive include/exclude on goals â†’ live capacity recompute
+              - generic [ref=e81]: new feature â€” keep or drop
+            - group "decision" [ref=e82]:
+              - button "Stay" [ref=e83] [cursor=pointer]
+              - button "Change" [ref=e84] [cursor=pointer]
+              - button "Remove" [ref=e85] [cursor=pointer]
+          - generic [ref=e86]:
+            - generic [ref=e87]:
+              - generic [ref=e88]: Light/dark theme toggle
+              - generic [ref=e89]: new feature â€” keep or drop
+            - group "decision" [ref=e90]:
+              - button "Stay" [ref=e91] [cursor=pointer]
+              - button "Change" [ref=e92] [cursor=pointer]
+              - button "Remove" [ref=e93] [cursor=pointer]
+          - generic [ref=e94]:
+            - generic [ref=e95]:
+              - generic [ref=e96]: Approval = Dani_Approved_Goal (9 of 11 committed)
+              - generic [ref=e97]: data source for the 9/11
+            - group "decision" [ref=e98]:
+              - button "Stay" [ref=e99] [cursor=pointer]
+              - button "Change" [ref=e100] [cursor=pointer]
+              - button "Remove" [ref=e101] [cursor=pointer]
+      - generic [ref=e102]:
+        - heading "Q2 delivered (Done) All stay All change All remove" [level=2] [ref=e103]:
+          - generic [ref=e104]: Q2 delivered (Done)
+          - generic [ref=e105]:
+            - button "All stay" [ref=e106] [cursor=pointer]
+            - button "All change" [ref=e107] [cursor=pointer]
+            - button "All remove" [ref=e108] [cursor=pointer]
+        - generic [ref=e110]:
+          - generic [ref=e111]:
+            - generic [ref=e112]: Studio 2.0 â€” Blurred Wings via MagiCrop
+            - generic [ref=e113]: DEV-266291 Â· Studio Â· Avgen inv. Â· Done 13 May
+          - group "decision" [ref=e114]:
+            - button "Stay" [ref=e115] [cursor=pointer]
+            - button "Change" [ref=e116] [cursor=pointer]
+            - button "Remove" [ref=e117] [cursor=pointer]
+      - generic [ref=e118]:
+        - heading "Q2 still in flight (behind Q2-detail toggle) All stay All change All remove" [level=2] [ref=e119]:
+          - generic [ref=e120]: Q2 still in flight (behind Q2-detail toggle)
+          - generic [ref=e121]:
+            - button "All stay" [ref=e122] [cursor=pointer]
+            - button "All change" [ref=e123] [cursor=pointer]
+            - button "All remove" [ref=e124] [cursor=pointer]
+        - generic [ref=e125]:
+          - generic [ref=e126]:
+            - generic [ref=e127]:
+              - generic [ref=e128]: "Recommendations Engine â€” MVP â†\x90 spillover"
+              - generic [ref=e129]: DEV-279323 Â· Narrative Â· In progress
+            - group "decision" [ref=e130]:
+              - button "Stay" [ref=e131] [cursor=pointer]
+              - button "Change" [ref=e132] [cursor=pointer]
+              - button "Remove" [ref=e133] [cursor=pointer]
+          - generic [ref=e134]:
+            - generic [ref=e135]:
+              - generic [ref=e136]: "Main DB â€” Large fields refactoring (nvarchar max) â†\x90 'large columns'"
+              - generic [ref=e137]: DEV-251375 Â· Operations Â· In progress
+            - group "decision" [ref=e138]:
+              - button "Stay" [ref=e139] [cursor=pointer]
+              - button "Change" [ref=e140] [cursor=pointer]
+              - button "Remove" [ref=e141] [cursor=pointer]
+          - generic [ref=e142]:
+            - generic [ref=e143]:
+              - generic [ref=e144]: "Studio 2.0 <> AVgen â€” Captions & Overlays â†\x90 spillover"
+              - generic [ref=e145]: DEV-266079 Â· Avgen Â· In progress
+            - group "decision" [ref=e146]:
+              - button "Stay" [ref=e147] [cursor=pointer]
+              - button "Change" [ref=e148] [cursor=pointer]
+              - button "Remove" [ref=e149] [cursor=pointer]
+          - generic [ref=e150]:
+            - generic [ref=e151]:
+              - generic [ref=e152]: AVgen <> Studio â€” Video Transitions
+              - generic [ref=e153]: DEV-277428 Â· Avgen Â· In progress
+            - group "decision" [ref=e154]:
+              - button "Stay" [ref=e155] [cursor=pointer]
+              - button "Change" [ref=e156] [cursor=pointer]
+              - button "Remove" [ref=e157] [cursor=pointer]
+          - generic [ref=e158]:
+            - generic [ref=e159]:
+              - generic [ref=e160]: Enable multiple sub-sports â€” OneClick
+              - generic [ref=e161]: DEV-270026 Â· Model Â· Testing
+            - group "decision" [ref=e162]:
+              - button "Stay" [ref=e163] [cursor=pointer]
+              - button "Change" [ref=e164] [cursor=pointer]
+              - button "Remove" [ref=e165] [cursor=pointer]
+      - generic [ref=e166]:
+        - heading "Spillover tracks & wording All stay All change All remove" [level=2] [ref=e167]:
+          - generic [ref=e168]: Spillover tracks & wording
+          - generic [ref=e169]:
+            - button "All stay" [ref=e170] [cursor=pointer]
+            - button "All change" [ref=e171] [cursor=pointer]
+            - button "All remove" [ref=e172] [cursor=pointer]
+        - generic [ref=e173]:
+          - generic [ref=e174]:
+            - generic [ref=e175]:
+              - generic [ref=e176]: "Recommendations: 'started late in Q2, spill baked in' â†’ FE 47 / BE 55"
+              - generic [ref=e177]: reworded per your note
+            - group "decision" [ref=e178]:
+              - button "Stay" [ref=e179] [cursor=pointer]
+              - button "Change" [ref=e180] [cursor=pointer]
+              - button "Remove" [ref=e181] [cursor=pointer]
+          - generic [ref=e182]:
+            - generic [ref=e183]:
+              - generic [ref=e184]: "Main DB large columns: 'mostly done, gradual rollout to reduce risk' â†’ BE 13"
+              - generic [ref=e185]: reworded per your note
+            - group "decision" [ref=e186]:
+              - button "Stay" [ref=e187] [cursor=pointer]
+              - button "Change" [ref=e188] [cursor=pointer]
+              - button "Remove" [ref=e189] [cursor=pointer]
+          - generic [ref=e190]:
+            - generic [ref=e191]:
+              - generic [ref=e192]: "Captions: 'overlays & captions â†’ Phase 2' â†’ FE 3 / BE 5"
+              - generic [ref=e193]: neutral wording
+            - group "decision" [ref=e194]:
+              - button "Stay" [ref=e195] [cursor=pointer]
+              - button "Change" [ref=e196] [cursor=pointer]
+              - button "Remove" [ref=e197] [cursor=pointer]
+      - generic [ref=e198]:
+        - heading "Lessons learned All stay All change All remove" [level=2] [ref=e199]:
+          - generic [ref=e200]: Lessons learned
+          - generic [ref=e201]:
+            - button "All stay" [ref=e202] [cursor=pointer]
+            - button "All change" [ref=e203] [cursor=pointer]
+            - button "All remove" [ref=e204] [cursor=pointer]
+        - generic [ref=e205]:
+          - generic [ref=e206]:
+            - generic [ref=e207]:
+              - generic [ref=e208]: Start flagship goals earlier
+              - generic [ref=e209]: Recommendations started late (reworded)
+            - group "decision" [ref=e210]:
+              - button "Stay" [ref=e211] [cursor=pointer]
+              - button "Change" [ref=e212] [cursor=pointer]
+              - button "Remove" [ref=e213] [cursor=pointer]
+          - generic [ref=e214]:
+            - generic [ref=e215]:
+              - generic [ref=e216]: Low completion, high WIP
+              - generic [ref=e217]: most Q2 goals ended in progress
+            - group "decision" [ref=e218]:
+              - button "Stay" [ref=e219] [cursor=pointer]
+              - button "Change" [ref=e220] [cursor=pointer]
+              - button "Remove" [ref=e221] [cursor=pointer]
+      - generic [ref=e222]:
+        - heading "Q3 capacity figures (live-recomputed on toggle) All stay All change All remove" [level=2] [ref=e223]:
+          - generic [ref=e224]: Q3 capacity figures (live-recomputed on toggle)
+          - generic [ref=e225]:
+            - button "All stay" [ref=e226] [cursor=pointer]
+            - button "All change" [ref=e227] [cursor=pointer]
+            - button "All remove" [ref=e228] [cursor=pointer]
+        - generic [ref=e229]:
+          - generic [ref=e230]:
+            - generic [ref=e231]:
+              - generic [ref=e232]: Avgen FE â€” 44 / 46 (+2)
+              - generic [ref=e233]: updates when goals toggled
+            - group "decision" [ref=e234]:
+              - button "Stay" [ref=e235] [cursor=pointer]
+              - button "Change" [ref=e236] [cursor=pointer]
+              - button "Remove" [ref=e237] [cursor=pointer]
+          - generic [ref=e238]:
+            - generic [ref=e239]:
+              - generic [ref=e240]: Avgen BE â€” 70 / 76 (+6)
+              - generic [ref=e241]: updates when goals toggled
+            - group "decision" [ref=e242]:
+              - button "Stay" [ref=e243] [cursor=pointer]
+              - button "Change" [ref=e244] [cursor=pointer]
+              - button "Remove" [ref=e245] [cursor=pointer]
+          - generic [ref=e246]:
+            - generic [ref=e247]:
+              - generic [ref=e248]: AVGen 2 FE â€” 47 / 47 (0)
+              - generic [ref=e249]: updates when goals toggled
+            - group "decision" [ref=e250]:
+              - button "Stay" [ref=e251] [cursor=pointer]
+              - button "Change" [ref=e252] [cursor=pointer]
+              - button "Remove" [ref=e253] [cursor=pointer]
+          - generic [ref=e254]:
+            - generic [ref=e255]:
+              - generic [ref=e256]: AVGen 2 BE â€” 80 / 78 (âˆ’2)
+              - generic [ref=e257]: the risk â€” clears if you exclude a BE goal
+            - group "decision" [ref=e258]:
+              - button "Stay" [ref=e259] [cursor=pointer]
+              - button "Change" [ref=e260] [cursor=pointer]
+              - button "Remove" [ref=e261] [cursor=pointer]
+      - generic [ref=e262]:
+        - heading "Q3 goals â€” Avgen (7 committed) All stay All change All remove" [level=2] [ref=e263]:
+          - generic [ref=e264]: Q3 goals â€” Avgen (7 committed)
+          - generic [ref=e265]:
+            - button "All stay" [ref=e266] [cursor=pointer]
+            - button "All change" [ref=e267] [cursor=pointer]
+            - button "All remove" [ref=e268] [cursor=pointer]
+        - generic [ref=e269]:
+          - generic [ref=e270]:
+            - generic [ref=e271]:
+              - generic [ref=e272]: Main DB â€” Teams Implementation
+              - generic [ref=e273]: DEV-285948 Â· Intake Â· P0 Â· BE 13 Â· approved âš
+            - group "decision" [ref=e274]:
+              - button "Stay" [ref=e275] [cursor=pointer]
+              - button "Change" [ref=e276] [cursor=pointer]
+              - button "Remove" [ref=e277] [cursor=pointer]
+          - generic [ref=e278]:
+            - generic [ref=e279]:
+              - generic [ref=e280]: Backoffice Ops Support for Studio VideoProject/Output
+              - generic [ref=e281]: DEV-286696 Â· Backoffice Â· P0 Â· BE 10* placeholder Â· approach TBD Â· approved
+            - group "decision" [ref=e282]:
+              - button "Stay" [ref=e283] [cursor=pointer]
+              - button "Change" [ref=e284] [cursor=pointer]
+              - button "Remove" [ref=e285] [cursor=pointer]
+          - generic [ref=e286]:
+            - generic [ref=e287]:
+              - generic [ref=e288]: Vertical Top Moments â€” Dedicated User Flow
+              - generic [ref=e289]: DEV-284793 Â· AVGen 2 Â· P0 Â· FE 30/BE 20 Â· Tech Review Â· approved
+            - group "decision" [ref=e290]:
+              - button "Stay" [ref=e291] [cursor=pointer]
+              - button "Change" [ref=e292] [cursor=pointer]
+              - button "Remove" [ref=e293] [cursor=pointer]
+          - generic [ref=e294]:
+            - generic [ref=e295]:
+              - generic [ref=e296]: Multi-Mongo Streams DB â€” Ph 3
+              - generic [ref=e297]: DEV-283952 Â· Video Infra Â· P0 Â· BE 5 Â· Product Review Â· approved
+            - group "decision" [ref=e298]:
+              - button "Stay" [ref=e299] [cursor=pointer]
+              - button "Change" [ref=e300] [cursor=pointer]
+              - button "Remove" [ref=e301] [cursor=pointer]
+          - generic [ref=e302]:
+            - generic [ref=e303]:
+              - generic [ref=e304]: A2V â€” Evaluator's Output for Clients
+              - generic [ref=e305]: DEV-275750 Â· Article 2 Video Â· P0 Â· BE 2 Â· Tech Review Â· approved
+            - group "decision" [ref=e306]:
+              - button "Stay" [ref=e307] [cursor=pointer]
+              - button "Change" [ref=e308] [cursor=pointer]
+              - button "Remove" [ref=e309] [cursor=pointer]
+          - generic [ref=e310]:
+            - generic [ref=e311]:
+              - generic [ref=e312]: Hermes Quality â€” Robustness & Output Accuracy
+              - generic [ref=e313]: DEV-289180 Â· Story X Â· P1 Â· FE 11/BE 15 Â· approval pending
+            - group "decision" [ref=e314]:
+              - button "Stay" [ref=e315] [cursor=pointer]
+              - button "Change" [ref=e316] [cursor=pointer]
+              - button "Remove" [ref=e317] [cursor=pointer]
+          - generic [ref=e318]:
+            - generic [ref=e319]:
+              - generic [ref=e320]: Studio 2.0 <> AVgen â€” Captions Integration Ph 2
+              - generic [ref=e321]: DEV-285476 Â· Avgen Â· P1 Â· FE 3/BE 5 Â· approval pending
+            - group "decision" [ref=e322]:
+              - button "Stay" [ref=e323] [cursor=pointer]
+              - button "Change" [ref=e324] [cursor=pointer]
+              - button "Remove" [ref=e325] [cursor=pointer]
+      - generic [ref=e326]:
+        - heading "Q3 goals â€” AVGen 2 (4 committed) All stay All change All remove" [level=2] [ref=e327]:
+          - generic [ref=e328]: Q3 goals â€” AVGen 2 (4 committed)
+          - generic [ref=e329]:
+            - button "All stay" [ref=e330] [cursor=pointer]
+            - button "All change" [ref=e331] [cursor=pointer]
+            - button "All remove" [ref=e332] [cursor=pointer]
+        - generic [ref=e333]:
+          - generic [ref=e334]:
+            - generic [ref=e335]:
+              - generic [ref=e336]: Recommendations Engine â€” MVP
+              - generic [ref=e337]: DEV-279323 Â· Narrative Â· P0 Â· FE 27/BE 35 Â· In progress Â· approved âš
+            - group "decision" [ref=e338]:
+              - button "Stay" [ref=e339] [cursor=pointer]
+              - button "Change" [ref=e340] [cursor=pointer]
+              - button "Remove" [ref=e341] [cursor=pointer]
+          - generic [ref=e342]:
+            - generic [ref=e343]:
+              - generic [ref=e344]: "Phase 2: Role-Permission Mapping & Rollout"
+              - generic [ref=e345]: DEV-282258 Â· Backoffice Â· P0 Â· BE 15 Â· approved
+            - group "decision" [ref=e346]:
+              - button "Stay" [ref=e347] [cursor=pointer]
+              - button "Change" [ref=e348] [cursor=pointer]
+              - button "Remove" [ref=e349] [cursor=pointer]
+          - generic [ref=e350]:
+            - generic [ref=e351]:
+              - generic [ref=e352]: Migrate Services to Identity-Based Auth
+              - generic [ref=e353]: DEV-269380 Â· DevOps Â· P0 Â· BE 10 Â· approved âš
+            - group "decision" [ref=e354]:
+              - button "Stay" [ref=e355] [cursor=pointer]
+              - button "Change" [ref=e356] [cursor=pointer]
+              - button "Remove" [ref=e357] [cursor=pointer]
+          - generic [ref=e358]:
+            - generic [ref=e359]:
+              - generic [ref=e360]: Recommendations Q3 â€” content-gap UX & more content types
+              - generic [ref=e361]: DEV-287323 Â· Narrative Â· P1 Â· FE 20/BE 20 Â· approved âš
+            - group "decision" [ref=e362]:
+              - button "Stay" [ref=e363] [cursor=pointer]
+              - button "Change" [ref=e364] [cursor=pointer]
+              - button "Remove" [ref=e365] [cursor=pointer]
+    - contentinfo [ref=e366]: Avgen & AVGen 2 Â· Q3 2026 goal approval â€” content review pass
