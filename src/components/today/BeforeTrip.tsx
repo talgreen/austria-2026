@@ -18,16 +18,16 @@ export default function BeforeTrip({ state }: { state: Extract<TripState, { phas
   return (
     <div className="mx-auto max-w-lg px-4 pb-8 space-y-3">
       <div className="pt-2">
-        <div className="text-xs font-extrabold uppercase tracking-[0.16em] text-terracotta-500">
+        <div className="text-xs font-extrabold uppercase tracking-[0.16em] text-rust-600">
           {t("today_before_eyebrow", { n: state.daysUntil })}
         </div>
-        <h1 className="mt-1 font-serif text-3xl leading-tight text-ink-900">
+        <h1 className="mt-1 font-serif font-black text-4xl leading-[1.05] text-ink-900">
           {t("today_before_title")} ✈️
         </h1>
       </div>
 
-      {/* Departure — the Austrian-red "headline" card */}
-      <div className="rounded-[var(--radius-card)] p-4 text-cream-50 bg-gradient-to-br from-terracotta-500 to-terracotta-600">
+      {/* Departure — warm rust "headline" card with a chunky ledge */}
+      <div className="rounded-3xl p-5 text-cream-50 bg-gradient-to-br from-rust-500 to-rust-700 shadow-[0_6px_0_#5c2712]">
         <div className="flex items-center gap-2 text-[11px] font-extrabold uppercase tracking-wide opacity-90">
           <Plane size={14} /> {t("today_departure_label")}
         </div>
@@ -60,9 +60,9 @@ export default function BeforeTrip({ state }: { state: Extract<TripState, { phas
       <div className="grid grid-cols-2 gap-3">
         <button
           onClick={() => navigateChapter(1)}
-          className="text-start rounded-[var(--radius-card)] p-4 bg-surface active:scale-[0.99] transition-transform"
+          className="text-start rounded-3xl p-4 bg-mustard-500 text-ink-900 active:scale-[0.99] transition-transform shadow-[0_4px_0_var(--color-mustard-600)]"
         >
-          <div className="flex items-center gap-2 text-[11px] font-extrabold uppercase tracking-wide text-terracotta-500">
+          <div className="flex items-center gap-2 text-[11px] font-extrabold uppercase tracking-wide text-rust-700">
             <CalendarDays size={14} /> {t("today_day1_preview")}
           </div>
         </button>

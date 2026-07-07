@@ -18,14 +18,14 @@ export default function DuringTrip({ state }: { state: Extract<TripState, { phas
   return (
     <div className="mx-auto max-w-lg px-4 pb-8 space-y-3">
       <div className="pt-2">
-        <div className="text-xs font-extrabold uppercase tracking-[0.16em] text-terracotta-500">
+        <div className="text-xs font-extrabold uppercase tracking-[0.16em] text-rust-600">
           {t("hero_today_day")} {day.dayNumber} {t("hero_of_ten")} · {localizeShortDate(day.date, lang)}
         </div>
-        <h1 className="mt-1 font-serif text-3xl leading-tight text-ink-900">{day.title}</h1>
+        <h1 className="mt-1 font-serif font-black text-4xl leading-[1.05] text-ink-900">{day.title}</h1>
       </div>
 
-      {/* Right now — Austrian-red headline card */}
-      <div className="rounded-[var(--radius-card)] p-4 text-cream-50 bg-gradient-to-br from-terracotta-500 to-terracotta-600">
+      {/* Right now — warm rust headline card with a chunky ledge */}
+      <div className="rounded-3xl p-5 text-cream-50 bg-gradient-to-br from-rust-500 to-rust-700 shadow-[0_6px_0_#5c2712]">
         <div className="flex items-start justify-between gap-3">
           <div className="min-w-0">
             <div className="flex items-center gap-2 text-[11px] font-extrabold uppercase tracking-wide opacity-90">
@@ -64,7 +64,7 @@ export default function DuringTrip({ state }: { state: Extract<TripState, { phas
       <div className="grid grid-cols-2 gap-3">
         <button
           onClick={() => navigateChapter(day.dayNumber)}
-          className="rounded-pill py-3 text-sm font-bold bg-terracotta-500/10 text-terracotta-700 active:scale-[0.98] transition-transform"
+          className="rounded-pill py-3 text-sm font-bold bg-mustard-500/25 text-rust-700 active:scale-[0.98] transition-transform"
         >
           {t("today_see_full_day")}
         </button>
