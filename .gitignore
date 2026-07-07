@@ -34,3 +34,6 @@ dist-ssr
 
 # Superpowers brainstorming visual companion
 .superpowers/
+
+# Playwright MCP scratch (screenshots/snapshots)
+.playwright-mcp/
