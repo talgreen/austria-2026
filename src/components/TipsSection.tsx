@@ -6,8 +6,8 @@ import { useLocalizeTip } from "../data/i18n";
 
 const severityStyle = {
   critical: {
-    border: "border-terracotta-500/50",
-    accent: "bg-terracotta-500/10 text-terracotta-700",
+    border: "border-rust-500/50",
+    accent: "bg-rust-500/10 text-rust-700",
     Icon: ShieldAlert
   },
   warning: {

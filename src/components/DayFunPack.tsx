@@ -9,7 +9,7 @@ import { ChallengeCard, RevealCard, TongueTwisterCard } from "./FunPackCards";
 function GroupLabel({ icon: Icon, labelKey }: { icon: typeof Puzzle; labelKey: DictKey }) {
   const t = useT();
   return (
-    <div className="flex items-center gap-2 text-[10px] uppercase tracking-[0.28em] text-terracotta-600/85 font-medium">
+    <div className="flex items-center gap-2 text-[10px] uppercase tracking-[0.28em] text-rust-600/85 font-medium">
       <Icon size={14} strokeWidth={2} />
       {t(labelKey)}
     </div>
@@ -105,7 +105,7 @@ export function FunPackBody({
                 onClick={() => navigateTab("kids")}
                 className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full bg-cream-100 hover:bg-cream-200 active:bg-cream-300 ring-1 ring-cream-300/70 text-sm font-medium text-ink-900 transition-colors cursor-pointer"
               >
-                <Gamepad2 size={14} className="text-terracotta-600" />
+                <Gamepad2 size={14} className="text-rust-600" />
                 {g.name}
               </button>
             ))}
@@ -113,7 +113,7 @@ export function FunPackBody({
               <button
                 type="button"
                 onClick={() => navigateTab("kids")}
-                className="text-sm font-medium text-terracotta-600 hover:text-terracotta-700 underline underline-offset-4 decoration-terracotta-500/40 cursor-pointer"
+                className="text-sm font-medium text-rust-600 hover:text-rust-700 underline underline-offset-4 decoration-rust-500/40 cursor-pointer"
               >
                 {t("kids_all_games_link")}
               </button>
@@ -136,11 +136,11 @@ export default function DayFunPack({ dayNumber }: { dayNumber: number }) {
 
   return (
     <section>
-      <div className="flex items-center gap-2 text-[10px] uppercase tracking-[0.32em] font-medium text-terracotta-600/85">
+      <div className="flex items-center gap-2 text-[10px] uppercase tracking-[0.32em] font-medium text-rust-600/85">
         <PartyPopper size={13} strokeWidth={2} />
         {t("kids_eyebrow")}
       </div>
-      <h2 className="mt-1 font-serif text-2xl sm:text-3xl text-ink-900 leading-tight">
+      <h2 className="mt-1 font-serif font-black text-2xl sm:text-3xl text-ink-900 leading-tight">
         {t("funpack_title")}
       </h2>
       <div className="mt-6 sm:mt-8">

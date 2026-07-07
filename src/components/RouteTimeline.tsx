@@ -106,14 +106,14 @@ export default function RouteTimeline() {
                     <span
                       className={`relative z-10 mt-1.5 grid place-items-center w-8 h-8 rounded-full text-[13px] font-bold tabular-nums ring-4 ring-cream-50 ${
                         isToday
-                          ? "bg-terracotta-500 text-cream-50"
+                          ? "bg-rust-500 text-cream-50"
                           : isPast
                           ? "bg-ink-700/20 text-ink-700/70"
                           : `${a.dot} text-cream-50`
                       }`}
                     >
                       {isToday && (
-                        <span className="absolute inset-0 rounded-full bg-terracotta-500 animate-ping opacity-60" aria-hidden />
+                        <span className="absolute inset-0 rounded-full bg-rust-500 animate-ping opacity-60" aria-hidden />
                       )}
                       <span className="relative">{dn}</span>
                     </span>
@@ -132,7 +132,7 @@ export default function RouteTimeline() {
                           {localizeWeekday(day.weekday, lang, true)} · {localizeShortDate(day.date, lang)}
                         </span>
                         {isToday && (
-                          <span className="text-[9px] uppercase tracking-[0.18em] font-bold text-terracotta-600 bg-terracotta-500/10 rounded-full px-2 py-0.5">
+                          <span className="text-[9px] uppercase tracking-[0.18em] font-bold text-rust-600 bg-rust-500/10 rounded-full px-2 py-0.5">
                             {t("today")}
                           </span>
                         )}

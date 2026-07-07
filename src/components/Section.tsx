@@ -38,11 +38,11 @@ export default function Section({
           transition={{ duration: 0.7, ease: "easeOut" }}
           className={`mb-8 sm:mb-12 ${center ? "text-center mx-auto max-w-2xl" : "max-w-3xl"}`}
         >
-          <h2 className="font-serif text-[34px] sm:text-5xl lg:text-[56px] text-ink-900 leading-[1.02] tracking-tight">
+          <h2 className="font-serif font-black text-[34px] sm:text-5xl lg:text-[56px] text-ink-900 leading-[1.02] tracking-tight">
             {title}
           </h2>
           {kicker && (
-            <p className="mt-3 font-serif italic text-terracotta-700/85 text-lg sm:text-xl">
+            <p className="mt-3 font-serif italic text-rust-700/85 text-lg sm:text-xl">
               {kicker}
             </p>
           )}

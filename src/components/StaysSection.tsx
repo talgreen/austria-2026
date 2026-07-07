@@ -159,7 +159,7 @@ export default function StaysSection() {
             <div className="p-5 flex-1 flex flex-col">
               <div className="flex items-start justify-between gap-3">
                 <h3 className="font-serif text-2xl text-ink-900 leading-tight">{s.name}</h3>
-                <span className={`shrink-0 inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-xs font-medium ${a.bgTint} ${a.text}`}>
+                <span className={`shrink-0 inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-xs font-medium shadow-[0_2px_0_rgba(201,127,31,0.35)] ${a.bgTint} ${a.text}`}>
                   {s.nights === 1
                     ? t("stay_nights_one", { n: s.nights })
                     : t("stay_nights_many", { n: s.nights })}

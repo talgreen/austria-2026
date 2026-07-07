@@ -62,7 +62,7 @@ export default function AttractionsGrid() {
               className={`px-4 py-2 rounded-full text-sm font-medium transition-all whitespace-nowrap min-h-10 ${
                 region === tab.id
                   ? "bg-terracotta-500 text-cream-50"
-                  : "bg-cream-50 border border-cream-300 text-ink-800 hover:border-terracotta-500/40"
+                  : "bg-cream-50 border border-cream-300 text-ink-800 hover:border-rust-500/40"
               }`}
             >
               {t(tab.key)}
@@ -79,7 +79,7 @@ export default function AttractionsGrid() {
           {tag && (
             <button
               onClick={() => setTag(null)}
-              className="px-3 py-1.5 rounded-full text-xs font-medium whitespace-nowrap min-h-9 bg-cream-50 border border-cream-300 text-ink-700 hover:border-terracotta-500/40 inline-flex items-center gap-1"
+              className="px-3 py-1.5 rounded-full text-xs font-medium whitespace-nowrap min-h-9 bg-cream-50 border border-cream-300 text-ink-700 hover:border-rust-500/40 inline-flex items-center gap-1"
             >
               {t("attr_filter_clear")} ✕
             </button>
@@ -91,7 +91,7 @@ export default function AttractionsGrid() {
               className={`px-3 py-1.5 rounded-full text-xs font-medium transition-colors whitespace-nowrap min-h-9 ${
                 tag === at
                   ? "bg-terracotta-500 text-cream-50"
-                  : "bg-cream-50 border border-cream-300 text-ink-700 hover:border-terracotta-500/40"
+                  : "bg-cream-50 border border-cream-300 text-ink-700 hover:border-rust-500/40"
               }`}
             >
               {t(TAG_KEY[at] ?? "tag_view")}

@@ -44,7 +44,7 @@ export default function KidsSection() {
                   onClick={() => setSelectedDay(pack.dayNumber)}
                   className={`shrink-0 snap-start inline-flex flex-col items-center justify-center min-w-12 px-3 py-2 rounded-2xl text-sm font-medium transition-colors cursor-pointer ${
                     isSelected
-                      ? "bg-terracotta-500 text-cream-50 shadow-sm shadow-terracotta-700/20"
+                      ? "bg-mustard-500 text-ink-900 shadow-[0_3px_0_var(--color-mustard-600)]"
                       : "bg-cream-100 hover:bg-cream-200 active:bg-cream-300 ring-1 ring-cream-300/70 text-ink-900"
                   }`}
                 >
@@ -52,7 +52,7 @@ export default function KidsSection() {
                   {isToday && (
                     <span
                       className={`text-[9px] uppercase tracking-[0.12em] ${
-                        isSelected ? "text-cream-50/90" : "text-terracotta-600"
+                        isSelected ? "text-rust-700" : "text-rust-600"
                       }`}
                     >
                       {t("kids_today_chip")}
@@ -86,7 +86,7 @@ export default function KidsSection() {
           ))}
         </div>
         <div className="mt-6 flex items-center gap-2 text-sm text-ink-700/70">
-          <Gamepad2 size={16} className="text-terracotta-600/80 shrink-0" />
+          <Gamepad2 size={16} className="text-rust-600/80 shrink-0" />
           {t("kids_games_footnote")}
         </div>
       </Section>

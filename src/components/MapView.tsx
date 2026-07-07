@@ -590,7 +590,7 @@ export default function MapView({ registerFocus }: Props) {
                       key={c}
                       onClick={() => toggle(c)}
                       aria-pressed={on}
-                      className={`inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-xs font-medium shadow-sm backdrop-blur transition-all whitespace-nowrap min-h-9 ${
+                      className={`inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-xs font-bold shadow-sm backdrop-blur transition-all whitespace-nowrap min-h-9 ${
                         on
                           ? "text-cream-50"
                           : "bg-cream-50/90 text-ink-700 border-cream-300 hover:bg-cream-50"
@@ -615,7 +615,7 @@ export default function MapView({ registerFocus }: Props) {
           <button
             onClick={() => setShowSpokes(s => !s)}
             aria-pressed={showSpokes}
-            className="inline-flex items-center gap-1.5 px-3 py-2 rounded-full text-[11px] font-medium shadow-md backdrop-blur transition-colors min-h-9 text-cream-50"
+            className="inline-flex items-center gap-1.5 px-3 py-2 rounded-full text-[11px] font-bold shadow-[0_3px_0_rgba(42,31,26,0.3),0_6px_10px_-4px_rgba(42,31,26,0.35)] backdrop-blur transition-colors min-h-9 text-cream-50"
             style={{ backgroundColor: showSpokes ? "#5C7244" : "#5C7244AA" }}
           >
             <Sparkles size={12} /> {showSpokes ? t("map_spokes_on") : t("map_spokes_off")}
@@ -623,7 +623,7 @@ export default function MapView({ registerFocus }: Props) {
           <button
             onClick={() => setShowRoute(s => !s)}
             aria-pressed={showRoute}
-            className="inline-flex items-center gap-1.5 px-3 py-2 rounded-full text-[11px] font-medium shadow-md backdrop-blur transition-colors min-h-9 text-cream-50"
+            className="inline-flex items-center gap-1.5 px-3 py-2 rounded-full text-[11px] font-bold shadow-[0_3px_0_rgba(42,31,26,0.3),0_6px_10px_-4px_rgba(42,31,26,0.35)] backdrop-blur transition-colors min-h-9 text-cream-50"
             style={{ backgroundColor: showRoute ? "#A23E2A" : "#A23E2AAA" }}
           >
             <Route size={12} /> {showRoute ? t("map_route_on") : t("map_route_off")}
@@ -637,7 +637,7 @@ export default function MapView({ registerFocus }: Props) {
             type="button"
             onClick={() => flyRef.current?.fitAll()}
             aria-label={t("map_zoom_fit")}
-            className="w-11 h-11 rounded-full bg-cream-50/95 backdrop-blur ring-1 ring-cream-300/70 shadow-md hover:bg-terracotta-500 hover:text-cream-50 hover:ring-terracotta-500 transition flex items-center justify-center text-ink-800"
+            className="w-11 h-11 rounded-full bg-cream-50/95 backdrop-blur ring-1 ring-cream-300/70 shadow-[0_3px_0_rgba(42,31,26,0.28),0_6px_10px_-4px_rgba(42,31,26,0.35)] hover:bg-rust-600 hover:text-cream-50 hover:ring-rust-600 transition flex items-center justify-center text-ink-800"
           >
             <Maximize2 size={16} />
           </button>
@@ -646,7 +646,7 @@ export default function MapView({ registerFocus }: Props) {
             onClick={handleLocateClick}
             aria-label={t("map_locate_me")}
             aria-pressed={!!userLocation}
-            className={`w-11 h-11 rounded-full backdrop-blur ring-1 shadow-md transition flex items-center justify-center ${
+            className={`w-11 h-11 rounded-full backdrop-blur ring-1 shadow-[0_3px_0_rgba(42,31,26,0.28),0_6px_10px_-4px_rgba(42,31,26,0.35)] transition flex items-center justify-center ${
               userLocation
                 ? "bg-[#3A7CEB] text-cream-50 ring-[#3A7CEB]/60"
                 : geolocBlocked
