@@ -2,9 +2,8 @@
 
 A static, mobile-first trip companion for our family road trip across Austria, **8 – 26 August 2026** (Vienna → Salzburg → Tyrol → the Pinzgau lakes → Vienna). Itinerary, interactive map, attractions, stays, restaurants/supermarkets, weather, food & drink, packing/booking checklists, and an in-app AI tour-guide chat (**Felix**, a warm Austrian alpine guide). Bilingual Hebrew + English. Built to be opened on the phone during the trip.
 
-Deployed on **Vercel** (framework preset: Vite). Pushes to `main` deploy to
-production; every branch/PR gets a preview URL. Set `VITE_GEMINI_API_KEY` in the
-Vercel project's Environment Variables for the in-app Felix chat.
+Deployed to **GitHub Pages** at **https://talgreen.github.io/austria-2026/** —
+pushes to `main` auto-build and publish via `.github/workflows/deploy.yml`.
 
 Built on a reusable trip-companion pattern. For the full design rationale and the playbook, see [`docs/HOW_TO_BUILD_A_VACATION_WEBSITE.md`](docs/HOW_TO_BUILD_A_VACATION_WEBSITE.md).
 
@@ -29,7 +28,7 @@ npm run preview  # preview the production build locally
 npm run lint     # ESLint flat config
 ```
 
-The app uses a root base path (`/`) for both local development and Vercel production.
+`vite.config.ts` switches the `base` between local dev (`/`) and the GitHub Pages build (`/austria-2026/`) automatically.
 
 ## Environment variables
 
@@ -44,7 +43,7 @@ Copy `.env.example` to `.env.local` and fill in the keys you need. None of these
 
 ## Updating content
 
-All content lives in plain TypeScript files under `src/data/` — no CMS, no database. Edit the file, push to `main`, and Vercel rebuilds and redeploys automatically.
+All content lives in plain TypeScript files under `src/data/` — no CMS, no database. Edit the file, push to `main`, and GitHub Pages rebuilds and redeploys automatically.
 
 | File | What's in it |
 | --- | --- |
@@ -79,7 +78,7 @@ Image fields point to `./images/<slug>.jpg`. Drop your own `.jpg` files into `pu
 
 ## Deploy
 
-Connect the GitHub repo to Vercel via **vercel.com → Add New → Project → Import Git Repository** (or use `npx vercel link` from the CLI). Vercel auto-detects the Vite framework from `vercel.json`. Set `VITE_GEMINI_API_KEY` in the project's **Environment Variables** for the in-app chat. Every push to `main` triggers a production deployment; pull requests and other branches get preview URLs.
+Pushing to `main` triggers `.github/workflows/deploy.yml`, which builds the site and publishes it to **GitHub Pages** at https://talgreen.github.io/austria-2026/. No manual step. `VITE_GEMINI_API_KEY` (for the in-app Felix chat) is read at build time — set it as a repository **Actions secret** if you want the built-in key baked into the deploy.
 
 ## Project layout
 
@@ -99,7 +98,7 @@ scripts/           Local-only image and audio generation scripts
 docs/
   HOW_TO_BUILD_A_VACATION_WEBSITE.md   Full design playbook + new-trip guide
 .github/workflows/
-  deploy.yml       legacy GitHub Pages CI — superseded by Vercel; remove when cutover is complete
+  deploy.yml       GitHub Pages CI — build + publish on push to main
 ```
 
 Gute Reise.
