@@ -79,7 +79,7 @@ export function RevealCard({
                   {emoji}
                 </span>
               )}
-              <span className="font-serif italic text-lg sm:text-xl text-terracotta-600 leading-snug">
+              <span className="font-serif italic text-lg sm:text-xl text-rust-600 leading-snug">
                 {answer}
               </span>
             </div>
@@ -94,7 +94,7 @@ export function RevealCard({
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
-            className="mt-3 inline-flex items-center gap-1.5 text-[10px] uppercase tracking-[0.24em] text-terracotta-600/75 font-medium"
+            className="mt-3 inline-flex items-center gap-1.5 text-[10px] uppercase tracking-[0.24em] text-rust-600/75 font-medium"
           >
             <Sparkles size={12} strokeWidth={2} />
             {t("kids_reveal")}
@@ -130,20 +130,20 @@ export function ChallengeCard({ challenge }: { challenge: KidsChallenge }) {
   return (
     <article
       dir="rtl"
-      className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-gold-400/15 to-cream-100 ring-1 ring-cream-300/70 shadow-[0_18px_50px_-30px_rgba(151,109,76,0.45)]"
+      className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-mustard-400/20 to-cream-100 ring-1 ring-cream-300/70 shadow-[0_18px_50px_-30px_rgba(151,109,76,0.45)]"
     >
       <Binoculars
         size={130}
         strokeWidth={1}
-        className="absolute -top-5 end-0 text-sienna-600 opacity-[0.07] pointer-events-none rtl:scale-x-[-1]"
+        className="absolute -top-5 end-0 text-rust-600 opacity-[0.07] pointer-events-none rtl:scale-x-[-1]"
         aria-hidden
       />
       <div className="relative px-5 sm:px-7 py-5 sm:py-6">
-        <div className="flex items-center gap-2 text-[10px] uppercase tracking-[0.32em] text-sienna-600/85 font-medium">
-          <span className="inline-block w-1.5 h-1.5 rounded-full bg-gold-400" />
+        <div className="flex items-center gap-2 text-[10px] uppercase tracking-[0.32em] text-rust-700/85 font-medium">
+          <span className="inline-block w-1.5 h-1.5 rounded-full bg-mustard-500" />
           {t("kids_challenge")}
         </div>
-        <h3 className="mt-3 font-serif italic text-2xl sm:text-3xl text-ink-900 leading-tight">
+        <h3 className="mt-3 font-serif font-black italic text-2xl sm:text-3xl text-ink-900 leading-tight">
           {challenge.title}
         </h3>
         <p className="mt-2 text-[14.5px] sm:text-base text-ink-700/90 leading-relaxed">
@@ -174,7 +174,7 @@ export function RoadGameCard({ game }: { game: KidsRoadGame }) {
           </h3>
           <div className="flex items-center gap-2 shrink-0">
             {game.minAge != null && (
-              <span className="inline-flex items-center px-2 py-0.5 rounded-full bg-terracotta-500/10 text-terracotta-600 text-[11px] font-medium">
+              <span className="inline-flex items-center px-2 py-0.5 rounded-full bg-rust-500/10 text-rust-600 text-[11px] font-medium">
                 {game.minAge}+
               </span>
             )}
@@ -203,13 +203,13 @@ export function RoadGameCard({ game }: { game: KidsRoadGame }) {
             className="overflow-hidden"
           >
             <div className="px-4 sm:px-5 pb-5 pt-1 border-t border-cream-300/60">
-              <div className="mt-3 text-[10px] uppercase tracking-[0.24em] text-terracotta-600/85 font-medium">
+              <div className="mt-3 text-[10px] uppercase tracking-[0.24em] text-rust-600/85 font-medium">
                 {t("kids_how_to_play")}
               </div>
               <ol className="mt-2.5 space-y-2">
                 {game.howToPlay.map((step, i) => (
                   <li key={i} className="flex items-start gap-2.5">
-                    <span className="shrink-0 w-5 h-5 mt-0.5 rounded-full bg-terracotta-500/10 text-terracotta-600 text-[11px] font-semibold flex items-center justify-center">
+                    <span className="shrink-0 w-5 h-5 mt-0.5 rounded-full bg-rust-500/10 text-rust-600 text-[11px] font-semibold flex items-center justify-center">
                       {i + 1}
                     </span>
                     <span className="text-sm text-ink-700/90 leading-relaxed">

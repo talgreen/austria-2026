@@ -57,8 +57,8 @@ export default function ServicesSection() {
                 onClick={() => setBase(b.id)}
                 className={`px-4 py-2.5 rounded-full text-sm font-medium transition-all whitespace-nowrap min-h-11 ${
                   base === b.id
-                    ? "bg-ink-900 text-cream-50"
-                    : "bg-cream-50 border border-cream-300 text-ink-800 hover:border-terracotta-500/40"
+                    ? "bg-terracotta-500 text-cream-50"
+                    : "bg-cream-50 border border-cream-300 text-ink-800 hover:border-rust-500/40"
                 }`}
               >
                 <span>{t(b.key)}</span>

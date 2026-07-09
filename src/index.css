@@ -22,10 +22,20 @@
      cream-*       → Warm snow/cream neutral — kept
      lake-*        → NEW: glacial lake teal (Achensee/Hallstatt) for water accents */
 @theme {
-  --color-cream-50: #FBF8F1;
-  --color-cream-100: #F5EFE6;
-  --color-cream-200: #EBE2D2;
-  --color-cream-300: #DBCEB6;
+  /* E · Retro-70s alpine — warmed cream paper (more golden than the
+     old near-white) so the whole app reads warm & nostalgic. */
+  --color-cream-50: #FBF5E5;
+  --color-cream-100: #F3E7CF;
+  --color-cream-200: #E8D6B6;
+  --color-cream-300: #D6C09C;
+  /* Retro warm accents: mustard (signature warm surface) + rust (display). */
+  --color-mustard-400: #EEB65C;
+  --color-mustard-500: #E4A02F;
+  --color-mustard-600: #C97F1F;
+  --color-mustard-700: #A5651A;
+  --color-rust-500: #B5502B;
+  --color-rust-600: #9A3F20;
+  --color-rust-700: #7A3316;
   --color-terracotta-400: #D75A52;
   --color-terracotta-500: #C0392B;
   --color-terracotta-600: #9F2B20;
@@ -45,8 +55,21 @@
   --color-lake-500: #2E8B9E;
   --color-lake-600: #226E7E;
 
+  /* ---------- 2026 redesign surfaces ----------
+     The redesign uses the existing alpine palette for accents — Austrian
+     red (terracotta) for "now/today", alpine pine (olive) for
+     "next/practical", gold for ambient. These two tokens are just the
+     warm card surfaces the new home/route/hub cards sit on. */
+  --color-surface: #F7F5F2;       /* warm cream card */
+  --color-surface-next: #F0F4F1;  /* faint alpine-green "next/practical" card */
+
+  /* Larger radii + roomier touch targets for the app-like feel. */
+  --radius-card: 1rem;    /* used via rounded-[var(--radius-card)] */
+  --radius-pill: 999px;
+
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
-  --font-serif: "Cormorant Garamond", "Georgia", ui-serif, serif;
+  /* E · display face: Fraunces (a warm, wonky serif) for Latin. */
+  --font-serif: "Fraunces", "Cormorant Garamond", "Georgia", ui-serif, serif;
 }
 
 /* Hebrew typography — applied automatically when <html dir="rtl">.
@@ -170,7 +193,7 @@ html {
 body {
   font-family: var(--font-sans);
   color: var(--color-ink-800);
-  background-color: var(--color-cream-50);
+  background-color: var(--color-cream-100);
   background-image:
     radial-gradient(at 20% 0%, rgba(192, 57, 43, 0.06) 0px, transparent 50%),
     radial-gradient(at 80% 100%, rgba(47, 94, 63, 0.07) 0px, transparent 50%),
@@ -184,6 +207,15 @@ h1, h2, h3, h4 {
   font-family: var(--font-serif);
   letter-spacing: -0.01em;
 }
+
+/* E · Fraunces reads best with real weight — give LTR display type a
+   substantial default. Hebrew/Suez One stays 400 (rules above), since
+   Suez One is already a heavy single-weight face. */
+html:not([dir="rtl"]) h1,
+html:not([dir="rtl"]) h2,
+html:not([dir="rtl"]) h3,
+html:not([dir="rtl"]) h4 { font-weight: 700; }
+html:not([dir="rtl"]) .font-serif { font-weight: 600; }
 
 @layer components {
   .section-title {
@@ -203,12 +235,23 @@ h1, h2, h3, h4 {
     margin-top: 0.75rem;
   }
 
+  /* E · Retro card — warm cream, chunky rounded, with a soft mustard
+     "hard shadow" ledge under it for that 70s brochure depth. */
   .card-paper {
-    @apply bg-cream-50 border border-cream-300/70 rounded-2xl shadow-[0_1px_2px_rgba(42,31,26,0.04),0_8px_24px_-12px_rgba(42,31,26,0.12)];
+    @apply bg-cream-50 border border-cream-300/70 rounded-3xl shadow-[0_4px_0_rgba(201,127,31,0.16),0_14px_28px_-16px_rgba(58,28,15,0.28)];
   }
 
   .card-paper-hover {
-    @apply transition-all duration-300 hover:shadow-[0_2px_4px_rgba(42,31,26,0.06),0_16px_32px_-12px_rgba(42,31,26,0.18)] hover:-translate-y-0.5;
+    @apply transition-all duration-300 hover:shadow-[0_6px_0_rgba(201,127,31,0.22),0_20px_34px_-16px_rgba(58,28,15,0.34)] hover:-translate-y-0.5;
+  }
+
+  /* E · Showcase card — the signature mustard "place card" with an inset
+     photo and a chunky bottom ledge. Used for hero place/attraction cards. */
+  .card-showcase {
+    background: var(--color-mustard-500);
+    border-radius: 26px;
+    overflow: hidden;
+    box-shadow: 0 8px 0 var(--color-mustard-600), 0 20px 32px -16px rgba(58, 28, 15, 0.42);
   }
 
   .pill {

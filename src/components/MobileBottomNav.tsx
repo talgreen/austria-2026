@@ -1,23 +1,21 @@
 import { useState } from "react";
-import { CalendarDays, Map, Compass, Baby, MoreHorizontal, Download } from "lucide-react";
+import { CalendarClock, Compass, Baby, Map, MoreHorizontal, Download } from "lucide-react";
 import { useT, type DictKey } from "../lib/dict";
 import { useLang } from "../lib/i18n";
 import LanguageSwitcher from "./LanguageSwitcher";
 import { canShowInstallOption, triggerInstallPrompt } from "../lib/install";
 import { navigateTab, type TabKey } from "../lib/route";
 
-const TABS: { id: TabKey | "more"; key: DictKey; Icon: typeof CalendarDays }[] = [
-  { id: "plan",   key: "nav_plan",        Icon: CalendarDays },
-  { id: "places", key: "nav_attractions", Icon: Compass },
-  // Kids gets a main-bar slot — it's the tab the family reaches for in
-  // the car, so it must be one tap away. Food moved to the More sheet.
-  { id: "kids",   key: "nav_kids",        Icon: Baby },
-  { id: "map",    key: "nav_map",         Icon: Map },
-  { id: "more",   key: "nav_attractions", Icon: MoreHorizontal }
+const TABS: { id: TabKey | "more"; key: DictKey; Icon: typeof CalendarClock }[] = [
+  { id: "today",   key: "nav_today",   Icon: CalendarClock },
+  { id: "explore", key: "nav_explore", Icon: Compass },
+  { id: "kids",    key: "nav_kids",    Icon: Baby },
+  { id: "map",     key: "nav_map",     Icon: Map },
+  { id: "more",    key: "nav_today",   Icon: MoreHorizontal } // label overridden below
 ];
 
 const MORE_LINKS: { id: TabKey; key: DictKey }[] = [
-  { id: "food",      key: "nav_food" },
+  { id: "plan",      key: "nav_itinerary" },
   { id: "stays",     key: "nav_stays" },
   { id: "tips",      key: "nav_tips" },
   { id: "checklist", key: "nav_checklist" },
@@ -25,7 +23,7 @@ const MORE_LINKS: { id: TabKey; key: DictKey }[] = [
 ];
 
 const MORE_LABEL: Record<"en" | "he", string> = { en: "More", he: "עוד" };
-const MORE_TAB_IDS = new Set<TabKey>(["food", "stays", "tips", "checklist", "emergency"]);
+const MORE_TAB_IDS = new Set<TabKey>(["plan", "stays", "tips", "checklist", "emergency"]);
 
 export default function MobileBottomNav({ activeTab }: { activeTab: TabKey }) {
   const t = useT();
@@ -80,6 +78,9 @@ export default function MobileBottomNav({ activeTab }: { activeTab: TabKey }) {
             <div className="mt-3 flex justify-center">
               <LanguageSwitcher variant="minimal" />
             </div>
+            <p className="mt-4 text-center text-[10px] leading-relaxed text-ink-700/45">
+              {t("footer_attribution")}
+            </p>
           </div>
         </div>
       )}

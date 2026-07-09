@@ -29,7 +29,7 @@ const TAG_KEY: Record<string, DictKey> = {
 };
 
 /** Tone for the difficulty pill — green for easy, amber for moderate,
- *  terracotta for challenging. */
+ *  rust for challenging. */
 const DIFFICULTY_STYLE: Record<
   Difficulty,
   { dotClass: string; textClass: string; bgClass: string; key: DictKey }
@@ -47,9 +47,9 @@ const DIFFICULTY_STYLE: Record<
     key: "difficulty_moderate"
   },
   challenging: {
-    dotClass: "bg-terracotta-500",
-    textClass: "text-terracotta-700",
-    bgClass: "bg-terracotta-500/12",
+    dotClass: "bg-rust-500",
+    textClass: "text-rust-700",
+    bgClass: "bg-rust-500/12",
     key: "difficulty_challenging"
   }
 };
@@ -211,7 +211,7 @@ export default function AttractionCard({ poi: rawPoi }: { poi: POI }) {
                   <span>{t(DIFFICULTY_STYLE[poi.difficulty].key)}</span>
                 </div>
               )}
-              <p className="text-[14px] leading-relaxed text-ink-700/90">
+              <p dir="auto" className="text-[14px] leading-relaxed text-ink-700/90">
                 {poi.description}
               </p>
               {/* German-accented narration of the description above.
@@ -222,7 +222,7 @@ export default function AttractionCard({ poi: rawPoi }: { poi: POI }) {
                 <ListenButton attractionId={poi.id} />
               </div>
               {(poi.openingNote || poi.bookingNote) && (
-                <div className="mt-4 text-xs text-terracotta-700 bg-terracotta-500/10 border border-terracotta-500/25 rounded-lg px-3 py-2 leading-snug">
+                <div className="mt-4 text-xs text-rust-700 bg-rust-500/10 border border-rust-500/25 rounded-lg px-3 py-2 leading-snug">
                   {poi.openingNote || poi.bookingNote}
                 </div>
               )}
@@ -239,7 +239,7 @@ export default function AttractionCard({ poi: rawPoi }: { poi: POI }) {
                         className="text-[13px] leading-snug text-ink-700/85 flex gap-2"
                       >
                         <span
-                          className="shrink-0 mt-[6px] w-1.5 h-1.5 rounded-full bg-terracotta-500/70"
+                          className="shrink-0 mt-[6px] w-1.5 h-1.5 rounded-full bg-rust-500/70"
                           aria-hidden
                         />
                         <span>{tip}</span>

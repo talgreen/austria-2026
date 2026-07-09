@@ -32,7 +32,7 @@ const CATEGORY_META: Record<
   DishCategory,
   { Icon: typeof Soup; key: DictKey; tone: string }
 > = {
-  pasta: { Icon: Wheat, key: "food_dish_pasta", tone: "text-terracotta-600" },
+  pasta: { Icon: Wheat, key: "food_dish_pasta", tone: "text-rust-600" },
   starter: { Icon: Soup, key: "food_dish_starter", tone: "text-olive-600" },
   main: { Icon: UtensilsCrossed, key: "food_dish_main", tone: "text-sienna-600" },
   dessert: { Icon: Cookie, key: "food_dish_dessert", tone: "text-gold-500" },
@@ -76,8 +76,8 @@ export default function FoodAndWineSection() {
               onClick={() => setRegion(tab.id)}
               className={`px-4 py-2.5 rounded-full text-sm font-medium transition-all whitespace-nowrap min-h-11 ${
                 region === tab.id
-                  ? "bg-ink-900 text-cream-50"
-                  : "bg-cream-50 border border-cream-300 text-ink-800 hover:border-terracotta-500/40"
+                  ? "bg-terracotta-500 text-cream-50"
+                  : "bg-cream-50 border border-cream-300 text-ink-800 hover:border-rust-500/40"
               }`}
             >
               {t(tab.key)}
@@ -101,6 +101,7 @@ export default function FoodAndWineSection() {
               Icon={UtensilsCrossed}
               label={t("food_dishes_label")}
               count={visibleDishes.length}
+              featured
             />
             <ul className="mt-5 grid sm:grid-cols-2 gap-4">
               {visibleDishes.map(rawDish => {
@@ -148,11 +149,11 @@ export default function FoodAndWineSection() {
                         {dish.name}
                       </h4>
                       {dish.germanName && (
-                        <div className="mt-0.5 font-serif italic text-terracotta-700/85 text-[13.5px]">
+                        <div className="mt-0.5 font-serif italic text-rust-700/85 text-[13.5px]">
                           {dish.germanName}
                         </div>
                       )}
-                      <p className="mt-2.5 text-[13.5px] sm:text-[14.5px] text-ink-700/85 leading-relaxed">
+                      <p dir="auto" className="mt-2.5 text-[13.5px] sm:text-[14.5px] text-ink-700/85 leading-relaxed">
                         {dish.description}
                       </p>
                       {dish.tryIt && (
@@ -184,7 +185,7 @@ export default function FoodAndWineSection() {
                 return (
                   <li
                     key={w.id}
-                    className="card-paper overflow-hidden border-s-4 border-terracotta-500/45 grid sm:grid-cols-[140px_1fr]"
+                    className="card-paper overflow-hidden grid sm:grid-cols-[140px_1fr]"
                   >
                     {/* Side photo on sm+, top photo on mobile.
                         The PoiImage component falls back to the styled
@@ -201,7 +202,7 @@ export default function FoodAndWineSection() {
                     </div>
                     <div className="p-4 sm:p-5 flex flex-col">
                       <div className="flex items-start gap-2.5">
-                        <span className="shrink-0 w-7 h-7 rounded-full bg-terracotta-500/10 text-terracotta-700 flex items-center justify-center">
+                        <span className="shrink-0 w-7 h-7 rounded-full bg-rust-500/10 text-rust-700 flex items-center justify-center">
                           <Grape size={13} strokeWidth={1.8} />
                         </span>
                         <div className="min-w-0 flex-1">
@@ -213,7 +214,7 @@ export default function FoodAndWineSection() {
                           </div>
                         </div>
                       </div>
-                      <p className="mt-3 text-[13.5px] sm:text-[14px] text-ink-700/85 leading-relaxed">
+                      <p dir="auto" className="mt-3 text-[13.5px] sm:text-[14px] text-ink-700/85 leading-relaxed">
                         {w.description}
                       </p>
                       {w.address && (
@@ -222,7 +223,7 @@ export default function FoodAndWineSection() {
                         </div>
                       )}
                       {w.bookingNote && (
-                        <div className="mt-3 text-[12px] text-terracotta-700 bg-terracotta-500/10 border border-terracotta-500/25 rounded-lg px-3 py-2 leading-snug flex items-start gap-2">
+                        <div className="mt-3 text-[12px] text-rust-700 bg-rust-500/10 border border-rust-500/25 rounded-lg px-3 py-2 leading-snug flex items-start gap-2">
                           <CalendarCheck
                             size={13}
                             className="mt-[1px] shrink-0"
@@ -262,15 +263,22 @@ export default function FoodAndWineSection() {
 function SubSectionHeader({
   Icon,
   label,
-  count
+  count,
+  featured
 }: {
   Icon: typeof UtensilsCrossed;
   label: string;
   count: number;
+  /** One sub-section may carry the signature mustard badge — sparingly. */
+  featured?: boolean;
 }) {
   return (
     <div className="flex items-baseline gap-3 border-b border-cream-300/70 pb-3">
-      <span className="shrink-0 w-8 h-8 rounded-full bg-terracotta-500/10 text-terracotta-700 flex items-center justify-center self-center">
+      <span
+        className={`shrink-0 w-8 h-8 rounded-full flex items-center justify-center self-center ${
+          featured ? "bg-mustard-500 text-ink-900" : "bg-rust-500/10 text-rust-700"
+        }`}
+      >
         <Icon size={15} strokeWidth={1.8} />
       </span>
       <h3 className="font-serif text-[22px] sm:text-2xl text-ink-900 leading-tight">

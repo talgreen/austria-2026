@@ -6,16 +6,7 @@ import Section from "./Section";
 import type { ChecklistItem } from "../data/types";
 import { useT } from "../lib/dict";
 import { useLocalizeChecklistItem } from "../data/i18n";
-
-const STORAGE_KEY = "austria-checklist-v1";
-
-function loadChecked(): Record<string, boolean> {
-  try {
-    return JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}");
-  } catch {
-    return {};
-  }
-}
+import { CHECKLIST_STORAGE_KEY, loadChecklistChecked, countDone } from "../lib/checklistProgress";
 
 function ChecklistList({
   items,
@@ -43,7 +34,7 @@ function ChecklistList({
                 type="checkbox"
                 checked={isDone}
                 onChange={() => onToggle(item.id)}
-                className="mt-1 w-4 h-4 accent-terracotta-500 cursor-pointer"
+                className="mt-1 w-4 h-4 accent-rust-600 cursor-pointer"
               />
               <div className="flex-1 min-w-0">
                 <div className="flex items-start gap-2 flex-wrap">
@@ -59,7 +50,7 @@ function ChecklistList({
                   )}
                 </div>
                 {item.detail && (
-                  <p className="text-xs text-ink-700/80 mt-1 leading-relaxed">{item.detail}</p>
+                  <p dir="auto" className="text-xs text-ink-700/80 mt-1 leading-relaxed">{item.detail}</p>
                 )}
                 {item.link && (
                   <a
@@ -83,13 +74,13 @@ function ChecklistList({
 export default function ChecklistSection() {
   const t = useT();
   const [tab, setTab] = useState<"booking" | "packing">("booking");
-  const [checked, setChecked] = useState<Record<string, boolean>>(() => loadChecked());
+  const [checked, setChecked] = useState<Record<string, boolean>>(() => loadChecklistChecked());
 
   const toggle = (id: string) => {
     setChecked(prev => {
       const next = { ...prev, [id]: !prev[id] };
       try {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(next));
+        localStorage.setItem(CHECKLIST_STORAGE_KEY, JSON.stringify(next));
       } catch {
         /* ignore */
       }
@@ -98,7 +89,7 @@ export default function ChecklistSection() {
   };
 
   const list = tab === "booking" ? bookingChecklist : packingChecklist;
-  const doneCount = list.filter(i => checked[i.id]).length;
+  const doneCount = countDone(list, checked);
 
   return (
     <Section
@@ -113,28 +104,28 @@ export default function ChecklistSection() {
             onClick={() => setTab("booking")}
             className={`px-4 py-2.5 rounded-full text-sm font-medium transition-all flex items-center gap-2 whitespace-nowrap min-h-11 ${
               tab === "booking"
-                ? "bg-ink-900 text-cream-50"
+                ? "bg-terracotta-500 text-cream-50"
                 : "bg-cream-50 border border-cream-300 text-ink-800 hover:border-terracotta-500/40"
             }`}
           >
             <ClipboardCheck size={14} />
             {t("checklist_booking")}
             <span className={`text-xs ${tab === "booking" ? "text-cream-200" : "text-ink-700/60"}`}>
-              {bookingChecklist.filter(i => checked[i.id]).length}/{bookingChecklist.length}
+              {countDone(bookingChecklist, checked)}/{bookingChecklist.length}
             </span>
           </button>
           <button
             onClick={() => setTab("packing")}
             className={`px-4 py-2.5 rounded-full text-sm font-medium transition-all flex items-center gap-2 whitespace-nowrap min-h-11 ${
               tab === "packing"
-                ? "bg-ink-900 text-cream-50"
+                ? "bg-terracotta-500 text-cream-50"
                 : "bg-cream-50 border border-cream-300 text-ink-800 hover:border-terracotta-500/40"
             }`}
           >
             <Briefcase size={14} />
             {t("checklist_packing")}
             <span className={`text-xs ${tab === "packing" ? "text-cream-200" : "text-ink-700/60"}`}>
-              {packingChecklist.filter(i => checked[i.id]).length}/{packingChecklist.length}
+              {countDone(packingChecklist, checked)}/{packingChecklist.length}
             </span>
           </button>
         </div>
@@ -161,7 +152,7 @@ export default function ChecklistSection() {
               stroke="currentColor"
               strokeWidth="3"
               strokeLinecap="round"
-              className="text-terracotta-500 transition-[stroke-dasharray] duration-500"
+              className="text-rust-600 transition-[stroke-dasharray] duration-500"
               strokeDasharray={`${
                 list.length === 0 ? 0 : (doneCount / list.length) * 100
               } 100`}

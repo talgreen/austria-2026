@@ -10,7 +10,6 @@ import type { POI, Category } from "../data/types";
 import { itinerary } from "../data/itinerary";
 import { getAreaForDay } from "../data/areas";
 import { accentClasses, type AreaAccent } from "../lib/accent";
-import Section from "./Section";
 import NavigateLinks from "./NavigateLinks";
 import { useT, type DictKey } from "../lib/dict";
 import { useLang } from "../lib/i18n";
@@ -216,6 +215,13 @@ const ROUTE_SEGMENTS: RouteSegment[] = [
     ]
   }
 ];
+
+/* Frame the initial map view on the trip itself (the five bases + the
+   airport) instead of a wide central-Europe view — so the map opens
+   already showing Austria, not Czechia. */
+const TRIP_BOUNDS = L.latLngBounds(
+  [...stays.map(s => s.coords), AIRPORT_POI.coords] as [number, number][]
+);
 
 interface FlyHandle {
   flyToId: (id: string) => void;
@@ -434,102 +440,13 @@ export default function MapView({ registerFocus }: Props) {
   };
 
   return (
-    <Section
-      id="map"
-      eyebrow={t("map_eyebrow")}
-      title={t("map_title")}
-      kicker={t("map_kicker")}
-      intro={t("map_intro")}
-    >
-      <div className="-mx-4 sm:mx-0 px-4 sm:px-0 overflow-x-auto scrollbar-hide mb-3">
-        <div className="flex gap-2 min-w-max sm:min-w-0 sm:flex-wrap">
-          {(["stay", "attraction", "restaurant", "winery", "supermarket", "gas", "airport"] as Category[]).map(
-            c => {
-              const cfg = CATEGORY_CONFIG[c];
-              const on = activeCats.has(c);
-              const Icon = cfg.Icon;
-              return (
-                <button
-                  key={c}
-                  onClick={() => toggle(c)}
-                  className={`inline-flex items-center gap-2 rounded-full border px-3.5 py-2 text-xs font-medium transition-all whitespace-nowrap min-h-9 ${
-                    on
-                      ? "text-cream-50 shadow-sm"
-                      : "bg-cream-50 text-ink-700 border-cream-300 opacity-60 hover:opacity-100 active:opacity-100"
-                  }`}
-                  style={
-                    on ? { backgroundColor: cfg.color, borderColor: cfg.color } : undefined
-                  }
-                >
-                  <Icon size={13} />
-                  {t(cfg.labelKey)}
-                  <span
-                    className={`text-[10px] ${
-                      on ? "text-cream-200" : "text-ink-700/60"
-                    }`}
-                  >
-                    {allPOIs.filter(p => p.category === c).length}
-                  </span>
-                </button>
-              );
-            }
-          )}
-        </div>
-      </div>
-
-      {/* Route ribbon: legend + toggle */}
-      <div className="flex items-center justify-between gap-3 mb-3 px-1 flex-wrap">
-        <div className="flex items-center gap-3 sm:gap-4 flex-wrap">
-          {/* Static legend — used to hover-highlight the matching route
-              polyline on the map, but the spotlight effect was more
-              distracting than useful. Now they're just pure legend. */}
-          {ROUTE_SEGMENTS.map(seg => (
-            <span
-              key={seg.id}
-              className={`flex items-center gap-2 text-[11px] uppercase tracking-[0.16em] font-medium transition-opacity ${
-                showRoute ? "opacity-100" : "opacity-40"
-              }`}
-            >
-              <span
-                className="block w-6 h-[3px] rounded-full"
-                style={{
-                  background: `repeating-linear-gradient(90deg, ${seg.color} 0 4px, transparent 4px 8px)`
-                }}
-              />
-              <span className="text-ink-800">{t(seg.dayKey)}</span>
-            </span>
-          ))}
-        </div>
-        <div className="flex items-center gap-2">
-          <button
-            onClick={() => setShowSpokes(s => !s)}
-            className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[11px] uppercase tracking-[0.16em] font-medium transition-colors min-h-9 text-cream-50 ${
-              showSpokes ? "" : "opacity-60 hover:opacity-100"
-            }`}
-            style={{ backgroundColor: showSpokes ? "#5C7244" : "#5C7244AA" }}
-            aria-pressed={showSpokes}
-          >
-            <Sparkles size={12} /> {showSpokes ? t("map_spokes_on") : t("map_spokes_off")}
-          </button>
-          <button
-            onClick={() => setShowRoute(s => !s)}
-            className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[11px] uppercase tracking-[0.16em] font-medium transition-colors min-h-9 text-cream-50 ${
-              showRoute ? "" : "opacity-60 hover:opacity-100"
-            }`}
-            style={{ backgroundColor: showRoute ? "#A23E2A" : "#A23E2AAA" }}
-            aria-pressed={showRoute}
-          >
-            <Route size={12} /> {showRoute ? t("map_route_on") : t("map_route_off")}
-          </button>
-        </div>
-      </div>
-
-      <div className="relative card-paper overflow-hidden -mx-4 sm:mx-0 rounded-none sm:rounded-2xl">
+    <div className="relative w-full h-[calc(100dvh-10rem)] md:h-[calc(100dvh-5rem)] bg-cream-200">
         <MapContainer
-          center={[47.7, 14.1]}
-          zoom={7}
+          bounds={TRIP_BOUNDS}
+          boundsOptions={{ padding: [40, 40] }}
+          zoomControl={false}
           scrollWheelZoom={true}
-          className="h-[70svh] sm:h-[600px] w-full"
+          className="h-full w-full"
         >
           {/* CartoDB Voyager — warm, editorial off-cream tiles that pair
               nicely with the Austrian palette. Free for low-traffic personal
@@ -658,36 +575,88 @@ export default function MapView({ registerFocus }: Props) {
           })}
         </MapContainer>
 
-        {/* Floating Fit-All button */}
-        <button
-          type="button"
-          onClick={() => flyRef.current?.fitAll()}
-          aria-label={t("map_zoom_fit")}
-          className="absolute top-3 end-3 z-[400] w-10 h-10 rounded-full bg-cream-50/95 backdrop-blur ring-1 ring-cream-300/70 shadow-md hover:bg-terracotta-500 hover:text-cream-50 hover:ring-terracotta-500 transition flex items-center justify-center text-ink-800"
-        >
-          <Maximize2 size={16} />
-        </button>
+        {/* Category filters — overlaid on the map so the map itself is the
+            hero (one-tap toggles, horizontal-scroll on narrow screens). */}
+        <div className="absolute top-3 inset-x-0 z-[500] pointer-events-none">
+          <div className="px-3 overflow-x-auto scrollbar-hide pointer-events-auto">
+            <div className="flex gap-2 w-max">
+              {(["stay", "attraction", "restaurant", "winery", "supermarket", "gas", "airport"] as Category[]).map(
+                c => {
+                  const cfg = CATEGORY_CONFIG[c];
+                  const on = activeCats.has(c);
+                  const Icon = cfg.Icon;
+                  return (
+                    <button
+                      key={c}
+                      onClick={() => toggle(c)}
+                      aria-pressed={on}
+                      className={`inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-xs font-bold shadow-sm backdrop-blur transition-all whitespace-nowrap min-h-9 ${
+                        on
+                          ? "text-cream-50"
+                          : "bg-cream-50/90 text-ink-700 border-cream-300 hover:bg-cream-50"
+                      }`}
+                      style={on ? { backgroundColor: cfg.color, borderColor: cfg.color } : undefined}
+                    >
+                      <Icon size={13} />
+                      {t(cfg.labelKey)}
+                      <span className={`text-[10px] ${on ? "text-cream-50/75" : "text-ink-700/55"}`}>
+                        {allPOIs.filter(p => p.category === c).length}
+                      </span>
+                    </button>
+                  );
+                }
+              )}
+            </div>
+          </div>
+        </div>
 
-        {/* Floating Locate-me button — request / refresh user location.
-            Lights up blue once we have a fix; greyed-out (but still
-            tappable) if permission was denied so the user can retry. */}
-        <button
-          type="button"
-          onClick={handleLocateClick}
-          aria-label={t("map_locate_me")}
-          aria-pressed={!!userLocation}
-          className={`absolute top-[60px] end-3 z-[400] w-10 h-10 rounded-full backdrop-blur ring-1 shadow-md transition flex items-center justify-center ${
-            userLocation
-              ? "bg-[#3A7CEB] text-cream-50 ring-[#3A7CEB]/60"
-              : geolocBlocked
-                ? "bg-cream-50/80 text-ink-700/40 ring-cream-300/70"
-                : "bg-cream-50/95 text-ink-800 ring-cream-300/70 hover:bg-[#3A7CEB] hover:text-cream-50 hover:ring-[#3A7CEB]/60"
-          }`}
-        >
-          <Locate size={16} strokeWidth={1.9} />
-        </button>
+        {/* Route / day-trip toggles — overlaid, bottom-start */}
+        <div className="absolute bottom-4 start-3 z-[500] flex gap-2">
+          <button
+            onClick={() => setShowSpokes(s => !s)}
+            aria-pressed={showSpokes}
+            className="inline-flex items-center gap-1.5 px-3 py-2 rounded-full text-[11px] font-bold shadow-[0_3px_0_rgba(42,31,26,0.3),0_6px_10px_-4px_rgba(42,31,26,0.35)] backdrop-blur transition-colors min-h-9 text-cream-50"
+            style={{ backgroundColor: showSpokes ? "#5C7244" : "#5C7244AA" }}
+          >
+            <Sparkles size={12} /> {showSpokes ? t("map_spokes_on") : t("map_spokes_off")}
+          </button>
+          <button
+            onClick={() => setShowRoute(s => !s)}
+            aria-pressed={showRoute}
+            className="inline-flex items-center gap-1.5 px-3 py-2 rounded-full text-[11px] font-bold shadow-[0_3px_0_rgba(42,31,26,0.3),0_6px_10px_-4px_rgba(42,31,26,0.35)] backdrop-blur transition-colors min-h-9 text-cream-50"
+            style={{ backgroundColor: showRoute ? "#A23E2A" : "#A23E2AAA" }}
+          >
+            <Route size={12} /> {showRoute ? t("map_route_on") : t("map_route_off")}
+          </button>
+        </div>
+
+        {/* Fit-all + Locate-me — overlaid, bottom-end (raised to clear the
+            map's attribution line). */}
+        <div className="absolute bottom-7 end-3 z-[500] flex flex-col gap-2">
+          <button
+            type="button"
+            onClick={() => flyRef.current?.fitAll()}
+            aria-label={t("map_zoom_fit")}
+            className="w-11 h-11 rounded-full bg-cream-50/95 backdrop-blur ring-1 ring-cream-300/70 shadow-[0_3px_0_rgba(42,31,26,0.28),0_6px_10px_-4px_rgba(42,31,26,0.35)] hover:bg-rust-600 hover:text-cream-50 hover:ring-rust-600 transition flex items-center justify-center text-ink-800"
+          >
+            <Maximize2 size={16} />
+          </button>
+          <button
+            type="button"
+            onClick={handleLocateClick}
+            aria-label={t("map_locate_me")}
+            aria-pressed={!!userLocation}
+            className={`w-11 h-11 rounded-full backdrop-blur ring-1 shadow-[0_3px_0_rgba(42,31,26,0.28),0_6px_10px_-4px_rgba(42,31,26,0.35)] transition flex items-center justify-center ${
+              userLocation
+                ? "bg-[#3A7CEB] text-cream-50 ring-[#3A7CEB]/60"
+                : geolocBlocked
+                  ? "bg-cream-50/80 text-ink-700/40 ring-cream-300/70"
+                  : "bg-cream-50/95 text-ink-800 ring-cream-300/70 hover:bg-[#3A7CEB] hover:text-cream-50 hover:ring-[#3A7CEB]/60"
+            }`}
+          >
+            <Locate size={16} strokeWidth={1.9} />
+          </button>
+        </div>
       </div>
-
-    </Section>
   );
 }

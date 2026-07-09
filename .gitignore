@@ -31,3 +31,9 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Superpowers brainstorming visual companion
+.superpowers/
+
+# Playwright MCP scratch (screenshots/snapshots)
+.playwright-mcp/

@@ -1,7 +1,5 @@
 import { useCallback, useRef } from "react";
 import Navbar from "./components/Navbar";
-import Hero from "./components/Hero";
-import Footer from "./components/Footer";
 import MobileBottomNav from "./components/MobileBottomNav";
 import ChapterDetailPage from "./components/ChapterDetailPage";
 import InstallPrompt from "./components/InstallPrompt";
@@ -38,9 +36,8 @@ export default function App() {
   return (
     <MapFocusContext.Provider value={{ focusOn }}>
       <Navbar activeTab={route.tab} />
-      {route.tab === "plan" && <Hero />}
+      {route.tab === "today" && <div className="h-16 sm:h-20" aria-hidden />}
       <TabShell tab={route.tab} registerFocus={registerFocus} />
-      <Footer />
       <div className="h-20 md:hidden" aria-hidden />
       <MobileBottomNav activeTab={route.tab} />
       <InstallPrompt />

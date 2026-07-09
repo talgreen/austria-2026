@@ -56,6 +56,9 @@ export const DICT = {
   hero_photo_day: { en: "Day {n}", he: "יום {n}" },
 
   /* ---------- Navbar ---------- */
+  nav_today: { en: "Today", he: "היום" },
+  nav_explore: { en: "Explore", he: "לגלות" },
+  nav_itinerary: { en: "Itinerary", he: "מסלול" },
   nav_plan: { en: "Plan", he: "תוכנית" },
   nav_map: { en: "Map", he: "מפה" },
   // The stays are the trip's bases (Vienna, Salzburg, the Alps) —
@@ -127,6 +130,13 @@ export const DICT = {
   plan_kicker: {
     en: "Swipe through eighteen chapters · click Read more for the full chapter",
     he: "החליקו בין שמונה־עשר פרקים · לחצו על 'קרא עוד' לפרק המלא"
+  },
+  /* ---------- Route timeline (2026 redesign) ---------- */
+  route_eyebrow: { en: "The route · day by day", he: "המסלול · יום אחר יום" },
+  route_title: { en: "The whole journey", he: "כל המסע" },
+  route_kicker: {
+    en: "Five bases, eighteen days — tap any day to open its chapter",
+    he: "חמישה בסיסים, שמונה־עשר ימים — הקישו על יום כדי לפתוח את הפרק"
   },
   plan_chapter_x_of_y: {
     en: "Chapter {x} / {y}",
@@ -367,6 +377,8 @@ export const DICT = {
     he: "אגמים, טירות, רכבלים, מערות, מערת קרח ורכבת קיטור"
   },
   attr_filter_all: { en: "All", he: "הכול" },
+  attr_count: { en: "{n} places", he: "{n} מקומות" },
+  attr_filter_clear: { en: "All types", he: "כל הסוגים" },
   attr_filter_north: { en: "Vienna", he: "וינה" },
   attr_filter_south: { en: "Alps", he: "אלפים" },
   attr_filter_water: { en: "Water", he: "מים" },
@@ -770,7 +782,56 @@ export const DICT = {
     he: "פרקים הבאים"
   },
   chapter_label: { en: "Chapter", he: "פרק" },
-  month_aug_short: { en: "Aug", he: "באוגוסט" }
+  month_aug_short: { en: "Aug", he: "באוגוסט" },
+
+  /* ---------- TodayHome (2026 redesign) ---------- */
+  today_before_eyebrow: { en: "{n} days to go", he: "עוד {n} ימים" },
+  today_before_title: { en: "Austria awaits", he: "אוסטריה מחכה" },
+  today_departure_label: { en: "Departure", he: "יציאה" },
+  today_departure_route: { en: "Tel Aviv → Vienna", he: "תל אביב → וינה" },
+  today_departure_note: {
+    en: "Land 08:45 · drive departs ~10:00",
+    he: "נחיתה 08:45 · יוצאים לדרך ~10:00"
+  },
+  today_packing_label: { en: "Getting ready", he: "מתכוננים" },
+  today_packing_progress: {
+    en: "{done} of {total} ready",
+    he: "{done} מתוך {total} מוכן"
+  },
+  today_day1_preview: { en: "Day 1 · preview", he: "יום 1 · הצצה" },
+  today_now_label: { en: "Right now", he: "עכשיו" },
+  today_next_label: { en: "Up next", he: "הבא בתור" },
+  today_see_full_day: { en: "See the full day", he: "לכל היום" },
+  today_open_map: { en: "Open the map", he: "פתחו מפה" },
+  today_no_next: { en: "That's the day — enjoy the evening.", he: "זה היום — תיהנו מהערב." },
+  today_after_title: { en: "Willkommen zurück", he: "ברוכים השבים" },
+  today_after_sub: {
+    en: "That summer in Austria · relive the trip",
+    he: "אותו קיץ באוסטריה · לחיות את הטיול מחדש"
+  },
+  today_after_itinerary: { en: "Browse the itinerary", he: "לדפדף במסלול" },
+  today_after_quiz: { en: "Play Quizzo", he: "לשחק עם קוויצו" },
+
+  /* ---------- Explore hub (2026 redesign) ---------- */
+  explore_eyebrow: { en: "Explore", he: "לגלות" },
+  explore_title: { en: "What to see & taste", he: "מה לראות ולטעום" },
+  explore_kicker: {
+    en: "The places we'll fall for and the food we'll eat",
+    he: "המקומות שנתאהב בהם והאוכל שנאכל"
+  },
+  explore_card_places: { en: "Attractions", he: "אטרקציות" },
+  explore_card_places_sub: {
+    en: "Lakes, castles, cable cars, caves",
+    he: "אגמים, טירות, רכבלים, מערות"
+  },
+  explore_card_food: { en: "Food & wine", he: "אוכל ויין" },
+  explore_card_food_sub: {
+    en: "Schnitzel, strudel — and what to drink",
+    he: "שניצל, שטרודל — ומה שותים"
+  },
+  explore_count_places: { en: "{n} places to see", he: "{n} מקומות לראות" },
+  explore_count_food: { en: "{n} dishes & drinks", he: "{n} מנות ומשקאות" },
+  explore_open_map: { en: "See it all on the map", he: "לראות הכול על המפה" }
 } as const;
 
 export type DictKey = keyof typeof DICT;
