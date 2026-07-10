@@ -1,19 +1,24 @@
-import { CalendarDays, Plane, ListChecks } from "lucide-react";
+import { ChevronLeft, ChevronRight, ListChecks, Map, Plane } from "lucide-react";
 import { TRIP_START } from "../../lib/tripState";
 import type { TripState } from "../../lib/tripState";
-import { useT } from "../../lib/dict";
+import { useT, localizeShortDate, localizeWeekday } from "../../lib/dict";
+import { useLang } from "../../lib/i18n";
 import { navigateTab, navigateChapter } from "../../lib/route";
 import { loadChecklistChecked, countDone } from "../../lib/checklistProgress";
 import { bookingChecklist, packingChecklist } from "../../data/checklist";
+import { itinerary } from "../../data/itinerary";
+import { useLocalizeDay } from "../../data/i18n";
 import LiveCountdown from "../LiveCountdown";
-import WeatherStrip from "../WeatherStrip";
 
 export default function BeforeTrip({ state }: { state: Extract<TripState, { phase: "before" }> }) {
   const t = useT();
+  const { lang } = useLang();
+  const localizeDay = useLocalizeDay();
   const checked = loadChecklistChecked();
   const allItems = [...bookingChecklist, ...packingChecklist];
   const done = countDone(allItems, checked);
   const total = allItems.length;
+  const Chevron = lang === "he" ? ChevronLeft : ChevronRight;
 
   return (
     <div className="mx-auto max-w-lg px-4 pb-8 space-y-3">
@@ -22,7 +27,7 @@ export default function BeforeTrip({ state }: { state: Extract<TripState, { phas
           {t("today_before_eyebrow", { n: state.daysUntil })}
         </div>
         <h1 className="mt-1 font-serif font-black text-4xl leading-[1.05] text-ink-900">
-          {t("today_before_title")} ✈️
+          {t("today_before_title")}
         </h1>
       </div>
 
@@ -57,18 +62,46 @@ export default function BeforeTrip({ state }: { state: Extract<TripState, { phas
         </div>
       </button>
 
-      <div className="grid grid-cols-2 gap-3">
-        <button
-          onClick={() => navigateChapter(1)}
-          className="text-start rounded-3xl p-4 bg-mustard-500 text-ink-900 active:scale-[0.99] transition-transform shadow-[0_4px_0_var(--color-mustard-600)]"
-        >
-          <div className="flex items-center gap-2 text-[11px] font-extrabold uppercase tracking-wide text-rust-700">
-            <CalendarDays size={14} /> {t("today_day1_preview")}
+      {/* The plan, day by day — the page's real job: one tap from here
+          into any chapter. Compact scannable rows, no hero art. */}
+      <div className="rounded-[var(--radius-card)] bg-surface overflow-hidden">
+        <div className="flex items-center justify-between gap-3 px-4 pt-4 pb-2">
+          <div className="flex items-center gap-2 text-[11px] font-extrabold uppercase tracking-wide text-rust-600">
+            <Map size={14} /> {t("today_plan_days_label")}
           </div>
-        </button>
-        <div className="rounded-[var(--radius-card)] p-2 bg-surface flex items-center">
-          <WeatherStrip variant="paper" />
+          <button
+            onClick={() => navigateTab("plan")}
+            className="text-[12px] font-bold text-rust-600 hover:text-rust-700 underline underline-offset-4 decoration-rust-500/40"
+          >
+            {t("today_full_route")}
+          </button>
         </div>
+        <ol className="divide-y divide-cream-300/50">
+          {itinerary.map(day => {
+            const local = localizeDay(day);
+            return (
+              <li key={day.dayNumber}>
+                <button
+                  onClick={() => navigateChapter(day.dayNumber)}
+                  className="w-full flex items-center gap-3 px-4 py-2.5 text-start hover:bg-cream-100/70 active:bg-cream-200/60 transition-colors"
+                >
+                  <span className="shrink-0 w-8 h-8 rounded-full bg-cream-100 ring-1 ring-cream-300/70 text-ink-900 text-[13px] font-bold flex items-center justify-center tabular-nums">
+                    {day.dayNumber}
+                  </span>
+                  <span className="min-w-0 flex-1">
+                    <span className="block text-[14px] font-semibold text-ink-900 leading-snug line-clamp-1">
+                      {local.title}
+                    </span>
+                    <span className="block text-[11.5px] text-ink-700/60 leading-snug">
+                      {localizeWeekday(day.weekday, lang, true)} · {localizeShortDate(day.date, lang)}
+                    </span>
+                  </span>
+                  <Chevron size={15} className="shrink-0 text-ink-700/40" />
+                </button>
+              </li>
+            );
+          })}
+        </ol>
       </div>
     </div>
   );

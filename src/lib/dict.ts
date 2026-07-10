@@ -107,6 +107,11 @@ export const DICT = {
   kids_difficulty_easy: { en: "Easy", he: "קל" },
   kids_difficulty_medium: { en: "Tricky", he: "מאתגר" },
   kids_road_games: { en: "Road games", he: "משחקי דרך" },
+  kids_words_title: { en: "German words", he: "מילים בגרמנית" },
+  kids_prev_day: { en: "Previous day", he: "היום הקודם" },
+  kids_next_day: { en: "Next day", he: "היום הבא" },
+  kids_jump_to: { en: "Jump to", he: "קפיצה אל" },
+  kids_challenge_section: { en: "Today's challenge", he: "אתגר היום" },
   kids_road_games_title: { en: "The games shelf", he: "מדף המשחקים" },
   kids_road_games_kicker: {
     en: "No equipment needed — just mouths and imagination",
@@ -799,6 +804,8 @@ export const DICT = {
     he: "{done} מתוך {total} מוכן"
   },
   today_day1_preview: { en: "Day 1 · preview", he: "יום 1 · הצצה" },
+  today_plan_days_label: { en: "The plan, day by day", he: "התוכנית, יום אחרי יום" },
+  today_full_route: { en: "Full route", he: "למסלול המלא" },
   today_now_label: { en: "Right now", he: "עכשיו" },
   today_next_label: { en: "Up next", he: "הבא בתור" },
   today_see_full_day: { en: "See the full day", he: "לכל היום" },
