@@ -18,6 +18,8 @@ import {
   Activity,
   Backpack,
   StickyNote,
+  Map as MapIcon,
+  PartyPopper,
   Utensils,
   Wine,
   Beer,
@@ -56,7 +58,9 @@ import PhotoCredit from "./PhotoCredit";
 import MiniMap from "./MiniMap";
 import ListenButton from "./ListenButton";
 import GermanWordCarousel from "./GermanWordCarousel";
-import DayFunPack from "./DayFunPack";
+import { FunPackBody } from "./DayFunPack";
+import { getKidsPack } from "../data/kids";
+import CollapsibleSection from "./CollapsibleSection";
 import { useCarouselSwipe } from "../lib/useCarouselSwipe";
 
 const ROMAN = ["", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X"];
@@ -620,20 +624,15 @@ function ChapterDetailContent({ day }: { day: Day }) {
           </div>
         </header>
 
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 py-10 sm:py-16 space-y-12 sm:space-y-16">
-          {/* Where you sleep — area lodging band */}
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
+          {/* Where you sleep — compact area lodging pill */}
           <WhereYouSleep area={area} variant="band" />
 
-          {/* German words (carousel) — three themed flashcards per day;
-              audio is on the pronunciation chip; progress is remembered. */}
-          {germanWords.length > 0 && (
-            <GermanWordCarousel dayNumber={day.dayNumber} words={germanWords} />
-          )}
-
-          {/* Activities */}
-          <section>
+          {/* The day plan — the page's spine, always expanded. Everything
+              else on the page folds into collapsed sections below it. */}
+          <section className="mt-6 sm:mt-8">
             <SectionLabel eyebrow={t("todays_plan")} title={t("hour_by_hour")} accentClass={a.text} />
-            <ol className="mt-6 sm:mt-8 space-y-5 sm:space-y-8">
+            <ol className="mt-5 sm:mt-6 space-y-3">
               {localDay.activities.map((act, i, arr) => (
                 <Fragment key={i}>
                   {i === 0 && localDay.rideToFirst && localDay.departureTime && (
@@ -645,7 +644,6 @@ function ChapterDetailContent({ day }: { day: Day }) {
                   )}
                   <ActivityRow
                     activity={act}
-                    index={i}
                     isToday={isToday}
                     optional={isActivityOptional(act, i, localDay)}
                     accentText={a.text}
@@ -681,13 +679,20 @@ function ChapterDetailContent({ day }: { day: Day }) {
             )}
           </section>
 
-          {/* Mini map */}
+          {/* Everything else folds — collapsed by default so the chapter
+              reads: hero → plan → tap only what you need. The map, gear,
+              restaurants, tips, kids corner and nightcap each open with
+              one tap instead of stacking into an endless scroll. */}
+          <div className="mt-8 sm:mt-10 space-y-3">
           {dayPois.length > 0 && (
-            <section>
-              <SectionLabel eyebrow={t("on_the_map")} title={t("the_days_stops")} accentClass={a.text} />
-              <p className="mt-2 mb-5 sm:mb-6 font-serif italic text-ink-700/70 text-[14.5px] sm:text-base">
-                {t("ordered_visit")}
-              </p>
+            <CollapsibleSection
+              id="day-stops"
+              icon={MapIcon}
+              eyebrow={t("on_the_map")}
+              title={t("the_days_stops")}
+              subtitle={t("ordered_visit")}
+              accentClass={a.text}
+            >
               <MiniMap pois={dayPois} />
               <ol className="mt-4 grid sm:grid-cols-2 gap-2.5">
                 {dayPois.map((p, i) => (
@@ -714,18 +719,20 @@ function ChapterDetailContent({ day }: { day: Day }) {
                   </li>
                 ))}
               </ol>
-            </section>
+            </CollapsibleSection>
           )}
 
-          {/* Day pack — what to bring, sitting between the plan and the
-              day-notes. Items can reference a specific stop with a small
-              chip the reader can tap to scroll back up to that activity. */}
+          {/* Day pack — what to bring. Items can reference a specific stop
+              with a small chip the reader can tap to scroll back up to
+              that activity. */}
           {localDay.gear && localDay.gear.length > 0 && (
-            <section>
-              <SectionLabel eyebrow={t("gear_eyebrow")} title={t("gear_title")} accentClass={a.text} />
-              <p className="mt-2 mb-5 sm:mb-6 font-serif italic text-ink-700/70 text-[14.5px] sm:text-base">
-                {t("gear_kicker")}
-              </p>
+            <CollapsibleSection
+              icon={Backpack}
+              eyebrow={t("gear_eyebrow")}
+              title={t("gear_title")}
+              subtitle={t("gear_kicker")}
+              accentClass={a.text}
+            >
               <ul className="grid sm:grid-cols-2 gap-2.5">
                 {localDay.gear.map((g, i) => {
                   const forName = g.for ? attractionNameById.get(g.for) : undefined;
@@ -765,13 +772,10 @@ function ChapterDetailContent({ day }: { day: Day }) {
                   );
                 })}
               </ul>
-            </section>
+            </CollapsibleSection>
           )}
 
-          {/* Where to eat — curated restaurants for today's plan. Sits
-              right after the day pack so it reads as part of the
-              "what does this day look like" sequence, before the
-              day-tips and chapter-tips informational blocks. */}
+          {/* Where to eat — curated restaurants for today's plan. */}
           {dayRestaurants.length > 0 && (
             <RestaurantsForDay restaurants={dayRestaurants} />
           )}
@@ -780,11 +784,13 @@ function ChapterDetailContent({ day }: { day: Day }) {
               relevant to this chapter, merged into one section to avoid two
               near-identical "tips" blocks on the detail page. */}
           {((localDay.dayTips && localDay.dayTips.length > 0) || tips.length > 0) && (
-            <section>
-              <SectionLabel eyebrow={t("daytips_eyebrow")} title={t("daytips_title")} accentClass={a.text} />
-              <p className="mt-2 mb-5 sm:mb-6 font-serif italic text-ink-700/70 text-[14.5px] sm:text-base">
-                {t("daytips_kicker")}
-              </p>
+            <CollapsibleSection
+              icon={Lightbulb}
+              eyebrow={t("daytips_eyebrow")}
+              title={t("daytips_title")}
+              subtitle={t("daytips_kicker")}
+              accentClass={a.text}
+            >
               <ul className="space-y-2.5">
                 {(localDay.dayTips ?? []).map((line, i) => (
                   <li
@@ -830,40 +836,51 @@ function ChapterDetailContent({ day }: { day: Day }) {
                   );
                 })}
               </ul>
-            </section>
+            </CollapsibleSection>
           )}
 
-          {/* Kids fun pack — Hebrew riddles, jokes, tongue twisters and
-              the day's spotting challenge (src/data/kids.ts). Sits just
-              before Quizzo so the chapter's kids block reads fun-pack →
-              quiz. Unlike Quizzo it is never date-locked: this content
-              is for the drive *to* the day's stops. */}
-          <DayFunPack dayNumber={day.dayNumber} />
+          {/* Kids corner — one folded section for everything child-facing:
+              the German word flashcards (moved here from the top of the
+              chapter), the Hebrew fun pack (riddles, jokes, twisters,
+              spotting challenge) and Quizzo. The fun pack is never
+              date-locked — it's for the drive *to* the day's stops —
+              while Quizzo keeps its unlock gate. Quiz is keyed on
+              (day, lang) so flipping the language wipes the in-progress
+              round + cached voice backend cleanly via a full remount. */}
+          <CollapsibleSection
+            icon={PartyPopper}
+            eyebrow={t("kids_eyebrow")}
+            title={t("funpack_title")}
+            subtitle={t("kids_kicker")}
+            accentClass="text-rust-600/85"
+          >
+            <div className="space-y-8">
+              {germanWords.length > 0 && (
+                <GermanWordCarousel dayNumber={day.dayNumber} words={germanWords} />
+              )}
+              {getKidsPack(day.dayNumber) && <FunPackBody dayNumber={day.dayNumber} />}
+              <Quiz
+                key={`${day.dayNumber}-${lang}`}
+                day={day.dayNumber}
+                locked={!isQuizUnlocked(day.dayNumber, day.date)}
+                unlockDate={day.date}
+              />
+            </div>
+          </CollapsibleSection>
 
-          {/* Quiz with Quizzo — kid-friendly recap (or pre-trip
-              preview) of the day. Mounted on every chapter, sandwiched
-              between "Good to know" and the adults-only drink callout
-              so the closing pair reads as Kids → Parents.
-              `isQuizUnlocked` lets the first N days (preview) and any
-              chapter whose date has arrived play; the rest render a
-              "Unlocks on …" notice card so the kid sees the slot but
-              can't burn API quota previewing tomorrow's surprises.
-              Key on (day, lang) so flipping the language wipes the
-              in-progress round + cached voice backend cleanly via a
-              full remount. */}
-          <Quiz
-            key={`${day.dayNumber}-${lang}`}
-            day={day.dayNumber}
-            locked={!isQuizUnlocked(day.dayNumber, day.date)}
-            unlockDate={day.date}
-          />
-
-          {/* Drink of the day — closing flourish, the literal end of the
-              chapter (after all the practical info). Adults-only nightcap
-              suggestion that mirrors the German word card opening. */}
+          {/* Drink of the day — the closing flourish, folded like the rest.
+              Adults-only nightcap suggestion. */}
           {localDay.drinkOfTheDay && (
-            <DrinkOfTheDay drink={localDay.drinkOfTheDay} />
+            <CollapsibleSection
+              icon={Wine}
+              eyebrow={t("drink_eyebrow")}
+              title={t("drink_title")}
+              subtitle={t("drink_kicker")}
+            >
+              <DrinkOfTheDay drink={localDay.drinkOfTheDay} />
+            </CollapsibleSection>
           )}
+          </div>
         </div>
 
         {/* Prev / Next chapter nav */}
@@ -933,13 +950,11 @@ function SectionLabel({ eyebrow, title, accentClass = "text-terracotta-600/85" }
 
 function ActivityRow({
   activity,
-  index,
   isToday,
   optional,
   accentText = "text-terracotta-600"
 }: {
   activity: DayActivity;
-  index: number;
   isToday: boolean;
   optional: boolean;
   accentText?: string;
@@ -952,7 +967,7 @@ function ActivityRow({
   const hasMoreInfo = !!att;
 
   /* Icon styling: optional always renders in the muted "not today" palette
-     so the badge in the eyebrow doesn't have to fight a saturated terracotta
+     so the badge in the header doesn't have to fight a saturated terracotta
      circle. Today + optional is rare but handled cleanly this way. */
   const iconClasses = optional
     ? "bg-cream-50 text-terracotta-600/55 ring-1 ring-cream-300/60"
@@ -963,64 +978,53 @@ function ActivityRow({
   return (
     <li
       id={activity.attractionId ? `activity-${activity.attractionId}` : undefined}
-      className="grid grid-cols-[40px_1fr] sm:grid-cols-[64px_1fr] gap-3 sm:gap-6 scroll-mt-24"
+      className={`rounded-2xl bg-cream-50 ring-1 p-4 sm:p-5 scroll-mt-24 ${
+        optional ? "ring-cream-300/50" : "ring-cream-300/70"
+      }`}
     >
-      {/* Icon column. The time used to live BELOW the icon (-bottom-4),
-          which floated it into the gap before the next row and read as if
-          it labeled the wrong activity. Time now lives in the eyebrow of
-          the content column, where it's unambiguously attached. */}
-      <div className="relative pt-0.5 sm:pt-1">
-        <div
-          className={`w-10 h-10 sm:w-14 sm:h-14 rounded-full flex items-center justify-center ${iconClasses}`}
+      {/* Header row: icon + a bold time chip + tag/optional badges. One
+          glance answers "when and what kind" before the title is read. */}
+      <div className="flex items-center flex-wrap gap-x-2.5 gap-y-1.5">
+        <span
+          className={`shrink-0 w-9 h-9 rounded-full flex items-center justify-center ${iconClasses}`}
         >
           {createElement(activityIcon(activity), {
             size: 16,
-            className: "sm:w-5 sm:h-5",
             strokeWidth: 1.7
           })}
-        </div>
+        </span>
+        {activity.time && (
+          <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-terracotta-500/10 text-terracotta-700 text-[12px] font-bold tabular-nums">
+            <Clock size={11} strokeWidth={2} />
+            {activity.time}
+          </span>
+        )}
+        {activity.tag && (
+          <span className="text-[9px] uppercase tracking-[0.22em] text-ink-700/50 font-medium">
+            {t(TAG_KEY[activity.tag] ?? "tag_view")}
+          </span>
+        )}
+        {optional && (
+          <span
+            className="inline-flex items-center px-1.5 py-[2px] rounded-full bg-olive-500/12 text-olive-700 text-[8.5px] uppercase tracking-[0.22em] font-semibold"
+            title={t("optional_aria")}
+            aria-label={t("optional_aria")}
+          >
+            {t("optional_label")}
+          </span>
+        )}
       </div>
 
-      <div className="min-w-0 pt-0.5 sm:pt-1">
-        <div className="flex items-baseline flex-wrap gap-x-2 gap-y-1">
-          <span className="text-[9px] uppercase tracking-[0.22em] text-ink-700/45 font-medium">
-            {String(index + 1).padStart(2, "0")}
-          </span>
-          {activity.time && (
-            <>
-              <span className="text-ink-700/30 text-[9px]" aria-hidden>·</span>
-              <span className="text-[10px] uppercase tracking-[0.22em] text-ink-800 font-semibold">
-                {activity.time}
-              </span>
-            </>
-          )}
-          {activity.tag && (
-            <>
-              <span className="text-ink-700/30 text-[9px]" aria-hidden>·</span>
-              <span className="text-[9px] uppercase tracking-[0.22em] text-terracotta-600/85 font-medium">
-                {t(TAG_KEY[activity.tag] ?? "tag_view")}
-              </span>
-            </>
-          )}
-          {optional && (
-            <span
-              className="ms-1 inline-flex items-center px-1.5 py-[2px] rounded-full bg-olive-500/12 text-olive-700 text-[8.5px] uppercase tracking-[0.22em] font-semibold"
-              title={t("optional_aria")}
-              aria-label={t("optional_aria")}
-            >
-              {t("optional_label")}
-            </span>
-          )}
-        </div>
+      <div className="min-w-0 mt-2.5">
         <h4
-          className={`mt-1 font-serif text-[18px] sm:text-[24px] leading-snug ${
+          className={`font-serif text-[18px] sm:text-[22px] leading-snug ${
             optional ? "text-ink-800/90" : "text-ink-900"
           }`}
         >
           {activity.title}
         </h4>
         {activity.description && (
-          <p className="mt-1.5 sm:mt-2 text-[14px] sm:text-[15.5px] text-ink-700/85 leading-relaxed">
+          <p className="mt-1.5 text-[14px] sm:text-[15px] text-ink-700/85 leading-relaxed">
             {activity.description}
           </p>
         )}
@@ -1166,18 +1170,15 @@ function RideConnector({
   const t = useT();
   return (
     <li
-      className="grid grid-cols-[40px_1fr] sm:grid-cols-[64px_1fr] gap-3 sm:gap-6 -mt-1 sm:-mt-2"
+      className="flex items-start gap-2.5 ps-4 sm:ps-5 py-0.5"
       aria-hidden={false}
     >
-      {/* Timeline rail with a small Car icon, mirroring the activity
-          column to the left. The dashed border continues the timeline. */}
-      <div className="relative flex justify-center">
-        <span className="absolute inset-x-0 top-0 bottom-0 mx-auto w-px border-l border-dashed border-cream-300/90" />
-        <span className="relative z-10 mt-1 inline-flex items-center justify-center w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-cream-100 ring-1 ring-cream-300/80 text-olive-700">
-          <Car size={11} strokeWidth={1.9} />
-        </span>
-      </div>
-      <div className="min-w-0 ps-1 pt-0.5">
+      {/* Small car marker threading the gap between two activity cards,
+          so the drive reads as a connector rather than a stop. */}
+      <span className="shrink-0 mt-0.5 inline-flex items-center justify-center w-6 h-6 rounded-full bg-cream-100 ring-1 ring-cream-300/80 text-olive-700">
+        <Car size={11} strokeWidth={1.9} />
+      </span>
+      <div className="min-w-0 pt-0.5">
         <div className="inline-flex items-baseline flex-wrap gap-x-2 gap-y-0.5">
           <span className="text-[10px] uppercase tracking-[0.22em] text-olive-700/85 font-medium">
             {departAt ? `${t("depart_at")} ${departAt} ${duration ? "· " + t("ride_to_next") : ""}` : t("ride_to_next")}
@@ -1203,11 +1204,12 @@ function RideConnector({
 function RestaurantsForDay({ restaurants }: { restaurants: Service[] }) {
   const t = useT();
   return (
-    <section>
-      <SectionLabel eyebrow={t("restaurants_eyebrow")} title={t("restaurants_title")} />
-      <p className="mt-2 mb-5 sm:mb-6 font-serif italic text-ink-700/70 text-[14.5px] sm:text-base">
-        {t("restaurants_kicker")}
-      </p>
+    <CollapsibleSection
+      icon={Utensils}
+      eyebrow={t("restaurants_eyebrow")}
+      title={t("restaurants_title")}
+      subtitle={t("restaurants_kicker")}
+    >
       <ul className="grid sm:grid-cols-2 gap-2.5">
         {restaurants.map(r => (
           <li
@@ -1243,7 +1245,7 @@ function RestaurantsForDay({ restaurants }: { restaurants: Service[] }) {
           </li>
         ))}
       </ul>
-    </section>
+    </CollapsibleSection>
   );
 }
 
@@ -1259,10 +1261,9 @@ function DrinkOfTheDay({ drink }: { drink: DayDrink }) {
   const Icon = style.Icon;
 
   return (
-    <section>
-      <article
-        className={`relative overflow-hidden rounded-3xl bg-gradient-to-br ${style.gradient} ring-1 ring-cream-300/70 shadow-[0_18px_50px_-30px_rgba(151,109,76,0.45)]`}
-      >
+    <article
+      className={`relative overflow-hidden rounded-3xl bg-gradient-to-br ${style.gradient} ring-1 ring-cream-300/70 shadow-[0_18px_50px_-30px_rgba(151,109,76,0.45)]`}
+    >
         {/* Oversized decorative glass icon in the corner, mirroring the
             quote glyph on the German word card. RTL flips it so it
             still reads as a "watermark" on the trailing edge. */}
@@ -1308,8 +1309,7 @@ function DrinkOfTheDay({ drink }: { drink: DayDrink }) {
               </p>
             </div>
           )}
-        </div>
-      </article>
-    </section>
+      </div>
+    </article>
   );
 }
