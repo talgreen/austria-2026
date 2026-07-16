@@ -94,7 +94,7 @@ export const itinerary: Day[] = [
         tag: "culture"
       },
       {
-        time: "Alternative",
+        alternativeFor: "morning",
         title: "Kletterpark Anif or Mondsee (if you'd rather)",
         description: "Swap the theme park for the Anif forest ropes-and-swim park (20 min) or a slower Mondsee lake day, depending on the kids' mood.",
         attractionId: "kletterpark-waldbad-anif",
@@ -201,9 +201,9 @@ export const itinerary: Day[] = [
         tag: "water"
       },
       {
-        time: "Alternative",
+        alternativeFor: "day",
         title: "Fichtenschloss on the Rosenalm (backup)",
-        description: "A mountain-top wooden adventure castle reached by the Rosenalm cable car, with a buggy-friendly loop to a little lake — a great rainy-or-restless plan B.",
+        description: "A mountain-top wooden adventure castle reached by the Rosenalm cable car, with a buggy-friendly loop to a little lake — a great rainy-or-restless plan B for any part of the day.",
         attractionId: "fichtenschloss-rosenalm",
         tag: "family",
         optional: true
@@ -714,9 +714,9 @@ export const itinerary: Day[] = [
         tag: "cave"
       },
       {
-        time: "Alternative",
+        alternativeFor: "afternoon",
         title: "Eisriesenwelt ice cave",
-        description: "The world's largest ice cave, high above Werfen by cable car — spectacular but strenuous and freezing. Best for the kids who can handle stairs and cold.",
+        description: "The world's largest ice cave, high above Werfen by cable car — spectacular but strenuous and freezing. Best for the kids who can handle stairs and cold. Swap it in for the afternoon salt mine.",
         attractionId: "eisriesenwelt-werfen",
         tag: "cave",
         optional: true

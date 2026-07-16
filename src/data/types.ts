@@ -147,6 +147,19 @@ export interface DayActivity {
    *  Set explicitly to `false` to opt a specific activity OUT of the
    *  auto-rule (e.g. a day's must-do headline stop is always part of the plan). */
   optional?: boolean;
+  /** Marks this activity as an *alternative* (a swap-in) rather than part
+   *  of the day's main plan, and says which slot it can replace:
+   *    - "morning" / "afternoon" / "evening" — it stands in for that
+   *      specific slot's headline activity ("do this instead of the
+   *      morning stop").
+   *    - "day" — a general whole-day plan-B (the "alternatives bank") when
+   *      there's no clear single slot it swaps into (e.g. a rainy-day
+   *      backup that could fill any part of the day).
+   *  The chapter detail page renders a distinct "Alternative · <slot>"
+   *  badge for these instead of the normal time chip, so the family can
+   *  tell at a glance it's an option, not a scheduled stop. An activity
+   *  with `alternativeFor` set is implicitly optional. */
+  alternativeFor?: "morning" | "afternoon" | "evening" | "day";
 }
 
 /** A single item on the per-day pack list. `item` is the description that

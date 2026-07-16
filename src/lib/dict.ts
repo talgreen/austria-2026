@@ -569,6 +569,19 @@ export const DICT = {
     en: "Optional — skip if you're tired",
     he: "לבחירה — אפשר לדלג אם עייפים"
   },
+  /* Alternative (swap-in) activities. The badge names the slot the
+     alternative can replace; "day" is the whole-day plan-B bank. */
+  alt_for_morning: { en: "Alternative · morning", he: "חלופה · לבוקר" },
+  alt_for_afternoon: {
+    en: "Alternative · afternoon",
+    he: "חלופה · לאחר הצהריים"
+  },
+  alt_for_evening: { en: "Alternative · evening", he: "חלופה · לערב" },
+  alt_for_day: { en: "Alternative · any time today", he: "חלופה · לכל היום" },
+  alt_aria: {
+    en: "Alternative option — swap it in instead of the day's plan",
+    he: "אפשרות חלופית — אפשר לשלב במקום התוכנית של היום"
+  },
 
   /* ---------- Timeline & stops ---------- */
   leave_by: { en: "Leave by", he: "יציאה עד" },
