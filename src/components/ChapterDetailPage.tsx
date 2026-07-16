@@ -26,7 +26,8 @@ import {
   Martini,
   Coffee,
   GlassWater,
-  Clock
+  Clock,
+  ArrowLeftRight
 } from "lucide-react";
 import { itinerary } from "../data/itinerary";
 import { getAttraction } from "../data/attractions";
@@ -75,6 +76,15 @@ const TAG_KEY: Record<string, DictKey> = {
   view: "tag_view",
   cave: "tag_cave",
   village: "tag_village"
+};
+
+/** Badge label for an alternative activity, keyed by the slot it can
+ *  swap into. "day" is the whole-day plan-B (the alternatives bank). */
+const ALT_KEY: Record<NonNullable<DayActivity["alternativeFor"]>, DictKey> = {
+  morning: "alt_for_morning",
+  afternoon: "alt_for_afternoon",
+  evening: "alt_for_evening",
+  day: "alt_for_day"
 };
 
 const REGION_KEY: Record<string, DictKey> = {
@@ -993,18 +1003,31 @@ function ActivityRow({
             strokeWidth: 1.7
           })}
         </span>
-        {activity.time && (
+        {/* Alternative activities get a dedicated "swap-in" badge naming
+            the slot they replace; everything else shows the time chip. */}
+        {activity.alternativeFor ? (
+          <span
+            className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-terracotta-500/12 text-terracotta-700 text-[12px] font-bold ring-1 ring-terracotta-500/25"
+            title={t("alt_aria")}
+            aria-label={t("alt_aria")}
+          >
+            <ArrowLeftRight size={11} strokeWidth={2} />
+            {t(ALT_KEY[activity.alternativeFor])}
+          </span>
+        ) : activity.time ? (
           <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-terracotta-500/10 text-terracotta-700 text-[12px] font-bold tabular-nums">
             <Clock size={11} strokeWidth={2} />
             {activity.time}
           </span>
-        )}
+        ) : null}
         {activity.tag && (
           <span className="text-[9px] uppercase tracking-[0.22em] text-ink-700/50 font-medium">
             {t(TAG_KEY[activity.tag] ?? "tag_view")}
           </span>
         )}
-        {optional && (
+        {/* An alternative is already flagged by its own badge — don't also
+            stack the generic "Optional" pill on it. */}
+        {optional && !activity.alternativeFor && (
           <span
             className="inline-flex items-center px-1.5 py-[2px] rounded-full bg-olive-500/12 text-olive-700 text-[8.5px] uppercase tracking-[0.22em] font-semibold"
             title={t("optional_aria")}
