@@ -87,6 +87,67 @@ const ALT_KEY: Record<NonNullable<DayActivity["alternativeFor"]>, DictKey> = {
   day: "alt_for_day"
 };
 
+/** Ribbon label for the distinct "swap-in" alternative panel — phrased as
+ *  "Instead of the <slot>" so it reads as an OR against the plan, not a
+ *  next step. "day" is the whole-day plan-B bank. */
+const SWAP_KEY: Record<NonNullable<DayActivity["alternativeFor"]>, DictKey> = {
+  morning: "alt_swap_morning",
+  afternoon: "alt_swap_afternoon",
+  evening: "alt_swap_evening",
+  day: "alt_swap_day"
+};
+
+/** Derive the time slot a primary (non-alternative) activity occupies from
+ *  its canonical English `time` string ("Morning" / "Afternoon" / "Evening").
+ *  Used to pair a slot alternative with the primary it swaps in for. Numeric
+ *  or unlabeled times return undefined (the alternative then falls back to
+ *  the end-of-plan backup bank). */
+function slotOfTime(time?: string): "morning" | "afternoon" | "evening" | undefined {
+  if (!time) return undefined;
+  const s = time.toLowerCase();
+  if (s.includes("morning")) return "morning";
+  if (s.includes("afternoon")) return "afternoon";
+  if (s.includes("evening") || s.includes("night")) return "evening";
+  return undefined;
+}
+
+/** A primary plan activity plus the alternatives (by array index) that swap
+ *  in for its slot. `dayAlts` collects whole-day backups (and any slot
+ *  alternative with no matching primary) for the end-of-plan bank. */
+interface PlanModel {
+  nodes: { primary: number; alts: number[] }[];
+  dayAlts: number[];
+}
+
+/** Build the plan render-model from the *canonical* day (English `time`
+ *  labels, so slot matching is stable across languages — index order is
+ *  preserved by localization, so the same indices address `localDay`).
+ *
+ *  Alternatives are lifted out of the flat sequence and attached to the
+ *  primary activity of the slot they replace, so a "morning" swap renders
+ *  under the morning stop rather than wherever it happened to sit in the
+ *  data. */
+function buildPlan(day: Day): PlanModel {
+  const acts = day.activities;
+  const nodes: { primary: number; alts: number[] }[] = [];
+  const nodeForSlot = new Map<string, number>();
+  acts.forEach((act, i) => {
+    if (act.alternativeFor) return;
+    nodes.push({ primary: i, alts: [] });
+    const slot = slotOfTime(act.time);
+    if (slot && !nodeForSlot.has(slot)) nodeForSlot.set(slot, nodes.length - 1);
+  });
+  const dayAlts: number[] = [];
+  acts.forEach((act, i) => {
+    if (!act.alternativeFor) return;
+    const target =
+      act.alternativeFor !== "day" ? nodeForSlot.get(act.alternativeFor) : undefined;
+    if (target !== undefined) nodes[target].alts.push(i);
+    else dayAlts.push(i);
+  });
+  return { nodes, dayAlts };
+}
+
 const REGION_KEY: Record<string, DictKey> = {
   north: "region_north_long",
   south: "region_south_long",
@@ -375,6 +436,10 @@ function ChapterDetailContent({ day }: { day: Day }) {
   const localizeTip = useLocalizeTip();
 
   const localDay = localizeDay(day);
+  // Render-model for the plan: alternatives lifted out of the flat activity
+  // list and attached to the slot they swap in for (built from the canonical
+  // day so slot matching is language-stable; indices address `localDay`).
+  const plan = useMemo(() => buildPlan(day), [day]);
   const tripState = getTripState();
   const isToday =
     tripState.phase === "during" && tripState.today.dayNumber === day.dayNumber;
@@ -643,34 +708,70 @@ function ChapterDetailContent({ day }: { day: Day }) {
           <section className="mt-6 sm:mt-8">
             <SectionLabel eyebrow={t("todays_plan")} title={t("hour_by_hour")} accentClass={a.text} />
             <ol className="mt-5 sm:mt-6 space-y-3">
-              {localDay.activities.map((act, i, arr) => (
-                <Fragment key={i}>
-                  {i === 0 && localDay.rideToFirst && localDay.departureTime && (
-                    <RideConnector
-                      departAt={localDay.departureTime}
-                      duration={localDay.rideToFirst.duration}
-                      note={localDay.rideToFirst.note}
+              {plan.nodes.map((node, ni) => {
+                const act = localDay.activities[node.primary];
+                return (
+                  <Fragment key={node.primary}>
+                    {ni === 0 && localDay.rideToFirst && localDay.departureTime && (
+                      <RideConnector
+                        departAt={localDay.departureTime}
+                        duration={localDay.rideToFirst.duration}
+                        note={localDay.rideToFirst.note}
+                      />
+                    )}
+                    <ActivityRow
+                      activity={act}
+                      isToday={isToday}
+                      optional={isActivityOptional(act, node.primary, localDay)}
+                      accentText={a.text}
+                      alternatives={node.alts.map(idx => localDay.activities[idx])}
                     />
-                  )}
-                  <ActivityRow
-                    activity={act}
-                    isToday={isToday}
-                    optional={isActivityOptional(act, i, localDay)}
-                    accentText={a.text}
-                  />
-                  {/* Inline ride connector — rendered only when this stop
-                      has a meaningful drive to the next one. Slips into
-                      the ordered list between two activity rows. */}
-                  {act.rideToNext && i < arr.length - 1 && (
-                    <RideConnector
-                      duration={act.rideToNext.duration ?? ""}
-                      note={act.rideToNext.note}
-                      departAt={act.rideToNext.departAt}
-                    />
-                  )}
-                </Fragment>
-              ))}
+                    {/* Inline ride connector — rendered only when this stop
+                        has a meaningful drive to the next one. Sits after the
+                        whole card (incl. any nested swap-in) so the drive
+                        connects to the next real stop, not the alternative. */}
+                    {act.rideToNext && ni < plan.nodes.length - 1 && (
+                      <RideConnector
+                        duration={act.rideToNext.duration ?? ""}
+                        note={act.rideToNext.note}
+                        departAt={act.rideToNext.departAt}
+                      />
+                    )}
+                  </Fragment>
+                );
+              })}
             </ol>
+
+            {/* Whole-day backups (and any slot alternative with no matching
+                stop) collect into one clearly-labeled bank below the plan —
+                never mistaken for a scheduled step. */}
+            {plan.dayAlts.length > 0 && (
+              <div className="mt-6 sm:mt-8">
+                <div className="flex items-center gap-2.5">
+                  <span className="shrink-0 w-9 h-9 rounded-full bg-terracotta-500/12 text-terracotta-700 flex items-center justify-center ring-1 ring-terracotta-500/25">
+                    <ArrowLeftRight size={16} strokeWidth={2} />
+                  </span>
+                  <div>
+                    <div className="font-serif text-[17px] sm:text-[19px] text-ink-900 leading-tight">
+                      {t("alt_bank_title")}
+                    </div>
+                    <div className="text-[12px] text-ink-700/65 leading-snug">
+                      {t("alt_bank_subtitle")}
+                    </div>
+                  </div>
+                </div>
+                <div className="mt-3 space-y-3">
+                  {plan.dayAlts.map(idx => (
+                    <AlternativeSwap
+                      key={idx}
+                      activity={localDay.activities[idx]}
+                      isToday={isToday}
+                      accentText={a.text}
+                    />
+                  ))}
+                </div>
+              </div>
+            )}
 
             {localDay.driveNotes && (
               <div className="mt-8 sm:mt-10 pt-5 sm:pt-6 border-t border-cream-300/60 flex items-start gap-3">
@@ -962,12 +1063,16 @@ function ActivityRow({
   activity,
   isToday,
   optional,
-  accentText = "text-terracotta-600"
+  accentText = "text-terracotta-600",
+  alternatives
 }: {
   activity: DayActivity;
   isToday: boolean;
   optional: boolean;
   accentText?: string;
+  /** Slot alternatives that swap in for this activity, rendered as nested
+   *  swap-in panels beneath the card. */
+  alternatives?: DayActivity[];
 }) {
   const t = useT();
   const localizePoi = useLocalizePoi();
@@ -1087,91 +1192,233 @@ function ActivityRow({
               transition={{ duration: 0.35, ease: "easeOut" }}
               className="relative z-40 overflow-hidden"
             >
-              <div className="mt-4 rounded-2xl bg-cream-100/80 ring-1 ring-cream-300/70 overflow-hidden grid sm:grid-cols-[200px_1fr] shadow-lg">
-                <div className="relative aspect-[4/3] sm:aspect-auto bg-cream-200 overflow-hidden">
-                  <PoiImage
-                    src={att.image}
-                    alt={att.name}
-                    region={att.region}
-                    category={att.category}
-                    tags={att.tags}
-                  />
-                  {/* Credit omitted on this small thumb — shown on the
-                      hero carousel above where the photo dominates. */}
-                </div>
-                <div className="p-4 sm:p-5 flex flex-col">
-                  <div className="flex items-center gap-2 flex-wrap">
-                    <div className="text-[10px] uppercase tracking-[0.22em] text-ink-700/55 font-medium">
-                      {t("about_this_place")}
-                    </div>
-                    {att.difficulty && (
-                      <div
-                        className={`inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[10px] uppercase tracking-[0.18em] font-medium ${DIFFICULTY_DETAIL_STYLE[att.difficulty].bg} ${DIFFICULTY_DETAIL_STYLE[att.difficulty].text}`}
-                      >
-                        <Activity size={10} strokeWidth={2.2} />
-                        {t(DIFFICULTY_DETAIL_STYLE[att.difficulty].key)}
-                      </div>
-                    )}
-                  </div>
-                  <h5 className="mt-1 font-serif text-lg text-ink-900 leading-tight">
-                    {att.name}
-                  </h5>
-                  <p className="mt-2 text-[13.5px] sm:text-[14.5px] text-ink-700/85 leading-relaxed">
-                    {att.description}
-                  </p>
-                  {/* German-accented narration of the description.
-                      Audio is pre-generated as a static asset, so no
-                      runtime API key or call is needed. */}
-                  <div className="mt-3">
-                    <ListenButton attractionId={att.id} />
-                  </div>
-                  {(att.openingNote || att.bookingNote) && (
-                    <div className="mt-3 text-xs text-terracotta-700 bg-terracotta-500/10 border border-terracotta-500/25 rounded-lg px-3 py-2 leading-snug">
-                      {att.openingNote || att.bookingNote}
-                    </div>
-                  )}
-                  {att.tips && att.tips.length > 0 && (
-                    <div className="mt-4 pt-3 border-t border-cream-300/70">
-                      <div className="flex items-center gap-1.5 text-[10px] uppercase tracking-[0.22em] text-olive-700 font-medium">
-                        <Lightbulb size={11} strokeWidth={1.9} />
-                        {t("insider_tips_label")}
-                      </div>
-                      <ul className="mt-2 space-y-1">
-                        {att.tips.map((tip, i) => (
-                          <li
-                            key={i}
-                            className="text-[12.5px] leading-snug text-ink-700/85 flex gap-2"
-                          >
-                            <span
-                              className="shrink-0 mt-[6px] w-1 h-1 rounded-full bg-terracotta-500/70"
-                              aria-hidden
-                            />
-                            <span>{tip}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  )}
-                  <div className="mt-auto pt-4 flex flex-wrap gap-x-4 gap-y-2">
-                    {att.website && (
-                      <a
-                        href={att.website}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="icon-link"
-                      >
-                        <ExternalLink size={12} /> {t("website")}
-                      </a>
-                    )}
-                    <NavigateLinks name={att.name} coords={att.coords} address={att.address} />
-                  </div>
-                </div>
-              </div>
+              <PlaceDetailCard att={att} />
             </motion.div>
           )}
         </AnimatePresence>
       </div>
+
+      {/* Swap-ins for this slot branch off the card as clearly-subordinate
+          panels — a plan step and its alternatives never look alike. */}
+      {alternatives && alternatives.length > 0 && (
+        <div className="mt-4 space-y-3">
+          {alternatives.map((alt, i) => (
+            <AlternativeSwap
+              key={i}
+              activity={alt}
+              isToday={isToday}
+              accentText={accentText}
+              connected
+            />
+          ))}
+        </div>
+      )}
     </li>
+  );
+}
+
+/* ---------- Shared "about this place" detail card ---------- */
+
+/* The expandable place panel used by both a plan card and an alternative
+ * swap-in — photo + description + narration + tips + links. Extracted so the
+ * two entry points stay visually and behaviorally identical. `att` must be
+ * localized already. */
+function PlaceDetailCard({ att }: { att: POI }) {
+  const t = useT();
+  return (
+    <div className="mt-4 rounded-2xl bg-cream-100/80 ring-1 ring-cream-300/70 overflow-hidden grid sm:grid-cols-[200px_1fr] shadow-lg">
+      <div className="relative aspect-[4/3] sm:aspect-auto bg-cream-200 overflow-hidden">
+        <PoiImage
+          src={att.image}
+          alt={att.name}
+          region={att.region}
+          category={att.category}
+          tags={att.tags}
+        />
+        {/* Credit omitted on this small thumb — shown on the
+            hero carousel above where the photo dominates. */}
+      </div>
+      <div className="p-4 sm:p-5 flex flex-col">
+        <div className="flex items-center gap-2 flex-wrap">
+          <div className="text-[10px] uppercase tracking-[0.22em] text-ink-700/55 font-medium">
+            {t("about_this_place")}
+          </div>
+          {att.difficulty && (
+            <div
+              className={`inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[10px] uppercase tracking-[0.18em] font-medium ${DIFFICULTY_DETAIL_STYLE[att.difficulty].bg} ${DIFFICULTY_DETAIL_STYLE[att.difficulty].text}`}
+            >
+              <Activity size={10} strokeWidth={2.2} />
+              {t(DIFFICULTY_DETAIL_STYLE[att.difficulty].key)}
+            </div>
+          )}
+        </div>
+        <h5 className="mt-1 font-serif text-lg text-ink-900 leading-tight">
+          {att.name}
+        </h5>
+        <p className="mt-2 text-[13.5px] sm:text-[14.5px] text-ink-700/85 leading-relaxed">
+          {att.description}
+        </p>
+        {/* German-accented narration of the description.
+            Audio is pre-generated as a static asset, so no
+            runtime API key or call is needed. */}
+        <div className="mt-3">
+          <ListenButton attractionId={att.id} />
+        </div>
+        {(att.openingNote || att.bookingNote) && (
+          <div className="mt-3 text-xs text-terracotta-700 bg-terracotta-500/10 border border-terracotta-500/25 rounded-lg px-3 py-2 leading-snug">
+            {att.openingNote || att.bookingNote}
+          </div>
+        )}
+        {att.tips && att.tips.length > 0 && (
+          <div className="mt-4 pt-3 border-t border-cream-300/70">
+            <div className="flex items-center gap-1.5 text-[10px] uppercase tracking-[0.22em] text-olive-700 font-medium">
+              <Lightbulb size={11} strokeWidth={1.9} />
+              {t("insider_tips_label")}
+            </div>
+            <ul className="mt-2 space-y-1">
+              {att.tips.map((tip, i) => (
+                <li
+                  key={i}
+                  className="text-[12.5px] leading-snug text-ink-700/85 flex gap-2"
+                >
+                  <span
+                    className="shrink-0 mt-[6px] w-1 h-1 rounded-full bg-terracotta-500/70"
+                    aria-hidden
+                  />
+                  <span>{tip}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+        <div className="mt-auto pt-4 flex flex-wrap gap-x-4 gap-y-2">
+          {att.website && (
+            <a
+              href={att.website}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="icon-link"
+            >
+              <ExternalLink size={12} /> {t("website")}
+            </a>
+          )}
+          <NavigateLinks name={att.name} coords={att.coords} address={att.address} />
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ---------- Alternative swap-in panel ---------- */
+
+/* A deliberately different-looking card for an *alternative* activity: a
+ * dashed terracotta outline over a warm tinted wash, led by a loud "⇄
+ * Instead of the morning" ribbon. Nothing about it reads as a scheduled
+ * step — it's visibly a branch off the plan. `connected` draws a short
+ * dashed tether up to the plan card it swaps in for. */
+function AlternativeSwap({
+  activity,
+  isToday,
+  accentText = "text-terracotta-600",
+  connected = false
+}: {
+  activity: DayActivity;
+  isToday: boolean;
+  accentText?: string;
+  connected?: boolean;
+}) {
+  const t = useT();
+  const localizePoi = useLocalizePoi();
+  const rawAtt = activity.attractionId ? getAttraction(activity.attractionId) : undefined;
+  const att = rawAtt ? localizePoi(rawAtt) : undefined;
+  const [open, setOpen] = useState(false);
+  const slot = activity.alternativeFor ?? "day";
+
+  return (
+    <div className="relative ps-3 sm:ps-4">
+      {/* "or" tether — a short dashed stub linking the panel up to the plan
+          card it swaps in for, with a little pill sitting on it. */}
+      {connected && (
+        <>
+          <span
+            aria-hidden
+            className="absolute -top-3 start-0 h-3 border-s-2 border-dashed border-terracotta-500/45"
+          />
+          <span className="absolute -top-[11px] start-2.5 px-1.5 rounded-full bg-cream-50 text-terracotta-700 text-[9px] font-bold uppercase tracking-[0.2em] ring-1 ring-terracotta-500/25">
+            {t("alt_or")}
+          </span>
+        </>
+      )}
+      <div
+        id={activity.attractionId ? `activity-${activity.attractionId}` : undefined}
+        className={`relative rounded-2xl border-2 border-dashed border-terracotta-500/40 bg-gradient-to-br from-terracotta-500/10 to-gold-400/10 p-4 sm:p-5 scroll-mt-24 ${
+          isToday ? "ring-1 ring-terracotta-500/20" : ""
+        }`}
+      >
+        {/* The loud swap ribbon — the "this is an OR, not a next step"
+            signal, riding the top edge of the panel. */}
+        <div className="flex items-center gap-2 flex-wrap">
+          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-terracotta-500 text-cream-50 text-[11px] font-bold uppercase tracking-[0.14em] shadow-sm">
+            <ArrowLeftRight size={12} strokeWidth={2.4} />
+            {t(SWAP_KEY[slot])}
+          </span>
+          {activity.tag && (
+            <span className="text-[9px] uppercase tracking-[0.22em] text-terracotta-700/70 font-semibold">
+              {t(TAG_KEY[activity.tag] ?? "tag_view")}
+            </span>
+          )}
+        </div>
+
+        <div className="min-w-0 mt-3">
+          <h4 className="font-serif text-[17px] sm:text-[20px] leading-snug text-ink-900">
+            {activity.title}
+          </h4>
+          {activity.description && (
+            <p className="mt-1.5 text-[13.5px] sm:text-[14.5px] text-ink-700/85 leading-relaxed">
+              {activity.description}
+            </p>
+          )}
+
+          {(att?.website || (!att && activity.link)) && (
+            <a
+              href={att?.website ?? activity.link}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={`mt-2 inline-flex items-center gap-1 text-[11px] uppercase tracking-[0.18em] font-medium ${accentText} hover:underline transition-colors`}
+            >
+              <ExternalLink size={11} strokeWidth={1.9} />
+              {t("official_site")} ↗
+            </a>
+          )}
+
+          {att && (
+            <button
+              onClick={() => setOpen(o => !o)}
+              className={`mt-3 inline-flex items-center gap-1.5 text-[11px] uppercase tracking-[0.18em] font-medium ${accentText} hover:underline transition-colors`}
+              aria-expanded={open}
+            >
+              {open ? <X size={12} /> : <Plus size={12} />}
+              {open ? t("hide_details") : t("more_about_place")}
+            </button>
+          )}
+
+          <AnimatePresence initial={false}>
+            {open && att && (
+              <motion.div
+                key="details"
+                initial={{ height: 0, opacity: 0 }}
+                animate={{ height: "auto", opacity: 1 }}
+                exit={{ height: 0, opacity: 0 }}
+                transition={{ duration: 0.35, ease: "easeOut" }}
+                className="relative z-40 overflow-hidden"
+              >
+                <PlaceDetailCard att={att} />
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
+      </div>
+    </div>
   );
 }
 

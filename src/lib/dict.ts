@@ -582,6 +582,24 @@ export const DICT = {
     en: "Alternative option — swap it in instead of the day's plan",
     he: "אפשרות חלופית — אפשר לשלב במקום התוכנית של היום"
   },
+  /* Loud "swap-in" ribbon shown on the distinct alternative panel — names
+     the slot this option replaces so it reads as an OR, not a next step. */
+  alt_swap_morning: { en: "Instead of the morning", he: "במקום הבוקר" },
+  alt_swap_afternoon: {
+    en: "Instead of the afternoon",
+    he: "במקום אחר הצהריים"
+  },
+  alt_swap_evening: { en: "Instead of the evening", he: "במקום הערב" },
+  alt_swap_day: { en: "Plan B — any time today", he: "תוכנית ב׳ — לכל שעה ביום" },
+  /* Small "or" tab that sits on the connector between a plan card and its
+     swap-in panel. */
+  alt_or: { en: "or", he: "או" },
+  /* Heading for the end-of-plan bank of whole-day backups. */
+  alt_bank_title: { en: "Backup plans", he: "תוכניות גיבוי" },
+  alt_bank_subtitle: {
+    en: "Swap in for any part of the day",
+    he: "אפשר לשלב בכל חלק מהיום"
+  },
 
   /* ---------- Timeline & stops ---------- */
   leave_by: { en: "Leave by", he: "יציאה עד" },
