@@ -992,7 +992,8 @@ function SetupView({
         value={draft}
         onChange={e => setDraft(e.target.value)}
         placeholder={t("gem_key_placeholder")}
-        className="px-4 py-3 rounded-xl border border-cream-300 bg-cream-100 text-ink-900 text-[14px] focus:outline-none focus:ring-2 focus:ring-terracotta-500/40"
+        // 16px avoids the iOS Safari focus auto-zoom (see chat input note).
+        className="px-4 py-3 rounded-xl border border-cream-300 bg-cream-100 text-ink-900 text-[16px] focus:outline-none focus:ring-2 focus:ring-terracotta-500/40"
         spellCheck={false}
         autoComplete="off"
       />
@@ -1217,7 +1218,10 @@ function ChatView({
             }
             disabled={isRecording || status === "transcribing"}
             dir="auto"
-            className="flex-1 min-w-0 px-3 py-2.5 rounded-full border border-cream-300 bg-cream-100 text-[14px] focus:outline-none focus:ring-2 focus:ring-terracotta-500/40 disabled:opacity-60 disabled:cursor-not-allowed placeholder:text-ink-700/50"
+            // Font must stay >= 16px: iOS Safari auto-zooms into any focused
+            // input with a smaller font and never zooms back out, which traps
+            // the user on a zoomed-in view they can't escape after typing.
+            className="flex-1 min-w-0 px-3 py-2.5 rounded-full border border-cream-300 bg-cream-100 text-[16px] focus:outline-none focus:ring-2 focus:ring-terracotta-500/40 disabled:opacity-60 disabled:cursor-not-allowed placeholder:text-ink-700/50"
             inputMode="text"
           />
           <button
