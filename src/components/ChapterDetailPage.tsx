@@ -59,6 +59,7 @@ import PhotoCredit from "./PhotoCredit";
 import MiniMap from "./MiniMap";
 import ListenButton from "./ListenButton";
 import GermanWordCarousel from "./GermanWordCarousel";
+import DayWeatherBadge from "./DayWeatherBadge";
 import { FunPackBody } from "./DayFunPack";
 import { getKidsPack } from "../data/kids";
 import CollapsibleSection from "./CollapsibleSection";
@@ -661,6 +662,7 @@ function ChapterDetailContent({ day }: { day: Day }) {
                     </span>
                   </>
                 )}
+                <DayWeatherBadge day={day} size={12} />
               </div>
 
               <h1 className="mt-2 sm:mt-3 font-serif text-3xl sm:text-6xl leading-[1.05] tracking-tight max-w-3xl drop-shadow-[0_2px_10px_rgba(0,0,0,0.5)]">
