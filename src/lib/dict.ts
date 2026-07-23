@@ -450,6 +450,10 @@ export const DICT = {
   weather_error: { en: "Weather unavailable", he: "מזג אוויר לא זמין" },
   weather_high_low: { en: "H {high}° / L {low}°", he: "מקס׳ {high}° / מינ׳ {low}°" },
   weather_now: { en: "Now {temp}°", he: "כעת {temp}°" },
+  weather_day_aria: {
+    en: "Forecast: high {high}°, low {low}°",
+    he: "תחזית: מקס׳ {high}°, מינ׳ {low}°"
+  },
 
   /* ---------- Difficulty ---------- */
   difficulty_label: { en: "Difficulty", he: "רמת קושי" },

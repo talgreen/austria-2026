@@ -20,6 +20,7 @@ import { activityIcon } from "../lib/activityIcon";
 import { useLang } from "../lib/i18n";
 import PoiImage from "./PoiImage";
 import PhotoCredit from "./PhotoCredit";
+import DayWeatherBadge from "./DayWeatherBadge";
 
 const ROMAN = ["", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X"];
 
@@ -180,6 +181,7 @@ export default function DayCard({ day }: { day: Day }) {
                 </span>
               </>
             )}
+            <DayWeatherBadge day={day} />
           </div>
           <h3 className="mt-1 sm:mt-2 font-serif text-xl sm:text-5xl leading-[1.05] tracking-tight max-w-2xl drop-shadow-[0_2px_10px_rgba(0,0,0,0.5)]">
             {day.title}
