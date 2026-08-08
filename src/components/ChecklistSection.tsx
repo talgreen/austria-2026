@@ -34,7 +34,7 @@ function ChecklistList({
                 type="checkbox"
                 checked={isDone}
                 onChange={() => onToggle(item.id)}
-                className="mt-1 w-4 h-4 accent-rust-600 cursor-pointer"
+                className="mt-1 w-4 h-4 accent-terracotta-600 cursor-pointer"
               />
               <div className="flex-1 min-w-0">
                 <div className="flex items-start gap-2 flex-wrap">
@@ -105,7 +105,7 @@ export default function ChecklistSection() {
             className={`px-4 py-2.5 rounded-full text-sm font-medium transition-all flex items-center gap-2 whitespace-nowrap min-h-11 ${
               tab === "booking"
                 ? "bg-terracotta-500 text-cream-50"
-                : "bg-cream-50 border border-cream-300 text-ink-800 hover:border-terracotta-500/40"
+                : "bg-cream-100 text-ink-800 hover:bg-cream-200"
             }`}
           >
             <ClipboardCheck size={14} />
@@ -119,7 +119,7 @@ export default function ChecklistSection() {
             className={`px-4 py-2.5 rounded-full text-sm font-medium transition-all flex items-center gap-2 whitespace-nowrap min-h-11 ${
               tab === "packing"
                 ? "bg-terracotta-500 text-cream-50"
-                : "bg-cream-50 border border-cream-300 text-ink-800 hover:border-terracotta-500/40"
+                : "bg-cream-100 text-ink-800 hover:bg-cream-200"
             }`}
           >
             <Briefcase size={14} />
@@ -152,7 +152,7 @@ export default function ChecklistSection() {
               stroke="currentColor"
               strokeWidth="3"
               strokeLinecap="round"
-              className="text-rust-600 transition-[stroke-dasharray] duration-500"
+              className="text-terracotta-600 transition-[stroke-dasharray] duration-500"
               strokeDasharray={`${
                 list.length === 0 ? 0 : (doneCount / list.length) * 100
               } 100`}

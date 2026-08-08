@@ -32,12 +32,12 @@ const CATEGORY_META: Record<
   DishCategory,
   { Icon: typeof Soup; key: DictKey; tone: string }
 > = {
-  pasta: { Icon: Wheat, key: "food_dish_pasta", tone: "text-rust-600" },
-  starter: { Icon: Soup, key: "food_dish_starter", tone: "text-olive-600" },
-  main: { Icon: UtensilsCrossed, key: "food_dish_main", tone: "text-sienna-600" },
-  dessert: { Icon: Cookie, key: "food_dish_dessert", tone: "text-gold-500" },
+  pasta: { Icon: Wheat, key: "food_dish_pasta", tone: "text-ink-700" },
+  starter: { Icon: Soup, key: "food_dish_starter", tone: "text-ink-700" },
+  main: { Icon: UtensilsCrossed, key: "food_dish_main", tone: "text-ink-700" },
+  dessert: { Icon: Cookie, key: "food_dish_dessert", tone: "text-ink-700" },
   drink: { Icon: Coffee, key: "food_dish_drink", tone: "text-ink-700" },
-  snack: { Icon: Cookie, key: "food_dish_snack", tone: "text-gold-500" }
+  snack: { Icon: Cookie, key: "food_dish_snack", tone: "text-ink-700" }
 };
 
 export default function FoodAndWineSection() {
@@ -77,7 +77,7 @@ export default function FoodAndWineSection() {
               className={`px-4 py-2.5 rounded-full text-sm font-medium transition-all whitespace-nowrap min-h-11 ${
                 region === tab.id
                   ? "bg-terracotta-500 text-cream-50"
-                  : "bg-cream-50 border border-cream-300 text-ink-800 hover:border-rust-500/40"
+                  : "bg-cream-100 text-ink-800 hover:bg-cream-200"
               }`}
             >
               {t(tab.key)}
@@ -135,7 +135,7 @@ export default function FoodAndWineSection() {
                           strokeWidth={1.9}
                           className={meta.tone}
                         />
-                        <span className="text-[9px] uppercase tracking-[0.2em] text-ink-800 font-medium">
+                        <span className="text-[11px] font-semibold text-ink-800">
                           {t(meta.key)}
                         </span>
                       </div>
@@ -149,7 +149,7 @@ export default function FoodAndWineSection() {
                         {dish.name}
                       </h4>
                       {dish.germanName && (
-                        <div className="mt-0.5 font-serif italic text-rust-700/85 text-[13.5px]">
+                        <div className="mt-0.5 text-ink-700/75 text-[13.5px]">
                           {dish.germanName}
                         </div>
                       )}
@@ -158,7 +158,7 @@ export default function FoodAndWineSection() {
                       </p>
                       {dish.tryIt && (
                         <div className="mt-3 pt-3 border-t border-cream-300/70 text-[12px] text-ink-700/75">
-                          <span className="text-[10px] uppercase tracking-[0.2em] text-olive-700 font-medium me-1.5">
+                          <span className="text-[11px] font-semibold text-ink-700/60 me-1.5">
                             {t("food_try_it")}
                           </span>
                           {dish.tryIt}
@@ -202,14 +202,14 @@ export default function FoodAndWineSection() {
                     </div>
                     <div className="p-4 sm:p-5 flex flex-col">
                       <div className="flex items-start gap-2.5">
-                        <span className="shrink-0 w-7 h-7 rounded-full bg-rust-500/10 text-rust-700 flex items-center justify-center">
+                        <span className="shrink-0 w-7 h-7 rounded-full bg-cream-50 text-ink-900 flex items-center justify-center">
                           <Grape size={13} strokeWidth={1.8} />
                         </span>
                         <div className="min-w-0 flex-1">
                           <h4 className="font-serif text-[19px] sm:text-[20px] text-ink-900 leading-tight">
                             {w.name}
                           </h4>
-                          <div className="mt-0.5 text-[10px] uppercase tracking-[0.2em] text-olive-700 font-medium">
+                          <div className="mt-0.5 text-[11px] font-semibold text-ink-700/60">
                             {t("food_appellation")} · {w.appellation}
                           </div>
                         </div>
@@ -223,7 +223,7 @@ export default function FoodAndWineSection() {
                         </div>
                       )}
                       {w.bookingNote && (
-                        <div className="mt-3 text-[12px] text-rust-700 bg-rust-500/10 border border-rust-500/25 rounded-lg px-3 py-2 leading-snug flex items-start gap-2">
+                        <div className="mt-3 text-[12px] text-terracotta-700 bg-terracotta-500/10 rounded-lg px-3 py-2 leading-snug flex items-start gap-2">
                           <CalendarCheck
                             size={13}
                             className="mt-[1px] shrink-0"
@@ -269,14 +269,14 @@ function SubSectionHeader({
   Icon: typeof UtensilsCrossed;
   label: string;
   count: number;
-  /** One sub-section may carry the signature mustard badge — sparingly. */
+  /** Kept for API compatibility — both variants now render the flat gray disc. */
   featured?: boolean;
 }) {
   return (
     <div className="flex items-baseline gap-3 border-b border-cream-300/70 pb-3">
       <span
         className={`shrink-0 w-8 h-8 rounded-full flex items-center justify-center self-center ${
-          featured ? "bg-mustard-500 text-ink-900" : "bg-rust-500/10 text-rust-700"
+          featured ? "bg-cream-100 text-ink-900" : "bg-cream-100 text-ink-900"
         }`}
       >
         <Icon size={15} strokeWidth={1.8} />
@@ -284,7 +284,7 @@ function SubSectionHeader({
       <h3 className="font-serif text-[22px] sm:text-2xl text-ink-900 leading-tight">
         {label}
       </h3>
-      <span className="ms-auto text-[11px] uppercase tracking-[0.22em] text-ink-700/55 font-medium">
+      <span className="ms-auto text-[11px] font-semibold text-ink-700/60">
         {count}
       </span>
     </div>

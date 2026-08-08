@@ -28,28 +28,29 @@ const TAG_KEY: Record<string, DictKey> = {
   village: "tag_village"
 };
 
-/** Tone for the difficulty pill — green for easy, amber for moderate,
- *  rust for challenging. */
+/** Tone for the difficulty pill — semantic dots stay colored so the
+ *  levels remain distinguishable; text is ink except challenging,
+ *  which keeps the terracotta severity accent. */
 const DIFFICULTY_STYLE: Record<
   Difficulty,
   { dotClass: string; textClass: string; bgClass: string; key: DictKey }
 > = {
   easy: {
     dotClass: "bg-olive-500",
-    textClass: "text-olive-700",
-    bgClass: "bg-olive-500/12",
+    textClass: "text-ink-700",
+    bgClass: "bg-cream-100",
     key: "difficulty_easy"
   },
   moderate: {
     dotClass: "bg-gold-500",
-    textClass: "text-sienna-600",
-    bgClass: "bg-gold-400/15",
+    textClass: "text-ink-700",
+    bgClass: "bg-cream-100",
     key: "difficulty_moderate"
   },
   challenging: {
-    dotClass: "bg-rust-500",
-    textClass: "text-rust-700",
-    bgClass: "bg-rust-500/12",
+    dotClass: "bg-terracotta-500",
+    textClass: "text-terracotta-600",
+    bgClass: "bg-terracotta-500/10",
     key: "difficulty_challenging"
   }
 };
@@ -68,7 +69,7 @@ export default function AttractionCard({ poi: rawPoi }: { poi: POI }) {
 
   return (
     <article
-      className="group relative overflow-hidden rounded-2xl bg-ink-900 shadow-[0_2px_10px_rgba(58,28,15,0.08)] hover:shadow-[0_18px_40px_rgba(58,28,15,0.18)] transition-shadow duration-500"
+      className="group relative overflow-hidden rounded-[var(--radius-card)] bg-ink-900"
       onMouseLeave={() => setOpen(false)}
     >
       {/* Photo, 4:5 portrait */}
@@ -85,7 +86,7 @@ export default function AttractionCard({ poi: rawPoi }: { poi: POI }) {
       </div>
 
       {/* Top corner: region badge */}
-      <div className="absolute top-3 start-3 flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-ink-900/55 backdrop-blur-md text-cream-50 text-[10px] uppercase tracking-[0.18em] font-medium">
+      <div className="absolute top-3 start-3 flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-ink-900/55 backdrop-blur-md text-cream-50 text-[11px] font-semibold">
         <span
           className={`w-1.5 h-1.5 rounded-full ${
             isSouth ? "bg-gold-500" : "bg-olive-500"
@@ -97,13 +98,13 @@ export default function AttractionCard({ poi: rawPoi }: { poi: POI }) {
       {/* Top corner: first tag + difficulty pill (stacked) */}
       <div className="absolute top-3 end-3 flex flex-col items-end gap-1.5">
         {firstTag && (
-          <div className="px-2.5 py-1 rounded-full bg-cream-50/90 text-ink-900 text-[10px] uppercase tracking-[0.16em] font-medium">
+          <div className="px-2.5 py-1 rounded-full bg-cream-50/90 text-ink-900 text-[11px] font-semibold">
             {t(TAG_KEY[firstTag] ?? "tag_view")}
           </div>
         )}
         {poi.difficulty && (
           <div
-            className={`px-2.5 py-1 rounded-full bg-cream-50/90 ${DIFFICULTY_STYLE[poi.difficulty].textClass} text-[10px] uppercase tracking-[0.16em] font-medium flex items-center gap-1.5`}
+            className={`px-2.5 py-1 rounded-full bg-cream-50/90 ${DIFFICULTY_STYLE[poi.difficulty].textClass} text-[11px] font-semibold flex items-center gap-1.5`}
             title={t("difficulty_label")}
           >
             <span
@@ -134,7 +135,7 @@ export default function AttractionCard({ poi: rawPoi }: { poi: POI }) {
           <button
             type="button"
             onClick={() => setOpen(o => !o)}
-            className="flex items-center gap-1.5 text-[11px] uppercase tracking-[0.16em] font-medium text-cream-50/90 hover:text-cream-50 transition"
+            className="flex items-center gap-1.5 text-[11px] font-semibold text-cream-50/90 hover:text-cream-50 transition"
             aria-expanded={open}
           >
             {open ? (
@@ -149,7 +150,7 @@ export default function AttractionCard({ poi: rawPoi }: { poi: POI }) {
           </button>
           <button
             onClick={() => focusOn(poi.id)}
-            className="text-[11px] uppercase tracking-[0.16em] font-medium text-cream-50/85 hover:text-cream-50 transition flex items-center gap-1.5"
+            className="text-[11px] font-semibold text-cream-50/85 hover:text-cream-50 transition flex items-center gap-1.5"
             aria-label={`${t("show_on_map")}: ${poi.name}`}
           >
             <MapPin size={13} /> {t("on_the_map_short")}
@@ -171,7 +172,7 @@ export default function AttractionCard({ poi: rawPoi }: { poi: POI }) {
             <div className="px-5 pt-5 pb-4 border-b border-cream-300/70">
               <div className="flex items-start justify-between gap-3">
                 <div>
-                  <div className="text-[10px] uppercase tracking-[0.22em] text-ink-700/60 font-medium">
+                  <div className="text-[11px] font-semibold text-ink-700/60">
                     {regionLong}
                   </div>
                   <h3 className="mt-1 font-serif text-2xl text-ink-900 leading-tight">
@@ -191,7 +192,7 @@ export default function AttractionCard({ poi: rawPoi }: { poi: POI }) {
                   {poi.tags.map(tg => (
                     <span
                       key={tg}
-                      className="text-[10px] uppercase tracking-[0.16em] text-ink-700/70"
+                      className="text-[11px] font-semibold text-ink-700/60"
                     >
                       · {t(TAG_KEY[tg] ?? "tag_view")}
                     </span>
@@ -203,7 +204,7 @@ export default function AttractionCard({ poi: rawPoi }: { poi: POI }) {
             <div className="px-5 py-4 overflow-y-auto flex-1">
               {poi.difficulty && (
                 <div
-                  className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full mb-3 text-[10px] uppercase tracking-[0.18em] font-medium ${DIFFICULTY_STYLE[poi.difficulty].bgClass} ${DIFFICULTY_STYLE[poi.difficulty].textClass}`}
+                  className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full mb-3 text-[11px] font-semibold ${DIFFICULTY_STYLE[poi.difficulty].bgClass} ${DIFFICULTY_STYLE[poi.difficulty].textClass}`}
                 >
                   <Activity size={11} strokeWidth={2} />
                   <span>{t("difficulty_label")}</span>
@@ -222,13 +223,13 @@ export default function AttractionCard({ poi: rawPoi }: { poi: POI }) {
                 <ListenButton attractionId={poi.id} />
               </div>
               {(poi.openingNote || poi.bookingNote) && (
-                <div className="mt-4 text-xs text-rust-700 bg-rust-500/10 border border-rust-500/25 rounded-lg px-3 py-2 leading-snug">
+                <div className="mt-4 text-xs text-terracotta-700 bg-terracotta-500/10 rounded-lg px-3 py-2 leading-snug">
                   {poi.openingNote || poi.bookingNote}
                 </div>
               )}
               {poi.tips && poi.tips.length > 0 && (
                 <div className="mt-5 pt-4 border-t border-cream-300/70">
-                  <div className="flex items-center gap-2 text-[10px] uppercase tracking-[0.22em] text-olive-700 font-medium">
+                  <div className="flex items-center gap-2 text-[11px] font-semibold text-ink-700/60">
                     <Lightbulb size={12} strokeWidth={1.9} />
                     {t("insider_tips_label")}
                   </div>
@@ -239,7 +240,7 @@ export default function AttractionCard({ poi: rawPoi }: { poi: POI }) {
                         className="text-[13px] leading-snug text-ink-700/85 flex gap-2"
                       >
                         <span
-                          className="shrink-0 mt-[6px] w-1.5 h-1.5 rounded-full bg-rust-500/70"
+                          className="shrink-0 mt-[6px] w-1.5 h-1.5 rounded-full bg-terracotta-500/70"
                           aria-hidden
                         />
                         <span>{tip}</span>

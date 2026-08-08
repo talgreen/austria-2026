@@ -159,7 +159,7 @@ export default function StaysSection() {
             <div className="p-5 flex-1 flex flex-col">
               <div className="flex items-start justify-between gap-3">
                 <h3 className="font-serif text-2xl text-ink-900 leading-tight">{s.name}</h3>
-                <span className={`shrink-0 inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-xs font-medium shadow-[0_2px_0_rgba(201,127,31,0.35)] ${a.bgTint} ${a.text}`}>
+                <span className={`shrink-0 inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-xs font-medium ${a.bgTint} ${a.text}`}>
                   {s.nights === 1
                     ? t("stay_nights_one", { n: s.nights })
                     : t("stay_nights_many", { n: s.nights })}
@@ -180,13 +180,13 @@ export default function StaysSection() {
 
               {s.highlights.length > 0 && (
                 <>
-                  <div className="mt-4 text-[10px] uppercase tracking-[0.22em] text-olive-700/85 font-medium">
+                  <div className="mt-4 text-[11px] font-semibold text-ink-700/60">
                     {t("stay_highlights")}
                   </div>
                   <ul className="mt-1.5 space-y-1.5">
                     {s.highlights.map((h, i) => (
                       <li key={i} className="flex gap-2 text-sm text-ink-800">
-                        <Check size={14} className="text-olive-500 shrink-0 mt-0.5" />
+                        <Check size={14} className="text-ink-900 shrink-0 mt-0.5" />
                         <span>{h}</span>
                       </li>
                     ))}
@@ -196,7 +196,7 @@ export default function StaysSection() {
 
               {s.warnings && s.warnings.length > 0 && (
                 <>
-                  <div className={`mt-4 text-[10px] uppercase tracking-[0.22em] font-medium ${a.text}`}>
+                  <div className={`mt-4 text-[11px] font-semibold ${a.text}`}>
                     {t("stay_warnings")}
                   </div>
                   <ul className="mt-1.5 space-y-1.5">

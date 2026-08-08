@@ -10,9 +10,9 @@ import { useLang } from "../lib/i18n";
 import { useLocalizeService } from "../data/i18n";
 
 const CATS: { id: "restaurant" | "supermarket" | "gas"; key: DictKey; Icon: typeof Utensils; color: string }[] = [
-  { id: "restaurant", key: "services_filter_restaurant", Icon: Utensils, color: "text-olive-600" },
-  { id: "supermarket", key: "services_filter_supermarket", Icon: ShoppingCart, color: "text-sienna-600" },
-  { id: "gas", key: "services_filter_gas", Icon: Fuel, color: "text-gold-500" }
+  { id: "restaurant", key: "services_filter_restaurant", Icon: Utensils, color: "text-ink-900" },
+  { id: "supermarket", key: "services_filter_supermarket", Icon: ShoppingCart, color: "text-ink-900" },
+  { id: "gas", key: "services_filter_gas", Icon: Fuel, color: "text-ink-900" }
 ];
 
 const BASES: {
@@ -58,7 +58,7 @@ export default function ServicesSection() {
                 className={`px-4 py-2.5 rounded-full text-sm font-medium transition-all whitespace-nowrap min-h-11 ${
                   base === b.id
                     ? "bg-terracotta-500 text-cream-50"
-                    : "bg-cream-50 border border-cream-300 text-ink-800 hover:border-rust-500/40"
+                    : "bg-cream-100 text-ink-800 hover:bg-cream-200"
                 }`}
               >
                 <span>{t(b.key)}</span>

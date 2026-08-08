@@ -6,18 +6,18 @@ import { useLocalizeTip } from "../data/i18n";
 
 const severityStyle = {
   critical: {
-    border: "border-rust-500/50",
-    accent: "bg-rust-500/10 text-rust-700",
+    border: "border-terracotta-500/50",
+    accent: "bg-terracotta-500/10 text-terracotta-700",
     Icon: ShieldAlert
   },
   warning: {
-    border: "border-gold-400/60",
-    accent: "bg-gold-400/15 text-sienna-600",
+    border: "border-cream-300",
+    accent: "bg-cream-50 text-ink-900",
     Icon: AlertTriangle
   },
   info: {
-    border: "border-olive-500/40",
-    accent: "bg-olive-500/10 text-olive-700",
+    border: "border-cream-300",
+    accent: "bg-cream-50 text-ink-700",
     Icon: Info
   }
 } as const;
