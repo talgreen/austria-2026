@@ -534,6 +534,178 @@ function ChapterDetailContent({ day }: { day: Day }) {
       disabled: slides.length <= 1
     });
 
+  // ── EXPERIMENT: hero readability variants for design review ──────────
+  // Picked via ?hero=glass|band|card|split (default "scrim" = current
+  // treatment). Temporary scaffolding: the chosen direction stays, the
+  // rest gets deleted.
+  const heroVariant = ((): "scrim" | "glass" | "band" | "card" | "split" => {
+    const v = new URLSearchParams(window.location.search).get("hero");
+    return v === "glass" || v === "band" || v === "card" || v === "split"
+      ? v
+      : "scrim";
+  })();
+
+  const heroCarousel =
+    slides.length === 0 ? (
+      // No photos for this day — show the styled placeholder
+      <motion.div
+        initial={{ scale: 1.06 }}
+        animate={{ scale: 1 }}
+        transition={{ duration: 1.2, ease: "easeOut" }}
+        className="absolute inset-0"
+      >
+        <PoiImage
+          src={lead.src}
+          alt={lead.alt}
+          region={localDay.region === "transit" ? "north" : localDay.region}
+          category={lead.category}
+          tags={lead.tags}
+        />
+      </motion.div>
+    ) : (
+      <AnimatePresence mode="sync">
+        <motion.div
+          key={currentSlide.src}
+          initial={{ opacity: 0, scale: 1.06 }}
+          animate={{ opacity: 1, scale: 1 }}
+          exit={{ opacity: 0, scale: 1 }}
+          transition={{
+            opacity: { duration: 1.4, ease: "easeInOut" },
+            scale: { duration: SLIDE_DURATION_MS / 1000 + 1.4, ease: "linear" }
+          }}
+          className="absolute inset-0 will-change-transform"
+        >
+          <PoiImage
+            src={currentSlide.src}
+            alt={currentSlide.alt}
+            region={localDay.region === "transit" ? "north" : localDay.region}
+            category={currentSlide.category}
+            tags={currentSlide.tags}
+          />
+        </motion.div>
+      </AnimatePresence>
+    );
+
+  const heroDashes = slides.length > 1 && (
+    <div
+      className="absolute end-4 sm:end-8 top-3 sm:top-5 z-10 flex gap-1 pointer-events-none"
+      aria-hidden
+    >
+      {slides.map((_, i) => (
+        <span
+          key={i}
+          className={`block h-px transition-all duration-500 ${
+            i === slideIdx ? "w-5 bg-cream-50/90" : "w-2 bg-cream-50/30"
+          }`}
+        />
+      ))}
+    </div>
+  );
+
+  /** Place-name + CC chips for the current slide (always dark pills — they
+   *  sit on the photo in every variant). */
+  const heroSlideChips = (heroSlideMeta.place || heroSlideMeta.credit) && (
+    <AnimatePresence mode="wait">
+      <motion.div
+        key={`hero-meta-${slides[slideIdx]?.src ?? lead.src ?? "none"}`}
+        initial={{ opacity: 0, y: 6 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0, y: 4 }}
+        transition={{ duration: 0.35 }}
+        className="flex flex-wrap items-center gap-x-3 gap-y-2"
+        dir="ltr"
+      >
+        {heroSlideMeta.place && (
+          <div className="font-serif italic text-cream-50/95 text-[11px] sm:text-xs px-2 py-0.5 rounded-full bg-ink-900/55 backdrop-blur-sm">
+            {heroSlideMeta.place}
+          </div>
+        )}
+        {heroSlideMeta.credit && (
+          <div className="px-1.5 py-[3px] rounded-full bg-ink-900/45 backdrop-blur-sm">
+            <PhotoCredit credit={heroSlideMeta.credit} variant="light" />
+          </div>
+        )}
+      </motion.div>
+    </AnimatePresence>
+  );
+
+  /** The chapter title block, in a cream (on-photo) or ink (on-cream) tone. */
+  const renderHeroTitle = (tone: "cream" | "ink") => {
+    const c = tone === "cream";
+    return (
+      <>
+        <div className="flex items-baseline gap-3 sm:gap-4">
+          <div
+            className={`font-serif text-3xl sm:text-5xl leading-none ${
+              c ? "drop-shadow-[0_2px_8px_rgba(0,0,0,0.45)]" : a.text
+            }`}
+          >
+            {ROMAN[day.dayNumber]}
+          </div>
+          <div className={`hidden sm:block h-px w-16 mb-2 ${c ? "bg-cream-50/40" : "bg-ink-900/15"}`} />
+          <div
+            className={`text-[10px] sm:text-[11px] uppercase tracking-[0.28em] font-medium ${
+              c ? heroAccentClass : "text-ink-700/55"
+            }`}
+          >
+            {t("plan_chapter_x_of_y", { x: String(day.dayNumber).padStart(2, "0"), y: String(itinerary.length).padStart(2, "0") })}
+          </div>
+          {isToday && (
+            <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-terracotta-500 text-cream-50 text-[9px] uppercase tracking-[0.22em] font-bold shadow-[0_4px_18px_rgba(196,90,61,0.5)]">
+              <Sun size={10} /> {t("today")}
+            </span>
+          )}
+        </div>
+
+        <div
+          className={`mt-2 sm:mt-3 flex items-center gap-2 sm:gap-3 text-[10px] sm:text-[12px] uppercase tracking-[0.22em] font-medium flex-wrap ${
+            c ? "text-cream-50/95" : "text-ink-700/70"
+          }`}
+        >
+          <span>{localizeWeekday(day.weekday, lang)}</span>
+          <span aria-hidden>·</span>
+          <span>{localizeShortDate(day.date, lang)}</span>
+          {day.departureTime && (
+            <>
+              <span aria-hidden>·</span>
+              <span className="inline-flex items-center gap-1 normal-case tracking-normal">
+                <Clock size={11} className="opacity-70" /> {lang === "he" ? `מומלץ לצאת ב־${day.departureTime}` : `Suggested depart: ${day.departureTime}`}
+              </span>
+            </>
+          )}
+          <span aria-hidden>·</span>
+          <span>{t(REGION_KEY[day.region])}</span>
+          {localDay.base && (
+            <>
+              <span aria-hidden>·</span>
+              <span className="inline-flex items-center gap-1 normal-case tracking-normal">
+                <MapPin size={11} className="opacity-70" /> {localDay.base}
+              </span>
+            </>
+          )}
+          <DayWeatherBadge day={day} size={12} />
+        </div>
+
+        <h1
+          className={`mt-2 sm:mt-3 font-serif text-3xl sm:text-6xl leading-[1.05] tracking-tight max-w-3xl ${
+            c ? "drop-shadow-[0_2px_10px_rgba(0,0,0,0.5)]" : "text-ink-900"
+          }`}
+        >
+          {localDay.title}
+        </h1>
+        {localDay.subtitle && (
+          <p
+            className={`mt-2 sm:mt-3 font-serif italic text-base sm:text-xl max-w-2xl ${
+              c ? "text-cream-50/95" : "text-ink-700/75"
+            }`}
+          >
+            {localDay.subtitle}
+          </p>
+        )}
+      </>
+    );
+  };
+
   return (
     <div className="min-h-screen bg-cream-100/40">
       {/* Sticky back bar */}
@@ -557,152 +729,92 @@ function ChapterDetailContent({ day }: { day: Day }) {
       </div>
 
       <article>
-        {/* Hero — crossfading carousel of every photo from the day */}
+        {/* Hero — crossfading carousel of every photo from the day.
+            EXPERIMENT: layout picked by ?hero= for the readability review. */}
         <header
-          className="relative w-full aspect-[16/10] sm:aspect-[21/9] max-h-[70vh] overflow-hidden bg-ink-900"
+          className="relative w-full overflow-hidden bg-ink-900"
           style={heroSwipeTouchAction ? { touchAction: heroSwipeTouchAction } : undefined}
           {...heroSwipeHandlers}
         >
-          {slides.length === 0 ? (
-            // No photos for this day — show the styled placeholder
-            <motion.div
-              initial={{ scale: 1.06 }}
-              animate={{ scale: 1 }}
-              transition={{ duration: 1.2, ease: "easeOut" }}
-              className="absolute inset-0"
-            >
-              <PoiImage
-                src={lead.src}
-                alt={lead.alt}
-                region={localDay.region === "transit" ? "north" : localDay.region}
-                category={lead.category}
-                tags={lead.tags}
-              />
-            </motion.div>
+          {heroVariant === "band" ? (
+            <>
+              {/* Photo melts into a solid ink band; the text sits on the band. */}
+              <div className="relative w-full aspect-[16/10] sm:aspect-[21/9] max-h-[60vh] overflow-hidden">
+                {heroCarousel}
+                <div className="absolute inset-0 bg-[linear-gradient(to_top,#17110C_0%,#17110C_6%,rgba(23,17,12,0.6)_32%,rgba(23,17,12,0.05)_65%,rgba(23,17,12,0.25)_100%)]" />
+                {heroDashes}
+              </div>
+              <div className="relative -mt-10 sm:-mt-16 px-4 sm:px-10 pb-7 sm:pb-10 text-cream-50">
+                <div className="max-w-4xl mx-auto">
+                  {renderHeroTitle("cream")}
+                  <div className="mt-4 sm:mt-5">{heroSlideChips}</div>
+                </div>
+              </div>
+            </>
           ) : (
-            <AnimatePresence mode="sync">
-              <motion.div
-                key={currentSlide.src}
-                initial={{ opacity: 0, scale: 1.06 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 1 }}
-                transition={{
-                  opacity: { duration: 1.4, ease: "easeInOut" },
-                  scale: { duration: SLIDE_DURATION_MS / 1000 + 1.4, ease: "linear" }
-                }}
-                className="absolute inset-0 will-change-transform"
-              >
-                <PoiImage
-                  src={currentSlide.src}
-                  alt={currentSlide.alt}
-                  region={localDay.region === "transit" ? "north" : localDay.region}
-                  category={currentSlide.category}
-                  tags={currentSlide.tags}
-                />
-              </motion.div>
-            </AnimatePresence>
-          )}
-
-          {/* Readability scrim — custom stops keep the lower ~60% (where all
-              the text sits) dark even over bright photo areas, fading only
-              near the top so the photo still breathes. */}
-          <div className="absolute inset-0 bg-[linear-gradient(to_top,rgba(23,17,12,0.94)_0%,rgba(23,17,12,0.8)_26%,rgba(23,17,12,0.55)_55%,rgba(23,17,12,0.15)_100%)]" />
-          <div className="absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-ink-900/40 to-transparent" />
-
-          {/* Carousel progress dashes — top-right of the hero */}
-          {slides.length > 1 && (
             <div
-              className="absolute end-4 sm:end-8 top-3 sm:top-5 z-10 flex gap-1 pointer-events-none"
-              aria-hidden
+              className={`relative w-full sm:aspect-[21/9] max-h-[70vh] overflow-hidden ${
+                heroVariant === "glass" ? "aspect-[4/3]" : "aspect-[16/10]"
+              }`}
             >
-              {slides.map((_, i) => (
-                <span
-                  key={i}
-                  className={`block h-px transition-all duration-500 ${
-                    i === slideIdx ? "w-5 bg-cream-50/90" : "w-2 bg-cream-50/30"
-                  }`}
-                />
-              ))}
+              {heroCarousel}
+
+              {heroVariant === "scrim" && (
+                <div className="absolute inset-0 bg-[linear-gradient(to_top,rgba(23,17,12,0.94)_0%,rgba(23,17,12,0.8)_26%,rgba(23,17,12,0.55)_55%,rgba(23,17,12,0.15)_100%)]" />
+              )}
+              {heroVariant === "glass" && (
+                <div className="absolute inset-0 bg-gradient-to-t from-ink-900/40 via-ink-900/10 to-ink-900/20" />
+              )}
+              {(heroVariant === "card" || heroVariant === "split") && (
+                <div className="absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-ink-900/35 to-transparent" />
+              )}
+              <div className="absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-ink-900/40 to-transparent" />
+
+              {heroDashes}
+
+              {heroVariant === "scrim" && (
+                <div className="absolute inset-x-0 bottom-0 px-4 sm:px-10 pb-6 sm:pb-12 text-cream-50 [text-shadow:0_1px_2px_rgba(23,17,12,0.55),0_2px_14px_rgba(23,17,12,0.35)]">
+                  <div className="max-w-4xl mx-auto">
+                    {renderHeroTitle("cream")}
+                    <div className="mt-4 sm:mt-5">{heroSlideChips}</div>
+                  </div>
+                </div>
+              )}
+
+              {heroVariant === "glass" && (
+                <div className="absolute inset-x-0 bottom-0 px-3 sm:px-8 pb-3 sm:pb-6 text-cream-50">
+                  <div className="max-w-4xl mx-auto rounded-2xl sm:rounded-3xl bg-ink-900/35 backdrop-blur-md ring-1 ring-cream-50/15 shadow-[0_10px_40px_rgba(0,0,0,0.3)] px-4 sm:px-8 py-4 sm:py-6">
+                    {renderHeroTitle("cream")}
+                    <div className="mt-3 sm:mt-4">{heroSlideChips}</div>
+                  </div>
+                </div>
+              )}
+
+              {(heroVariant === "card" || heroVariant === "split") && (
+                <div className={`absolute z-10 start-4 ${heroVariant === "card" ? "top-3" : "bottom-3"}`}>
+                  {heroSlideChips}
+                </div>
+              )}
             </div>
           )}
+        </header>
 
-          <div className="absolute inset-x-0 bottom-0 px-4 sm:px-10 pb-6 sm:pb-12 text-cream-50 [text-shadow:0_1px_2px_rgba(23,17,12,0.55),0_2px_14px_rgba(23,17,12,0.35)]">
-            <div className="max-w-4xl mx-auto">
-              <div className="flex items-baseline gap-3 sm:gap-4">
-                <div className="font-serif text-3xl sm:text-5xl leading-none drop-shadow-[0_2px_8px_rgba(0,0,0,0.45)]">
-                  {ROMAN[day.dayNumber]}
-                </div>
-                <div className="hidden sm:block h-px w-16 bg-cream-50/40 mb-2" />
-                <div className={`text-[10px] sm:text-[11px] uppercase tracking-[0.28em] font-medium ${heroAccentClass}`}>
-                  {t("plan_chapter_x_of_y", { x: String(day.dayNumber).padStart(2, "0"), y: String(itinerary.length).padStart(2, "0") })}
-                </div>
-                {isToday && (
-                  <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-terracotta-500 text-cream-50 text-[9px] uppercase tracking-[0.22em] font-bold shadow-[0_4px_18px_rgba(196,90,61,0.5)]">
-                    <Sun size={10} /> {t("today")}
-                  </span>
-                )}
-              </div>
-
-              <div className="mt-2 sm:mt-3 flex items-center gap-2 sm:gap-3 text-[10px] sm:text-[12px] uppercase tracking-[0.22em] text-cream-50/95 font-medium flex-wrap">
-                <span>{localizeWeekday(day.weekday, lang)}</span>
-                <span aria-hidden>·</span>
-                <span>{localizeShortDate(day.date, lang)}</span>
-                {day.departureTime && (
-                  <>
-                    <span aria-hidden>·</span>
-                    <span className="inline-flex items-center gap-1 normal-case tracking-normal text-cream-50/95">
-                      <Clock size={11} className="opacity-70" /> {lang === "he" ? `מומלץ לצאת ב־${day.departureTime}` : `Suggested depart: ${day.departureTime}`}
-                    </span>
-                  </>
-                )}
-                <span aria-hidden>·</span>
-                <span>{t(REGION_KEY[day.region])}</span>
-                {localDay.base && (
-                  <>
-                    <span aria-hidden>·</span>
-                    <span className="inline-flex items-center gap-1 normal-case tracking-normal text-cream-50/95">
-                      <MapPin size={11} className="opacity-70" /> {localDay.base}
-                    </span>
-                  </>
-                )}
-                <DayWeatherBadge day={day} size={12} />
-              </div>
-
-              <h1 className="mt-2 sm:mt-3 font-serif text-3xl sm:text-6xl leading-[1.05] tracking-tight max-w-3xl drop-shadow-[0_2px_10px_rgba(0,0,0,0.5)]">
-                {localDay.title}
-              </h1>
-              {localDay.subtitle && (
-                <p className="mt-2 sm:mt-3 font-serif italic text-cream-50/95 text-base sm:text-xl max-w-2xl">
-                  {localDay.subtitle}
-                </p>
-              )}
-              {(heroSlideMeta.place || heroSlideMeta.credit) && (
-                <AnimatePresence mode="wait">
-                  <motion.div
-                    key={`hero-meta-${slides[slideIdx]?.src ?? lead.src ?? "none"}`}
-                    initial={{ opacity: 0, y: 6 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: 4 }}
-                    transition={{ duration: 0.35 }}
-                    className="mt-4 sm:mt-5 flex flex-wrap items-center gap-x-3 gap-y-2"
-                    dir="ltr"
-                  >
-                    {heroSlideMeta.place && (
-                      <div className="font-serif italic text-cream-50/95 text-[11px] sm:text-xs px-2 py-0.5 rounded-full bg-ink-900/55 backdrop-blur-sm">
-                        {heroSlideMeta.place}
-                      </div>
-                    )}
-                    {heroSlideMeta.credit && (
-                      <div className="px-1.5 py-[3px] rounded-full bg-ink-900/45 backdrop-blur-sm">
-                        <PhotoCredit credit={heroSlideMeta.credit} variant="light" />
-                      </div>
-                    )}
-                  </motion.div>
-                </AnimatePresence>
-              )}
+        {/* EXPERIMENT: card / split variants put the title on a solid cream
+            surface overlapping or below the photo instead of on it. */}
+        {heroVariant === "card" && (
+          <div className="relative z-10 px-4 sm:px-6 -mt-14 sm:-mt-24">
+            <div className="max-w-4xl mx-auto rounded-3xl bg-cream-50 ring-1 ring-cream-300/70 shadow-[0_24px_60px_-24px_rgba(58,28,15,0.4)] px-5 sm:px-8 py-5 sm:py-7">
+              {renderHeroTitle("ink")}
             </div>
           </div>
-        </header>
+        )}
+        {heroVariant === "split" && (
+          <div className="bg-cream-50 border-b border-cream-300/60">
+            <div className="max-w-4xl mx-auto px-4 sm:px-6 pt-5 sm:pt-7 pb-6 sm:pb-8">
+              {renderHeroTitle("ink")}
+            </div>
+          </div>
+        )}
 
         <div className="max-w-4xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
           {/* Where you sleep — compact area lodging pill */}
