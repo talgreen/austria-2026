@@ -63,7 +63,6 @@ import PhotoCredit from "./PhotoCredit";
 import MiniMap from "./MiniMap";
 import ListenButton from "./ListenButton";
 import GermanWordCarousel from "./GermanWordCarousel";
-import DayWeatherBadge from "./DayWeatherBadge";
 import { FunPackBody } from "./DayFunPack";
 import { getKidsPack } from "../data/kids";
 import CollapsibleSection from "./CollapsibleSection";
@@ -153,12 +152,6 @@ function buildPlan(day: Day): PlanModel {
   });
   return { nodes, dayAlts };
 }
-
-const REGION_KEY: Record<string, DictKey> = {
-  north: "region_north_long",
-  south: "region_south_long",
-  transit: "region_transit_long"
-};
 
 /** Decide whether an activity should render with the "Optional" badge.
  *
@@ -516,9 +509,6 @@ function ChapterDetailContent({ day }: { day: Day }) {
 
   const area = getAreaForDay(day.dayNumber);
   const a = accentClasses(area.accent);
-  // For the hero (dark background), we need a lighter version of the accent text.
-  // We derive a hero-safe colour using opacity rather than a parallel colour system.
-  const heroAccentClass = "text-cream-50/90";
 
   const prevDay = day.dayNumber > 1 ? itinerary[day.dayNumber - 2] : null;
   const nextDay =
@@ -539,56 +529,8 @@ function ChapterDetailContent({ day }: { day: Day }) {
       disabled: slides.length <= 1
     });
 
-  // ── EXPERIMENT: hero readability variants for design review ──────────
-  // Picked via ?hero=glass|band|card|split (default "scrim" = current
-  // treatment). Temporary scaffolding: the chosen direction stays, the
-  // rest gets deleted.
-  type HeroVariant =
-    | "scrim"
-    | "glass"
-    | "band"
-    | "card"
-    | "split"
-    | "card2"
-    | "card3"
-    | "card4"
-    | "card5"
-    | "marker"
-    | "poster"
-    | "scrap"
-    | "arch"
-    | "blur"
-    | "ambient"
-    | "cinema"
-    | "editorial"
-    | "focus"
-    | "focus2";
-  const heroVariant = ((): HeroVariant => {
-    const v = new URLSearchParams(window.location.search).get("hero");
-    return v === "glass" ||
-      v === "band" ||
-      v === "card" ||
-      v === "split" ||
-      v === "card2" ||
-      v === "card3" ||
-      v === "card4" ||
-      v === "card5" ||
-      v === "marker" ||
-      v === "poster" ||
-      v === "scrap" ||
-      v === "arch" ||
-      v === "blur" ||
-      v === "ambient" ||
-      v === "cinema" ||
-      v === "editorial" ||
-      v === "focus" ||
-      v === "focus2"
-      ? v
-      : "scrim";
-  })();
-
-  /* focus variants: the day's forecast rendered as a first-class element
-     (icon + high/low) instead of a tiny inline suffix. */
+  /* The day's forecast as a first-class hero element (icon + high/low) —
+     day, place and weather lead the chapter header. */
   const { weather: tripWeather } = useTripWeather();
   const heroForecast = forecastForDay(tripWeather, day);
   const weatherIconFor = (code: number, size: number) => {
@@ -599,42 +541,6 @@ function ChapterDetailContent({ day }: { day: Day }) {
       return <CloudSnow size={size} />;
     return <CloudRain size={size} />;
   };
-
-  /* ambient variant: sample the current photo's average color (darkened for
-     contrast) so the band under the photo color-matches every slide,
-     Apple-Music style. Falls back to a warm ink tone. */
-  const [ambientColor, setAmbientColor] = useState("#241C14");
-  const ambientSrc = currentSlide?.src ?? lead.src;
-  useEffect(() => {
-    if (heroVariant !== "ambient" || !ambientSrc) return;
-    const img = new Image();
-    img.src = ambientSrc;
-    img.onload = () => {
-      try {
-        const c = document.createElement("canvas");
-        c.width = 10;
-        c.height = 10;
-        const ctx = c.getContext("2d");
-        if (!ctx) return;
-        ctx.drawImage(img, 0, 0, 10, 10);
-        const d = ctx.getImageData(0, 5, 10, 5).data;
-        let r = 0,
-          g = 0,
-          b = 0,
-          n = 0;
-        for (let i = 0; i < d.length; i += 4) {
-          r += d[i];
-          g += d[i + 1];
-          b += d[i + 2];
-          n++;
-        }
-        const darken = (x: number) => Math.round((x / n) * 0.38 + 16);
-        setAmbientColor(`rgb(${darken(r)}, ${darken(g)}, ${darken(b)})`);
-      } catch {
-        /* keep the fallback tone */
-      }
-    };
-  }, [heroVariant, ambientSrc]);
 
   const heroCarousel =
     slides.length === 0 ? (
@@ -693,118 +599,6 @@ function ChapterDetailContent({ day }: { day: Day }) {
     </div>
   );
 
-  /** Place-name + CC chips for the current slide (always dark pills — they
-   *  sit on the photo in every variant). */
-  const heroSlideChips = (heroSlideMeta.place || heroSlideMeta.credit) && (
-    <AnimatePresence mode="wait">
-      <motion.div
-        key={`hero-meta-${slides[slideIdx]?.src ?? lead.src ?? "none"}`}
-        initial={{ opacity: 0, y: 6 }}
-        animate={{ opacity: 1, y: 0 }}
-        exit={{ opacity: 0, y: 4 }}
-        transition={{ duration: 0.35 }}
-        className="flex flex-wrap items-center gap-x-3 gap-y-2"
-        dir="ltr"
-      >
-        {heroSlideMeta.place && (
-          <div className="font-serif italic text-cream-50/95 text-[11px] sm:text-xs px-2 py-0.5 rounded-full bg-ink-900/55 backdrop-blur-sm">
-            {heroSlideMeta.place}
-          </div>
-        )}
-        {heroSlideMeta.credit && (
-          <div className="px-1.5 py-[3px] rounded-full bg-ink-900/45 backdrop-blur-sm">
-            <PhotoCredit credit={heroSlideMeta.credit} variant="light" />
-          </div>
-        )}
-      </motion.div>
-    </AnimatePresence>
-  );
-
-  /** Weekday · date · region · base · weather items — color-agnostic, the
-   *  wrapping row sets the tone. */
-  const heroMetaItems = (
-    <>
-      <span>{localizeWeekday(day.weekday, lang)}</span>
-      <span aria-hidden>·</span>
-      <span>{localizeShortDate(day.date, lang)}</span>
-      {day.departureTime && (
-        <>
-          <span aria-hidden>·</span>
-          <span className="inline-flex items-center gap-1 normal-case tracking-normal">
-            <Clock size={11} className="opacity-70" /> {lang === "he" ? `מומלץ לצאת ב־${day.departureTime}` : `Suggested depart: ${day.departureTime}`}
-          </span>
-        </>
-      )}
-      <span aria-hidden>·</span>
-      <span>{t(REGION_KEY[day.region])}</span>
-      {localDay.base && (
-        <>
-          <span aria-hidden>·</span>
-          <span className="inline-flex items-center gap-1 normal-case tracking-normal">
-            <MapPin size={11} className="opacity-70" /> {localDay.base}
-          </span>
-        </>
-      )}
-      <DayWeatherBadge day={day} size={12} />
-    </>
-  );
-
-  /** The chapter title block, in a cream (on-photo) or ink (on-cream) tone. */
-  const renderHeroTitle = (tone: "cream" | "ink") => {
-    const c = tone === "cream";
-    return (
-      <>
-        <div className="flex items-baseline gap-3 sm:gap-4">
-          <div
-            className={`font-serif text-3xl sm:text-5xl leading-none ${
-              c ? "drop-shadow-[0_2px_8px_rgba(0,0,0,0.45)]" : a.text
-            }`}
-          >
-            {ROMAN[day.dayNumber]}
-          </div>
-          <div className={`hidden sm:block h-px w-16 mb-2 ${c ? "bg-cream-50/40" : "bg-ink-900/15"}`} />
-          <div
-            className={`text-[10px] sm:text-[11px] uppercase tracking-[0.28em] font-medium ${
-              c ? heroAccentClass : "text-ink-700/55"
-            }`}
-          >
-            {t("plan_chapter_x_of_y", { x: String(day.dayNumber).padStart(2, "0"), y: String(itinerary.length).padStart(2, "0") })}
-          </div>
-          {isToday && (
-            <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-terracotta-500 text-cream-50 text-[9px] uppercase tracking-[0.22em] font-bold shadow-[0_4px_18px_rgba(196,90,61,0.5)]">
-              <Sun size={10} /> {t("today")}
-            </span>
-          )}
-        </div>
-
-        <div
-          className={`mt-2 sm:mt-3 flex items-center gap-2 sm:gap-3 text-[10px] sm:text-[12px] uppercase tracking-[0.22em] font-medium flex-wrap ${
-            c ? "text-cream-50/95" : "text-ink-700/70"
-          }`}
-        >
-          {heroMetaItems}
-        </div>
-
-        <h1
-          className={`mt-2 sm:mt-3 font-serif text-3xl sm:text-6xl leading-[1.05] tracking-tight max-w-3xl ${
-            c ? "drop-shadow-[0_2px_10px_rgba(0,0,0,0.5)]" : "text-ink-900"
-          }`}
-        >
-          {localDay.title}
-        </h1>
-        {localDay.subtitle && (
-          <p
-            className={`mt-2 sm:mt-3 font-serif italic text-base sm:text-xl max-w-2xl ${
-              c ? "text-cream-50/95" : "text-ink-700/75"
-            }`}
-          >
-            {localDay.subtitle}
-          </p>
-        )}
-      </>
-    );
-  };
-
   return (
     <div className="min-h-screen bg-cream-100/40">
       {/* Sticky back bar */}
@@ -828,617 +622,70 @@ function ChapterDetailContent({ day }: { day: Day }) {
       </div>
 
       <article>
-        {/* Hero — crossfading carousel of every photo from the day.
-            EXPERIMENT: layout picked by ?hero= for the readability review. */}
+        {/* Hero — the day's photos crossfade behind a header that leads
+            with what the family needs at a glance: the day and date, the
+            home base, and the weather. The photo dissolves into the page
+            with no hard edge; the day's theme closes the block quietly. */}
         <header
-          className={`relative w-full overflow-hidden ${
-            heroVariant === "card5" ||
-            heroVariant === "arch" ||
-            heroVariant === "poster" ||
-            heroVariant === "editorial" ||
-            heroVariant === "focus2"
-              ? ""
-              : "bg-ink-900"
-          }`}
-          style={{
-            ...(heroSwipeTouchAction ? { touchAction: heroSwipeTouchAction } : {}),
-            ...(heroVariant === "ambient" ? { backgroundColor: ambientColor } : {})
-          }}
+          className="relative w-full overflow-hidden"
+          style={heroSwipeTouchAction ? { touchAction: heroSwipeTouchAction } : undefined}
           {...heroSwipeHandlers}
         >
-          {heroVariant === "card5" ? (
-            /* Polaroid: the photo sits inside a cream frame, with the whole
-               title block as the "handwritten caption" under it. */
-            <div className="px-4 sm:px-6 pt-4 sm:pt-6">
-              <div className="max-w-4xl mx-auto bg-cream-50 rounded-[1.75rem] ring-1 ring-cream-300/70 shadow-[0_24px_60px_-28px_rgba(58,28,15,0.45)] p-2.5 sm:p-4">
-                <div className="relative aspect-[16/11] sm:aspect-[21/9] max-h-[60vh] overflow-hidden rounded-[1.25rem]">
-                  {heroCarousel}
-                  {heroDashes}
-                  <div className="absolute bottom-2 start-2 z-10">{heroSlideChips}</div>
-                </div>
-                <div className="px-2 sm:px-4 pt-4 sm:pt-5 pb-2 sm:pb-3">
-                  <div className="flex items-baseline gap-3">
-                    <div className={`font-serif text-2xl sm:text-4xl leading-none ${a.text}`}>
-                      {ROMAN[day.dayNumber]}
-                    </div>
-                    <div className="text-[10px] uppercase tracking-[0.28em] font-medium text-ink-700/55">
-                      {t("plan_chapter_x_of_y", { x: String(day.dayNumber).padStart(2, "0"), y: String(itinerary.length).padStart(2, "0") })}
-                    </div>
-                  </div>
-                  <h1 className="mt-1.5 font-serif text-3xl sm:text-5xl leading-[1.05] tracking-tight text-ink-900">
-                    {localDay.title}
-                  </h1>
-                  {localDay.subtitle && (
-                    <p className="mt-1.5 font-serif italic text-ink-700/75 text-base sm:text-lg max-w-2xl">
-                      {localDay.subtitle}
-                    </p>
-                  )}
-                  <div className="mt-2.5 flex items-center gap-2 sm:gap-3 text-[10px] sm:text-[11px] uppercase tracking-[0.22em] font-medium flex-wrap text-ink-700/70">
-                    {heroMetaItems}
-                  </div>
-                </div>
-              </div>
-            </div>
-          ) : heroVariant === "arch" ? (
-            /* Alpine arch: the photo becomes an arched window on cream,
-               crowned by the chapter medallion; the title reads as a
-               centered inscription beneath it. */
-            <div className="px-6 sm:px-10 pt-6 sm:pt-8">
-              <div className="relative max-w-3xl mx-auto">
-                <div className="relative aspect-[4/5] sm:aspect-[16/10] max-h-[58vh] overflow-hidden rounded-t-[999px] rounded-b-2xl">
-                  {heroCarousel}
-                  <div className="absolute bottom-3 left-1/2 -translate-x-1/2 z-10">{heroSlideChips}</div>
-                </div>
-                <div
-                  className={`absolute -top-5 left-1/2 -translate-x-1/2 w-12 h-12 rounded-full bg-cream-50 ring-1 ring-cream-300/70 shadow-[0_10px_28px_-10px_rgba(58,28,15,0.5)] flex items-center justify-center font-serif text-xl leading-none ${a.text}`}
-                >
-                  {ROMAN[day.dayNumber]}
-                </div>
-              </div>
-              <div className="max-w-3xl mx-auto text-center pt-5 sm:pt-6 pb-4 sm:pb-5">
-                <div className="text-[10px] sm:text-[11px] uppercase tracking-[0.32em] font-medium text-ink-700/55">
-                  {t("plan_chapter_x_of_y", { x: String(day.dayNumber).padStart(2, "0"), y: String(itinerary.length).padStart(2, "0") })}
-                </div>
-                <h1 className="mt-1.5 font-serif text-3xl sm:text-6xl leading-[1.05] tracking-tight text-ink-900">
-                  {localDay.title}
-                </h1>
-                {localDay.subtitle && (
-                  <p className="mt-2 font-serif italic text-ink-700/75 text-base sm:text-xl">
-                    {localDay.subtitle}
-                  </p>
-                )}
-                <div className="mt-3 flex items-center justify-center gap-3" aria-hidden>
-                  <span className="h-px w-10 bg-ink-900/15" />
-                  <span className="w-1.5 h-1.5 rotate-45 bg-terracotta-500/70" />
-                  <span className="h-px w-10 bg-ink-900/15" />
-                </div>
-                <div className="mt-3 flex items-center justify-center gap-2 sm:gap-3 text-[10px] sm:text-[11px] uppercase tracking-[0.22em] font-medium flex-wrap text-ink-700/70">
-                  {heroMetaItems}
-                </div>
-              </div>
-            </div>
-          ) : heroVariant === "poster" ? (
-            /* Art-print: the photo is cut on a diagonal, a ghost numeral
-               straddles the seam, the title crosses onto the cream side and
-               the date runs vertically like a print's edge caption. */
-            <>
-              <div className="relative w-full aspect-[16/11] sm:aspect-[21/10] max-h-[62vh] overflow-hidden [clip-path:polygon(0_0,100%_0,100%_80%,0_100%)]">
-                {heroCarousel}
-                <div className="absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-ink-900/40 to-transparent" />
-                {heroDashes}
-                <div className="absolute top-3 start-4 z-10">{heroSlideChips}</div>
-              </div>
-              <div className="relative px-4 sm:px-10 pb-6 sm:pb-10">
-                <div
-                  aria-hidden
-                  className="pointer-events-none select-none absolute -top-20 sm:-top-36 end-4 sm:end-16 font-serif text-[7rem] sm:text-[12rem] leading-none text-cream-50/30 [text-shadow:0_4px_40px_rgba(23,17,12,0.35)]"
-                >
-                  {ROMAN[day.dayNumber]}
-                </div>
-                <div className="relative max-w-4xl mx-auto -mt-6 sm:-mt-12 flex items-end justify-between gap-4 sm:gap-8">
-                  <div className="min-w-0">
-                    <div className="text-[10px] sm:text-[11px] uppercase tracking-[0.3em] font-medium text-terracotta-600/85">
-                      {t("plan_chapter_x_of_y", { x: String(day.dayNumber).padStart(2, "0"), y: String(itinerary.length).padStart(2, "0") })}
-                    </div>
-                    <h1 className="mt-1.5 font-serif text-4xl sm:text-7xl leading-[1.02] tracking-tight text-ink-900 max-w-3xl">
-                      {localDay.title}
-                    </h1>
-                    {localDay.subtitle && (
-                      <p className="mt-2 font-serif italic text-ink-700/75 text-base sm:text-xl max-w-2xl">
-                        {localDay.subtitle}
-                      </p>
-                    )}
-                    <div className="mt-3 flex items-center gap-2 flex-wrap">
-                      <DayWeatherBadge day={day} size={12} />
-                    </div>
-                  </div>
-                  <div className="shrink-0 self-stretch flex items-end pb-1">
-                    <div className="[writing-mode:vertical-rl] text-[9px] sm:text-[10px] uppercase tracking-[0.3em] font-medium text-ink-700/60 border-s border-ink-900/15 ps-2 max-h-44">
-                      {localizeWeekday(day.weekday, lang)} · {localizeShortDate(day.date, lang)} · {t(REGION_KEY[day.region])}{localDay.base ? ` · ${localDay.base}` : ""}
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </>
-          ) : heroVariant === "ambient" ? (
-            /* Ambient: the photo dissolves into a band whose color is
-               sampled from the photo itself, so every chapter's hero is
-               color-matched to its image. */
-            <>
-              <div className="relative w-full aspect-[16/10] sm:aspect-[21/9] max-h-[60vh] overflow-hidden">
-                {heroCarousel}
-                <div className="absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-ink-900/40 to-transparent" />
-                <div
-                  className="absolute inset-0"
-                  style={{ background: `linear-gradient(to top, ${ambientColor} 0%, transparent 48%)` }}
-                />
-                {heroDashes}
-              </div>
-              <div className="relative -mt-10 sm:-mt-16 px-4 sm:px-10 pb-7 sm:pb-10 text-cream-50">
-                <div className="max-w-4xl mx-auto">
-                  {renderHeroTitle("cream")}
-                  <div className="mt-4 sm:mt-5">{heroSlideChips}</div>
-                </div>
-              </div>
-            </>
-          ) : heroVariant === "editorial" ? (
-            /* Editorial: the photo dissolves into the paper — no edge, no
-               box — and the title is set below it in a large, quiet
-               masthead with hairline rules. */
-            <>
-              <div className="relative w-full aspect-[16/10] sm:aspect-[21/9] max-h-[62vh] overflow-hidden bg-ink-900">
-                {heroCarousel}
-                <div className="absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-ink-900/40 to-transparent" />
-                <div className="absolute inset-x-0 bottom-0 h-2/5 bg-gradient-to-t from-cream-50 via-cream-50/55 to-transparent" />
-                {heroDashes}
-                <div className="absolute top-3 start-4 z-10">{heroSlideChips}</div>
-              </div>
-              <div className="bg-cream-50 border-b border-cream-300/60">
-                <div className="max-w-4xl mx-auto px-4 sm:px-6 pb-6 sm:pb-9">
-                  <div className="flex items-center gap-3">
-                    <span className={`font-serif text-2xl sm:text-3xl leading-none ${a.text}`}>
-                      {ROMAN[day.dayNumber]}
-                    </span>
-                    <span className="h-4 w-px bg-ink-900/20" aria-hidden />
-                    <span className="text-[10px] sm:text-[11px] uppercase tracking-[0.34em] font-medium text-ink-700/60">
-                      {t("plan_chapter_x_of_y", { x: String(day.dayNumber).padStart(2, "0"), y: String(itinerary.length).padStart(2, "0") })}
-                    </span>
-                  </div>
-                  <h1 className="mt-2.5 font-serif text-4xl sm:text-7xl leading-[1.04] tracking-tight text-ink-900 max-w-3xl">
-                    {localDay.title}
-                  </h1>
-                  {localDay.subtitle && (
-                    <p className="mt-2.5 font-serif italic text-ink-700/70 text-lg sm:text-2xl max-w-2xl">
-                      {localDay.subtitle}
-                    </p>
-                  )}
-                  <div className="mt-4 sm:mt-5 pt-3.5 border-t border-ink-900/10 flex items-center gap-2 sm:gap-3 text-[10px] sm:text-[11px] uppercase tracking-[0.24em] font-medium flex-wrap text-ink-700/70">
-                    {heroMetaItems}
-                  </div>
-                </div>
-              </div>
-            </>
-          ) : heroVariant === "focus2" ? (
-            /* focus2: same hierarchy (day · date, place, weather first; the
-               theme demoted) on the dissolve-into-paper base. No credits. */
-            <>
-              <div className="relative w-full aspect-[16/10] sm:aspect-[21/9] max-h-[62vh] overflow-hidden bg-ink-900">
-                {heroCarousel}
-                <div className="absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-ink-900/40 to-transparent" />
-                <div className="absolute inset-x-0 bottom-0 h-2/5 bg-gradient-to-t from-cream-50 via-cream-50/55 to-transparent" />
-                {heroDashes}
-              </div>
-              <div className="bg-cream-50 border-b border-cream-300/60">
-                <div className="max-w-4xl mx-auto px-4 sm:px-6 pb-6 sm:pb-8">
-                  <div className="text-[9px] sm:text-[10px] uppercase tracking-[0.3em] font-medium text-ink-700/50">
-                    {t("plan_chapter_x_of_y", { x: String(day.dayNumber).padStart(2, "0"), y: String(itinerary.length).padStart(2, "0") })}
-                  </div>
-                  <div className="mt-1.5 font-serif text-3xl sm:text-5xl text-ink-900 leading-tight tracking-tight">
-                    {localizeWeekday(day.weekday, lang)} · {localizeShortDate(day.date, lang)}
-                  </div>
-                  <div className="mt-2.5 flex flex-wrap items-center gap-x-4 gap-y-2">
-                    {localDay.base && (
-                      <div className="flex items-center gap-1.5 text-[15px] sm:text-lg font-medium text-ink-800">
-                        <MapPin size={17} className="text-terracotta-500 shrink-0" />
-                        {localDay.base}
-                      </div>
-                    )}
-                    {heroForecast && (
-                      <div
-                        dir="ltr"
-                        className="inline-flex items-center gap-2 rounded-full bg-gold-400/20 ring-1 ring-gold-500/40 px-3.5 py-1.5 text-ink-900"
-                      >
-                        <span className="text-sienna-600">{weatherIconFor(heroForecast.code, 18)}</span>
-                        <span className="font-bold text-[15px] tabular-nums">{heroForecast.tMax}°</span>
-                        <span className="text-ink-700/60 text-[13px] tabular-nums">/ {heroForecast.tMin}°</span>
-                      </div>
-                    )}
-                  </div>
-                  <div className="mt-3.5 pt-3.5 border-t border-ink-900/10 font-serif text-lg sm:text-2xl text-ink-800/85 leading-snug max-w-2xl">
-                    {localDay.title}
-                  </div>
-                </div>
-              </div>
-            </>
-          ) : heroVariant === "band" ? (
-            <>
-              {/* Photo melts into a solid ink band; the text sits on the band. */}
-              <div className="relative w-full aspect-[16/10] sm:aspect-[21/9] max-h-[60vh] overflow-hidden">
-                {heroCarousel}
-                <div className="absolute inset-0 bg-[linear-gradient(to_top,#17110C_0%,#17110C_6%,rgba(23,17,12,0.6)_32%,rgba(23,17,12,0.05)_65%,rgba(23,17,12,0.25)_100%)]" />
-                {heroDashes}
-              </div>
-              <div className="relative -mt-10 sm:-mt-16 px-4 sm:px-10 pb-7 sm:pb-10 text-cream-50">
-                <div className="max-w-4xl mx-auto">
-                  {renderHeroTitle("cream")}
-                  <div className="mt-4 sm:mt-5">{heroSlideChips}</div>
-                </div>
-              </div>
-            </>
-          ) : (
-            <div
-              className={`relative w-full sm:aspect-[21/9] max-h-[70vh] overflow-hidden ${
-                heroVariant === "glass"
-                  ? "aspect-[4/3]"
-                  : heroVariant === "marker"
-                    ? "aspect-[16/13]"
-                    : heroVariant === "cinema"
-                      ? "aspect-[4/5]"
-                      : heroVariant === "focus"
-                        ? "aspect-[16/12]"
-                        : "aspect-[16/10]"
-              }`}
-            >
-              {heroCarousel}
-
-              {heroVariant === "scrim" && (
-                <div className="absolute inset-0 bg-[linear-gradient(to_top,rgba(23,17,12,0.94)_0%,rgba(23,17,12,0.8)_26%,rgba(23,17,12,0.55)_55%,rgba(23,17,12,0.15)_100%)]" />
-              )}
-              {heroVariant === "glass" && (
-                <div className="absolute inset-0 bg-gradient-to-t from-ink-900/40 via-ink-900/10 to-ink-900/20" />
-              )}
-              {(heroVariant === "card" ||
-                heroVariant === "split" ||
-                heroVariant === "card2" ||
-                heroVariant === "card3" ||
-                heroVariant === "card4" ||
-                heroVariant === "scrap") && (
-                <div className="absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-ink-900/35 to-transparent" />
-              )}
-              {heroVariant === "marker" && (
-                <div className="absolute inset-x-0 bottom-0 h-44 bg-gradient-to-t from-ink-900/30 to-transparent" />
-              )}
-              {(heroVariant === "blur" || heroVariant === "focus") && (
-                /* iOS-style progressive blur: the photo melts out of focus
-                   toward the text — no scrim wall, no card. */
-                <div className="absolute inset-x-0 bottom-0 h-[62%] pointer-events-none">
-                  <div className="absolute inset-0 backdrop-blur-[2px] [mask-image:linear-gradient(to_bottom,transparent_0%,#000_35%)]" />
-                  <div className="absolute inset-0 backdrop-blur-[7px] [mask-image:linear-gradient(to_bottom,transparent_30%,#000_65%)]" />
-                  <div className="absolute inset-0 backdrop-blur-[18px] [mask-image:linear-gradient(to_bottom,transparent_55%,#000_92%)]" />
-                  <div className="absolute inset-0 bg-gradient-to-t from-ink-900/60 via-ink-900/25 to-transparent" />
-                </div>
-              )}
-              {heroVariant === "cinema" && (
-                /* Film grade: warm multiply tint + vignette + deep base, so
-                   every photo gets the same cinematic treatment. */
-                <>
-                  <div className="absolute inset-0 bg-sienna-600 mix-blend-multiply opacity-30" />
-                  <div className="absolute inset-0 bg-[radial-gradient(120%_90%_at_50%_20%,transparent_35%,rgba(23,17,12,0.55)_100%)]" />
-                  <div className="absolute inset-x-0 bottom-0 h-[78%] bg-[linear-gradient(to_top,rgba(23,17,12,0.92)_0%,rgba(23,17,12,0.66)_40%,rgba(23,17,12,0.3)_72%,transparent_100%)]" />
-                </>
-              )}
-              <div className="absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-ink-900/40 to-transparent" />
-
-              {heroDashes}
-
-              {/* card4: the chapter mark stays on the photo — only the title
-                  moves down to the card. */}
-              {heroVariant === "card4" && (
-                <div className="absolute top-4 sm:top-6 start-4 sm:start-8 flex items-baseline gap-2.5 text-cream-50 [text-shadow:0_1px_3px_rgba(23,17,12,0.6)]">
-                  <div className="font-serif text-4xl sm:text-5xl leading-none">
-                    {ROMAN[day.dayNumber]}
-                  </div>
-                  <div className="text-[10px] uppercase tracking-[0.28em] font-medium text-cream-50/90">
-                    {t("plan_chapter_x_of_y", { x: String(day.dayNumber).padStart(2, "0"), y: String(itinerary.length).padStart(2, "0") })}
-                  </div>
-                </div>
-              )}
-
-              {heroVariant === "scrim" && (
-                <div className="absolute inset-x-0 bottom-0 px-4 sm:px-10 pb-6 sm:pb-12 text-cream-50 [text-shadow:0_1px_2px_rgba(23,17,12,0.55),0_2px_14px_rgba(23,17,12,0.35)]">
-                  <div className="max-w-4xl mx-auto">
-                    {renderHeroTitle("cream")}
-                    <div className="mt-4 sm:mt-5">{heroSlideChips}</div>
-                  </div>
-                </div>
-              )}
-
-              {heroVariant === "glass" && (
-                <div className="absolute inset-x-0 bottom-0 px-3 sm:px-8 pb-3 sm:pb-6 text-cream-50">
-                  <div className="max-w-4xl mx-auto rounded-2xl sm:rounded-3xl bg-ink-900/35 backdrop-blur-md ring-1 ring-cream-50/15 shadow-[0_10px_40px_rgba(0,0,0,0.3)] px-4 sm:px-8 py-4 sm:py-6">
-                    {renderHeroTitle("cream")}
-                    <div className="mt-3 sm:mt-4">{heroSlideChips}</div>
-                  </div>
-                </div>
-              )}
-
-              {heroVariant === "blur" && (
-                <div className="absolute inset-x-0 bottom-0 px-4 sm:px-10 pb-6 sm:pb-12 text-cream-50">
-                  <div className="max-w-4xl mx-auto">
-                    {renderHeroTitle("cream")}
-                    <div className="mt-4 sm:mt-5">{heroSlideChips}</div>
-                  </div>
-                </div>
-              )}
-
-              {/* focus: hierarchy per the trip's real needs — the DAY
-                  (weekday · date), the PLACE and the WEATHER lead; the
-                  day's theme is a quiet closing line. No photo credits. */}
-              {heroVariant === "focus" && (
-                <div className="absolute inset-x-0 bottom-0 px-4 sm:px-10 pb-6 sm:pb-10 text-cream-50">
-                  <div className="max-w-4xl mx-auto">
-                    <div className="text-[9px] sm:text-[10px] uppercase tracking-[0.3em] font-medium text-cream-50/65">
-                      {t("plan_chapter_x_of_y", { x: String(day.dayNumber).padStart(2, "0"), y: String(itinerary.length).padStart(2, "0") })}
-                    </div>
-                    <div className="mt-1.5 font-serif text-3xl sm:text-5xl leading-tight tracking-tight drop-shadow-[0_2px_10px_rgba(0,0,0,0.35)]">
-                      {localizeWeekday(day.weekday, lang)} · {localizeShortDate(day.date, lang)}
-                    </div>
-                    {localDay.base && (
-                      <div className="mt-2 flex items-center gap-1.5 text-[15px] sm:text-xl font-medium text-cream-50/95">
-                        <MapPin size={17} className="text-gold-400 shrink-0" />
-                        {localDay.base}
-                      </div>
-                    )}
-                    {heroForecast && (
-                      <div
-                        dir="ltr"
-                        className="mt-3 inline-flex items-center gap-2 rounded-full bg-cream-50/95 text-ink-900 px-3.5 py-1.5 shadow-[0_10px_28px_-10px_rgba(0,0,0,0.55)]"
-                      >
-                        <span className="text-sienna-600">{weatherIconFor(heroForecast.code, 18)}</span>
-                        <span className="font-bold text-[15px] sm:text-base tabular-nums">{heroForecast.tMax}°</span>
-                        <span className="text-ink-700/60 text-[13px] sm:text-sm tabular-nums">/ {heroForecast.tMin}°</span>
-                      </div>
-                    )}
-                    <div className="mt-3 sm:mt-4 font-serif text-lg sm:text-2xl text-cream-50/85 leading-snug max-w-2xl">
-                      {localDay.title}
-                    </div>
-                  </div>
-                </div>
-              )}
-
-              {heroVariant === "cinema" && (
-                <div className="absolute inset-x-0 bottom-0 px-4 sm:px-10 pb-7 sm:pb-12 text-cream-50">
-                  <div className="max-w-3xl mx-auto flex flex-col items-center text-center">
-                    <div className="text-[9px] sm:text-[10px] uppercase tracking-[0.5em] text-cream-50/75 font-medium">
-                      {t("plan_chapter_x_of_y", { x: String(day.dayNumber).padStart(2, "0"), y: String(itinerary.length).padStart(2, "0") })}
-                    </div>
-                    <h1 className="mt-2 font-serif text-3xl sm:text-6xl leading-[1.06] tracking-tight drop-shadow-[0_2px_14px_rgba(0,0,0,0.45)]">
-                      {localDay.title}
-                    </h1>
-                    {localDay.subtitle && (
-                      <p className="mt-2 font-serif italic text-cream-50/85 text-base sm:text-xl">
-                        {localDay.subtitle}
-                      </p>
-                    )}
-                    <div className="mt-3 flex items-center gap-3" aria-hidden>
-                      <span className="h-px w-14 sm:w-20 bg-cream-50/35" />
-                      <span className="font-serif text-lg sm:text-xl leading-none text-cream-50/90">
-                        {ROMAN[day.dayNumber]}
-                      </span>
-                      <span className="h-px w-14 sm:w-20 bg-cream-50/35" />
-                    </div>
-                    <div className="mt-3 flex items-center justify-center gap-2 sm:gap-3 text-[9px] sm:text-[11px] uppercase tracking-[0.3em] font-medium flex-wrap text-cream-50/85">
-                      {heroMetaItems}
-                    </div>
-                    <div className="mt-3">{heroSlideChips}</div>
-                  </div>
-                </div>
-              )}
-
-              {(heroVariant === "card" ||
-                heroVariant === "split" ||
-                heroVariant === "card2" ||
-                heroVariant === "card3" ||
-                heroVariant === "scrap") && (
-                <div className={`absolute z-10 start-4 ${heroVariant === "split" ? "bottom-3" : "top-3"}`}>
-                  {heroSlideChips}
-                </div>
-              )}
-
-              {/* marker: no card, no scrim — every text run carries its own
-                  tight ink bar, like a highlighter stroke over the photo. */}
-              {heroVariant === "marker" && (
-                <div className="absolute inset-x-0 bottom-0 px-4 sm:px-10 pb-6 sm:pb-10">
-                  <div className="max-w-4xl mx-auto flex flex-col items-start gap-2">
-                    <div className="flex items-stretch gap-1.5">
-                      <span className="inline-flex items-center bg-terracotta-500 text-cream-50 font-serif text-lg sm:text-2xl leading-none px-2.5 py-1 rounded-[4px]">
-                        {ROMAN[day.dayNumber]}
-                      </span>
-                      <span className="inline-flex items-center bg-ink-900/85 text-cream-50/90 text-[9px] sm:text-[10px] uppercase tracking-[0.26em] font-medium px-2.5 rounded-[4px]">
-                        {t("plan_chapter_x_of_y", { x: String(day.dayNumber).padStart(2, "0"), y: String(itinerary.length).padStart(2, "0") })}
-                      </span>
-                    </div>
-                    <h1 className="font-serif text-3xl sm:text-6xl leading-[1.25] sm:leading-[1.2] tracking-tight max-w-3xl">
-                      <span className="bg-ink-900/85 text-cream-50 px-2.5 py-0.5 rounded-[4px] [-webkit-box-decoration-break:clone] [box-decoration-break:clone]">
-                        {localDay.title}
-                      </span>
-                    </h1>
-                    {localDay.subtitle && (
-                      <p className="font-serif italic text-base sm:text-xl max-w-2xl leading-[1.55]">
-                        <span className="bg-cream-50/95 text-ink-900 px-2 py-0.5 rounded-[4px] [-webkit-box-decoration-break:clone] [box-decoration-break:clone]">
-                          {localDay.subtitle}
-                        </span>
-                      </p>
-                    )}
-                    <div className="mt-0.5 flex flex-wrap items-center gap-1.5">
-                      <span className="inline-flex items-center bg-ink-900/80 text-cream-50/95 text-[9px] sm:text-[10px] uppercase tracking-[0.2em] font-medium px-2 py-1 rounded-[4px]">
-                        {localizeWeekday(day.weekday, lang)} · {localizeShortDate(day.date, lang)}
-                      </span>
-                      <span className="inline-flex items-center bg-ink-900/80 text-cream-50/95 text-[9px] sm:text-[10px] uppercase tracking-[0.2em] font-medium px-2 py-1 rounded-[4px]">
-                        {t(REGION_KEY[day.region])}
-                      </span>
-                      {localDay.base && (
-                        <span className="inline-flex items-center gap-1 bg-ink-900/80 text-cream-50/95 text-[10px] px-2 py-1 rounded-[4px]">
-                          <MapPin size={10} className="opacity-70" /> {localDay.base}
-                        </span>
-                      )}
-                      <span className="inline-flex items-center bg-ink-900/80 px-2 py-1 rounded-[4px]">
-                        <DayWeatherBadge day={day} size={12} />
-                      </span>
-                      {heroSlideChips}
-                    </div>
-                  </div>
-                </div>
-              )}
-            </div>
-          )}
-        </header>
-
-        {/* EXPERIMENT: card / split variants put the title on a solid cream
-            surface overlapping or below the photo instead of on it. */}
-        {heroVariant === "card" && (
-          <div className="relative z-10 px-4 sm:px-6 -mt-14 sm:-mt-24">
-            <div className="max-w-4xl mx-auto rounded-3xl bg-cream-50 ring-1 ring-cream-300/70 shadow-[0_24px_60px_-24px_rgba(58,28,15,0.4)] px-5 sm:px-8 py-5 sm:py-7">
-              {renderHeroTitle("ink")}
-            </div>
-          </div>
-        )}
-        {heroVariant === "split" && (
-          <div className="bg-cream-50 border-b border-cream-300/60">
-            <div className="max-w-4xl mx-auto px-4 sm:px-6 pt-5 sm:pt-7 pb-6 sm:pb-8">
-              {renderHeroTitle("ink")}
-            </div>
-          </div>
-        )}
-        {heroVariant === "card2" && (
-          /* Ticket / boarding-pass: accent bar on the leading edge, roman
-             numeral medallion straddling the card's top edge, meta row as a
-             dashed "ticket stub" strip. */
-          <div className="relative z-10 px-4 sm:px-6 -mt-14 sm:-mt-24">
-            <div className="relative max-w-4xl mx-auto">
-              <div className="rounded-3xl bg-cream-50 ring-1 ring-cream-300/70 shadow-[0_24px_60px_-24px_rgba(58,28,15,0.4)] overflow-hidden">
-                <span aria-hidden className="absolute inset-y-0 start-0 w-1.5 bg-terracotta-500" />
-                <div className="px-6 sm:px-9 pt-5 sm:pt-6 pb-4 sm:pb-5">
-                  <div className="text-[10px] sm:text-[11px] uppercase tracking-[0.28em] font-medium text-terracotta-600/85">
-                    {t("plan_chapter_x_of_y", { x: String(day.dayNumber).padStart(2, "0"), y: String(itinerary.length).padStart(2, "0") })}
-                  </div>
-                  <h1 className="mt-1.5 font-serif text-3xl sm:text-6xl leading-[1.05] tracking-tight text-ink-900 max-w-3xl">
-                    {localDay.title}
-                  </h1>
-                  {localDay.subtitle && (
-                    <p className="mt-2 font-serif italic text-ink-700/75 text-base sm:text-xl max-w-2xl">
-                      {localDay.subtitle}
-                    </p>
-                  )}
-                </div>
-                <div className="border-t border-dashed border-cream-300 px-6 sm:px-9 py-3 sm:py-3.5 flex items-center gap-2 sm:gap-3 text-[10px] sm:text-[11px] uppercase tracking-[0.2em] font-medium flex-wrap text-ink-700/70 bg-cream-100/50">
-                  {heroMetaItems}
-                </div>
-              </div>
-              <div className="absolute -top-5 end-6 w-11 h-11 rounded-full bg-terracotta-500 text-cream-50 flex items-center justify-center font-serif text-lg leading-none shadow-lg ring-4 ring-cream-50">
-                {ROMAN[day.dayNumber]}
-              </div>
-            </div>
-          </div>
-        )}
-        {heroVariant === "card3" && (
-          /* Book-chapter sheet: full-width cream sheet with rounded top
-             corners rising into the photo, roman numeral medallion centered
-             on the seam, everything centered like a title page. */
-          <div className="relative z-10 -mt-6 sm:-mt-10">
-            <div className="relative bg-cream-50 rounded-t-[2.5rem] sm:rounded-t-[3rem] border-b border-cream-300/60">
-              <div className="absolute -top-7 left-1/2 -translate-x-1/2 w-14 h-14 rounded-full bg-cream-50 ring-1 ring-cream-300/70 shadow-[0_10px_30px_-10px_rgba(58,28,15,0.5)] flex items-center justify-center">
-                <span className={`font-serif text-2xl leading-none ${a.text}`}>
-                  {ROMAN[day.dayNumber]}
-                </span>
-              </div>
-              <div className="max-w-3xl mx-auto px-4 sm:px-6 pt-10 sm:pt-11 pb-6 sm:pb-8 text-center">
-                <div className="text-[10px] sm:text-[11px] uppercase tracking-[0.32em] font-medium text-ink-700/55">
-                  {t("plan_chapter_x_of_y", { x: String(day.dayNumber).padStart(2, "0"), y: String(itinerary.length).padStart(2, "0") })}
-                </div>
-                <h1 className="mt-2 font-serif text-3xl sm:text-6xl leading-[1.05] tracking-tight text-ink-900">
-                  {localDay.title}
-                </h1>
-                {localDay.subtitle && (
-                  <p className="mt-2 sm:mt-3 font-serif italic text-ink-700/75 text-base sm:text-xl">
-                    {localDay.subtitle}
-                  </p>
-                )}
-                <div className="mt-3 sm:mt-4 flex items-center justify-center gap-2 sm:gap-3 text-[10px] sm:text-[12px] uppercase tracking-[0.22em] font-medium flex-wrap text-ink-700/70">
-                  {heroMetaItems}
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
-        {heroVariant === "scrap" && (
-          /* Scrapbook: the title is a taped, slightly rotated sticker, the
-             date is its own crooked tag, and the chapter numeral is a
-             wax-seal stamp overlapping the photo edge. */
-          <div className="relative z-10 max-w-4xl mx-auto px-5 sm:px-8 -mt-16 sm:-mt-24">
-            <div className="relative me-10 sm:me-16">
-              <div className="relative -rotate-2 rounded-md bg-cream-50 ring-1 ring-cream-300/80 shadow-[0_18px_44px_-18px_rgba(58,28,15,0.55)] px-5 sm:px-8 py-4 sm:py-6">
-                <span aria-hidden className="absolute -top-2.5 start-8 w-16 h-5 -rotate-6 rounded-[2px] bg-gold-400/40 ring-1 ring-gold-400/30" />
-                <span aria-hidden className="absolute -bottom-2.5 end-10 w-14 h-5 rotate-3 rounded-[2px] bg-gold-400/35 ring-1 ring-gold-400/25" />
-                <div className="text-[10px] sm:text-[11px] uppercase tracking-[0.28em] font-medium text-terracotta-600/85">
-                  {t("plan_chapter_x_of_y", { x: String(day.dayNumber).padStart(2, "0"), y: String(itinerary.length).padStart(2, "0") })}
-                </div>
-                <h1 className="mt-1 font-serif text-3xl sm:text-5xl leading-[1.05] tracking-tight text-ink-900">
-                  {localDay.title}
-                </h1>
-                {localDay.subtitle && (
-                  <p className="mt-1.5 font-serif italic text-ink-700/75 text-[15px] sm:text-lg">
-                    {localDay.subtitle}
-                  </p>
-                )}
-              </div>
-              <div className="relative inline-flex rotate-1 ms-4 sm:ms-8 -mt-2 items-center gap-2 rounded-md bg-cream-50 ring-1 ring-cream-300/80 shadow-[0_10px_24px_-12px_rgba(58,28,15,0.5)] px-3 py-2 text-[9px] sm:text-[10px] uppercase tracking-[0.2em] font-medium text-ink-700/75 flex-wrap">
-                {heroMetaItems}
-              </div>
+          <div className="relative w-full aspect-[16/10] sm:aspect-[21/9] max-h-[62vh] overflow-hidden bg-ink-900">
+            {heroCarousel}
+            <div className="absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-ink-900/40 to-transparent" />
+            <div className="absolute inset-x-0 bottom-0 h-2/5 bg-gradient-to-t from-cream-50 via-cream-50/55 to-transparent" />
+            {heroDashes}
+            {/* CC-licensed photos must stay attributed — a minimal © glyph
+                in the corner, out of the content's way. */}
+            {heroSlideMeta.credit && (
               <div
-                aria-hidden
-                className="absolute -top-7 -end-6 sm:-end-10 rotate-6 w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-terracotta-500 text-cream-50 flex items-center justify-center font-serif text-xl sm:text-2xl leading-none shadow-[0_12px_30px_-10px_rgba(196,90,61,0.7)] border-2 border-dashed border-cream-50/70"
+                className="absolute top-3 start-4 z-10 px-1.5 py-[3px] rounded-full bg-ink-900/45 backdrop-blur-sm"
+                dir="ltr"
               >
-                {ROMAN[day.dayNumber]}
+                <PhotoCredit credit={heroSlideMeta.credit} variant="light" />
+              </div>
+            )}
+          </div>
+          <div className="bg-cream-50 border-b border-cream-300/60">
+            <div className="max-w-4xl mx-auto px-4 sm:px-6 pb-6 sm:pb-8">
+              <div className="flex items-center gap-2.5">
+                <div className="text-[9px] sm:text-[10px] uppercase tracking-[0.3em] font-medium text-ink-700/50">
+                  {t("plan_chapter_x_of_y", { x: String(day.dayNumber).padStart(2, "0"), y: String(itinerary.length).padStart(2, "0") })}
+                </div>
+                {isToday && (
+                  <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-terracotta-500 text-cream-50 text-[9px] uppercase tracking-[0.22em] font-bold shadow-[0_4px_18px_rgba(196,90,61,0.5)]">
+                    <Sun size={10} /> {t("today")}
+                  </span>
+                )}
+              </div>
+              <h1 className="mt-1.5 font-serif text-3xl sm:text-5xl text-ink-900 leading-tight tracking-tight">
+                {localizeWeekday(day.weekday, lang)} · {localizeShortDate(day.date, lang)}
+              </h1>
+              <div className="mt-2.5 flex flex-wrap items-center gap-x-4 gap-y-2">
+                {localDay.base && (
+                  <div className="flex items-center gap-1.5 text-[15px] sm:text-lg font-medium text-ink-800">
+                    <MapPin size={17} className="text-terracotta-500 shrink-0" />
+                    {localDay.base}
+                  </div>
+                )}
+                {heroForecast && (
+                  <div
+                    dir="ltr"
+                    className="inline-flex items-center gap-2 rounded-full bg-gold-400/20 ring-1 ring-gold-500/40 px-3.5 py-1.5 text-ink-900"
+                  >
+                    <span className="text-sienna-600">{weatherIconFor(heroForecast.code, 18)}</span>
+                    <span className="font-bold text-[15px] tabular-nums">{heroForecast.tMax}°</span>
+                    <span className="text-ink-700/60 text-[13px] tabular-nums">/ {heroForecast.tMin}°</span>
+                  </div>
+                )}
+              </div>
+              <div className="mt-3.5 pt-3.5 border-t border-ink-900/10 font-serif text-lg sm:text-2xl text-ink-800/85 leading-snug max-w-2xl">
+                {localDay.title}
               </div>
             </div>
           </div>
-        )}
-        {heroVariant === "card4" && (
-          /* Split data: chapter mark lives on the photo, the card carries
-             only the title, and the meta scatters into pills below. */
-          <>
-            <div className="relative z-10 px-4 sm:px-6 -mt-12 sm:-mt-20">
-              <div className="max-w-4xl mx-auto rounded-3xl bg-cream-50 ring-1 ring-cream-300/70 shadow-[0_24px_60px_-24px_rgba(58,28,15,0.4)] px-5 sm:px-8 py-5 sm:py-6">
-                <h1 className="font-serif text-3xl sm:text-6xl leading-[1.05] tracking-tight text-ink-900 max-w-3xl">
-                  {localDay.title}
-                </h1>
-                {localDay.subtitle && (
-                  <p className="mt-2 font-serif italic text-ink-700/75 text-base sm:text-xl max-w-2xl">
-                    {localDay.subtitle}
-                  </p>
-                )}
-              </div>
-            </div>
-            <div className="max-w-4xl mx-auto px-4 sm:px-6 mt-3 flex flex-wrap items-center justify-center gap-2">
-              <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-cream-50 ring-1 ring-cream-300/70 text-[10px] uppercase tracking-[0.2em] font-medium text-ink-700/75">
-                {localizeWeekday(day.weekday, lang)} · {localizeShortDate(day.date, lang)}
-              </span>
-              <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-cream-50 ring-1 ring-cream-300/70 text-[10px] uppercase tracking-[0.2em] font-medium text-ink-700/75">
-                {t(REGION_KEY[day.region])}
-              </span>
-              {localDay.base && (
-                <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-cream-50 ring-1 ring-cream-300/70 text-[10px] uppercase tracking-[0.2em] font-medium text-ink-700/75 normal-case tracking-normal">
-                  <MapPin size={11} className="opacity-70" /> {localDay.base}
-                </span>
-              )}
-              <span className="inline-flex items-center px-2 py-1 rounded-full bg-cream-50 ring-1 ring-cream-300/70">
-                <DayWeatherBadge day={day} size={12} />
-              </span>
-              {heroSlideChips}
-            </div>
-          </>
-        )}
+        </header>
 
         <div className="max-w-4xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
           {/* Where you sleep — compact area lodging pill */}
