@@ -117,9 +117,9 @@ export default function AttractionCard({ poi: rawPoi }: { poi: POI }) {
 
       {/* Bottom gradient + title (always visible) */}
       <div className="absolute inset-x-0 bottom-0 pointer-events-none">
-        <div className="h-40 bg-gradient-to-t from-ink-900/95 via-ink-900/60 to-transparent" />
+        <div className="h-48 bg-[linear-gradient(to_top,rgba(23,17,12,0.95)_0%,rgba(23,17,12,0.75)_40%,rgba(23,17,12,0)_100%)]" />
       </div>
-      <div className="absolute inset-x-0 bottom-0 px-4 sm:px-5 pb-4 sm:pb-5 text-cream-50">
+      <div className="absolute inset-x-0 bottom-0 px-4 sm:px-5 pb-4 sm:pb-5 text-cream-50 [text-shadow:0_1px_2px_rgba(23,17,12,0.55),0_2px_14px_rgba(23,17,12,0.35)]">
         <h3 className="font-serif text-2xl sm:text-[26px] leading-[1.05] drop-shadow-[0_2px_8px_rgba(0,0,0,0.35)]">
           {poi.name}
         </h3>

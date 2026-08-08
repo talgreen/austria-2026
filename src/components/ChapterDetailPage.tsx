@@ -59,11 +59,11 @@ import PhotoCredit from "./PhotoCredit";
 import MiniMap from "./MiniMap";
 import ListenButton from "./ListenButton";
 import GermanWordCarousel from "./GermanWordCarousel";
-import DayWeatherBadge from "./DayWeatherBadge";
 import { FunPackBody } from "./DayFunPack";
 import { getKidsPack } from "../data/kids";
 import CollapsibleSection from "./CollapsibleSection";
 import { useCarouselSwipe } from "../lib/useCarouselSwipe";
+import DayWeatherChip from "./DayWeatherChip";
 
 const ROMAN = ["", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X"];
 
@@ -148,12 +148,6 @@ function buildPlan(day: Day): PlanModel {
   });
   return { nodes, dayAlts };
 }
-
-const REGION_KEY: Record<string, DictKey> = {
-  north: "region_north_long",
-  south: "region_south_long",
-  transit: "region_transit_long"
-};
 
 /** Decide whether an activity should render with the "Optional" badge.
  *
@@ -511,9 +505,6 @@ function ChapterDetailContent({ day }: { day: Day }) {
 
   const area = getAreaForDay(day.dayNumber);
   const a = accentClasses(area.accent);
-  // For the hero (dark background), we need a lighter version of the accent text.
-  // We derive a hero-safe colour using opacity rather than a parallel colour system.
-  const heroAccentClass = "text-cream-50/90";
 
   const prevDay = day.dayNumber > 1 ? itinerary[day.dayNumber - 2] : null;
   const nextDay =
@@ -533,6 +524,63 @@ function ChapterDetailContent({ day }: { day: Day }) {
       },
       disabled: slides.length <= 1
     });
+
+  const heroCarousel =
+    slides.length === 0 ? (
+      // No photos for this day — show the styled placeholder
+      <motion.div
+        initial={{ scale: 1.06 }}
+        animate={{ scale: 1 }}
+        transition={{ duration: 1.2, ease: "easeOut" }}
+        className="absolute inset-0"
+      >
+        <PoiImage
+          src={lead.src}
+          alt={lead.alt}
+          region={localDay.region === "transit" ? "north" : localDay.region}
+          category={lead.category}
+          tags={lead.tags}
+        />
+      </motion.div>
+    ) : (
+      <AnimatePresence mode="sync">
+        <motion.div
+          key={currentSlide.src}
+          initial={{ opacity: 0, scale: 1.06 }}
+          animate={{ opacity: 1, scale: 1 }}
+          exit={{ opacity: 0, scale: 1 }}
+          transition={{
+            opacity: { duration: 1.4, ease: "easeInOut" },
+            scale: { duration: SLIDE_DURATION_MS / 1000 + 1.4, ease: "linear" }
+          }}
+          className="absolute inset-0 will-change-transform"
+        >
+          <PoiImage
+            src={currentSlide.src}
+            alt={currentSlide.alt}
+            region={localDay.region === "transit" ? "north" : localDay.region}
+            category={currentSlide.category}
+            tags={currentSlide.tags}
+          />
+        </motion.div>
+      </AnimatePresence>
+    );
+
+  const heroDashes = slides.length > 1 && (
+    <div
+      className="absolute end-4 sm:end-8 top-3 sm:top-5 z-10 flex gap-1 pointer-events-none"
+      aria-hidden
+    >
+      {slides.map((_, i) => (
+        <span
+          key={i}
+          className={`block h-px transition-all duration-500 ${
+            i === slideIdx ? "w-5 bg-cream-50/90" : "w-2 bg-cream-50/30"
+          }`}
+        />
+      ))}
+    </div>
+  );
 
   return (
     <div className="min-h-screen bg-cream-100/40">
@@ -557,80 +605,35 @@ function ChapterDetailContent({ day }: { day: Day }) {
       </div>
 
       <article>
-        {/* Hero — crossfading carousel of every photo from the day */}
+        {/* Hero — the day's photos crossfade behind a header that leads
+            with what the family needs at a glance: the day and date, the
+            home base, and the weather. The photo dissolves into the page
+            with no hard edge; the day's theme closes the block quietly. */}
         <header
-          className="relative w-full aspect-[16/10] sm:aspect-[21/9] max-h-[70vh] overflow-hidden bg-ink-900"
+          className="relative w-full overflow-hidden"
           style={heroSwipeTouchAction ? { touchAction: heroSwipeTouchAction } : undefined}
           {...heroSwipeHandlers}
         >
-          {slides.length === 0 ? (
-            // No photos for this day — show the styled placeholder
-            <motion.div
-              initial={{ scale: 1.06 }}
-              animate={{ scale: 1 }}
-              transition={{ duration: 1.2, ease: "easeOut" }}
-              className="absolute inset-0"
-            >
-              <PoiImage
-                src={lead.src}
-                alt={lead.alt}
-                region={localDay.region === "transit" ? "north" : localDay.region}
-                category={lead.category}
-                tags={lead.tags}
-              />
-            </motion.div>
-          ) : (
-            <AnimatePresence mode="sync">
-              <motion.div
-                key={currentSlide.src}
-                initial={{ opacity: 0, scale: 1.06 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 1 }}
-                transition={{
-                  opacity: { duration: 1.4, ease: "easeInOut" },
-                  scale: { duration: SLIDE_DURATION_MS / 1000 + 1.4, ease: "linear" }
-                }}
-                className="absolute inset-0 will-change-transform"
+          <div className="relative w-full aspect-[16/10] sm:aspect-[21/9] max-h-[62vh] overflow-hidden bg-ink-900">
+            {heroCarousel}
+            <div className="absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-ink-900/40 to-transparent" />
+            <div className="absolute inset-x-0 bottom-0 h-2/5 bg-gradient-to-t from-cream-50 via-cream-50/55 to-transparent" />
+            {heroDashes}
+            {/* CC-licensed photos must stay attributed — a minimal © glyph
+                in the corner, out of the content's way. */}
+            {heroSlideMeta.credit && (
+              <div
+                className="absolute top-3 start-4 z-10 px-1.5 py-[3px] rounded-full bg-ink-900/45 backdrop-blur-sm"
+                dir="ltr"
               >
-                <PoiImage
-                  src={currentSlide.src}
-                  alt={currentSlide.alt}
-                  region={localDay.region === "transit" ? "north" : localDay.region}
-                  category={currentSlide.category}
-                  tags={currentSlide.tags}
-                />
-              </motion.div>
-            </AnimatePresence>
-          )}
-
-          <div className="absolute inset-0 bg-gradient-to-t from-ink-900/95 via-ink-900/55 to-ink-900/15" />
-          <div className="absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-ink-900/40 to-transparent" />
-
-          {/* Carousel progress dashes — top-right of the hero */}
-          {slides.length > 1 && (
-            <div
-              className="absolute end-4 sm:end-8 top-3 sm:top-5 z-10 flex gap-1 pointer-events-none"
-              aria-hidden
-            >
-              {slides.map((_, i) => (
-                <span
-                  key={i}
-                  className={`block h-px transition-all duration-500 ${
-                    i === slideIdx ? "w-5 bg-cream-50/90" : "w-2 bg-cream-50/30"
-                  }`}
-                />
-              ))}
-            </div>
-          )}
-
-          <div className="absolute inset-x-0 bottom-0 px-4 sm:px-10 pb-6 sm:pb-12 text-cream-50">
-            <div className="max-w-4xl mx-auto">
-              <div className="flex items-baseline gap-3 sm:gap-4">
-                <div className="font-serif text-3xl sm:text-5xl leading-none drop-shadow-[0_2px_8px_rgba(0,0,0,0.45)]">
-                  {ROMAN[day.dayNumber]}
-                </div>
-                <div className="hidden sm:block h-px w-16 bg-cream-50/40 mb-2" />
-                <div className={`text-[10px] sm:text-[11px] uppercase tracking-[0.28em] font-medium ${heroAccentClass}`}>
+                <PhotoCredit credit={heroSlideMeta.credit} variant="light" />
+              </div>
+            )}
+          </div>
+          <div className="bg-cream-50 border-b border-cream-300/60">
+            <div className="max-w-4xl mx-auto px-4 sm:px-6 pb-6 sm:pb-8">
+              <div className="flex items-center gap-2.5">
+                <div className="text-[9px] sm:text-[10px] uppercase tracking-[0.3em] font-medium text-ink-700/50">
                   {t("plan_chapter_x_of_y", { x: String(day.dayNumber).padStart(2, "0"), y: String(itinerary.length).padStart(2, "0") })}
                 </div>
                 {isToday && (
@@ -639,64 +642,21 @@ function ChapterDetailContent({ day }: { day: Day }) {
                   </span>
                 )}
               </div>
-
-              <div className="mt-2 sm:mt-3 flex items-center gap-2 sm:gap-3 text-[10px] sm:text-[12px] uppercase tracking-[0.22em] text-cream-50/85 font-medium flex-wrap">
-                <span>{localizeWeekday(day.weekday, lang)}</span>
-                <span aria-hidden>·</span>
-                <span>{localizeShortDate(day.date, lang)}</span>
-                {day.departureTime && (
-                  <>
-                    <span aria-hidden>·</span>
-                    <span className="inline-flex items-center gap-1 normal-case tracking-normal text-cream-50/85">
-                      <Clock size={11} className="opacity-70" /> {lang === "he" ? `מומלץ לצאת ב־${day.departureTime}` : `Suggested depart: ${day.departureTime}`}
-                    </span>
-                  </>
-                )}
-                <span aria-hidden>·</span>
-                <span>{t(REGION_KEY[day.region])}</span>
-                {localDay.base && (
-                  <>
-                    <span aria-hidden>·</span>
-                    <span className="inline-flex items-center gap-1 normal-case tracking-normal text-cream-50/85">
-                      <MapPin size={11} className="opacity-70" /> {localDay.base}
-                    </span>
-                  </>
-                )}
-                <DayWeatherBadge day={day} size={12} />
-              </div>
-
-              <h1 className="mt-2 sm:mt-3 font-serif text-3xl sm:text-6xl leading-[1.05] tracking-tight max-w-3xl drop-shadow-[0_2px_10px_rgba(0,0,0,0.5)]">
-                {localDay.title}
+              <h1 className="mt-1.5 font-serif text-3xl sm:text-5xl text-ink-900 leading-tight tracking-tight">
+                {localizeWeekday(day.weekday, lang)} · {localizeShortDate(day.date, lang)}
               </h1>
-              {localDay.subtitle && (
-                <p className="mt-2 sm:mt-3 font-serif italic text-cream-50/85 text-base sm:text-xl max-w-2xl">
-                  {localDay.subtitle}
-                </p>
-              )}
-              {(heroSlideMeta.place || heroSlideMeta.credit) && (
-                <AnimatePresence mode="wait">
-                  <motion.div
-                    key={`hero-meta-${slides[slideIdx]?.src ?? lead.src ?? "none"}`}
-                    initial={{ opacity: 0, y: 6 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: 4 }}
-                    transition={{ duration: 0.35 }}
-                    className="mt-4 sm:mt-5 flex flex-wrap items-center gap-x-3 gap-y-2"
-                    dir="ltr"
-                  >
-                    {heroSlideMeta.place && (
-                      <div className="font-serif italic text-cream-50/95 text-[11px] sm:text-xs px-2 py-0.5 rounded-full bg-ink-900/55 backdrop-blur-sm">
-                        {heroSlideMeta.place}
-                      </div>
-                    )}
-                    {heroSlideMeta.credit && (
-                      <div className="px-1.5 py-[3px] rounded-full bg-ink-900/45 backdrop-blur-sm">
-                        <PhotoCredit credit={heroSlideMeta.credit} variant="light" />
-                      </div>
-                    )}
-                  </motion.div>
-                </AnimatePresence>
-              )}
+              <div className="mt-2.5 flex flex-wrap items-center gap-x-4 gap-y-2">
+                {localDay.base && (
+                  <div className="flex items-center gap-1.5 text-[15px] sm:text-lg font-medium text-ink-800">
+                    <MapPin size={17} className="text-terracotta-500 shrink-0" />
+                    {localDay.base}
+                  </div>
+                )}
+                <DayWeatherChip day={day} />
+              </div>
+              <div className="mt-3.5 pt-3.5 border-t border-ink-900/10 font-serif text-lg sm:text-2xl text-ink-800/85 leading-snug max-w-2xl">
+                {localDay.title}
+              </div>
             </div>
           </div>
         </header>
