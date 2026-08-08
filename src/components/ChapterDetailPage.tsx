@@ -551,7 +551,11 @@ function ChapterDetailContent({ day }: { day: Day }) {
     | "marker"
     | "poster"
     | "scrap"
-    | "arch";
+    | "arch"
+    | "blur"
+    | "ambient"
+    | "cinema"
+    | "editorial";
   const heroVariant = ((): HeroVariant => {
     const v = new URLSearchParams(window.location.search).get("hero");
     return v === "glass" ||
@@ -565,10 +569,50 @@ function ChapterDetailContent({ day }: { day: Day }) {
       v === "marker" ||
       v === "poster" ||
       v === "scrap" ||
-      v === "arch"
+      v === "arch" ||
+      v === "blur" ||
+      v === "ambient" ||
+      v === "cinema" ||
+      v === "editorial"
       ? v
       : "scrim";
   })();
+
+  /* ambient variant: sample the current photo's average color (darkened for
+     contrast) so the band under the photo color-matches every slide,
+     Apple-Music style. Falls back to a warm ink tone. */
+  const [ambientColor, setAmbientColor] = useState("#241C14");
+  const ambientSrc = currentSlide?.src ?? lead.src;
+  useEffect(() => {
+    if (heroVariant !== "ambient" || !ambientSrc) return;
+    const img = new Image();
+    img.src = ambientSrc;
+    img.onload = () => {
+      try {
+        const c = document.createElement("canvas");
+        c.width = 10;
+        c.height = 10;
+        const ctx = c.getContext("2d");
+        if (!ctx) return;
+        ctx.drawImage(img, 0, 0, 10, 10);
+        const d = ctx.getImageData(0, 5, 10, 5).data;
+        let r = 0,
+          g = 0,
+          b = 0,
+          n = 0;
+        for (let i = 0; i < d.length; i += 4) {
+          r += d[i];
+          g += d[i + 1];
+          b += d[i + 2];
+          n++;
+        }
+        const darken = (x: number) => Math.round((x / n) * 0.38 + 16);
+        setAmbientColor(`rgb(${darken(r)}, ${darken(g)}, ${darken(b)})`);
+      } catch {
+        /* keep the fallback tone */
+      }
+    };
+  }, [heroVariant, ambientSrc]);
 
   const heroCarousel =
     slides.length === 0 ? (
@@ -766,11 +810,17 @@ function ChapterDetailContent({ day }: { day: Day }) {
             EXPERIMENT: layout picked by ?hero= for the readability review. */}
         <header
           className={`relative w-full overflow-hidden ${
-            heroVariant === "card5" || heroVariant === "arch" || heroVariant === "poster"
+            heroVariant === "card5" ||
+            heroVariant === "arch" ||
+            heroVariant === "poster" ||
+            heroVariant === "editorial"
               ? ""
               : "bg-ink-900"
           }`}
-          style={heroSwipeTouchAction ? { touchAction: heroSwipeTouchAction } : undefined}
+          style={{
+            ...(heroSwipeTouchAction ? { touchAction: heroSwipeTouchAction } : {}),
+            ...(heroVariant === "ambient" ? { backgroundColor: ambientColor } : {})
+          }}
           {...heroSwipeHandlers}
         >
           {heroVariant === "card5" ? (
@@ -887,6 +937,64 @@ function ChapterDetailContent({ day }: { day: Day }) {
                 </div>
               </div>
             </>
+          ) : heroVariant === "ambient" ? (
+            /* Ambient: the photo dissolves into a band whose color is
+               sampled from the photo itself, so every chapter's hero is
+               color-matched to its image. */
+            <>
+              <div className="relative w-full aspect-[16/10] sm:aspect-[21/9] max-h-[60vh] overflow-hidden">
+                {heroCarousel}
+                <div className="absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-ink-900/40 to-transparent" />
+                <div
+                  className="absolute inset-0"
+                  style={{ background: `linear-gradient(to top, ${ambientColor} 0%, transparent 48%)` }}
+                />
+                {heroDashes}
+              </div>
+              <div className="relative -mt-10 sm:-mt-16 px-4 sm:px-10 pb-7 sm:pb-10 text-cream-50">
+                <div className="max-w-4xl mx-auto">
+                  {renderHeroTitle("cream")}
+                  <div className="mt-4 sm:mt-5">{heroSlideChips}</div>
+                </div>
+              </div>
+            </>
+          ) : heroVariant === "editorial" ? (
+            /* Editorial: the photo dissolves into the paper — no edge, no
+               box — and the title is set below it in a large, quiet
+               masthead with hairline rules. */
+            <>
+              <div className="relative w-full aspect-[16/10] sm:aspect-[21/9] max-h-[62vh] overflow-hidden bg-ink-900">
+                {heroCarousel}
+                <div className="absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-ink-900/40 to-transparent" />
+                <div className="absolute inset-x-0 bottom-0 h-2/5 bg-gradient-to-t from-cream-50 via-cream-50/55 to-transparent" />
+                {heroDashes}
+                <div className="absolute top-3 start-4 z-10">{heroSlideChips}</div>
+              </div>
+              <div className="bg-cream-50 border-b border-cream-300/60">
+                <div className="max-w-4xl mx-auto px-4 sm:px-6 pb-6 sm:pb-9">
+                  <div className="flex items-center gap-3">
+                    <span className={`font-serif text-2xl sm:text-3xl leading-none ${a.text}`}>
+                      {ROMAN[day.dayNumber]}
+                    </span>
+                    <span className="h-4 w-px bg-ink-900/20" aria-hidden />
+                    <span className="text-[10px] sm:text-[11px] uppercase tracking-[0.34em] font-medium text-ink-700/60">
+                      {t("plan_chapter_x_of_y", { x: String(day.dayNumber).padStart(2, "0"), y: String(itinerary.length).padStart(2, "0") })}
+                    </span>
+                  </div>
+                  <h1 className="mt-2.5 font-serif text-4xl sm:text-7xl leading-[1.04] tracking-tight text-ink-900 max-w-3xl">
+                    {localDay.title}
+                  </h1>
+                  {localDay.subtitle && (
+                    <p className="mt-2.5 font-serif italic text-ink-700/70 text-lg sm:text-2xl max-w-2xl">
+                      {localDay.subtitle}
+                    </p>
+                  )}
+                  <div className="mt-4 sm:mt-5 pt-3.5 border-t border-ink-900/10 flex items-center gap-2 sm:gap-3 text-[10px] sm:text-[11px] uppercase tracking-[0.24em] font-medium flex-wrap text-ink-700/70">
+                    {heroMetaItems}
+                  </div>
+                </div>
+              </div>
+            </>
           ) : heroVariant === "band" ? (
             <>
               {/* Photo melts into a solid ink band; the text sits on the band. */}
@@ -909,7 +1017,9 @@ function ChapterDetailContent({ day }: { day: Day }) {
                   ? "aspect-[4/3]"
                   : heroVariant === "marker"
                     ? "aspect-[16/13]"
-                    : "aspect-[16/10]"
+                    : heroVariant === "cinema"
+                      ? "aspect-[4/5]"
+                      : "aspect-[16/10]"
               }`}
             >
               {heroCarousel}
@@ -930,6 +1040,25 @@ function ChapterDetailContent({ day }: { day: Day }) {
               )}
               {heroVariant === "marker" && (
                 <div className="absolute inset-x-0 bottom-0 h-44 bg-gradient-to-t from-ink-900/30 to-transparent" />
+              )}
+              {heroVariant === "blur" && (
+                /* iOS-style progressive blur: the photo melts out of focus
+                   toward the text — no scrim wall, no card. */
+                <div className="absolute inset-x-0 bottom-0 h-[62%] pointer-events-none">
+                  <div className="absolute inset-0 backdrop-blur-[2px] [mask-image:linear-gradient(to_bottom,transparent_0%,#000_35%)]" />
+                  <div className="absolute inset-0 backdrop-blur-[7px] [mask-image:linear-gradient(to_bottom,transparent_30%,#000_65%)]" />
+                  <div className="absolute inset-0 backdrop-blur-[18px] [mask-image:linear-gradient(to_bottom,transparent_55%,#000_92%)]" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-ink-900/60 via-ink-900/25 to-transparent" />
+                </div>
+              )}
+              {heroVariant === "cinema" && (
+                /* Film grade: warm multiply tint + vignette + deep base, so
+                   every photo gets the same cinematic treatment. */
+                <>
+                  <div className="absolute inset-0 bg-sienna-600 mix-blend-multiply opacity-30" />
+                  <div className="absolute inset-0 bg-[radial-gradient(120%_90%_at_50%_20%,transparent_35%,rgba(23,17,12,0.55)_100%)]" />
+                  <div className="absolute inset-x-0 bottom-0 h-[78%] bg-[linear-gradient(to_top,rgba(23,17,12,0.92)_0%,rgba(23,17,12,0.66)_40%,rgba(23,17,12,0.3)_72%,transparent_100%)]" />
+                </>
               )}
               <div className="absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-ink-900/40 to-transparent" />
 
@@ -962,6 +1091,44 @@ function ChapterDetailContent({ day }: { day: Day }) {
                   <div className="max-w-4xl mx-auto rounded-2xl sm:rounded-3xl bg-ink-900/35 backdrop-blur-md ring-1 ring-cream-50/15 shadow-[0_10px_40px_rgba(0,0,0,0.3)] px-4 sm:px-8 py-4 sm:py-6">
                     {renderHeroTitle("cream")}
                     <div className="mt-3 sm:mt-4">{heroSlideChips}</div>
+                  </div>
+                </div>
+              )}
+
+              {heroVariant === "blur" && (
+                <div className="absolute inset-x-0 bottom-0 px-4 sm:px-10 pb-6 sm:pb-12 text-cream-50">
+                  <div className="max-w-4xl mx-auto">
+                    {renderHeroTitle("cream")}
+                    <div className="mt-4 sm:mt-5">{heroSlideChips}</div>
+                  </div>
+                </div>
+              )}
+
+              {heroVariant === "cinema" && (
+                <div className="absolute inset-x-0 bottom-0 px-4 sm:px-10 pb-7 sm:pb-12 text-cream-50">
+                  <div className="max-w-3xl mx-auto flex flex-col items-center text-center">
+                    <div className="text-[9px] sm:text-[10px] uppercase tracking-[0.5em] text-cream-50/75 font-medium">
+                      {t("plan_chapter_x_of_y", { x: String(day.dayNumber).padStart(2, "0"), y: String(itinerary.length).padStart(2, "0") })}
+                    </div>
+                    <h1 className="mt-2 font-serif text-3xl sm:text-6xl leading-[1.06] tracking-tight drop-shadow-[0_2px_14px_rgba(0,0,0,0.45)]">
+                      {localDay.title}
+                    </h1>
+                    {localDay.subtitle && (
+                      <p className="mt-2 font-serif italic text-cream-50/85 text-base sm:text-xl">
+                        {localDay.subtitle}
+                      </p>
+                    )}
+                    <div className="mt-3 flex items-center gap-3" aria-hidden>
+                      <span className="h-px w-14 sm:w-20 bg-cream-50/35" />
+                      <span className="font-serif text-lg sm:text-xl leading-none text-cream-50/90">
+                        {ROMAN[day.dayNumber]}
+                      </span>
+                      <span className="h-px w-14 sm:w-20 bg-cream-50/35" />
+                    </div>
+                    <div className="mt-3 flex items-center justify-center gap-2 sm:gap-3 text-[9px] sm:text-[11px] uppercase tracking-[0.3em] font-medium flex-wrap text-cream-50/85">
+                      {heroMetaItems}
+                    </div>
+                    <div className="mt-3">{heroSlideChips}</div>
                   </div>
                 </div>
               )}
