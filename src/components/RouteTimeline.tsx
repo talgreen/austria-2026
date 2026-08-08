@@ -10,6 +10,7 @@ import { useT, localizeWeekday, localizeShortDate } from "../lib/dict";
 import { useLang, useLoc } from "../lib/i18n";
 import { useLocalizeDay, useLocalizeStay } from "../data/i18n";
 import PoiImage from "./PoiImage";
+import DayWeatherChip from "./DayWeatherChip";
 import type { Day } from "../data/types";
 
 /** Pick a representative photo for a day: the first activity whose
@@ -127,8 +128,10 @@ export default function RouteTimeline() {
                     }`}
                   >
                     <div className="flex-1 min-w-0 py-3 ps-4 pe-2">
+                      {/* The day + date lead, with the forecast beside them;
+                          the day's theme is the quiet second line. */}
                       <div className="flex items-center gap-2 flex-wrap">
-                        <span className="text-[10px] uppercase tracking-[0.16em] font-semibold text-ink-700/60">
+                        <span className="font-serif text-[17px] leading-snug text-ink-900">
                           {localizeWeekday(day.weekday, lang, true)} · {localizeShortDate(day.date, lang)}
                         </span>
                         {isToday && (
@@ -136,12 +139,13 @@ export default function RouteTimeline() {
                             {t("today")}
                           </span>
                         )}
+                        <DayWeatherChip day={day} size="sm" />
                       </div>
-                      <div className="font-serif text-lg leading-snug text-ink-900 mt-0.5 line-clamp-2">
+                      <div className="text-[13px] text-ink-700/75 mt-1 line-clamp-1">
                         {ld.title}
                       </div>
                       {first && (
-                        <div className="text-xs text-ink-700/65 mt-1 line-clamp-1">
+                        <div className="text-xs text-ink-700/55 mt-0.5 line-clamp-1">
                           {first.time ? `${first.time} · ` : ""}
                           {first.title}
                         </div>

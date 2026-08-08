@@ -8,10 +8,6 @@ import {
   MapPin,
   Car,
   Sun,
-  CloudSun,
-  Cloud,
-  CloudRain,
-  CloudSnow,
   ExternalLink,
   Plus,
   X,
@@ -67,7 +63,7 @@ import { FunPackBody } from "./DayFunPack";
 import { getKidsPack } from "../data/kids";
 import CollapsibleSection from "./CollapsibleSection";
 import { useCarouselSwipe } from "../lib/useCarouselSwipe";
-import { forecastForDay, useTripWeather } from "../lib/weather";
+import DayWeatherChip from "./DayWeatherChip";
 
 const ROMAN = ["", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X"];
 
@@ -529,19 +525,6 @@ function ChapterDetailContent({ day }: { day: Day }) {
       disabled: slides.length <= 1
     });
 
-  /* The day's forecast as a first-class hero element (icon + high/low) —
-     day, place and weather lead the chapter header. */
-  const { weather: tripWeather } = useTripWeather();
-  const heroForecast = forecastForDay(tripWeather, day);
-  const weatherIconFor = (code: number, size: number) => {
-    if (code === 0) return <Sun size={size} />;
-    if (code <= 2) return <CloudSun size={size} />;
-    if (code <= 48) return <Cloud size={size} />;
-    if ((code >= 71 && code <= 77) || (code >= 85 && code <= 86))
-      return <CloudSnow size={size} />;
-    return <CloudRain size={size} />;
-  };
-
   const heroCarousel =
     slides.length === 0 ? (
       // No photos for this day — show the styled placeholder
@@ -669,16 +652,7 @@ function ChapterDetailContent({ day }: { day: Day }) {
                     {localDay.base}
                   </div>
                 )}
-                {heroForecast && (
-                  <div
-                    dir="ltr"
-                    className="inline-flex items-center gap-2 rounded-full bg-gold-400/20 ring-1 ring-gold-500/40 px-3.5 py-1.5 text-ink-900"
-                  >
-                    <span className="text-sienna-600">{weatherIconFor(heroForecast.code, 18)}</span>
-                    <span className="font-bold text-[15px] tabular-nums">{heroForecast.tMax}°</span>
-                    <span className="text-ink-700/60 text-[13px] tabular-nums">/ {heroForecast.tMin}°</span>
-                  </div>
-                )}
+                <DayWeatherChip day={day} />
               </div>
               <div className="mt-3.5 pt-3.5 border-t border-ink-900/10 font-serif text-lg sm:text-2xl text-ink-800/85 leading-snug max-w-2xl">
                 {localDay.title}
