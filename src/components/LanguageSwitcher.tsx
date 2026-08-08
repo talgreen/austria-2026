@@ -25,7 +25,7 @@ export default function LanguageSwitcher({ variant = "navbar", onDark = false }:
   if (variant === "minimal") {
     return (
       <div
-        className={`inline-flex items-center gap-0.5 rounded-full bg-cream-50/80 ring-1 ring-cream-300/70 p-0.5 text-[11px] font-medium ${baseColor}`}
+        className={`inline-flex items-center gap-0.5 rounded-full bg-cream-100 p-0.5 text-[11px] font-medium ${baseColor}`}
         role="group"
         aria-label="Language"
       >
@@ -51,7 +51,7 @@ export default function LanguageSwitcher({ variant = "navbar", onDark = false }:
   return (
     <div
       className={`inline-flex items-center gap-1 rounded-full ${
-        onDark ? "bg-cream-50/15 ring-1 ring-cream-50/25" : "bg-cream-100/80 ring-1 ring-cream-300/70"
+        onDark ? "bg-cream-50/15 ring-1 ring-cream-50/25" : "bg-cream-100"
       } px-1 py-1 text-[11px] font-semibold backdrop-blur`}
       role="group"
       aria-label="Language"
@@ -68,7 +68,7 @@ export default function LanguageSwitcher({ variant = "navbar", onDark = false }:
           onClick={() => setLang(l.id)}
           className={`px-2 py-0.5 rounded-full transition-colors min-h-7 ${
             lang === l.id
-              ? "bg-terracotta-500 text-cream-50 shadow-sm"
+              ? "bg-ink-900 text-cream-50"
               : onDark
               ? "text-cream-50/85 hover:text-cream-50"
               : "text-ink-700 hover:text-terracotta-600"

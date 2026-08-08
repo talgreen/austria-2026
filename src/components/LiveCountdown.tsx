@@ -92,7 +92,7 @@ function CountdownBlock({ value, label, pad, size, pulse }: BlockProps) {
         </span>
       </div>
       <div
-        className={`uppercase tracking-[0.22em] font-medium opacity-90 ${
+        className={`font-semibold opacity-90 ${
           size === "lg" ? "text-[10px] sm:text-xs" : "text-[9px] sm:text-[11px]"
         }`}
       >

@@ -84,7 +84,7 @@ export function TimelineStop({
             </span>
           )}
           {activity.optional && (
-            <span className="text-[10px] uppercase tracking-wide rounded-full bg-ink-800/8 text-ink-700/70 px-2 py-0.5">
+            <span className="text-[10px] font-semibold rounded-full bg-ink-800/8 text-ink-700/60 px-2 py-0.5">
               {t("optional_label")}
             </span>
           )}

@@ -155,7 +155,7 @@ export default function InstallPrompt() {
             className="fixed z-[8101] inset-x-0 bottom-0 md:inset-0 md:m-auto md:h-fit md:max-w-md
                        bg-cream-50 text-ink-900
                        rounded-t-3xl md:rounded-3xl
-                       border border-cream-300/70 shadow-[0_-12px_40px_-8px_rgba(42,31,26,0.25)] md:shadow-[0_24px_60px_-12px_rgba(42,31,26,0.35)]
+                       shadow-xl
                        pt-3 pb-[max(1rem,env(safe-area-inset-bottom))] px-5 md:p-6"
             initial={{ y: "100%", opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
@@ -206,7 +206,7 @@ export default function InstallPrompt() {
                 {steps.map((step, i) => (
                   <li
                     key={i}
-                    className="flex items-start gap-3 rounded-xl border border-cream-300/60 bg-cream-50 px-3 py-2.5"
+                    className="flex items-start gap-3 rounded-xl bg-cream-100 px-3 py-2.5"
                   >
                     <span
                       className="shrink-0 inline-flex items-center justify-center w-7 h-7 rounded-full
@@ -217,7 +217,7 @@ export default function InstallPrompt() {
                     </span>
                     <span
                       className="shrink-0 inline-flex items-center justify-center w-9 h-9 rounded-lg
-                                 bg-cream-100 text-ink-800"
+                                 bg-cream-50 text-ink-800"
                       aria-hidden
                     >
                       {step.icon}
@@ -240,10 +240,8 @@ export default function InstallPrompt() {
               <button
                 type="button"
                 onClick={handleInstallClick}
-                className="mt-5 w-full inline-flex items-center justify-center gap-2 rounded-full
-                           bg-terracotta-500 px-5 py-3 text-base font-medium text-cream-50
-                           shadow-md shadow-terracotta-700/20 active:scale-[0.99] transition-transform
-                           hover:bg-terracotta-600 focus:outline-none focus:ring-2 focus:ring-terracotta-500/40"
+                className="btn-primary mt-5 w-full justify-center py-3 text-base
+                           active:scale-[0.99] transition-transform"
               >
                 <Download size={18} />
                 {t("install_install_button")}

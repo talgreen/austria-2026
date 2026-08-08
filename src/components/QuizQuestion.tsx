@@ -36,7 +36,7 @@ export default function QuizQuestion({ question, index, total, selectedIndex, on
     <div className="flex flex-col gap-5">
       {/* Eyebrow — "Question X of Y" + progress dots */}
       <div className="flex items-center justify-between gap-3">
-        <div className="text-[10px] uppercase tracking-[0.28em] text-terracotta-600/85 font-medium">
+        <div className="text-[10px] font-semibold text-ink-700/60">
           {t("quiz_question_of", { n: index, total })}
         </div>
         <div className="flex gap-1.5" aria-hidden>
@@ -68,22 +68,22 @@ export default function QuizQuestion({ question, index, total, selectedIndex, on
           const isPicked = i === selectedIndex;
 
           let chrome =
-            "bg-cream-50 ring-1 ring-cream-300/70 hover:ring-terracotta-500/60 hover:bg-cream-100/80";
+            "bg-cream-50 hover:bg-cream-200/60";
           if (locked) {
             if (isCorrect) {
               chrome = "bg-olive-500/12 ring-1 ring-olive-500/55 text-ink-900";
             } else if (isPicked) {
               chrome = "bg-terracotta-500/15 ring-1 ring-terracotta-500/55 text-ink-900";
             } else {
-              chrome = "bg-cream-50/70 ring-1 ring-cream-300/60 text-ink-700/55";
+              chrome = "bg-cream-50/70 text-ink-700/55";
             }
           }
 
-          let badgeChrome = "bg-cream-100 text-ink-800 ring-1 ring-cream-300/80";
+          let badgeChrome = "bg-cream-100 text-ink-800";
           if (locked) {
             if (isCorrect) badgeChrome = "bg-olive-500 text-cream-50";
             else if (isPicked) badgeChrome = "bg-terracotta-500 text-cream-50";
-            else badgeChrome = "bg-cream-100 text-ink-700/55 ring-1 ring-cream-300/60";
+            else badgeChrome = "bg-cream-100 text-ink-700/55";
           }
 
           return (
@@ -131,7 +131,7 @@ export default function QuizQuestion({ question, index, total, selectedIndex, on
               : "bg-terracotta-500/10 ring-1 ring-terracotta-500/35 text-terracotta-700"
           }`}
         >
-          <div className="text-[10px] uppercase tracking-[0.22em] font-semibold opacity-80">
+          <div className="text-[10px] font-semibold opacity-80">
             {selectedIndex === correctIdx ? t("quiz_correct") : t("quiz_wrong")}
           </div>
           <div className="mt-1 text-ink-800/95">

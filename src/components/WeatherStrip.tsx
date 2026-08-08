@@ -32,10 +32,10 @@ const CACHE_KEY = "austria-weather-v3";
 const CACHE_TTL_MS = 60 * 60 * 1000;
 
 function iconFor(code: number, size = 14) {
-  if (code === 0) return <Sun size={size} className="text-gold-500" />;
-  if (code <= 2) return <CloudSun size={size} className="text-gold-400" />;
+  if (code === 0) return <Sun size={size} className="text-terracotta-500" />;
+  if (code <= 2) return <CloudSun size={size} className="text-ink-700/70" />;
   if (code <= 48) return <Cloud size={size} className="text-ink-700/70" />;
-  return <CloudRain size={size} className="text-olive-500" />;
+  return <CloudRain size={size} className="text-ink-700/70" />;
 }
 
 function dayLabel(iso: string, idx: number, lang: Lang, todayLabel: string): string {
@@ -132,20 +132,20 @@ export default function WeatherStrip({ variant = "paper" }: Props = {}) {
   if (!data) return null;
 
   const wrapperClasses = isGlass
-    ? "rounded-2xl bg-cream-50/12 backdrop-blur-md text-cream-50 border border-cream-50/20 shadow-[0_8px_32px_-12px_rgba(0,0,0,0.35)]"
+    ? "rounded-2xl bg-cream-50/12 backdrop-blur-md text-cream-50 border border-cream-50/20"
     : "card-paper";
   const labelText = isGlass ? "text-cream-50/70" : "text-ink-700/60";
   const tempStrong = isGlass ? "text-cream-50" : "text-ink-900";
   const tempMuted = isGlass ? "text-cream-50/70" : "text-ink-700/55";
-  const triggerHint = isGlass ? "text-gold-300" : "text-terracotta-600";
+  const triggerHint = isGlass ? "text-cream-50/85" : "text-terracotta-600";
   const dividerClass = isGlass ? "border-cream-50/15" : "border-cream-300/70";
   const dayLabelClass = isGlass ? "text-cream-50/75" : "text-ink-700/65";
   const dayTempStrong = isGlass ? "text-cream-50" : "text-ink-900";
   const dayTempMuted = isGlass ? "text-cream-50/65" : "text-ink-700/55";
 
   const tabActive = isGlass
-    ? "bg-cream-50/25 text-cream-50 shadow-sm"
-    : "bg-terracotta-500/15 text-ink-900 ring-1 ring-terracotta-500/25";
+    ? "bg-cream-50/25 text-cream-50"
+    : "bg-cream-50 text-ink-900";
   const tabIdle = isGlass
     ? "text-cream-50/65 hover:bg-cream-50/10"
     : "text-ink-700/70 hover:bg-cream-100/80";
@@ -210,7 +210,7 @@ export default function WeatherStrip({ variant = "paper" }: Props = {}) {
             return (
               <div key={spot.key} className="flex items-center gap-1.5 shrink-0">
                 {iconFor(w.days[0]?.code ?? 0, 14)}
-                <span className={`text-[10px] uppercase tracking-[0.16em] font-medium ${labelText}`}>
+                <span className={`text-[10px] font-semibold ${labelText}`}>
                   {SPOT_LABEL[spot.key][lang]}
                 </span>
                 <span className={`text-sm font-semibold tabular-nums ${tempStrong}`}>
@@ -224,7 +224,7 @@ export default function WeatherStrip({ variant = "paper" }: Props = {}) {
           })}
         </div>
         <span
-          className={`text-[10px] uppercase tracking-[0.18em] font-medium shrink-0 hidden sm:inline ${triggerHint}`}
+          className={`text-[10px] font-semibold shrink-0 hidden sm:inline ${triggerHint}`}
         >
           {open ? (lang === "he" ? "סגור" : "Hide") : lang === "he" ? "תחזית" : "Forecast"}
         </span>

@@ -544,7 +544,7 @@ export default function Quiz({
   if (locked) {
     return (
       <section>
-        <article className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-cream-50 via-cream-100 to-terracotta-500/10 ring-1 ring-cream-300/70 shadow-[0_18px_50px_-30px_rgba(151,109,76,0.45)]">
+        <article className="relative overflow-hidden rounded-3xl bg-cream-100">
           <Sparkles
             size={140}
             strokeWidth={1}
@@ -565,7 +565,7 @@ export default function Quiz({
 
   return (
     <section>
-      <article className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-cream-50 via-cream-100 to-terracotta-500/10 ring-1 ring-cream-300/70 shadow-[0_18px_50px_-30px_rgba(151,109,76,0.45)]">
+      <article className="relative overflow-hidden rounded-3xl bg-cream-100">
         <Sparkles
           size={140}
           strokeWidth={1}
@@ -586,7 +586,7 @@ export default function Quiz({
             className={`w-8 h-8 rounded-full flex items-center justify-center transition-colors ${
               muted
                 ? "bg-terracotta-500/10 text-terracotta-600 hover:bg-terracotta-500/20"
-                : "text-ink-700/55 hover:bg-cream-100 hover:text-ink-800"
+                : "text-ink-700/55 hover:bg-cream-200 hover:text-ink-800"
             }`}
           >
             {muted ? <VolumeX size={15} /> : <Volume2 size={15} />}
@@ -596,7 +596,7 @@ export default function Quiz({
               type="button"
               onClick={handleClose}
               aria-label={t("quiz_close")}
-              className="w-8 h-8 rounded-full text-ink-700/55 hover:bg-cream-100 hover:text-ink-800 flex items-center justify-center transition-colors"
+              className="w-8 h-8 rounded-full text-ink-700/55 hover:bg-cream-200 hover:text-ink-800 flex items-center justify-center transition-colors"
             >
               <X size={16} />
             </button>
@@ -672,7 +672,7 @@ export default function Quiz({
 function CardEyebrow() {
   const t = useT();
   return (
-    <div className="flex items-center gap-2 text-[10px] uppercase tracking-[0.32em] text-terracotta-600/85 font-medium">
+    <div className="flex items-center gap-2 text-[10px] font-semibold text-ink-700/60">
       <span className="inline-block w-1.5 h-1.5 rounded-full bg-terracotta-500" />
       {t("quiz_eyebrow")}
     </div>
@@ -682,7 +682,7 @@ function CardEyebrow() {
 function FallbackBanner() {
   const t = useT();
   return (
-    <div className="mb-4 px-3 py-2 rounded-xl bg-gold-500/10 ring-1 ring-gold-500/35 text-[12px] text-sienna-600 leading-snug">
+    <div className="mb-4 px-3 py-2 rounded-xl bg-cream-50 text-[12px] text-ink-700/80 leading-snug">
       {t("quiz_fallback_banner")}
     </div>
   );
@@ -706,7 +706,7 @@ function IdleView({
       transition={{ duration: 0.3 }}
     >
       <CardEyebrow />
-      <h2 className="mt-3 sm:mt-4 font-serif italic text-3xl sm:text-5xl text-ink-900 leading-none">
+      <h2 className="mt-3 sm:mt-4 font-serif text-3xl sm:text-5xl text-ink-900 leading-none">
         {t("quiz_title")}
       </h2>
       <p className="mt-3 text-[14.5px] sm:text-[16px] text-ink-700/85 leading-relaxed max-w-xl">
@@ -718,7 +718,7 @@ function IdleView({
           type="button"
           onClick={onStart}
           whileTap={{ scale: 0.97 }}
-          className="inline-flex items-center gap-2 px-5 py-3 rounded-full bg-terracotta-500 hover:bg-terracotta-600 text-cream-50 text-[14px] font-medium shadow-md shadow-terracotta-700/25 transition-colors"
+          className="inline-flex items-center gap-2 px-5 py-3 rounded-full bg-terracotta-500 hover:bg-terracotta-600 text-cream-50 text-[14px] font-medium transition-colors"
         >
           <Sparkles size={15} strokeWidth={2.1} />
           {t("quiz_start")}
@@ -726,9 +726,9 @@ function IdleView({
 
         {/* Tiny chip telling the kid which mode they're about to
             play in — no surprises when they hit Start. */}
-        <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-cream-50 ring-1 ring-cream-300/70 text-[12px] text-ink-700/75">
+        <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-cream-50 text-[12px] text-ink-700/75">
           {mode === "offline" ? (
-            <WifiOff size={12} strokeWidth={2} className="text-olive-700" />
+            <WifiOff size={12} strokeWidth={2} className="text-ink-700/70" />
           ) : (
             <Wifi size={12} strokeWidth={2} className="text-terracotta-600" />
           )}
@@ -736,8 +736,8 @@ function IdleView({
         </span>
 
         {lastScore && (
-          <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-cream-50 ring-1 ring-cream-300/70 text-[12px] text-ink-700/80">
-            <PartyPopper size={12} className="text-gold-500" strokeWidth={2} />
+          <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-cream-50 text-[12px] text-ink-700/80">
+            <PartyPopper size={12} className="text-terracotta-500" strokeWidth={2} />
             {t("quiz_score", { score: lastScore.score, total: lastScore.total })}
           </span>
         )}
@@ -757,7 +757,7 @@ function LoadingView({ isOfflinePackBuild }: { isOfflinePackBuild: boolean }) {
       className="flex items-center gap-3 py-3"
     >
       <Loader2 size={20} className="animate-spin text-terracotta-600" />
-      <div className="font-serif italic text-[16px] sm:text-lg text-ink-800">
+      <div className="font-serif text-[16px] sm:text-lg text-ink-800">
         {t(isOfflinePackBuild ? "quiz_offline_preparing" : "quiz_loading")}
       </div>
     </motion.div>
@@ -818,7 +818,7 @@ function PlayingView({
       {/* Voice-unavailable hint shown only when audio is unmuted —
           if the kid muted intentionally the hint is just noise. */}
       {!muted && voiceBackend === "none" && (
-        <div className="mb-4 px-3 py-2 rounded-xl bg-gold-500/10 ring-1 ring-gold-500/35 text-[12px] text-sienna-600 leading-snug">
+        <div className="mb-4 px-3 py-2 rounded-xl bg-cream-50 text-[12px] text-ink-700/80 leading-snug">
           {t("quiz_voice_unavailable")}
         </div>
       )}
@@ -845,7 +845,7 @@ function PlayingView({
             <button
               type="button"
               onClick={onEndRound}
-              className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full bg-cream-50 ring-1 ring-cream-300/70 hover:ring-terracotta-500/55 text-ink-700/85 text-[12.5px] font-medium transition-colors"
+              className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full bg-cream-50 hover:bg-cream-200/60 text-ink-700/85 text-[12.5px] font-medium transition-colors"
             >
               <StopCircle size={13} strokeWidth={2.1} />
               {t("quiz_end_round")}
@@ -853,7 +853,7 @@ function PlayingView({
           )}
 
           {liveWaitingForMore ? (
-            <div className="inline-flex items-center gap-2 px-4 py-2.5 rounded-full bg-cream-100 text-ink-700/70 text-[12.5px]">
+            <div className="inline-flex items-center gap-2 px-4 py-2.5 rounded-full bg-cream-50 text-ink-700/70 text-[12.5px]">
               <Loader2 size={13} className="animate-spin" />
               {t("quiz_loading_more")}
             </div>
@@ -921,17 +921,17 @@ function DoneView({
       {phase.usingFallback && <FallbackBanner />}
 
       <div className="mt-1 flex items-baseline flex-wrap gap-x-3 gap-y-1">
-        <h2 className="font-serif italic text-4xl sm:text-6xl text-ink-900 leading-none">
+        <h2 className="font-serif text-4xl sm:text-6xl text-ink-900 leading-none">
           {score}
           <span className="text-ink-700/40 mx-1">/</span>
           {total}
         </h2>
-        <div className="text-[12px] uppercase tracking-[0.22em] text-terracotta-600/85 font-medium">
+        <div className="text-[12px] font-semibold text-ink-700/60">
           {t("quiz_score", { score, total })}
         </div>
       </div>
 
-      <p className="mt-3 font-serif italic text-[16px] sm:text-lg text-ink-800/90 leading-snug">
+      <p className="mt-3 font-serif text-[16px] sm:text-lg text-ink-800/90 leading-snug">
         {flavor}
       </p>
 
@@ -939,7 +939,7 @@ function DoneView({
         <button
           type="button"
           onClick={onPlayAgain}
-          className="inline-flex items-center gap-2 px-4 py-2.5 rounded-full bg-terracotta-500 hover:bg-terracotta-600 text-cream-50 text-[13px] font-medium shadow-md shadow-terracotta-700/25 transition-colors"
+          className="inline-flex items-center gap-2 px-4 py-2.5 rounded-full bg-terracotta-500 hover:bg-terracotta-600 text-cream-50 text-[13px] font-medium transition-colors"
         >
           <RotateCcw size={13} strokeWidth={2.1} />
           {t("quiz_play_again")}
@@ -947,7 +947,7 @@ function DoneView({
         <button
           type="button"
           onClick={onNewQuestions}
-          className="inline-flex items-center gap-2 px-4 py-2.5 rounded-full bg-cream-50 ring-1 ring-cream-300/70 hover:ring-terracotta-500/55 text-ink-800 text-[13px] font-medium transition-colors"
+          className="inline-flex items-center gap-2 px-4 py-2.5 rounded-full bg-cream-50 hover:bg-cream-200/60 text-ink-800 text-[13px] font-medium transition-colors"
         >
           <RefreshCw size={13} strokeWidth={2.1} />
           {t("quiz_new_questions")}
@@ -955,7 +955,7 @@ function DoneView({
         <button
           type="button"
           onClick={onAskQuizzo}
-          className="inline-flex items-center gap-2 px-4 py-2.5 rounded-full bg-cream-50 ring-1 ring-cream-300/70 hover:ring-terracotta-500/55 text-ink-800 text-[13px] font-medium transition-colors"
+          className="inline-flex items-center gap-2 px-4 py-2.5 rounded-full bg-cream-50 hover:bg-cream-200/60 text-ink-800 text-[13px] font-medium transition-colors"
         >
           <MessageCircle size={13} strokeWidth={2.1} />
           {t("quiz_ask_quizzo")}
@@ -984,7 +984,7 @@ function ErrorView({
         <CardEyebrow />
       </div>
 
-      <h2 className="font-serif italic text-2xl sm:text-3xl text-ink-900">
+      <h2 className="font-serif text-2xl sm:text-3xl text-ink-900">
         {t("quiz_error")}
       </h2>
       <p className="mt-2 text-[13.5px] sm:text-[14.5px] text-ink-700/75 leading-relaxed">
@@ -1037,11 +1037,11 @@ function LockedView({
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.25 }}
     >
-      <div className="flex items-center gap-2 text-[10px] uppercase tracking-[0.32em] text-terracotta-600/65 font-medium">
+      <div className="flex items-center gap-2 text-[10px] font-semibold text-ink-700/60">
         <Lock size={12} strokeWidth={2.1} />
         {t("quiz_locked_eyebrow")}
       </div>
-      <h2 className="mt-3 sm:mt-4 font-serif italic text-2xl sm:text-4xl text-ink-900 leading-tight">
+      <h2 className="mt-3 sm:mt-4 font-serif text-2xl sm:text-4xl text-ink-900 leading-tight">
         {t("quiz_locked_title")}
       </h2>
       {friendlyDate && (
@@ -1073,9 +1073,9 @@ function ModeToggle({
 
   const baseChipClass =
     "inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[12px] font-medium transition-colors";
-  const activeClass = "bg-terracotta-500 text-cream-50 shadow-sm";
+  const activeClass = "bg-ink-900 text-cream-50";
   const inactiveClass =
-    "text-ink-700/65 hover:text-ink-800 hover:bg-cream-50";
+    "text-ink-700/65 hover:text-ink-800 hover:bg-cream-100";
 
   const hint =
     mode === "offline"
@@ -1090,7 +1090,7 @@ function ModeToggle({
     >
       <div className="flex items-center justify-between gap-3 flex-wrap">
         <div className="flex items-center gap-2">
-          <span className="text-[10px] uppercase tracking-[0.22em] text-ink-700/55 font-medium">
+          <span className="text-[10px] font-semibold text-ink-700/60">
             {t("quiz_mode_label")}
           </span>
         </div>
@@ -1098,7 +1098,7 @@ function ModeToggle({
         <div
           role="group"
           aria-label={t("quiz_mode_label")}
-          className="inline-flex p-0.5 bg-cream-100 rounded-full ring-1 ring-cream-300/70"
+          className="inline-flex p-0.5 bg-cream-50 rounded-full"
         >
           <button
             type="button"

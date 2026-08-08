@@ -69,14 +69,14 @@ export default function MiniMap({ pois }: { pois: POI[] }) {
   const t = useT();
   if (pois.length === 0) {
     return (
-      <div className="h-64 sm:h-80 rounded-2xl bg-cream-100 ring-1 ring-cream-300/70 flex items-center justify-center text-ink-700/55 text-sm font-serif italic">
+      <div className="h-64 sm:h-80 rounded-2xl bg-cream-100 flex items-center justify-center text-ink-700/55 text-sm font-serif">
         {t("no_locations_for_chapter")}
       </div>
     );
   }
 
   return (
-    <div className="overflow-hidden rounded-2xl ring-1 ring-cream-300/70 shadow-[0_18px_40px_-22px_rgba(58,28,15,0.18)]">
+    <div className="overflow-hidden rounded-2xl">
       <MapContainer
         center={pois[0].coords}
         zoom={10}

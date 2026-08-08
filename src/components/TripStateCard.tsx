@@ -28,10 +28,7 @@ export default function TripStateCard() {
       {state.phase === "before" && (
         <div
           className="relative px-5 sm:px-8 py-7 sm:py-10 text-cream-50 overflow-hidden"
-          style={{
-            background:
-              "linear-gradient(135deg, #C45A3D 0%, #A8472D 55%, #8B3622 100%)"
-          }}
+          style={{ background: "#0F0F0F" }}
         >
           <div
             className="absolute inset-0 opacity-25"
@@ -53,7 +50,7 @@ export default function TripStateCard() {
           </svg>
 
           <div className="relative">
-            <div className="flex items-center justify-center gap-2 text-[10px] sm:text-xs uppercase tracking-[0.28em] font-medium opacity-90 mb-4 sm:mb-6">
+            <div className="flex items-center justify-center gap-2 text-[10px] sm:text-xs font-semibold opacity-90 mb-4 sm:mb-6">
               <Sparkles size={11} />
               <span>Austria 2026 begins</span>
               <span className="opacity-60">·</span>
@@ -62,7 +59,7 @@ export default function TripStateCard() {
 
             <LiveCountdown target={TRIP_START} mode="down" size="lg" />
 
-            <div className="mt-5 sm:mt-7 text-center font-serif italic text-lg sm:text-2xl leading-snug opacity-95">
+            <div className="mt-5 sm:mt-7 text-center font-serif text-lg sm:text-2xl leading-snug opacity-95">
               {state.daysUntil <= 1
                 ? "Gute Reise — almost there."
                 : state.daysUntil <= 7
@@ -79,20 +76,18 @@ export default function TripStateCard() {
         <div className="grid sm:grid-cols-[auto_1fr] gap-0">
           <div
             className="relative px-6 py-6 sm:px-10 sm:py-8 text-cream-50 flex sm:flex-col items-center justify-center gap-4 sm:gap-2 overflow-hidden"
-            style={{
-              background: "linear-gradient(135deg, #C45A3D 0%, #A8472D 100%)"
-            }}
+            style={{ background: "#0F0F0F" }}
           >
             <div className="flex flex-col items-center">
               <div className="font-serif text-7xl sm:text-8xl leading-none tracking-tight">
                 {state.today.dayNumber}
               </div>
-              <div className="text-[10px] uppercase tracking-[0.22em] font-medium opacity-90 mt-1">
+              <div className="text-[10px] font-semibold opacity-90 mt-1">
                 of 10
               </div>
             </div>
             <div className="hidden sm:block w-12 h-px bg-cream-50/40 my-2" />
-            <div className="flex items-center gap-1.5 text-[10px] uppercase tracking-[0.22em] opacity-90">
+            <div className="flex items-center gap-1.5 text-[10px] font-semibold opacity-90">
               <Clock size={11} />
               <span>
                 {state.elapsed.days}d {String(state.elapsed.hours).padStart(2, "0")}h in
@@ -101,7 +96,7 @@ export default function TripStateCard() {
           </div>
 
           <div className="px-5 py-5 sm:px-7 sm:py-7">
-            <div className="flex items-center gap-2 text-xs uppercase tracking-[0.22em] text-terracotta-600 font-medium">
+            <div className="flex items-center gap-2 text-xs font-semibold text-ink-700/60">
               <Sun size={12} /> Today &middot; {formatDate(state.today.date)}
             </div>
             <div className="font-serif text-2xl sm:text-3xl text-ink-900 mt-1.5 leading-tight">
@@ -118,7 +113,7 @@ export default function TripStateCard() {
             )}
             {state.tomorrow && (
               <div className="mt-3 inline-flex items-center gap-1.5 text-[11px] text-ink-700/70">
-                <MapPin size={11} className="text-olive-500" />
+                <MapPin size={11} className="text-ink-700/70" />
                 Tomorrow: {state.tomorrow.title}
               </div>
             )}
@@ -129,16 +124,16 @@ export default function TripStateCard() {
       {state.phase === "after" && (
         <div
           className="px-6 py-8 sm:px-10 sm:py-10 text-cream-50 text-center"
-          style={{ background: "linear-gradient(135deg, #8B4513 0%, #6F3710 100%)" }}
+          style={{ background: "#0F0F0F" }}
         >
           <Plane size={32} className="mx-auto mb-2 opacity-90" />
-          <div className="text-[10px] uppercase tracking-[0.28em] opacity-90">
+          <div className="text-[10px] font-semibold opacity-90">
             Trip complete
           </div>
           <div className="font-serif text-3xl sm:text-4xl mt-2">
             That was Austria 2026
           </div>
-          <p className="font-serif italic text-base sm:text-lg opacity-90 mt-1">
+          <p className="font-serif text-base sm:text-lg opacity-90 mt-1">
             Until next time. Buon ritorno.
           </p>
         </div>

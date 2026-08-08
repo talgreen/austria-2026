@@ -100,7 +100,7 @@ function GermanWordCarouselInner({
   return (
     <section className="space-y-6 sm:space-y-8">
       <article
-        className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-cream-50 via-cream-100 to-gold-400/10 ring-1 ring-cream-300/70 shadow-[0_18px_50px_-30px_rgba(151,109,76,0.45)]"
+        className="relative overflow-hidden rounded-3xl bg-cream-100"
         style={swipeTouchAction ? { touchAction: swipeTouchAction } : undefined}
         {...swipeHandlers}
       >
@@ -112,7 +112,7 @@ function GermanWordCarouselInner({
         />
 
         <div className="relative px-5 sm:px-8 py-6 sm:py-8 flex flex-col min-h-[280px] sm:min-h-[320px]">
-          <div className="flex items-center gap-2 text-[10px] uppercase tracking-[0.32em] text-terracotta-600/85 font-medium shrink-0">
+          <div className="flex items-center gap-2 text-[10px] font-semibold text-ink-700/60 shrink-0">
             <span className="inline-block w-1.5 h-1.5 rounded-full bg-terracotta-500 shrink-0" />
             {t("word_eyebrow")}
           </div>
@@ -128,7 +128,7 @@ function GermanWordCarouselInner({
                 className="mt-4 sm:mt-5 flex-1 flex flex-col"
               >
                 <div className="flex flex-wrap items-start justify-between gap-3">
-                  <h2 className="font-serif italic text-4xl sm:text-6xl text-ink-900 leading-none min-w-0">
+                  <h2 className="font-serif text-4xl sm:text-6xl text-ink-900 leading-none min-w-0">
                     {w.word}
                   </h2>
                 </div>
@@ -142,7 +142,7 @@ function GermanWordCarouselInner({
                       state === "error"
                         ? "ring-amber-400/90 text-ink-700/70"
                         : state === "playing"
-                          ? "ring-terracotta-400 text-ink-900 shadow-sm"
+                          ? "ring-terracotta-400 text-ink-900"
                           : "ring-cream-300/90 text-ink-700/85 hover:ring-terracotta-300/80 hover:bg-cream-50/95"
                     }`}
                     aria-label={`${t("word_pronounce_chip_listen")}: ${w.word}`}
@@ -169,7 +169,7 @@ function GermanWordCarouselInner({
                 </div>
 
                 <p className="mt-3 text-[15px] sm:text-[17px] text-ink-700/90 leading-snug">
-                  <span className="text-[10px] uppercase tracking-[0.24em] text-ink-700/55 font-medium me-2">
+                  <span className="text-[10px] font-semibold text-ink-700/60 me-2">
                     {t("word_meaning_label")}
                   </span>
                   {w.meaning}
@@ -177,11 +177,11 @@ function GermanWordCarouselInner({
 
                 {w.example && (
                   <div className="mt-5 pt-5 border-t border-cream-300/60 flex-1">
-                    <div className="text-[10px] uppercase tracking-[0.24em] text-ink-700/55 font-medium mb-1.5">
+                    <div className="text-[10px] font-semibold text-ink-700/60 mb-1.5">
                       {t("word_use_label")}
                     </div>
                     <div
-                      className="text-start font-serif italic text-[16px] sm:text-[18px] text-ink-900 leading-snug"
+                      className="text-start font-serif text-[16px] sm:text-[18px] text-ink-900 leading-snug"
                     >
                       <span dir="ltr" className="inline-block">
                         “{w.example}”
@@ -194,11 +194,11 @@ function GermanWordCarouselInner({
                             exToggle(e);
                           }}
                           dir="ltr"
-                          className={`mx-2 inline-flex shrink-0 items-center gap-1.5 rounded-full bg-cream-50/90 px-2.5 py-1 text-left align-middle font-sans not-italic ring-1 transition-all outline-none focus-visible:ring-2 focus-visible:ring-terracotta-400/80 ${
+                          className={`mx-2 inline-flex shrink-0 items-center gap-1.5 rounded-full bg-cream-50/90 px-2.5 py-1 text-left align-middle font-sans ring-1 transition-all outline-none focus-visible:ring-2 focus-visible:ring-terracotta-400/80 ${
                             exState === "error"
                               ? "ring-amber-400/90 text-ink-700/70"
                               : exState === "playing"
-                                ? "ring-terracotta-400 text-ink-900 shadow-sm"
+                                ? "ring-terracotta-400 text-ink-900"
                                 : "ring-cream-300/90 text-ink-700/85 hover:ring-terracotta-300/80"
                           }`}
                           aria-label={t("word_example_chip_listen")}
@@ -238,7 +238,7 @@ function GermanWordCarouselInner({
             <button
               type="button"
               onClick={() => go(-1)}
-              className="inline-flex h-7 w-7 items-center justify-center rounded-full bg-cream-50/95 ring-1 ring-cream-300/70 text-ink-700 hover:bg-terracotta-500 hover:text-cream-50 hover:ring-terracotta-500 transition-colors"
+              className="inline-flex h-7 w-7 items-center justify-center rounded-full bg-cream-50 text-ink-700 hover:bg-terracotta-500 hover:text-cream-50 transition-colors"
               aria-label={t("word_carousel_prev")}
             >
               <ChevronLeft size={14} strokeWidth={2.2} />
@@ -263,7 +263,7 @@ function GermanWordCarouselInner({
             <button
               type="button"
               onClick={() => go(1)}
-              className="inline-flex h-7 w-7 items-center justify-center rounded-full bg-cream-50/95 ring-1 ring-cream-300/70 text-ink-700 hover:bg-terracotta-500 hover:text-cream-50 hover:ring-terracotta-500 transition-colors"
+              className="inline-flex h-7 w-7 items-center justify-center rounded-full bg-cream-50 text-ink-700 hover:bg-terracotta-500 hover:text-cream-50 transition-colors"
               aria-label={t("word_carousel_next")}
             >
               <ChevronRight size={14} strokeWidth={2.2} />

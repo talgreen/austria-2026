@@ -94,13 +94,13 @@ export default function KidsSection() {
       kicker={t("kids_kicker")}
     >
       {/* Day stepper — one day at a time instead of 18 number chips */}
-      <div className="flex items-center justify-between gap-3 rounded-2xl bg-cream-50 ring-1 ring-cream-300/70 px-2 py-2">
+      <div className="flex items-center justify-between gap-3 rounded-2xl bg-cream-100 px-2 py-2">
         <button
           type="button"
           onClick={() => setSelectedDay(d => Math.max(1, d - 1))}
           disabled={selectedDay <= 1}
           aria-label={t("kids_prev_day")}
-          className="shrink-0 w-11 h-11 rounded-xl flex items-center justify-center text-ink-800 hover:bg-cream-100 active:bg-cream-200 disabled:opacity-30 disabled:pointer-events-none transition-colors cursor-pointer"
+          className="shrink-0 w-11 h-11 rounded-xl flex items-center justify-center text-ink-800 hover:bg-cream-200 active:bg-cream-300 disabled:opacity-30 disabled:pointer-events-none transition-colors cursor-pointer"
         >
           <PrevIcon size={20} strokeWidth={2} />
         </button>
@@ -110,7 +110,7 @@ export default function KidsSection() {
               {t("hero_photo_day", { n: selectedDay })}
             </span>
             {isToday && (
-              <span className="inline-flex items-center px-2 py-0.5 rounded-full bg-mustard-500 text-rust-700 text-[10px] uppercase tracking-[0.12em] font-bold">
+              <span className="inline-flex items-center px-2 py-0.5 rounded-full bg-terracotta-500 text-cream-50 text-[10px] font-bold">
                 {t("kids_today_chip")}
               </span>
             )}
@@ -127,7 +127,7 @@ export default function KidsSection() {
           onClick={() => setSelectedDay(d => Math.min(maxDay, d + 1))}
           disabled={selectedDay >= maxDay}
           aria-label={t("kids_next_day")}
-          className="shrink-0 w-11 h-11 rounded-xl flex items-center justify-center text-ink-800 hover:bg-cream-100 active:bg-cream-200 disabled:opacity-30 disabled:pointer-events-none transition-colors cursor-pointer"
+          className="shrink-0 w-11 h-11 rounded-xl flex items-center justify-center text-ink-800 hover:bg-cream-200 active:bg-cream-300 disabled:opacity-30 disabled:pointer-events-none transition-colors cursor-pointer"
         >
           <NextIcon size={20} strokeWidth={2} />
         </button>
@@ -135,7 +135,7 @@ export default function KidsSection() {
 
       {/* Quick-nav — opens a section and scrolls to it */}
       <div className="mt-4">
-        <div className="text-[10px] uppercase tracking-[0.28em] text-ink-700/55 font-medium">
+        <div className="text-[10px] font-semibold text-ink-700/60">
           {t("kids_jump_to")}
         </div>
         <div className="mt-2 flex gap-2 overflow-x-auto pb-1 [-webkit-overflow-scrolling:touch]">
@@ -144,7 +144,7 @@ export default function KidsSection() {
               key={key}
               type="button"
               onClick={() => jumpTo(key)}
-              className="shrink-0 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-cream-100 hover:bg-cream-200 active:bg-cream-300 ring-1 ring-cream-300/70 text-[13px] font-medium text-ink-900 transition-colors cursor-pointer"
+              className="shrink-0 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-cream-100 hover:bg-cream-200 active:bg-cream-300 text-[13px] font-medium text-ink-900 transition-colors cursor-pointer"
             >
               <Icon size={13} className="text-rust-600" />
               {t(labelKey)}

@@ -9,7 +9,7 @@ import { ChallengeCard, RevealCard, TongueTwisterCard } from "./FunPackCards";
 function GroupLabel({ icon: Icon, labelKey }: { icon: typeof Puzzle; labelKey: DictKey }) {
   const t = useT();
   return (
-    <div className="flex items-center gap-2 text-[10px] uppercase tracking-[0.28em] text-rust-600/85 font-medium">
+    <div className="flex items-center gap-2 text-[10px] font-semibold text-ink-700/60">
       <Icon size={14} strokeWidth={2} />
       {t(labelKey)}
     </div>
@@ -42,12 +42,12 @@ export function FunPackBody({
       {(pack.theme || lang === "en") && (
         <div dir="rtl" className="flex flex-wrap items-center gap-x-3 gap-y-1">
           {pack.theme && (
-            <p className="font-serif italic text-xl sm:text-2xl text-ink-900">
+            <p className="font-serif text-xl sm:text-2xl text-ink-900">
               {pack.theme}
             </p>
           )}
           {lang === "en" && (
-            <span dir="ltr" className="text-xs text-ink-700/60 italic">
+            <span dir="ltr" className="text-xs text-ink-700/60">
               {t("kids_hebrew_note")}
             </span>
           )}
@@ -103,7 +103,7 @@ export function FunPackBody({
                 key={g.id}
                 type="button"
                 onClick={() => navigateTab("kids")}
-                className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full bg-cream-100 hover:bg-cream-200 active:bg-cream-300 ring-1 ring-cream-300/70 text-sm font-medium text-ink-900 transition-colors cursor-pointer"
+                className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full bg-cream-100 hover:bg-cream-200 active:bg-cream-300 text-sm font-medium text-ink-900 transition-colors cursor-pointer"
               >
                 <Gamepad2 size={14} className="text-rust-600" />
                 {g.name}
@@ -136,7 +136,7 @@ export default function DayFunPack({ dayNumber }: { dayNumber: number }) {
 
   return (
     <section>
-      <div className="flex items-center gap-2 text-[10px] uppercase tracking-[0.32em] font-medium text-rust-600/85">
+      <div className="flex items-center gap-2 text-[10px] font-semibold text-ink-700/60">
         <PartyPopper size={13} strokeWidth={2} />
         {t("kids_eyebrow")}
       </div>

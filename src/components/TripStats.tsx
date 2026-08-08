@@ -68,7 +68,7 @@ function StatCell({ stat, fire }: { stat: Stat; fire: boolean }) {
           {stat.suffix && <span className="text-base text-ink-700/70">{stat.suffix}</span>}
         </span>
       </div>
-      <div className="text-[10px] sm:text-[11px] uppercase tracking-[0.18em] text-ink-700/65 font-medium">
+      <div className="text-[10px] sm:text-[11px] text-ink-700/60 font-semibold">
         {stat.label[lang]}
       </div>
     </div>
@@ -89,8 +89,8 @@ export default function TripStats() {
       transition={{ duration: 0.5 }}
     >
       <div className="flex items-center gap-3 mb-3 px-1">
-        <span className="h-px w-6 bg-terracotta-500/60" aria-hidden />
-        <span className="text-[10px] uppercase tracking-[0.28em] font-medium text-terracotta-600">
+        <span className="h-px w-6 bg-cream-300" aria-hidden />
+        <span className="text-[10px] font-semibold text-ink-700/60">
           {t("trip_stats_eyebrow")}
         </span>
       </div>

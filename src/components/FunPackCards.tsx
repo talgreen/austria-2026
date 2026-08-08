@@ -19,11 +19,11 @@ export function DifficultyBadge({ difficulty }: { difficulty: KidsDifficulty }) 
   const t = useT();
   const style =
     difficulty === "easy"
-      ? "bg-olive-500/10 text-olive-700"
-      : "bg-gold-400/15 text-sienna-600";
+      ? "bg-cream-50 text-ink-800"
+      : "bg-terracotta-500/10 text-terracotta-600";
   return (
     <span
-      className={`inline-flex items-center px-2 py-0.5 rounded-full text-[10px] uppercase tracking-[0.18em] font-medium ${style}`}
+      className={`inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-semibold ${style}`}
     >
       {t(difficulty === "easy" ? "kids_difficulty_easy" : "kids_difficulty_medium")}
     </span>
@@ -79,11 +79,11 @@ export function RevealCard({
                   {emoji}
                 </span>
               )}
-              <span className="font-serif italic text-lg sm:text-xl text-rust-600 leading-snug">
+              <span className="font-serif text-lg sm:text-xl text-rust-600 leading-snug">
                 {answer}
               </span>
             </div>
-            <div className="mt-2 text-[10px] uppercase tracking-[0.24em] text-ink-700/45 font-medium">
+            <div className="mt-2 text-[10px] font-semibold text-ink-700/60">
               {t("kids_hide")}
             </div>
           </motion.div>
@@ -94,7 +94,7 @@ export function RevealCard({
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
-            className="mt-3 inline-flex items-center gap-1.5 text-[10px] uppercase tracking-[0.24em] text-rust-600/75 font-medium"
+            className="mt-3 inline-flex items-center gap-1.5 text-[10px] font-semibold text-rust-600/75"
           >
             <Sparkles size={12} strokeWidth={2} />
             {t("kids_reveal")}
@@ -116,7 +116,7 @@ export function TongueTwisterCard({ twister }: { twister: KidsTongueTwister }) {
         </p>
         <DifficultyBadge difficulty={twister.difficulty} />
       </div>
-      <div className="mt-2 text-[10px] uppercase tracking-[0.24em] text-ink-700/50 font-medium">
+      <div className="mt-2 text-[10px] font-semibold text-ink-700/60">
         {t("kids_twister_hint")}
       </div>
     </div>
@@ -130,7 +130,7 @@ export function ChallengeCard({ challenge }: { challenge: KidsChallenge }) {
   return (
     <article
       dir="rtl"
-      className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-mustard-400/20 to-cream-100 ring-1 ring-cream-300/70 shadow-[0_18px_50px_-30px_rgba(151,109,76,0.45)]"
+      className="relative overflow-hidden rounded-3xl bg-cream-100"
     >
       <Binoculars
         size={130}
@@ -139,11 +139,11 @@ export function ChallengeCard({ challenge }: { challenge: KidsChallenge }) {
         aria-hidden
       />
       <div className="relative px-5 sm:px-7 py-5 sm:py-6">
-        <div className="flex items-center gap-2 text-[10px] uppercase tracking-[0.32em] text-rust-700/85 font-medium">
-          <span className="inline-block w-1.5 h-1.5 rounded-full bg-mustard-500" />
+        <div className="flex items-center gap-2 text-[10px] font-semibold text-ink-700/60">
+          <span className="inline-block w-1.5 h-1.5 rounded-full bg-terracotta-500" />
           {t("kids_challenge")}
         </div>
-        <h3 className="mt-3 font-serif font-black italic text-2xl sm:text-3xl text-ink-900 leading-tight">
+        <h3 className="mt-3 font-serif font-black text-2xl sm:text-3xl text-ink-900 leading-tight">
           {challenge.title}
         </h3>
         <p className="mt-2 text-[14.5px] sm:text-base text-ink-700/90 leading-relaxed">
@@ -166,7 +166,7 @@ export function RoadGameCard({ game }: { game: KidsRoadGame }) {
         type="button"
         onClick={() => setOpen(o => !o)}
         aria-expanded={open}
-        className="w-full text-start p-4 sm:p-5 transition-colors hover:bg-cream-100/60 active:bg-cream-200/50 cursor-pointer"
+        className="w-full text-start p-4 sm:p-5 transition-colors hover:bg-cream-200/60 active:bg-cream-200 cursor-pointer"
       >
         <div className="flex items-center justify-between gap-3">
           <h3 className="font-serif text-xl sm:text-2xl text-ink-900 leading-snug">
@@ -203,7 +203,7 @@ export function RoadGameCard({ game }: { game: KidsRoadGame }) {
             className="overflow-hidden"
           >
             <div className="px-4 sm:px-5 pb-5 pt-1 border-t border-cream-300/60">
-              <div className="mt-3 text-[10px] uppercase tracking-[0.24em] text-rust-600/85 font-medium">
+              <div className="mt-3 text-[10px] font-semibold text-ink-700/60">
                 {t("kids_how_to_play")}
               </div>
               <ol className="mt-2.5 space-y-2">
