@@ -603,7 +603,10 @@ function ChapterDetailContent({ day }: { day: Day }) {
             </AnimatePresence>
           )}
 
-          <div className="absolute inset-0 bg-gradient-to-t from-ink-900/95 via-ink-900/55 to-ink-900/15" />
+          {/* Readability scrim — custom stops keep the lower ~60% (where all
+              the text sits) dark even over bright photo areas, fading only
+              near the top so the photo still breathes. */}
+          <div className="absolute inset-0 bg-[linear-gradient(to_top,rgba(23,17,12,0.94)_0%,rgba(23,17,12,0.8)_26%,rgba(23,17,12,0.55)_55%,rgba(23,17,12,0.15)_100%)]" />
           <div className="absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-ink-900/40 to-transparent" />
 
           {/* Carousel progress dashes — top-right of the hero */}
@@ -623,7 +626,7 @@ function ChapterDetailContent({ day }: { day: Day }) {
             </div>
           )}
 
-          <div className="absolute inset-x-0 bottom-0 px-4 sm:px-10 pb-6 sm:pb-12 text-cream-50">
+          <div className="absolute inset-x-0 bottom-0 px-4 sm:px-10 pb-6 sm:pb-12 text-cream-50 [text-shadow:0_1px_2px_rgba(23,17,12,0.55),0_2px_14px_rgba(23,17,12,0.35)]">
             <div className="max-w-4xl mx-auto">
               <div className="flex items-baseline gap-3 sm:gap-4">
                 <div className="font-serif text-3xl sm:text-5xl leading-none drop-shadow-[0_2px_8px_rgba(0,0,0,0.45)]">
@@ -640,14 +643,14 @@ function ChapterDetailContent({ day }: { day: Day }) {
                 )}
               </div>
 
-              <div className="mt-2 sm:mt-3 flex items-center gap-2 sm:gap-3 text-[10px] sm:text-[12px] uppercase tracking-[0.22em] text-cream-50/85 font-medium flex-wrap">
+              <div className="mt-2 sm:mt-3 flex items-center gap-2 sm:gap-3 text-[10px] sm:text-[12px] uppercase tracking-[0.22em] text-cream-50/95 font-medium flex-wrap">
                 <span>{localizeWeekday(day.weekday, lang)}</span>
                 <span aria-hidden>·</span>
                 <span>{localizeShortDate(day.date, lang)}</span>
                 {day.departureTime && (
                   <>
                     <span aria-hidden>·</span>
-                    <span className="inline-flex items-center gap-1 normal-case tracking-normal text-cream-50/85">
+                    <span className="inline-flex items-center gap-1 normal-case tracking-normal text-cream-50/95">
                       <Clock size={11} className="opacity-70" /> {lang === "he" ? `מומלץ לצאת ב־${day.departureTime}` : `Suggested depart: ${day.departureTime}`}
                     </span>
                   </>
@@ -657,7 +660,7 @@ function ChapterDetailContent({ day }: { day: Day }) {
                 {localDay.base && (
                   <>
                     <span aria-hidden>·</span>
-                    <span className="inline-flex items-center gap-1 normal-case tracking-normal text-cream-50/85">
+                    <span className="inline-flex items-center gap-1 normal-case tracking-normal text-cream-50/95">
                       <MapPin size={11} className="opacity-70" /> {localDay.base}
                     </span>
                   </>
@@ -669,7 +672,7 @@ function ChapterDetailContent({ day }: { day: Day }) {
                 {localDay.title}
               </h1>
               {localDay.subtitle && (
-                <p className="mt-2 sm:mt-3 font-serif italic text-cream-50/85 text-base sm:text-xl max-w-2xl">
+                <p className="mt-2 sm:mt-3 font-serif italic text-cream-50/95 text-base sm:text-xl max-w-2xl">
                   {localDay.subtitle}
                 </p>
               )}

@@ -129,7 +129,9 @@ export default function DayCard({ day }: { day: Day }) {
             tags={lead.tags}
           />
         </div>
-        <div className="absolute inset-0 bg-gradient-to-t from-ink-900/95 via-ink-900/55 to-ink-900/15" />
+        {/* Readability scrim — custom stops keep the lower ~60% (where the
+            title + meta sit) dark even over bright photo areas. */}
+        <div className="absolute inset-0 bg-[linear-gradient(to_top,rgba(23,17,12,0.94)_0%,rgba(23,17,12,0.8)_26%,rgba(23,17,12,0.55)_55%,rgba(23,17,12,0.15)_100%)]" />
         <div className="absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-ink-900/40 to-transparent" />
 
         {/* Photo credit — minimal © glyph in the corner. */}
@@ -140,7 +142,7 @@ export default function DayCard({ day }: { day: Day }) {
         )}
 
         {/* Top: chapter mark */}
-        <div className="absolute top-3 sm:top-6 left-4 sm:left-8 right-4 sm:right-8 flex items-start justify-between gap-3 text-cream-50">
+        <div className="absolute top-3 sm:top-6 left-4 sm:left-8 right-4 sm:right-8 flex items-start justify-between gap-3 text-cream-50 [text-shadow:0_1px_2px_rgba(23,17,12,0.55),0_2px_14px_rgba(23,17,12,0.35)]">
           <div className="flex items-baseline gap-2 sm:gap-3">
             <div className="font-serif text-2xl sm:text-4xl leading-none drop-shadow-[0_2px_8px_rgba(0,0,0,0.45)]">
               {ROMAN[day.dayNumber]}
@@ -158,15 +160,15 @@ export default function DayCard({ day }: { day: Day }) {
         </div>
 
         {/* Bottom: title + meta */}
-        <div className="absolute inset-x-0 bottom-0 p-3.5 sm:p-8 text-cream-50 pr-3.5 sm:pr-44">
-          <div className="flex items-center gap-2 sm:gap-3 text-[9px] sm:text-[11px] uppercase tracking-[0.2em] sm:tracking-[0.24em] text-cream-50/85 font-medium flex-wrap">
+        <div className="absolute inset-x-0 bottom-0 p-3.5 sm:p-8 text-cream-50 pr-3.5 sm:pr-44 [text-shadow:0_1px_2px_rgba(23,17,12,0.55),0_2px_14px_rgba(23,17,12,0.35)]">
+          <div className="flex items-center gap-2 sm:gap-3 text-[9px] sm:text-[11px] uppercase tracking-[0.2em] sm:tracking-[0.24em] text-cream-50/95 font-medium flex-wrap">
             <span>{day.weekday}</span>
             <span aria-hidden>·</span>
             <span>{formatDate(day.date)}</span>
             {day.departureTime && (
               <>
                 <span aria-hidden className="hidden sm:inline">·</span>
-                <span className="hidden sm:inline-flex items-center gap-1 normal-case tracking-normal text-cream-50/85">
+                <span className="hidden sm:inline-flex items-center gap-1 normal-case tracking-normal text-cream-50/95">
                   <Clock size={11} className="opacity-70" /> {lang === "he" ? `מומלץ לצאת ב־${day.departureTime}` : `Suggested depart: ${day.departureTime}`}
                 </span>
               </>
@@ -176,7 +178,7 @@ export default function DayCard({ day }: { day: Day }) {
             {day.base && (
               <>
                 <span aria-hidden className="hidden sm:inline">·</span>
-                <span className="hidden sm:inline-flex items-center gap-1 normal-case tracking-normal text-cream-50/85">
+                <span className="hidden sm:inline-flex items-center gap-1 normal-case tracking-normal text-cream-50/95">
                   <MapPin size={11} className="opacity-70" /> {day.base}
                 </span>
               </>
@@ -187,7 +189,7 @@ export default function DayCard({ day }: { day: Day }) {
             {day.title}
           </h3>
           {day.subtitle && (
-            <p className="hidden sm:block mt-2 font-serif italic text-cream-50/85 text-base sm:text-lg max-w-xl">
+            <p className="hidden sm:block mt-2 font-serif italic text-cream-50/95 text-base sm:text-lg max-w-xl">
               {day.subtitle}
             </p>
           )}
