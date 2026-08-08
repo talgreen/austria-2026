@@ -31,8 +31,8 @@ export default function Navbar({ activeTab }: { activeTab: TabKey }) {
       dir="ltr"
       className={`fixed top-0 inset-x-0 z-50 transition-all duration-300 ${
         scrolled
-          ? "bg-cream-50/85 backdrop-blur-md border-b border-cream-300/60 shadow-sm"
-          : "bg-cream-50/70 backdrop-blur-sm"
+          ? "bg-white/95 backdrop-blur-md border-b border-cream-300"
+          : "bg-white/85 backdrop-blur-sm"
       }`}
       style={{ paddingTop: "env(safe-area-inset-top)" }}
     >
@@ -41,10 +41,10 @@ export default function Navbar({ activeTab }: { activeTab: TabKey }) {
           onClick={() => navigateTab("today")}
           className="flex items-baseline gap-2 group min-h-11"
         >
-          <span className={`font-serif text-xl sm:text-2xl text-ink-900 group-hover:text-terracotta-600 transition-colors`}>
+          <span className="font-extrabold tracking-tight text-lg sm:text-xl text-ink-900 group-hover:text-ink-700 transition-colors">
             {t("brand_short")}
           </span>
-          <span className="font-serif italic text-terracotta-600 text-base sm:text-lg">{t("brand_year")}</span>
+          <span className="font-extrabold text-terracotta-500 text-base sm:text-lg">{t("brand_year")}</span>
         </button>
 
         <div className="hidden md:flex items-center gap-1">
@@ -52,10 +52,10 @@ export default function Navbar({ activeTab }: { activeTab: TabKey }) {
             <button
               key={l.id}
               onClick={() => navigateTab(l.id)}
-              className={`px-3 py-2 text-sm font-medium transition-colors ${
+              className={`px-3 py-2 text-sm transition-colors ${
                 activeTab === l.id
-                  ? "text-terracotta-600"
-                  : "text-ink-700 hover:text-terracotta-600"
+                  ? "font-bold text-ink-900"
+                  : "font-medium text-ink-700/80 hover:text-ink-900"
               }`}
             >
               {t(l.key)}

@@ -64,7 +64,7 @@ export default function RouteTimeline() {
                 </span>
               </div>
               <div className="pt-1 pb-3">
-                <div className={`text-[11px] uppercase tracking-[0.2em] font-bold ${a.text}`}>
+                <div className={`text-[13px] font-extrabold ${a.text}`}>
                   {loc(area.shortName)}
                 </div>
                 <div className="text-sm font-semibold text-ink-900 mt-0.5">
@@ -135,7 +135,7 @@ export default function RouteTimeline() {
                           {localizeWeekday(day.weekday, lang, true)} · {localizeShortDate(day.date, lang)}
                         </span>
                         {isToday && (
-                          <span className="text-[9px] uppercase tracking-[0.18em] font-bold text-rust-600 bg-rust-500/10 rounded-full px-2 py-0.5">
+                          <span className="text-[10px] font-bold text-cream-50 bg-terracotta-500 rounded-full px-2 py-0.5">
                             {t("today")}
                           </span>
                         )}

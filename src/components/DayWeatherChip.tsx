@@ -39,11 +39,11 @@ export default function DayWeatherChip({ day, size = "lg" }: Props) {
         high: String(forecast.tMax),
         low: String(forecast.tMin)
       })}
-      className={`inline-flex items-center rounded-full bg-gold-400/20 ring-1 ring-gold-500/40 text-ink-900 ${
+      className={`inline-flex items-center rounded-full bg-cream-50 ring-1 ring-cream-300 text-ink-900 ${
         lg ? "gap-2 px-3.5 py-1.5" : "gap-1.5 px-2.5 py-0.5"
       }`}
     >
-      <span className="text-sienna-600">{iconFor(forecast.code, lg ? 18 : 13)}</span>
+      <span className="text-ink-700">{iconFor(forecast.code, lg ? 18 : 13)}</span>
       <span className={`font-bold tabular-nums ${lg ? "text-[15px]" : "text-[12px]"}`}>
         {forecast.tMax}°
       </span>

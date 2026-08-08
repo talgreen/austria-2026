@@ -51,7 +51,7 @@ export default function MobileBottomNav({ activeTab }: { activeTab: TabKey }) {
           onClick={() => setMoreOpen(false)}
         >
           <div
-            className="absolute bottom-[calc(64px+env(safe-area-inset-bottom))] inset-x-0 bg-cream-50 border-t border-cream-300/70 rounded-t-3xl px-4 pt-3 pb-5 shadow-2xl"
+            className="absolute bottom-[calc(64px+env(safe-area-inset-bottom))] inset-x-0 bg-white rounded-t-3xl px-4 pt-3 pb-5 shadow-2xl"
             onClick={(e) => e.stopPropagation()}
           >
             <div className="w-10 h-1 bg-cream-300 rounded-full mx-auto mb-4" />
@@ -60,7 +60,7 @@ export default function MobileBottomNav({ activeTab }: { activeTab: TabKey }) {
                 <button
                   key={l.id}
                   onClick={() => go(l.id)}
-                  className="text-start bg-cream-100 hover:bg-cream-200 active:bg-cream-300 transition-colors rounded-xl px-4 py-4 text-base font-medium text-ink-900"
+                  className="text-start bg-cream-100 hover:bg-cream-200 active:bg-cream-200 transition-colors rounded-2xl px-4 py-4 text-base font-bold text-ink-900"
                 >
                   {t(l.key)}
                 </button>
@@ -69,7 +69,7 @@ export default function MobileBottomNav({ activeTab }: { activeTab: TabKey }) {
             {showInstall && (
               <button
                 onClick={handleInstallClick}
-                className="mt-3 w-full inline-flex items-center justify-center gap-2 bg-terracotta-500 hover:bg-terracotta-600 active:bg-terracotta-700 text-cream-50 rounded-xl px-4 py-3 text-sm font-medium shadow-sm shadow-terracotta-700/20 transition-colors"
+                className="mt-3 w-full inline-flex items-center justify-center gap-2 bg-ink-900 hover:bg-ink-800 active:bg-ink-800 text-cream-50 rounded-full px-4 py-3 text-sm font-bold transition-colors"
               >
                 <Download size={16} />
                 {t("install_menu_label")}
@@ -86,7 +86,7 @@ export default function MobileBottomNav({ activeTab }: { activeTab: TabKey }) {
       )}
 
       <nav
-        className="fixed bottom-0 inset-x-0 z-[8001] md:hidden bg-cream-50/95 backdrop-blur-md border-t border-cream-300/70 shadow-[0_-4px_24px_rgba(42,31,26,0.08)]"
+        className="fixed bottom-0 inset-x-0 z-[8001] md:hidden bg-white/95 backdrop-blur-md border-t border-cream-300"
         style={{ paddingBottom: "env(safe-area-inset-bottom)" }}
       >
         <ul className="grid grid-cols-5 h-16">
@@ -97,11 +97,11 @@ export default function MobileBottomNav({ activeTab }: { activeTab: TabKey }) {
               <li key={id}>
                 <button
                   onClick={() => (id === "more" ? setMoreOpen(o => !o) : go(id))}
-                  className={`w-full h-full flex flex-col items-center justify-center gap-1 text-[10px] font-medium transition-colors active:scale-[0.96] ${
-                    isActive ? "text-terracotta-600" : "text-ink-700/70"
+                  className={`w-full h-full flex flex-col items-center justify-center gap-1 text-[10px] transition-colors active:scale-[0.96] ${
+                    isActive ? "font-bold text-ink-900" : "font-medium text-ink-700/60"
                   }`}
                 >
-                  <span className={`w-10 h-7 flex items-center justify-center rounded-full transition-colors ${isActive ? "bg-terracotta-500/12" : ""}`}>
+                  <span className={`w-10 h-7 flex items-center justify-center rounded-full transition-colors ${isActive ? "bg-ink-900 text-cream-50" : ""}`}>
                     <Icon size={18} strokeWidth={isActive ? 2.4 : 1.8} />
                   </span>
                   {label}

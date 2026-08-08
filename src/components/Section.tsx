@@ -17,37 +17,22 @@ interface Props {
 export default function Section({
   id,
   title,
-  kicker,
   intro,
-  children,
-  toned,
-  center
+  children
 }: Props) {
   return (
-    <section
-      id={id}
-      className={`relative py-14 sm:py-24 lg:py-28 scroll-mt-20 ${
-        toned ? "bg-cream-100/60" : ""
-      }`}
-    >
+    <section id={id} className="relative py-8 sm:py-12 scroll-mt-20">
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
         <motion.header
-          initial={{ opacity: 0, y: 16 }}
+          initial={{ opacity: 0, y: 8 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-80px" }}
-          transition={{ duration: 0.7, ease: "easeOut" }}
-          className={`mb-8 sm:mb-12 ${center ? "text-center mx-auto max-w-2xl" : "max-w-3xl"}`}
+          transition={{ duration: 0.4, ease: "easeOut" }}
+          className="mb-5 sm:mb-7 max-w-3xl"
         >
-          <h2 className="font-serif font-black text-[34px] sm:text-5xl lg:text-[56px] text-ink-900 leading-[1.02] tracking-tight">
-            {title}
-          </h2>
-          {kicker && (
-            <p className="mt-3 font-serif italic text-rust-700/85 text-lg sm:text-xl">
-              {kicker}
-            </p>
-          )}
+          <h2 className="section-title">{title}</h2>
           {intro && (
-            <p className="mt-4 sm:mt-5 text-[15px] sm:text-lg text-ink-700/85 leading-relaxed">
+            <p className="mt-2 text-[14px] sm:text-base text-ink-700/80 leading-relaxed">
               {intro}
             </p>
           )}

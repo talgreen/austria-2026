@@ -40,7 +40,7 @@ export default function CollapsibleSection({
   title,
   subtitle,
   icon: Icon,
-  accentClass = "text-terracotta-600/85",
+  accentClass = "text-ink-900",
   defaultOpen = false,
   open: controlledOpen,
   onOpenChange,
@@ -66,31 +66,29 @@ export default function CollapsibleSection({
     <section
       ref={ref}
       id={id}
-      className="rounded-2xl bg-cream-50 ring-1 ring-cream-300/70 overflow-hidden scroll-mt-24"
+      className="rounded-[var(--radius-card)] bg-cream-100 overflow-hidden scroll-mt-24"
     >
       <button
         type="button"
         onClick={() => setOpen(!open)}
         aria-expanded={open}
-        className="w-full flex items-center justify-between gap-3 px-4 sm:px-5 py-4 text-start cursor-pointer hover:bg-cream-100/60 active:bg-cream-200/50 transition-colors"
+        className="w-full flex items-center justify-between gap-3 px-4 sm:px-5 py-4 text-start cursor-pointer hover:bg-cream-200/60 active:bg-cream-200 transition-colors"
       >
         <div className="flex items-center gap-3 min-w-0">
           {Icon && (
             <span
-              className={`shrink-0 w-9 h-9 rounded-full bg-cream-100 ring-1 ring-cream-300/70 flex items-center justify-center ${accentClass}`}
+              className={`shrink-0 w-9 h-9 rounded-full bg-cream-50 flex items-center justify-center ${accentClass}`}
             >
               <Icon size={16} strokeWidth={1.8} />
             </span>
           )}
           <div className="min-w-0">
             {eyebrow && (
-              <div
-                className={`text-[10px] uppercase tracking-[0.24em] font-medium ${accentClass}`}
-              >
+              <div className="text-[11px] font-semibold text-ink-700/70">
                 {eyebrow}
               </div>
             )}
-            <h2 className="font-serif text-lg sm:text-xl text-ink-900 leading-tight">
+            <h2 className="text-[15px] sm:text-base font-bold text-ink-900 leading-tight">
               {title}
             </h2>
             {subtitle && !open && (
@@ -119,7 +117,7 @@ export default function CollapsibleSection({
             transition={{ duration: 0.3, ease: "easeOut" }}
             className="overflow-hidden"
           >
-            <div className="px-4 sm:px-5 pb-5 pt-4 border-t border-cream-300/60">
+            <div className="px-4 sm:px-5 pb-5 pt-4 border-t border-cream-300">
               {children}
             </div>
           </motion.div>

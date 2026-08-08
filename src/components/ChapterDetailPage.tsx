@@ -583,24 +583,22 @@ function ChapterDetailContent({ day }: { day: Day }) {
   );
 
   return (
-    <div className="min-h-screen bg-cream-100/40">
-      {/* Sticky back bar */}
-      <div className="sticky top-0 z-40 bg-cream-50/95 backdrop-blur-md border-b border-cream-300/60">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 h-14 sm:h-16 flex items-center justify-between gap-3">
+    <div className="min-h-screen bg-cream-50">
+      {/* Sticky back bar — back arrow + centered bold title */}
+      <div className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-cream-300">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 h-14 sm:h-16 grid grid-cols-[1fr_auto_1fr] items-center gap-3">
           <button
             type="button"
             onClick={() => navigateTab("plan")}
-            className="inline-flex items-center gap-2 text-ink-800 hover:text-terracotta-600 transition-colors min-h-11 -ms-2 px-2 rounded-full"
+            aria-label={t("back_to_plan")}
+            className="justify-self-start inline-flex items-center justify-center w-10 h-10 rounded-full bg-cream-100 text-ink-900 hover:bg-cream-200 transition-colors -ms-1"
           >
             {isRTL ? <ArrowRight size={18} /> : <ArrowLeft size={18} />}
-            <span className="text-sm font-medium">{t("back_to_plan")}</span>
           </button>
-          <div className="hidden sm:block text-[11px] uppercase tracking-[0.22em] text-ink-700/55 font-medium">
-            {t("plan_chapter_x_of_y", {
-              x: String(day.dayNumber).padStart(2, "0"),
-              y: String(itinerary.length).padStart(2, "0")
-            })}
+          <div className="text-[15px] font-bold text-ink-900 truncate">
+            {localizeWeekday(day.weekday, lang)} · {localizeShortDate(day.date, lang)}
           </div>
+          <span aria-hidden />
         </div>
       </div>
 
@@ -617,7 +615,7 @@ function ChapterDetailContent({ day }: { day: Day }) {
           <div className="relative w-full aspect-[16/10] sm:aspect-[21/9] max-h-[62vh] overflow-hidden bg-ink-900">
             {heroCarousel}
             <div className="absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-ink-900/40 to-transparent" />
-            <div className="absolute inset-x-0 bottom-0 h-2/5 bg-gradient-to-t from-cream-50 via-cream-50/55 to-transparent" />
+            <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-ink-900/60 to-transparent" />
             {heroDashes}
             {/* CC-licensed photos must stay attributed — a minimal © glyph
                 in the corner, out of the content's way. */}
@@ -629,33 +627,39 @@ function ChapterDetailContent({ day }: { day: Day }) {
                 <PhotoCredit credit={heroSlideMeta.credit} variant="light" />
               </div>
             )}
-          </div>
-          <div className="bg-cream-50 border-b border-cream-300/60">
-            <div className="max-w-4xl mx-auto px-4 sm:px-6 pb-6 sm:pb-8">
-              <div className="flex items-center gap-2.5">
-                <div className="text-[9px] sm:text-[10px] uppercase tracking-[0.3em] font-medium text-ink-700/50">
-                  {t("plan_chapter_x_of_y", { x: String(day.dayNumber).padStart(2, "0"), y: String(itinerary.length).padStart(2, "0") })}
-                </div>
+            {/* Bold title + accent pill overlaid on the photo */}
+            <div className="absolute inset-x-0 bottom-0 z-10 pb-9 sm:pb-12">
+              <div className="max-w-4xl mx-auto px-4 sm:px-6 text-center">
                 {isToday && (
-                  <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-terracotta-500 text-cream-50 text-[9px] uppercase tracking-[0.22em] font-bold shadow-[0_4px_18px_rgba(196,90,61,0.5)]">
-                    <Sun size={10} /> {t("today")}
+                  <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-terracotta-500 text-cream-50 text-[11px] font-bold mb-2">
+                    <Sun size={11} /> {t("today")}
                   </span>
                 )}
+                <h1 className="text-3xl sm:text-5xl font-extrabold tracking-tight text-white leading-tight drop-shadow-[0_2px_12px_rgba(0,0,0,0.45)]">
+                  {localizeWeekday(day.weekday, lang)} · {localizeShortDate(day.date, lang)}
+                </h1>
               </div>
-              <h1 className="mt-1.5 font-serif text-3xl sm:text-5xl text-ink-900 leading-tight tracking-tight">
-                {localizeWeekday(day.weekday, lang)} · {localizeShortDate(day.date, lang)}
-              </h1>
-              <div className="mt-2.5 flex flex-wrap items-center gap-x-4 gap-y-2">
+            </div>
+          </div>
+          {/* Status card overlapping the hero bottom */}
+          <div className="relative z-10 -mt-5 sm:-mt-7 max-w-4xl mx-auto px-4 sm:px-6 w-full">
+            <div className="rounded-[var(--radius-card)] bg-white ring-1 ring-cream-300 overflow-hidden">
+              <div className="status-bar-dark justify-between">
+                <span>
+                  {t("plan_chapter_x_of_y", { x: String(day.dayNumber).padStart(2, "0"), y: String(itinerary.length).padStart(2, "0") })}
+                </span>
+                <DayWeatherChip day={day} />
+              </div>
+              <div className="px-4 py-4">
                 {localDay.base && (
-                  <div className="flex items-center gap-1.5 text-[15px] sm:text-lg font-medium text-ink-800">
-                    <MapPin size={17} className="text-terracotta-500 shrink-0" />
+                  <div className="flex items-center gap-1.5 text-[14px] sm:text-base font-bold text-ink-900">
+                    <MapPin size={16} className="text-terracotta-500 shrink-0" />
                     {localDay.base}
                   </div>
                 )}
-                <DayWeatherChip day={day} />
-              </div>
-              <div className="mt-3.5 pt-3.5 border-t border-ink-900/10 font-serif text-lg sm:text-2xl text-ink-800/85 leading-snug max-w-2xl">
-                {localDay.title}
+                <div className="mt-1.5 text-[15px] sm:text-lg text-ink-700/85 leading-snug">
+                  {localDay.title}
+                </div>
               </div>
             </div>
           </div>
@@ -737,14 +741,14 @@ function ChapterDetailContent({ day }: { day: Day }) {
 
             {localDay.driveNotes && (
               <div className="mt-8 sm:mt-10 pt-5 sm:pt-6 border-t border-cream-300/60 flex items-start gap-3">
-                <span className="shrink-0 w-10 h-10 rounded-full bg-olive-500/10 text-olive-700 flex items-center justify-center">
+                <span className="shrink-0 w-10 h-10 rounded-full bg-cream-100 text-ink-900 flex items-center justify-center">
                   <Car size={16} />
                 </span>
                 <div>
-                  <div className="text-[10px] uppercase tracking-[0.24em] text-olive-700/80 font-medium">
+                  <div className="text-[12px] font-semibold text-ink-700/70">
                     {t("on_the_road")}
                   </div>
-                  <p className="mt-0.5 font-serif italic text-ink-700/85 text-[15px] sm:text-base leading-relaxed">
+                  <p className="mt-0.5 text-ink-700/85 text-[14px] sm:text-[15px] leading-relaxed">
                     {localDay.driveNotes}
                   </p>
                 </div>
@@ -771,7 +775,7 @@ function ChapterDetailContent({ day }: { day: Day }) {
                 {dayPois.map((p, i) => (
                   <li
                     key={p.id}
-                    className="flex items-start gap-3 p-3 rounded-xl bg-cream-50 ring-1 ring-cream-300/70"
+                    className="flex items-start gap-3 p-3 rounded-xl bg-cream-50"
                   >
                     <span className={`shrink-0 w-7 h-7 rounded-full ${a.dot} text-cream-50 flex items-center justify-center text-xs font-semibold`}>
                       {i + 1}
@@ -812,7 +816,7 @@ function ChapterDetailContent({ day }: { day: Day }) {
                   return (
                     <li
                       key={i}
-                      className="flex items-start gap-3 p-3 rounded-xl bg-cream-50 ring-1 ring-cream-300/70"
+                      className="flex items-start gap-3 p-3 rounded-xl bg-cream-50"
                     >
                       <span
                         className={`shrink-0 w-7 h-7 rounded-full flex items-center justify-center ${
@@ -831,11 +835,11 @@ function ChapterDetailContent({ day }: { day: Day }) {
                           <button
                             type="button"
                             onClick={() => scrollToActivity(g.for!)}
-                            className="mt-1.5 inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-terracotta-500/10 text-terracotta-700 text-[10px] uppercase tracking-[0.16em] font-medium hover:bg-terracotta-500/18 transition-colors"
+                            className="mt-1.5 inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-cream-100 text-ink-800 text-[11px] font-semibold hover:bg-cream-200 transition-colors"
                             title={forName}
                           >
                             <Activity size={9} strokeWidth={2.2} />
-                            <span className="normal-case tracking-normal text-[11px] font-normal">
+                            <span>
                               {t("gear_for_label")} {forName}
                             </span>
                           </button>
@@ -868,12 +872,12 @@ function ChapterDetailContent({ day }: { day: Day }) {
                 {(localDay.dayTips ?? []).map((line, i) => (
                   <li
                     key={`day-tip-${i}`}
-                    className="relative ps-12 sm:ps-14 pe-4 sm:pe-5 py-4 sm:py-5 rounded-2xl bg-cream-50 ring-1 ring-gold-500/35"
+                    className="relative ps-12 sm:ps-14 pe-4 sm:pe-5 py-4 sm:py-5 rounded-2xl bg-cream-50"
                   >
-                    <span className="absolute start-3 sm:start-4 top-4 sm:top-5 w-7 h-7 rounded-full bg-gold-500/10 text-sienna-600 flex items-center justify-center">
+                    <span className="absolute start-3 sm:start-4 top-4 sm:top-5 w-7 h-7 rounded-full bg-cream-100 text-ink-700 flex items-center justify-center">
                       <StickyNote size={14} strokeWidth={1.8} />
                     </span>
-                    <div className="text-[10px] uppercase tracking-[0.22em] font-medium text-sienna-600">
+                    <div className="text-[11px] font-semibold text-ink-700/60">
                       {t("severity_info")}
                     </div>
                     <p className="mt-1.5 text-[13.5px] sm:text-[14.5px] text-ink-700/85 leading-relaxed">
@@ -887,7 +891,7 @@ function ChapterDetailContent({ day }: { day: Day }) {
                   return (
                     <li
                       key={tip.id}
-                      className={`relative ps-12 sm:ps-14 pe-4 sm:pe-5 py-4 sm:py-5 rounded-2xl bg-cream-50 ring-1 ${s.ring}`}
+                      className="relative ps-12 sm:ps-14 pe-4 sm:pe-5 py-4 sm:py-5 rounded-2xl bg-cream-50"
                     >
                       <span
                         className={`absolute start-3 sm:start-4 top-4 sm:top-5 w-7 h-7 rounded-full ${s.bg} ${s.text} flex items-center justify-center`}
@@ -895,7 +899,7 @@ function ChapterDetailContent({ day }: { day: Day }) {
                         <Icon size={14} />
                       </span>
                       <div
-                        className={`text-[10px] uppercase tracking-[0.22em] font-medium ${s.text}`}
+                        className={`text-[11px] font-semibold ${s.text}`}
                       >
                         {t(s.labelKey)}
                       </div>
@@ -963,16 +967,16 @@ function ChapterDetailContent({ day }: { day: Day }) {
               <button
                 type="button"
                 onClick={() => navigateChapter(prevDay.dayNumber)}
-                className="group flex items-center gap-3 sm:gap-4 text-start p-3 sm:p-5 rounded-2xl ring-1 ring-cream-300/70 hover:ring-terracotta-500/60 hover:bg-cream-100/60 transition-all"
+                className="group flex items-center gap-3 sm:gap-4 text-start p-3 sm:p-5 rounded-[var(--radius-card)] bg-cream-100 hover:bg-cream-200 transition-colors"
               >
-                <span className="shrink-0 w-10 h-10 rounded-full bg-cream-100 text-ink-800 flex items-center justify-center group-hover:bg-terracotta-500 group-hover:text-cream-50 transition-colors">
+                <span className="shrink-0 w-10 h-10 rounded-full bg-cream-50 text-ink-800 flex items-center justify-center group-hover:bg-ink-900 group-hover:text-cream-50 transition-colors">
                   {isRTL ? <ChevronRight size={18} /> : <ChevronLeft size={18} />}
                 </span>
                 <div className="min-w-0">
-                  <div className="text-[9px] sm:text-[10px] uppercase tracking-[0.22em] text-ink-700/55 font-medium">
+                  <div className="text-[11px] font-semibold text-ink-700/60">
                     {t("previous")} · {ROMAN[prevDay.dayNumber]}
                   </div>
-                  <div className="mt-0.5 font-serif text-[14px] sm:text-base text-ink-900 leading-tight line-clamp-2">
+                  <div className="mt-0.5 font-bold text-[14px] sm:text-base text-ink-900 leading-tight line-clamp-2">
                     {localPrevDay.title}
                   </div>
                 </div>
@@ -984,17 +988,17 @@ function ChapterDetailContent({ day }: { day: Day }) {
               <button
                 type="button"
                 onClick={() => navigateChapter(nextDay.dayNumber)}
-                className="group flex items-center gap-3 sm:gap-4 text-end p-3 sm:p-5 rounded-2xl ring-1 ring-cream-300/70 hover:ring-terracotta-500/60 hover:bg-cream-100/60 transition-all justify-end"
+                className="group flex items-center gap-3 sm:gap-4 text-end p-3 sm:p-5 rounded-[var(--radius-card)] bg-cream-100 hover:bg-cream-200 transition-colors justify-end"
               >
                 <div className="min-w-0">
-                  <div className="text-[9px] sm:text-[10px] uppercase tracking-[0.22em] text-ink-700/55 font-medium">
+                  <div className="text-[11px] font-semibold text-ink-700/60">
                     {t("next")} · {ROMAN[nextDay.dayNumber]}
                   </div>
-                  <div className="mt-0.5 font-serif text-[14px] sm:text-base text-ink-900 leading-tight line-clamp-2">
+                  <div className="mt-0.5 font-bold text-[14px] sm:text-base text-ink-900 leading-tight line-clamp-2">
                     {localNextDay.title}
                   </div>
                 </div>
-                <span className="shrink-0 w-10 h-10 rounded-full bg-cream-100 text-ink-800 flex items-center justify-center group-hover:bg-terracotta-500 group-hover:text-cream-50 transition-colors">
+                <span className="shrink-0 w-10 h-10 rounded-full bg-cream-50 text-ink-800 flex items-center justify-center group-hover:bg-ink-900 group-hover:text-cream-50 transition-colors">
                   {isRTL ? <ChevronLeft size={18} /> : <ChevronRight size={18} />}
                 </span>
               </button>
@@ -1008,15 +1012,11 @@ function ChapterDetailContent({ day }: { day: Day }) {
   );
 }
 
-function SectionLabel({ eyebrow, title, accentClass = "text-terracotta-600/85" }: { eyebrow: string; title: string; accentClass?: string }) {
+function SectionLabel({ eyebrow, title }: { eyebrow: string; title: string; accentClass?: string }) {
   return (
     <div>
-      <div className={`text-[10px] uppercase tracking-[0.32em] font-medium ${accentClass}`}>
-        {eyebrow}
-      </div>
-      <h2 className="mt-1 font-serif text-2xl sm:text-3xl text-ink-900 leading-tight">
-        {title}
-      </h2>
+      <div className="text-[12px] font-semibold text-ink-700/70">{eyebrow}</div>
+      <h2 className="mt-0.5 section-title">{title}</h2>
     </div>
   );
 }
@@ -1047,16 +1047,16 @@ function ActivityRow({
      so the badge in the header doesn't have to fight a saturated terracotta
      circle. Today + optional is rare but handled cleanly this way. */
   const iconClasses = optional
-    ? "bg-cream-50 text-terracotta-600/55 ring-1 ring-cream-300/60"
+    ? "bg-cream-50 text-ink-700/50"
     : isToday
       ? "bg-terracotta-500 text-cream-50"
-      : "bg-cream-100 text-terracotta-600 ring-1 ring-cream-300/80";
+      : "bg-cream-50 text-ink-900";
 
   return (
     <li
       id={activity.attractionId ? `activity-${activity.attractionId}` : undefined}
-      className={`rounded-2xl bg-cream-50 ring-1 p-4 sm:p-5 scroll-mt-24 ${
-        optional ? "ring-cream-300/50" : "ring-cream-300/70"
+      className={`rounded-[var(--radius-card)] bg-cream-100 p-4 sm:p-5 scroll-mt-24 ${
+        optional ? "opacity-80" : ""
       }`}
     >
       {/* Header row: icon + a bold time chip + tag/optional badges. One
@@ -1082,13 +1082,13 @@ function ActivityRow({
             {t(ALT_KEY[activity.alternativeFor])}
           </span>
         ) : activity.time ? (
-          <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-terracotta-500/10 text-terracotta-700 text-[12px] font-bold tabular-nums">
+          <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-cream-50 text-ink-900 text-[12px] font-bold tabular-nums">
             <Clock size={11} strokeWidth={2} />
             {activity.time}
           </span>
         ) : null}
         {activity.tag && (
-          <span className="text-[9px] uppercase tracking-[0.22em] text-ink-700/50 font-medium">
+          <span className="text-[11px] text-ink-700/60 font-semibold">
             {t(TAG_KEY[activity.tag] ?? "tag_view")}
           </span>
         )}
@@ -1096,7 +1096,7 @@ function ActivityRow({
             stack the generic "Optional" pill on it. */}
         {optional && !activity.alternativeFor && (
           <span
-            className="inline-flex items-center px-1.5 py-[2px] rounded-full bg-olive-500/12 text-olive-700 text-[8.5px] uppercase tracking-[0.22em] font-semibold"
+            className="inline-flex items-center px-2 py-[2px] rounded-full bg-cream-50 text-ink-700/70 text-[10px] font-semibold"
             title={t("optional_aria")}
             aria-label={t("optional_aria")}
           >
@@ -1126,7 +1126,7 @@ function ActivityRow({
             href={att?.website ?? activity.link}
             target="_blank"
             rel="noopener noreferrer"
-            className={`mt-2 inline-flex items-center gap-1 text-[11px] uppercase tracking-[0.18em] font-medium ${accentText} hover:underline transition-colors`}
+            className={`mt-2 inline-flex items-center gap-1 text-[12px] font-bold ${accentText} hover:underline transition-colors`}
           >
             <ExternalLink size={11} strokeWidth={1.9} />
             {t("official_site")} ↗
@@ -1136,7 +1136,7 @@ function ActivityRow({
         {hasMoreInfo && (
           <button
             onClick={() => setOpen(o => !o)}
-            className={`mt-3 inline-flex items-center gap-1.5 text-[11px] uppercase tracking-[0.18em] font-medium ${accentText} hover:underline transition-colors`}
+            className={`mt-3 inline-flex items-center gap-1.5 text-[12px] font-bold ${accentText} hover:underline transition-colors`}
             aria-expanded={open}
           >
             {open ? <X size={12} /> : <Plus size={12} />}
@@ -1188,7 +1188,7 @@ function ActivityRow({
 function PlaceDetailCard({ att }: { att: POI }) {
   const t = useT();
   return (
-    <div className="mt-4 rounded-2xl bg-cream-100/80 ring-1 ring-cream-300/70 overflow-hidden grid sm:grid-cols-[200px_1fr] shadow-lg">
+    <div className="mt-4 rounded-2xl bg-cream-50 overflow-hidden grid sm:grid-cols-[200px_1fr]">
       <div className="relative aspect-[4/3] sm:aspect-auto bg-cream-200 overflow-hidden">
         <PoiImage
           src={att.image}
@@ -1202,12 +1202,12 @@ function PlaceDetailCard({ att }: { att: POI }) {
       </div>
       <div className="p-4 sm:p-5 flex flex-col">
         <div className="flex items-center gap-2 flex-wrap">
-          <div className="text-[10px] uppercase tracking-[0.22em] text-ink-700/55 font-medium">
+          <div className="text-[11px] font-semibold text-ink-700/60">
             {t("about_this_place")}
           </div>
           {att.difficulty && (
             <div
-              className={`inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[10px] uppercase tracking-[0.18em] font-medium ${DIFFICULTY_DETAIL_STYLE[att.difficulty].bg} ${DIFFICULTY_DETAIL_STYLE[att.difficulty].text}`}
+              className={`inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[11px] font-semibold ${DIFFICULTY_DETAIL_STYLE[att.difficulty].bg} ${DIFFICULTY_DETAIL_STYLE[att.difficulty].text}`}
             >
               <Activity size={10} strokeWidth={2.2} />
               {t(DIFFICULTY_DETAIL_STYLE[att.difficulty].key)}
@@ -1233,7 +1233,7 @@ function PlaceDetailCard({ att }: { att: POI }) {
         )}
         {att.tips && att.tips.length > 0 && (
           <div className="mt-4 pt-3 border-t border-cream-300/70">
-            <div className="flex items-center gap-1.5 text-[10px] uppercase tracking-[0.22em] text-olive-700 font-medium">
+            <div className="flex items-center gap-1.5 text-[11px] font-semibold text-ink-700/70">
               <Lightbulb size={11} strokeWidth={1.9} />
               {t("insider_tips_label")}
             </div>
@@ -1280,12 +1280,11 @@ function PlaceDetailCard({ att }: { att: POI }) {
  * dashed tether up to the plan card it swaps in for. */
 function AlternativeSwap({
   activity,
-  isToday,
   accentText = "text-terracotta-600",
   connected = false
 }: {
   activity: DayActivity;
-  isToday: boolean;
+  isToday?: boolean;
   accentText?: string;
   connected?: boolean;
 }) {
@@ -1306,26 +1305,24 @@ function AlternativeSwap({
             aria-hidden
             className="absolute -top-3 start-0 h-3 border-s-2 border-dashed border-terracotta-500/45"
           />
-          <span className="absolute -top-[11px] start-2.5 px-1.5 rounded-full bg-cream-50 text-terracotta-700 text-[9px] font-bold uppercase tracking-[0.2em] ring-1 ring-terracotta-500/25">
+          <span className="absolute -top-[11px] start-2.5 px-1.5 rounded-full bg-cream-50 text-terracotta-700 text-[10px] font-bold ring-1 ring-terracotta-500/25">
             {t("alt_or")}
           </span>
         </>
       )}
       <div
         id={activity.attractionId ? `activity-${activity.attractionId}` : undefined}
-        className={`relative rounded-2xl border-2 border-dashed border-terracotta-500/40 bg-gradient-to-br from-terracotta-500/10 to-gold-400/10 p-4 sm:p-5 scroll-mt-24 ${
-          isToday ? "ring-1 ring-terracotta-500/20" : ""
-        }`}
+        className="relative rounded-[var(--radius-card)] border-2 border-dashed border-cream-300 bg-cream-100/60 p-4 sm:p-5 scroll-mt-24"
       >
         {/* The loud swap ribbon — the "this is an OR, not a next step"
             signal, riding the top edge of the panel. */}
         <div className="flex items-center gap-2 flex-wrap">
-          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-terracotta-500 text-cream-50 text-[11px] font-bold uppercase tracking-[0.14em] shadow-sm">
+          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-terracotta-500 text-cream-50 text-[11px] font-bold">
             <ArrowLeftRight size={12} strokeWidth={2.4} />
             {t(SWAP_KEY[slot])}
           </span>
           {activity.tag && (
-            <span className="text-[9px] uppercase tracking-[0.22em] text-terracotta-700/70 font-semibold">
+            <span className="text-[11px] text-ink-700/60 font-semibold">
               {t(TAG_KEY[activity.tag] ?? "tag_view")}
             </span>
           )}
@@ -1346,7 +1343,7 @@ function AlternativeSwap({
               href={att?.website ?? activity.link}
               target="_blank"
               rel="noopener noreferrer"
-              className={`mt-2 inline-flex items-center gap-1 text-[11px] uppercase tracking-[0.18em] font-medium ${accentText} hover:underline transition-colors`}
+              className={`mt-2 inline-flex items-center gap-1 text-[12px] font-bold ${accentText} hover:underline transition-colors`}
             >
               <ExternalLink size={11} strokeWidth={1.9} />
               {t("official_site")} ↗
@@ -1356,7 +1353,7 @@ function AlternativeSwap({
           {att && (
             <button
               onClick={() => setOpen(o => !o)}
-              className={`mt-3 inline-flex items-center gap-1.5 text-[11px] uppercase tracking-[0.18em] font-medium ${accentText} hover:underline transition-colors`}
+              className={`mt-3 inline-flex items-center gap-1.5 text-[12px] font-bold ${accentText} hover:underline transition-colors`}
               aria-expanded={open}
             >
               {open ? <X size={12} /> : <Plus size={12} />}
@@ -1407,21 +1404,21 @@ function RideConnector({
     >
       {/* Small car marker threading the gap between two activity cards,
           so the drive reads as a connector rather than a stop. */}
-      <span className="shrink-0 mt-0.5 inline-flex items-center justify-center w-6 h-6 rounded-full bg-cream-100 ring-1 ring-cream-300/80 text-olive-700">
+      <span className="shrink-0 mt-0.5 inline-flex items-center justify-center w-6 h-6 rounded-full bg-cream-100 text-ink-700">
         <Car size={11} strokeWidth={1.9} />
       </span>
       <div className="min-w-0 pt-0.5">
         <div className="inline-flex items-baseline flex-wrap gap-x-2 gap-y-0.5">
-          <span className="text-[10px] uppercase tracking-[0.22em] text-olive-700/85 font-medium">
+          <span className="text-[11px] font-semibold text-ink-700/70">
             {departAt ? `${t("depart_at")} ${departAt} ${duration ? "· " + t("ride_to_next") : ""}` : t("ride_to_next")}
           </span>
           {duration && (
-            <span className="font-serif text-[14px] sm:text-[15px] text-ink-900">
+            <span className="font-bold text-[14px] sm:text-[15px] text-ink-900">
               {duration}
             </span>
           )}
           {note && (
-            <span className="text-[12px] sm:text-[13px] text-ink-700/65 italic">
+            <span className="text-[12px] sm:text-[13px] text-ink-700/65">
               {duration ? "· " : ""}{note}
             </span>
           )}
@@ -1446,9 +1443,9 @@ function RestaurantsForDay({ restaurants }: { restaurants: Service[] }) {
         {restaurants.map(r => (
           <li
             key={r.id}
-            className="flex items-start gap-3 p-3 rounded-xl bg-cream-50 ring-1 ring-cream-300/70"
+            className="flex items-start gap-3 p-3 rounded-xl bg-cream-50"
           >
-            <span className="shrink-0 w-9 h-9 rounded-full bg-terracotta-500/12 text-terracotta-700 flex items-center justify-center">
+            <span className="shrink-0 w-9 h-9 rounded-full bg-cream-100 text-ink-900 flex items-center justify-center">
               <Utensils size={15} strokeWidth={1.8} />
             </span>
             <div className="min-w-0 flex-1">
@@ -1494,7 +1491,7 @@ function DrinkOfTheDay({ drink }: { drink: DayDrink }) {
 
   return (
     <article
-      className={`relative overflow-hidden rounded-3xl bg-gradient-to-br ${style.gradient} ring-1 ring-cream-300/70 shadow-[0_18px_50px_-30px_rgba(151,109,76,0.45)]`}
+      className="relative overflow-hidden rounded-[var(--radius-card)] bg-cream-50"
     >
         {/* Oversized decorative glass icon in the corner, mirroring the
             quote glyph on the German word card. RTL flips it so it
@@ -1507,17 +1504,17 @@ function DrinkOfTheDay({ drink }: { drink: DayDrink }) {
         />
 
         <div className="relative px-5 sm:px-8 py-6 sm:py-8">
-          <div className="flex items-center gap-2 text-[10px] uppercase tracking-[0.32em] text-terracotta-600/85 font-medium">
+          <div className="flex items-center gap-2 text-[12px] font-semibold text-ink-700/70">
             <span className={`inline-block w-1.5 h-1.5 rounded-full ${style.accentDot}`} />
             {t("drink_eyebrow")}
           </div>
 
           <div className="mt-4 sm:mt-5 flex items-baseline flex-wrap gap-x-4 gap-y-2">
-            <h2 className="font-serif italic text-3xl sm:text-5xl text-ink-900 leading-none">
+            <h2 className="text-3xl sm:text-5xl font-extrabold tracking-tight text-ink-900 leading-none">
               {drink.name}
             </h2>
             <div
-              className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full ${style.chipBg} ${style.chipText} text-[10px] uppercase tracking-[0.18em] font-medium`}
+              className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full ${style.chipBg} ${style.chipText} text-[11px] font-semibold`}
             >
               <Icon size={11} strokeWidth={1.9} />
               {t(style.labelKey)}
@@ -1525,18 +1522,18 @@ function DrinkOfTheDay({ drink }: { drink: DayDrink }) {
           </div>
 
           <p className="mt-4 text-[14.5px] sm:text-[16px] text-ink-700/90 leading-relaxed">
-            <span className="text-[10px] uppercase tracking-[0.24em] text-ink-700/55 font-medium me-2">
+            <span className="text-[12px] font-semibold text-ink-700/60 me-2">
               {t("drink_pairing_label")}
             </span>
             {drink.pairing}
           </p>
 
           {drink.servingNote && (
-            <div className="mt-5 pt-5 border-t border-cream-300/60">
-              <div className="text-[10px] uppercase tracking-[0.24em] text-ink-700/55 font-medium">
+            <div className="mt-5 pt-5 border-t border-cream-300">
+              <div className="text-[12px] font-semibold text-ink-700/60">
                 {t("drink_serving_label")}
               </div>
-              <p className="mt-1.5 font-serif italic text-[15px] sm:text-[17px] text-ink-900 leading-snug">
+              <p className="mt-1.5 text-[15px] sm:text-[16px] text-ink-900 leading-snug">
                 {drink.servingNote}
               </p>
             </div>

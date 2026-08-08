@@ -5,6 +5,7 @@ import ChapterDetailPage from "./components/ChapterDetailPage";
 import InstallPrompt from "./components/InstallPrompt";
 import Gemininio from "./components/Gemininio";
 import TabShell from "./components/TabShell";
+import SiteFooter from "./components/SiteFooter";
 import { MapFocusContext } from "./lib/mapContext";
 import { useHashRoute, navigateTab } from "./lib/route";
 
@@ -38,6 +39,7 @@ export default function App() {
       <Navbar activeTab={route.tab} />
       {route.tab === "today" && <div className="h-16 sm:h-20" aria-hidden />}
       <TabShell tab={route.tab} registerFocus={registerFocus} />
+      {route.tab !== "map" && <SiteFooter />}
       <div className="h-20 md:hidden" aria-hidden />
       <MobileBottomNav activeTab={route.tab} />
       <InstallPrompt />

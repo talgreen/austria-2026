@@ -829,6 +829,10 @@ export const DICT = {
   today_before_title: { en: "Austria awaits", he: "אוסטריה מחכה" },
   today_departure_label: { en: "Departure", he: "יציאה" },
   today_departure_route: { en: "Tel Aviv → Vienna", he: "תל אביב → וינה" },
+  today_from_city: { en: "Tel Aviv", he: "תל אביב" },
+  today_to_city: { en: "Vienna", he: "וינה" },
+  today_arrival_label: { en: "Arrival", he: "נחיתה" },
+  today_trip_days: { en: "{n} days", he: "{n} ימים" },
   today_departure_note: {
     en: "Land 08:45 · drive departs ~10:00",
     he: "נחיתה 08:45 · יוצאים לדרך ~10:00"
