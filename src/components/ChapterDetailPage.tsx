@@ -538,9 +538,26 @@ function ChapterDetailContent({ day }: { day: Day }) {
   // Picked via ?hero=glass|band|card|split (default "scrim" = current
   // treatment). Temporary scaffolding: the chosen direction stays, the
   // rest gets deleted.
-  const heroVariant = ((): "scrim" | "glass" | "band" | "card" | "split" => {
+  type HeroVariant =
+    | "scrim"
+    | "glass"
+    | "band"
+    | "card"
+    | "split"
+    | "card2"
+    | "card3"
+    | "card4"
+    | "card5";
+  const heroVariant = ((): HeroVariant => {
     const v = new URLSearchParams(window.location.search).get("hero");
-    return v === "glass" || v === "band" || v === "card" || v === "split"
+    return v === "glass" ||
+      v === "band" ||
+      v === "card" ||
+      v === "split" ||
+      v === "card2" ||
+      v === "card3" ||
+      v === "card4" ||
+      v === "card5"
       ? v
       : "scrim";
   })();
@@ -629,6 +646,35 @@ function ChapterDetailContent({ day }: { day: Day }) {
     </AnimatePresence>
   );
 
+  /** Weekday · date · region · base · weather items — color-agnostic, the
+   *  wrapping row sets the tone. */
+  const heroMetaItems = (
+    <>
+      <span>{localizeWeekday(day.weekday, lang)}</span>
+      <span aria-hidden>·</span>
+      <span>{localizeShortDate(day.date, lang)}</span>
+      {day.departureTime && (
+        <>
+          <span aria-hidden>·</span>
+          <span className="inline-flex items-center gap-1 normal-case tracking-normal">
+            <Clock size={11} className="opacity-70" /> {lang === "he" ? `מומלץ לצאת ב־${day.departureTime}` : `Suggested depart: ${day.departureTime}`}
+          </span>
+        </>
+      )}
+      <span aria-hidden>·</span>
+      <span>{t(REGION_KEY[day.region])}</span>
+      {localDay.base && (
+        <>
+          <span aria-hidden>·</span>
+          <span className="inline-flex items-center gap-1 normal-case tracking-normal">
+            <MapPin size={11} className="opacity-70" /> {localDay.base}
+          </span>
+        </>
+      )}
+      <DayWeatherBadge day={day} size={12} />
+    </>
+  );
+
   /** The chapter title block, in a cream (on-photo) or ink (on-cream) tone. */
   const renderHeroTitle = (tone: "cream" | "ink") => {
     const c = tone === "cream";
@@ -662,28 +708,7 @@ function ChapterDetailContent({ day }: { day: Day }) {
             c ? "text-cream-50/95" : "text-ink-700/70"
           }`}
         >
-          <span>{localizeWeekday(day.weekday, lang)}</span>
-          <span aria-hidden>·</span>
-          <span>{localizeShortDate(day.date, lang)}</span>
-          {day.departureTime && (
-            <>
-              <span aria-hidden>·</span>
-              <span className="inline-flex items-center gap-1 normal-case tracking-normal">
-                <Clock size={11} className="opacity-70" /> {lang === "he" ? `מומלץ לצאת ב־${day.departureTime}` : `Suggested depart: ${day.departureTime}`}
-              </span>
-            </>
-          )}
-          <span aria-hidden>·</span>
-          <span>{t(REGION_KEY[day.region])}</span>
-          {localDay.base && (
-            <>
-              <span aria-hidden>·</span>
-              <span className="inline-flex items-center gap-1 normal-case tracking-normal">
-                <MapPin size={11} className="opacity-70" /> {localDay.base}
-              </span>
-            </>
-          )}
-          <DayWeatherBadge day={day} size={12} />
+          {heroMetaItems}
         </div>
 
         <h1
@@ -732,11 +757,44 @@ function ChapterDetailContent({ day }: { day: Day }) {
         {/* Hero — crossfading carousel of every photo from the day.
             EXPERIMENT: layout picked by ?hero= for the readability review. */}
         <header
-          className="relative w-full overflow-hidden bg-ink-900"
+          className={`relative w-full overflow-hidden ${heroVariant === "card5" ? "" : "bg-ink-900"}`}
           style={heroSwipeTouchAction ? { touchAction: heroSwipeTouchAction } : undefined}
           {...heroSwipeHandlers}
         >
-          {heroVariant === "band" ? (
+          {heroVariant === "card5" ? (
+            /* Polaroid: the photo sits inside a cream frame, with the whole
+               title block as the "handwritten caption" under it. */
+            <div className="px-4 sm:px-6 pt-4 sm:pt-6">
+              <div className="max-w-4xl mx-auto bg-cream-50 rounded-[1.75rem] ring-1 ring-cream-300/70 shadow-[0_24px_60px_-28px_rgba(58,28,15,0.45)] p-2.5 sm:p-4">
+                <div className="relative aspect-[16/11] sm:aspect-[21/9] max-h-[60vh] overflow-hidden rounded-[1.25rem]">
+                  {heroCarousel}
+                  {heroDashes}
+                  <div className="absolute bottom-2 start-2 z-10">{heroSlideChips}</div>
+                </div>
+                <div className="px-2 sm:px-4 pt-4 sm:pt-5 pb-2 sm:pb-3">
+                  <div className="flex items-baseline gap-3">
+                    <div className={`font-serif text-2xl sm:text-4xl leading-none ${a.text}`}>
+                      {ROMAN[day.dayNumber]}
+                    </div>
+                    <div className="text-[10px] uppercase tracking-[0.28em] font-medium text-ink-700/55">
+                      {t("plan_chapter_x_of_y", { x: String(day.dayNumber).padStart(2, "0"), y: String(itinerary.length).padStart(2, "0") })}
+                    </div>
+                  </div>
+                  <h1 className="mt-1.5 font-serif text-3xl sm:text-5xl leading-[1.05] tracking-tight text-ink-900">
+                    {localDay.title}
+                  </h1>
+                  {localDay.subtitle && (
+                    <p className="mt-1.5 font-serif italic text-ink-700/75 text-base sm:text-lg max-w-2xl">
+                      {localDay.subtitle}
+                    </p>
+                  )}
+                  <div className="mt-2.5 flex items-center gap-2 sm:gap-3 text-[10px] sm:text-[11px] uppercase tracking-[0.22em] font-medium flex-wrap text-ink-700/70">
+                    {heroMetaItems}
+                  </div>
+                </div>
+              </div>
+            </div>
+          ) : heroVariant === "band" ? (
             <>
               {/* Photo melts into a solid ink band; the text sits on the band. */}
               <div className="relative w-full aspect-[16/10] sm:aspect-[21/9] max-h-[60vh] overflow-hidden">
@@ -765,12 +823,29 @@ function ChapterDetailContent({ day }: { day: Day }) {
               {heroVariant === "glass" && (
                 <div className="absolute inset-0 bg-gradient-to-t from-ink-900/40 via-ink-900/10 to-ink-900/20" />
               )}
-              {(heroVariant === "card" || heroVariant === "split") && (
+              {(heroVariant === "card" ||
+                heroVariant === "split" ||
+                heroVariant === "card2" ||
+                heroVariant === "card3" ||
+                heroVariant === "card4") && (
                 <div className="absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-ink-900/35 to-transparent" />
               )}
               <div className="absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-ink-900/40 to-transparent" />
 
               {heroDashes}
+
+              {/* card4: the chapter mark stays on the photo — only the title
+                  moves down to the card. */}
+              {heroVariant === "card4" && (
+                <div className="absolute top-4 sm:top-6 start-4 sm:start-8 flex items-baseline gap-2.5 text-cream-50 [text-shadow:0_1px_3px_rgba(23,17,12,0.6)]">
+                  <div className="font-serif text-4xl sm:text-5xl leading-none">
+                    {ROMAN[day.dayNumber]}
+                  </div>
+                  <div className="text-[10px] uppercase tracking-[0.28em] font-medium text-cream-50/90">
+                    {t("plan_chapter_x_of_y", { x: String(day.dayNumber).padStart(2, "0"), y: String(itinerary.length).padStart(2, "0") })}
+                  </div>
+                </div>
+              )}
 
               {heroVariant === "scrim" && (
                 <div className="absolute inset-x-0 bottom-0 px-4 sm:px-10 pb-6 sm:pb-12 text-cream-50 [text-shadow:0_1px_2px_rgba(23,17,12,0.55),0_2px_14px_rgba(23,17,12,0.35)]">
@@ -790,8 +865,11 @@ function ChapterDetailContent({ day }: { day: Day }) {
                 </div>
               )}
 
-              {(heroVariant === "card" || heroVariant === "split") && (
-                <div className={`absolute z-10 start-4 ${heroVariant === "card" ? "top-3" : "bottom-3"}`}>
+              {(heroVariant === "card" ||
+                heroVariant === "split" ||
+                heroVariant === "card2" ||
+                heroVariant === "card3") && (
+                <div className={`absolute z-10 start-4 ${heroVariant === "split" ? "bottom-3" : "top-3"}`}>
                   {heroSlideChips}
                 </div>
               )}
@@ -814,6 +892,102 @@ function ChapterDetailContent({ day }: { day: Day }) {
               {renderHeroTitle("ink")}
             </div>
           </div>
+        )}
+        {heroVariant === "card2" && (
+          /* Ticket / boarding-pass: accent bar on the leading edge, roman
+             numeral medallion straddling the card's top edge, meta row as a
+             dashed "ticket stub" strip. */
+          <div className="relative z-10 px-4 sm:px-6 -mt-14 sm:-mt-24">
+            <div className="relative max-w-4xl mx-auto">
+              <div className="rounded-3xl bg-cream-50 ring-1 ring-cream-300/70 shadow-[0_24px_60px_-24px_rgba(58,28,15,0.4)] overflow-hidden">
+                <span aria-hidden className="absolute inset-y-0 start-0 w-1.5 bg-terracotta-500" />
+                <div className="px-6 sm:px-9 pt-5 sm:pt-6 pb-4 sm:pb-5">
+                  <div className="text-[10px] sm:text-[11px] uppercase tracking-[0.28em] font-medium text-terracotta-600/85">
+                    {t("plan_chapter_x_of_y", { x: String(day.dayNumber).padStart(2, "0"), y: String(itinerary.length).padStart(2, "0") })}
+                  </div>
+                  <h1 className="mt-1.5 font-serif text-3xl sm:text-6xl leading-[1.05] tracking-tight text-ink-900 max-w-3xl">
+                    {localDay.title}
+                  </h1>
+                  {localDay.subtitle && (
+                    <p className="mt-2 font-serif italic text-ink-700/75 text-base sm:text-xl max-w-2xl">
+                      {localDay.subtitle}
+                    </p>
+                  )}
+                </div>
+                <div className="border-t border-dashed border-cream-300 px-6 sm:px-9 py-3 sm:py-3.5 flex items-center gap-2 sm:gap-3 text-[10px] sm:text-[11px] uppercase tracking-[0.2em] font-medium flex-wrap text-ink-700/70 bg-cream-100/50">
+                  {heroMetaItems}
+                </div>
+              </div>
+              <div className="absolute -top-5 end-6 w-11 h-11 rounded-full bg-terracotta-500 text-cream-50 flex items-center justify-center font-serif text-lg leading-none shadow-lg ring-4 ring-cream-50">
+                {ROMAN[day.dayNumber]}
+              </div>
+            </div>
+          </div>
+        )}
+        {heroVariant === "card3" && (
+          /* Book-chapter sheet: full-width cream sheet with rounded top
+             corners rising into the photo, roman numeral medallion centered
+             on the seam, everything centered like a title page. */
+          <div className="relative z-10 -mt-6 sm:-mt-10">
+            <div className="relative bg-cream-50 rounded-t-[2.5rem] sm:rounded-t-[3rem] border-b border-cream-300/60">
+              <div className="absolute -top-7 left-1/2 -translate-x-1/2 w-14 h-14 rounded-full bg-cream-50 ring-1 ring-cream-300/70 shadow-[0_10px_30px_-10px_rgba(58,28,15,0.5)] flex items-center justify-center">
+                <span className={`font-serif text-2xl leading-none ${a.text}`}>
+                  {ROMAN[day.dayNumber]}
+                </span>
+              </div>
+              <div className="max-w-3xl mx-auto px-4 sm:px-6 pt-10 sm:pt-11 pb-6 sm:pb-8 text-center">
+                <div className="text-[10px] sm:text-[11px] uppercase tracking-[0.32em] font-medium text-ink-700/55">
+                  {t("plan_chapter_x_of_y", { x: String(day.dayNumber).padStart(2, "0"), y: String(itinerary.length).padStart(2, "0") })}
+                </div>
+                <h1 className="mt-2 font-serif text-3xl sm:text-6xl leading-[1.05] tracking-tight text-ink-900">
+                  {localDay.title}
+                </h1>
+                {localDay.subtitle && (
+                  <p className="mt-2 sm:mt-3 font-serif italic text-ink-700/75 text-base sm:text-xl">
+                    {localDay.subtitle}
+                  </p>
+                )}
+                <div className="mt-3 sm:mt-4 flex items-center justify-center gap-2 sm:gap-3 text-[10px] sm:text-[12px] uppercase tracking-[0.22em] font-medium flex-wrap text-ink-700/70">
+                  {heroMetaItems}
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+        {heroVariant === "card4" && (
+          /* Split data: chapter mark lives on the photo, the card carries
+             only the title, and the meta scatters into pills below. */
+          <>
+            <div className="relative z-10 px-4 sm:px-6 -mt-12 sm:-mt-20">
+              <div className="max-w-4xl mx-auto rounded-3xl bg-cream-50 ring-1 ring-cream-300/70 shadow-[0_24px_60px_-24px_rgba(58,28,15,0.4)] px-5 sm:px-8 py-5 sm:py-6">
+                <h1 className="font-serif text-3xl sm:text-6xl leading-[1.05] tracking-tight text-ink-900 max-w-3xl">
+                  {localDay.title}
+                </h1>
+                {localDay.subtitle && (
+                  <p className="mt-2 font-serif italic text-ink-700/75 text-base sm:text-xl max-w-2xl">
+                    {localDay.subtitle}
+                  </p>
+                )}
+              </div>
+            </div>
+            <div className="max-w-4xl mx-auto px-4 sm:px-6 mt-3 flex flex-wrap items-center justify-center gap-2">
+              <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-cream-50 ring-1 ring-cream-300/70 text-[10px] uppercase tracking-[0.2em] font-medium text-ink-700/75">
+                {localizeWeekday(day.weekday, lang)} · {localizeShortDate(day.date, lang)}
+              </span>
+              <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-cream-50 ring-1 ring-cream-300/70 text-[10px] uppercase tracking-[0.2em] font-medium text-ink-700/75">
+                {t(REGION_KEY[day.region])}
+              </span>
+              {localDay.base && (
+                <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-cream-50 ring-1 ring-cream-300/70 text-[10px] uppercase tracking-[0.2em] font-medium text-ink-700/75 normal-case tracking-normal">
+                  <MapPin size={11} className="opacity-70" /> {localDay.base}
+                </span>
+              )}
+              <span className="inline-flex items-center px-2 py-1 rounded-full bg-cream-50 ring-1 ring-cream-300/70">
+                <DayWeatherBadge day={day} size={12} />
+              </span>
+              {heroSlideChips}
+            </div>
+          </>
         )}
 
         <div className="max-w-4xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
