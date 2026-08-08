@@ -197,28 +197,36 @@ function parseWordObjects(inner) {
   return out;
 }
 
-function extractEnDayInner(src, dayNum) {
-  if (dayNum < 10) {
-    const re = new RegExp(
-      `\\n  \\{\\n    dayNumber: ${dayNum},([\\s\\S]*?)\\n  \\},\\n  \\{\\n    dayNumber: ${dayNum + 1},`
-    );
-    const m = src.match(re);
-    return m ? m[1] : null;
+/** Highest dayNumber present in the EN itinerary source. */
+function countDays(src) {
+  let max = 0;
+  for (const m of src.matchAll(/\n    dayNumber: (\d+),/g)) {
+    max = Math.max(max, Number(m[1]));
   }
-  const m = src.match(/\n  \{\n    dayNumber: 10,([\s\S]*?)\n  \}\n\];/);
-  return m ? m[1] : null;
+  return max;
+}
+
+function extractEnDayInner(src, dayNum) {
+  const boundary = new RegExp(
+    `\\n  \\{\\n    dayNumber: ${dayNum},([\\s\\S]*?)\\n  \\},\\n  \\{\\n    dayNumber: ${dayNum + 1},`
+  );
+  const m = src.match(boundary);
+  if (m) return m[1];
+  /** Last day: no following block, the array closes instead. */
+  const last = new RegExp(`\\n  \\{\\n    dayNumber: ${dayNum},([\\s\\S]*?)\\n  \\}\\n\\];`);
+  const m2 = src.match(last);
+  return m2 ? m2[1] : null;
 }
 
 function extractHeDayInner(src, dayNum) {
-  if (dayNum < 10) {
-    const re = new RegExp(
-      `\\n  ${dayNum}: \\{([\\s\\S]*?)\\n  \\},\\n  ${dayNum + 1}: \\{`
-    );
-    const m = src.match(re);
-    return m ? m[1] : null;
-  }
-  const m = src.match(/\n  10: \{([\s\S]*?)\n  \}\n\};/);
-  return m ? m[1] : null;
+  const boundary = new RegExp(
+    `\\n  ${dayNum}: \\{([\\s\\S]*?)\\n  \\},\\n  ${dayNum + 1}: \\{`
+  );
+  const m = src.match(boundary);
+  if (m) return m[1];
+  const last = new RegExp(`\\n  ${dayNum}: \\{([\\s\\S]*?)\\n  \\}\\n\\};`);
+  const m2 = src.match(last);
+  return m2 ? m2[1] : null;
 }
 
 function extractGermanWordsInner(dayInner) {
@@ -443,9 +451,11 @@ async function main() {
 
   const enSrc = (await readFile(ITINERARY_EN, "utf8")).replace(/\r\n/g, "\n");
   const heSrc = (await readFile(ITINERARY_HE, "utf8")).replace(/\r\n/g, "\n");
+  const dayCount = countDays(enSrc);
+  if (dayCount < 1) throw new Error("No dayNumber entries found in itinerary.ts");
 
   if (parseOnly) {
-    for (let dayNum = 1; dayNum <= 10; dayNum++) {
+    for (let dayNum = 1; dayNum <= dayCount; dayNum++) {
       const enWords = parseEnWordsForDay(enSrc, dayNum);
       const heWords = parseHeWordsForDay(heSrc, dayNum);
       if (enWords.length !== heWords.length) {
@@ -522,7 +532,7 @@ async function main() {
     let wrote = 0;
     let skipped = 0;
 
-    for (let dayNum = 1; dayNum <= 10; dayNum++) {
+    for (let dayNum = 1; dayNum <= dayCount; dayNum++) {
       const enWords = parseEnWordsForDay(enSrc, dayNum);
       const heWords = parseHeWordsForDay(heSrc, dayNum);
       if (enWords.length !== heWords.length) {
