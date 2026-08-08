@@ -8,6 +8,10 @@ import {
   MapPin,
   Car,
   Sun,
+  CloudSun,
+  Cloud,
+  CloudRain,
+  CloudSnow,
   ExternalLink,
   Plus,
   X,
@@ -64,6 +68,7 @@ import { FunPackBody } from "./DayFunPack";
 import { getKidsPack } from "../data/kids";
 import CollapsibleSection from "./CollapsibleSection";
 import { useCarouselSwipe } from "../lib/useCarouselSwipe";
+import { forecastForDay, useTripWeather } from "../lib/weather";
 
 const ROMAN = ["", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X"];
 
@@ -555,7 +560,9 @@ function ChapterDetailContent({ day }: { day: Day }) {
     | "blur"
     | "ambient"
     | "cinema"
-    | "editorial";
+    | "editorial"
+    | "focus"
+    | "focus2";
   const heroVariant = ((): HeroVariant => {
     const v = new URLSearchParams(window.location.search).get("hero");
     return v === "glass" ||
@@ -573,10 +580,25 @@ function ChapterDetailContent({ day }: { day: Day }) {
       v === "blur" ||
       v === "ambient" ||
       v === "cinema" ||
-      v === "editorial"
+      v === "editorial" ||
+      v === "focus" ||
+      v === "focus2"
       ? v
       : "scrim";
   })();
+
+  /* focus variants: the day's forecast rendered as a first-class element
+     (icon + high/low) instead of a tiny inline suffix. */
+  const { weather: tripWeather } = useTripWeather();
+  const heroForecast = forecastForDay(tripWeather, day);
+  const weatherIconFor = (code: number, size: number) => {
+    if (code === 0) return <Sun size={size} />;
+    if (code <= 2) return <CloudSun size={size} />;
+    if (code <= 48) return <Cloud size={size} />;
+    if ((code >= 71 && code <= 77) || (code >= 85 && code <= 86))
+      return <CloudSnow size={size} />;
+    return <CloudRain size={size} />;
+  };
 
   /* ambient variant: sample the current photo's average color (darkened for
      contrast) so the band under the photo color-matches every slide,
@@ -813,7 +835,8 @@ function ChapterDetailContent({ day }: { day: Day }) {
             heroVariant === "card5" ||
             heroVariant === "arch" ||
             heroVariant === "poster" ||
-            heroVariant === "editorial"
+            heroVariant === "editorial" ||
+            heroVariant === "focus2"
               ? ""
               : "bg-ink-900"
           }`}
@@ -995,6 +1018,48 @@ function ChapterDetailContent({ day }: { day: Day }) {
                 </div>
               </div>
             </>
+          ) : heroVariant === "focus2" ? (
+            /* focus2: same hierarchy (day · date, place, weather first; the
+               theme demoted) on the dissolve-into-paper base. No credits. */
+            <>
+              <div className="relative w-full aspect-[16/10] sm:aspect-[21/9] max-h-[62vh] overflow-hidden bg-ink-900">
+                {heroCarousel}
+                <div className="absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-ink-900/40 to-transparent" />
+                <div className="absolute inset-x-0 bottom-0 h-2/5 bg-gradient-to-t from-cream-50 via-cream-50/55 to-transparent" />
+                {heroDashes}
+              </div>
+              <div className="bg-cream-50 border-b border-cream-300/60">
+                <div className="max-w-4xl mx-auto px-4 sm:px-6 pb-6 sm:pb-8">
+                  <div className="text-[9px] sm:text-[10px] uppercase tracking-[0.3em] font-medium text-ink-700/50">
+                    {t("plan_chapter_x_of_y", { x: String(day.dayNumber).padStart(2, "0"), y: String(itinerary.length).padStart(2, "0") })}
+                  </div>
+                  <div className="mt-1.5 font-serif text-3xl sm:text-5xl text-ink-900 leading-tight tracking-tight">
+                    {localizeWeekday(day.weekday, lang)} · {localizeShortDate(day.date, lang)}
+                  </div>
+                  <div className="mt-2.5 flex flex-wrap items-center gap-x-4 gap-y-2">
+                    {localDay.base && (
+                      <div className="flex items-center gap-1.5 text-[15px] sm:text-lg font-medium text-ink-800">
+                        <MapPin size={17} className="text-terracotta-500 shrink-0" />
+                        {localDay.base}
+                      </div>
+                    )}
+                    {heroForecast && (
+                      <div
+                        dir="ltr"
+                        className="inline-flex items-center gap-2 rounded-full bg-gold-400/20 ring-1 ring-gold-500/40 px-3.5 py-1.5 text-ink-900"
+                      >
+                        <span className="text-sienna-600">{weatherIconFor(heroForecast.code, 18)}</span>
+                        <span className="font-bold text-[15px] tabular-nums">{heroForecast.tMax}°</span>
+                        <span className="text-ink-700/60 text-[13px] tabular-nums">/ {heroForecast.tMin}°</span>
+                      </div>
+                    )}
+                  </div>
+                  <div className="mt-3.5 pt-3.5 border-t border-ink-900/10 font-serif text-lg sm:text-2xl text-ink-800/85 leading-snug max-w-2xl">
+                    {localDay.title}
+                  </div>
+                </div>
+              </div>
+            </>
           ) : heroVariant === "band" ? (
             <>
               {/* Photo melts into a solid ink band; the text sits on the band. */}
@@ -1019,7 +1084,9 @@ function ChapterDetailContent({ day }: { day: Day }) {
                     ? "aspect-[16/13]"
                     : heroVariant === "cinema"
                       ? "aspect-[4/5]"
-                      : "aspect-[16/10]"
+                      : heroVariant === "focus"
+                        ? "aspect-[16/12]"
+                        : "aspect-[16/10]"
               }`}
             >
               {heroCarousel}
@@ -1041,7 +1108,7 @@ function ChapterDetailContent({ day }: { day: Day }) {
               {heroVariant === "marker" && (
                 <div className="absolute inset-x-0 bottom-0 h-44 bg-gradient-to-t from-ink-900/30 to-transparent" />
               )}
-              {heroVariant === "blur" && (
+              {(heroVariant === "blur" || heroVariant === "focus") && (
                 /* iOS-style progressive blur: the photo melts out of focus
                    toward the text — no scrim wall, no card. */
                 <div className="absolute inset-x-0 bottom-0 h-[62%] pointer-events-none">
@@ -1100,6 +1167,41 @@ function ChapterDetailContent({ day }: { day: Day }) {
                   <div className="max-w-4xl mx-auto">
                     {renderHeroTitle("cream")}
                     <div className="mt-4 sm:mt-5">{heroSlideChips}</div>
+                  </div>
+                </div>
+              )}
+
+              {/* focus: hierarchy per the trip's real needs — the DAY
+                  (weekday · date), the PLACE and the WEATHER lead; the
+                  day's theme is a quiet closing line. No photo credits. */}
+              {heroVariant === "focus" && (
+                <div className="absolute inset-x-0 bottom-0 px-4 sm:px-10 pb-6 sm:pb-10 text-cream-50">
+                  <div className="max-w-4xl mx-auto">
+                    <div className="text-[9px] sm:text-[10px] uppercase tracking-[0.3em] font-medium text-cream-50/65">
+                      {t("plan_chapter_x_of_y", { x: String(day.dayNumber).padStart(2, "0"), y: String(itinerary.length).padStart(2, "0") })}
+                    </div>
+                    <div className="mt-1.5 font-serif text-3xl sm:text-5xl leading-tight tracking-tight drop-shadow-[0_2px_10px_rgba(0,0,0,0.35)]">
+                      {localizeWeekday(day.weekday, lang)} · {localizeShortDate(day.date, lang)}
+                    </div>
+                    {localDay.base && (
+                      <div className="mt-2 flex items-center gap-1.5 text-[15px] sm:text-xl font-medium text-cream-50/95">
+                        <MapPin size={17} className="text-gold-400 shrink-0" />
+                        {localDay.base}
+                      </div>
+                    )}
+                    {heroForecast && (
+                      <div
+                        dir="ltr"
+                        className="mt-3 inline-flex items-center gap-2 rounded-full bg-cream-50/95 text-ink-900 px-3.5 py-1.5 shadow-[0_10px_28px_-10px_rgba(0,0,0,0.55)]"
+                      >
+                        <span className="text-sienna-600">{weatherIconFor(heroForecast.code, 18)}</span>
+                        <span className="font-bold text-[15px] sm:text-base tabular-nums">{heroForecast.tMax}°</span>
+                        <span className="text-ink-700/60 text-[13px] sm:text-sm tabular-nums">/ {heroForecast.tMin}°</span>
+                      </div>
+                    )}
+                    <div className="mt-3 sm:mt-4 font-serif text-lg sm:text-2xl text-cream-50/85 leading-snug max-w-2xl">
+                      {localDay.title}
+                    </div>
                   </div>
                 </div>
               )}
