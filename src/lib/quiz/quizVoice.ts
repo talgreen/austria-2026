@@ -267,11 +267,12 @@ class BrowserTtsQuizVoice implements QuizVoice {
         voices.find(v => /hebrew/i.test(v.name)) ??
         null;
     } else {
-      // Prefer an German-accented English voice if one is installed,
-      // else any en-* voice, else the default.
+      // Prefer a German-accented English voice if one is installed,
+      // else a de-* voice (German accent on English text), else any
+      // en-* voice, else the default.
       this.chosenVoice =
-        voices.find(v => /german|germano/i.test(v.name) && /^en/i.test(v.lang)) ??
-        voices.find(v => /^it/i.test(v.lang)) ??
+        voices.find(v => /german|deutsch/i.test(v.name) && /^en/i.test(v.lang)) ??
+        voices.find(v => /^de/i.test(v.lang)) ??
         voices.find(v => /^en/i.test(v.lang)) ??
         null;
     }

@@ -7,7 +7,7 @@
 // **Default (Google path): Gemini 3.1 Flash TTS** — `GEMINI_API_KEY` (AI Studio key;
 // same family as the site’s Gemini features). Model: `GEMINI_TTS_MODEL` or
 // `gemini-3.1-flash-tts-preview`. Voices: prebuilt names, e.g. `GEMINI_TTS_VOICE_NAME=Kore`
-// or per-language `GEMINI_TTS_VOICE_IT` / `_EN` / `_HE`.
+// or per-language `GEMINI_TTS_VOICE_DE` / `_EN` / `_HE`.
 //
 // **Legacy Cloud Chirp 3 HD:** `--google-chirp3` or `GERMAN_WORDS_TTS=google-chirp3`
 // — requires Cloud Text-to-Speech API + `gcloud auth application-default login`
@@ -50,22 +50,22 @@ const ELEVEN_OUTPUT_FORMAT = "mp3_44100_128";
 function getElevenTtsConfig() {
   return {
     modelId:
-      process.env.ELEVEN_IT_WORDS_MODEL?.trim() ||
+      process.env.ELEVEN_DE_WORDS_MODEL?.trim() ||
       process.env.ELEVEN_HE_MODEL?.trim() ||
       "eleven_v3",
-    voiceItEn: process.env.ELEVEN_IT_WORDS_VOICE_ID || "ZRKmc75tGxpIMNTEiwe0",
+    voiceDeEn: process.env.ELEVEN_DE_WORDS_VOICE_ID || "ZRKmc75tGxpIMNTEiwe0",
     voiceHe: process.env.ELEVEN_HE_VOICE_ID || "21m00Tcm4TlvDq8ikWAM"
   };
 }
 
 /** Full `voice.name` values for Cloud TTS (Chirp 3 HD). */
 function getGoogleVoiceConfig() {
-  const stemItEn = process.env.GOOGLE_TTS_VOICE_STEM || "Kore";
-  /** Same stem as IT/EN by default — Despina’s Hebrew leg often sounded thin vs Kore. */
-  const stemHe = process.env.GOOGLE_TTS_HEBREW_VOICE_STEM || stemItEn;
+  const stemDeEn = process.env.GOOGLE_TTS_VOICE_STEM || "Kore";
+  /** Same stem as DE/EN by default — Despina’s Hebrew leg often sounded thin vs Kore. */
+  const stemHe = process.env.GOOGLE_TTS_HEBREW_VOICE_STEM || stemDeEn;
   return {
-    voiceIt: process.env.GOOGLE_TTS_VOICE_IT || `it-IT-Chirp3-HD-${stemItEn}`,
-    voiceEn: process.env.GOOGLE_TTS_VOICE_EN || `en-US-Chirp3-HD-${stemItEn}`,
+    voiceDe: process.env.GOOGLE_TTS_VOICE_DE || `de-DE-Chirp3-HD-${stemDeEn}`,
+    voiceEn: process.env.GOOGLE_TTS_VOICE_EN || `en-US-Chirp3-HD-${stemDeEn}`,
     voiceHe: process.env.GOOGLE_TTS_VOICE_HE || `he-IL-Chirp3-HD-${stemHe}`
   };
 }
@@ -93,7 +93,7 @@ function useGoogleChirp3() {
 function getGeminiVoiceConfig() {
   const d = process.env.GEMINI_TTS_VOICE_NAME?.trim() || "Kore";
   return {
-    voiceIt: process.env.GEMINI_TTS_VOICE_IT?.trim() || d,
+    voiceDe: process.env.GEMINI_TTS_VOICE_DE?.trim() || d,
     voiceEn: process.env.GEMINI_TTS_VOICE_EN?.trim() || d,
     voiceHe: process.env.GEMINI_TTS_VOICE_HE?.trim() || d
   };
@@ -102,7 +102,7 @@ function getGeminiVoiceConfig() {
 function geminiPromptFor(lang, literal) {
   const body = literal.replace(/\r\n/g, "\n");
   switch (lang) {
-    case "it":
+    case "de":
       return `Speak in German with a calm, clear travel-phrasebook tone. Read exactly the following text, with natural pacing:\n\n${body}`;
     case "en":
       return `Speak in American English with a calm, clear travel-phrasebook tone. Read exactly the following text, with natural pacing:\n\n${body}`;
@@ -153,17 +153,46 @@ function pickField(block, key) {
   return m ? m[1] : undefined;
 }
 
+/** Split the array-inner text into balanced `{ … }` chunks. Handles both
+ *  single-line objects (EN itinerary) and multiline objects (HE itinerary). */
 function parseWordObjects(inner) {
   const out = [];
-  let pos = 0;
-  while (true) {
-    const s = inner.indexOf("\n      {", pos);
-    if (s < 0) break;
-    const e = inner.indexOf("\n      }", s + 1);
-    if (e < 0) break;
-    const chunk = inner.slice(s, e + "\n      }".length);
-    out.push(chunk);
-    pos = e + 1;
+  let i = 0;
+  while (i < inner.length) {
+    if (inner[i] !== "{") {
+      i++;
+      continue;
+    }
+    const start = i;
+    let depth = 0;
+    while (i < inner.length) {
+      const c = inner[i];
+      if (c === '"') {
+        i++;
+        while (i < inner.length) {
+          if (inner[i] === "\\") {
+            i += 2;
+            continue;
+          }
+          if (inner[i] === '"') {
+            i++;
+            break;
+          }
+          i++;
+        }
+        continue;
+      }
+      if (c === "{") depth++;
+      else if (c === "}") {
+        depth--;
+        if (depth === 0) {
+          i++;
+          break;
+        }
+      }
+      i++;
+    }
+    out.push(inner.slice(start, i));
   }
   return out;
 }
@@ -325,30 +354,30 @@ function googleSpeakingRates() {
   const he =
     heRaw !== undefined && heRaw !== "" ? Number(heRaw) : mainOk;
   const heOk = Number.isFinite(he) ? he : mainOk;
-  return { it: mainOk, en: mainOk, he: heOk };
+  return { de: mainOk, en: mainOk, he: heOk };
 }
 
-function googleWordSegments(cfg, it, enMeaning, heMeaning) {
+function googleWordSegments(cfg, de, enMeaning, heMeaning) {
   const r = googleSpeakingRates();
   return [
-    { text: it, languageCode: "it-IT", name: cfg.voiceIt, speakingRate: r.it },
+    { text: de, languageCode: "de-DE", name: cfg.voiceDe, speakingRate: r.de },
     { text: enMeaning, languageCode: "en-US", name: cfg.voiceEn, speakingRate: r.en },
     { text: heMeaning, languageCode: "he-IL", name: cfg.voiceHe, speakingRate: r.he }
   ];
 }
 
-function geminiWordSegments(cfg, it, enMeaning, heMeaning) {
+function geminiWordSegments(cfg, de, enMeaning, heMeaning) {
   return [
-    { text: geminiPromptFor("it", it), voiceName: cfg.voiceIt },
+    { text: geminiPromptFor("de", de), voiceName: cfg.voiceDe },
     { text: geminiPromptFor("en", enMeaning), voiceName: cfg.voiceEn },
     { text: geminiPromptFor("he", heMeaning), voiceName: cfg.voiceHe }
   ];
 }
 
-function elevenWordSegments(cfg, it, enMeaning, heMeaning) {
+function elevenWordSegments(cfg, de, enMeaning, heMeaning) {
   return [
-    { text: it, voiceId: cfg.voiceItEn, languageCode: "it" },
-    { text: enMeaning, voiceId: cfg.voiceItEn, languageCode: "en" },
+    { text: de, voiceId: cfg.voiceDeEn, languageCode: "de" },
+    { text: enMeaning, voiceId: cfg.voiceDeEn, languageCode: "en" },
     { text: heMeaning, voiceId: cfg.voiceHe, languageCode: "he" }
   ];
 }
@@ -426,7 +455,7 @@ async function main() {
       for (let i = 0; i < enWords.length; i++) {
         if (enWords[i].example && enWords[i].exampleMeaning && heWords[i].exampleMeaning) exCount++;
       }
-      console.log(`day ${dayNum}: ${enWords.length} words, ${exCount} with example (IT+EN+HE)`);
+      console.log(`day ${dayNum}: ${enWords.length} words, ${exCount} with example (DE+EN+HE)`);
     }
     console.log("parse-only OK");
     return;
@@ -451,14 +480,14 @@ async function main() {
     }
     elevenCfg = getElevenTtsConfig();
     console.log(
-      `TTS: ElevenLabs | model=${elevenCfg.modelId} | IT+EN voice=${elevenCfg.voiceItEn} | HE voice=${elevenCfg.voiceHe}`
+      `TTS: ElevenLabs | model=${elevenCfg.modelId} | DE+EN voice=${elevenCfg.voiceDeEn} | HE voice=${elevenCfg.voiceHe}`
     );
   } else if (useGoogleChirp3()) {
     googleMode = "chirp3";
     googleToken = await getGoogleAccessToken();
     googleVoices = getGoogleVoiceConfig();
     console.log(
-      `TTS: Google Cloud Chirp 3 HD | IT=${googleVoices.voiceIt} | EN=${googleVoices.voiceEn} | HE=${googleVoices.voiceHe}`
+      `TTS: Google Cloud Chirp 3 HD | DE=${googleVoices.voiceDe} | EN=${googleVoices.voiceEn} | HE=${googleVoices.voiceHe}`
     );
   } else {
     googleMode = "gemini";
@@ -472,7 +501,7 @@ async function main() {
     }
     geminiVoices = getGeminiVoiceConfig();
     console.log(
-      `TTS: Gemini Flash TTS | model=${getGeminiTtsModel()} | IT=${geminiVoices.voiceIt} | EN=${geminiVoices.voiceEn} | HE=${geminiVoices.voiceHe}`
+      `TTS: Gemini Flash TTS | model=${getGeminiTtsModel()} | DE=${geminiVoices.voiceDe} | EN=${geminiVoices.voiceEn} | HE=${geminiVoices.voiceHe}`
     );
   }
 
@@ -524,7 +553,7 @@ async function main() {
               elevenWordSegments(elevenCfg, en.word, en.meaning, he.meaning),
               wordDest
             );
-            console.log(`+ ${prefix}-${i}.mp3 (IT · EN · HE)`);
+            console.log(`+ ${prefix}-${i}.mp3 (DE · EN · HE)`);
             wrote++;
           } else if (googleMode === "chirp3") {
             await buildTrilingualGoogle(
@@ -534,7 +563,7 @@ async function main() {
               googleWordSegments(googleVoices, en.word, en.meaning, he.meaning),
               wordDest
             );
-            console.log(`+ ${prefix}-${i}.mp3 (IT · EN · HE)`);
+            console.log(`+ ${prefix}-${i}.mp3 (DE · EN · HE)`);
             wrote++;
           } else {
             await buildTrilingualGemini(
@@ -544,7 +573,7 @@ async function main() {
               geminiWordSegments(geminiVoices, en.word, en.meaning, he.meaning),
               wordDest
             );
-            console.log(`+ ${prefix}-${i}.mp3 (IT · EN · HE)`);
+            console.log(`+ ${prefix}-${i}.mp3 (DE · EN · HE)`);
             wrote++;
           }
         }
@@ -564,7 +593,7 @@ async function main() {
               elevenWordSegments(elevenCfg, en.example, en.exampleMeaning, he.exampleMeaning),
               exDest
             );
-            console.log(`+ ${prefix}-${i}-ex.mp3 (IT · EN · HE)`);
+            console.log(`+ ${prefix}-${i}-ex.mp3 (DE · EN · HE)`);
             wrote++;
           } else if (googleMode === "chirp3") {
             await buildTrilingualGoogle(
@@ -574,7 +603,7 @@ async function main() {
               googleWordSegments(googleVoices, en.example, en.exampleMeaning, he.exampleMeaning),
               exDest
             );
-            console.log(`+ ${prefix}-${i}-ex.mp3 (IT · EN · HE)`);
+            console.log(`+ ${prefix}-${i}-ex.mp3 (DE · EN · HE)`);
             wrote++;
           } else {
             await buildTrilingualGemini(
@@ -584,7 +613,7 @@ async function main() {
               geminiWordSegments(geminiVoices, en.example, en.exampleMeaning, he.exampleMeaning),
               exDest
             );
-            console.log(`+ ${prefix}-${i}-ex.mp3 (IT · EN · HE)`);
+            console.log(`+ ${prefix}-${i}-ex.mp3 (DE · EN · HE)`);
             wrote++;
           }
         } else {
