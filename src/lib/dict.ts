@@ -161,7 +161,16 @@ export const DICT = {
   /* ---------- Chapter detail ---------- */
   back_to_plan: { en: "Back to the plan", he: "חזרה לתוכנית" },
   todays_plan: { en: "Today's plan", he: "תוכנית היום" },
-  hour_by_hour: { en: "Hour by hour", he: "שעה אחרי שעה" },
+  hour_by_hour: { en: "Morning to evening", he: "מהבוקר עד הערב" },
+  /* Time-of-day slot labels — the redesign leads every day with its
+     morning/afternoon plan, so these render as prominent chips and
+     headings across the route cards, chapter plan and Today screen. */
+  slot_morning: { en: "Morning", he: "בוקר" },
+  slot_lunch: { en: "Lunch", he: "צהריים" },
+  slot_afternoon: { en: "Afternoon", he: "אחר הצהריים" },
+  /* Compact form for the small route-card chips (Hebrew only differs). */
+  slot_afternoon_short: { en: "Afternoon", he: "אחה״צ" },
+  slot_evening: { en: "Evening", he: "ערב" },
   on_the_map: { en: "On the map", he: "על המפה" },
   the_days_stops: { en: "The day's stops", he: "עצירות היום" },
   ordered_visit: {

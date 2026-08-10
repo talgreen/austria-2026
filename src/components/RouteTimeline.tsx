@@ -11,6 +11,7 @@ import { useLang, useLoc } from "../lib/i18n";
 import { useLocalizeDay, useLocalizeStay } from "../data/i18n";
 import PoiImage from "./PoiImage";
 import DayWeatherChip from "./DayWeatherChip";
+import { displaySlot, SLOT_META, type TimeSlot } from "../lib/timeSlot";
 import type { Day } from "../data/types";
 
 /** Pick a representative photo for a day: the first activity whose
@@ -21,6 +22,28 @@ function leadImageFor(day: Day) {
     .map(a => (a.attractionId ? getAttraction(a.attractionId) : undefined))
     .find(a => !!a?.image);
   return { src: lead?.image ?? day.leadImage, category: lead?.category, tags: lead?.tags };
+}
+
+/** The day's headline plan for the route card: one row per time-of-day
+ *  slot (morning → evening), first primary activity each. Classified on
+ *  the CANONICAL day (English time labels), titled from the localized
+ *  one — index order is preserved by localization. Capped at 3 rows,
+ *  dropping lunch first so morning/afternoon/evening always survive. */
+function slotRowsFor(day: Day, localDay: Day): { slot: TimeSlot; title: string }[] {
+  const rows: { slot: TimeSlot; title: string }[] = [];
+  const seen = new Set<TimeSlot>();
+  day.activities.forEach((act, i) => {
+    if (act.alternativeFor) return;
+    const slot = displaySlot(act.time);
+    if (!slot || seen.has(slot)) return;
+    seen.add(slot);
+    rows.push({ slot, title: localDay.activities[i].title });
+  });
+  if (rows.length > 3) {
+    const lunch = rows.findIndex(r => r.slot === "lunch");
+    if (lunch >= 0) rows.splice(lunch, 1);
+  }
+  return rows.slice(0, 3);
 }
 
 /**
@@ -85,7 +108,7 @@ export default function RouteTimeline() {
               const ld = localizeDay(day);
               const isToday = dn === todayNumber;
               const isPast = todayNumber !== null && dn < todayNumber;
-              const first = ld.activities[0];
+              const slotRows = slotRowsFor(day, ld);
               const img = leadImageFor(day);
               const isLastStop = ai === areas.length - 1 && di === area.dayNumbers.length - 1;
 
@@ -141,18 +164,49 @@ export default function RouteTimeline() {
                         )}
                         <DayWeatherChip day={day} size="sm" />
                       </div>
-                      <div className="text-[13px] text-ink-700/75 mt-1 line-clamp-1">
-                        {ld.title}
-                      </div>
-                      {first && (
-                        <div className="text-xs text-ink-700/55 mt-0.5 line-clamp-1">
-                          {first.time ? `${first.time} · ` : ""}
-                          {first.title}
+                      {/* The card's body IS the day's plan: one bold row
+                          per time-of-day slot. What we do in the morning
+                          and afternoon is the headline data — the day's
+                          theme only appears when there's no slotted plan
+                          to show (rare transit/free days). */}
+                      {slotRows.length > 0 ? (
+                        <div className="mt-2 space-y-1.5">
+                          {slotRows.map(row => {
+                            const meta = SLOT_META[row.slot];
+                            const SlotIcon = meta.Icon;
+                            return (
+                              /* Chip and title share the line; the title
+                                 wraps beneath the chip instead of
+                                 truncating away in the narrow card
+                                 column. */
+                              <div
+                                key={row.slot}
+                                className="text-[13px] font-semibold text-ink-900 leading-snug line-clamp-3"
+                              >
+                                <span
+                                  className={`me-1.5 inline-flex items-center gap-1 px-1.5 py-[2px] rounded-full align-[-2px] ${meta.bg} ${meta.text}`}
+                                >
+                                  <SlotIcon size={10} strokeWidth={2.4} />
+                                  <span className="text-[9px] font-bold uppercase tracking-[0.12em] leading-none">
+                                    {t(meta.shortLabelKey)}
+                                  </span>
+                                </span>
+                                {row.title}
+                              </div>
+                            );
+                          })}
+                        </div>
+                      ) : (
+                        <div className="text-[13px] text-ink-700/75 mt-1 line-clamp-1">
+                          {ld.title}
                         </div>
                       )}
                     </div>
 
-                    <div className="relative w-20 shrink-0 self-stretch">
+                    {/* Photo column, slimmed to give the plan rows room;
+                        the open-chapter chevron rides the photo's corner
+                        instead of costing its own column. */}
+                    <div className="relative w-16 shrink-0 self-stretch">
                       <PoiImage
                         src={img.src}
                         alt={ld.title}
@@ -160,10 +214,9 @@ export default function RouteTimeline() {
                         category={img.category}
                         tags={img.tags}
                       />
-                    </div>
-
-                    <div className="self-center px-2 text-ink-700/30 group-hover:text-ink-700/60 transition-colors">
-                      <Arrow size={18} />
+                      <span className="absolute bottom-1 end-1 grid place-items-center w-5 h-5 rounded-full bg-cream-50/85 text-ink-700/70 group-hover:text-ink-900 transition-colors">
+                        <Arrow size={13} />
+                      </span>
                     </div>
                   </button>
                 </motion.div>

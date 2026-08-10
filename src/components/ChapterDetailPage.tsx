@@ -64,6 +64,7 @@ import { getKidsPack } from "../data/kids";
 import CollapsibleSection from "./CollapsibleSection";
 import { useCarouselSwipe } from "../lib/useCarouselSwipe";
 import DayWeatherChip from "./DayWeatherChip";
+import { slotOfTime, displaySlot, isClockTime, SLOT_META } from "../lib/timeSlot";
 
 const ROMAN = ["", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X"];
 
@@ -97,20 +98,6 @@ const SWAP_KEY: Record<NonNullable<DayActivity["alternativeFor"]>, DictKey> = {
   evening: "alt_swap_evening",
   day: "alt_swap_day"
 };
-
-/** Derive the time slot a primary (non-alternative) activity occupies from
- *  its canonical English `time` string ("Morning" / "Afternoon" / "Evening").
- *  Used to pair a slot alternative with the primary it swaps in for. Numeric
- *  or unlabeled times return undefined (the alternative then falls back to
- *  the end-of-plan backup bank). */
-function slotOfTime(time?: string): "morning" | "afternoon" | "evening" | undefined {
-  if (!time) return undefined;
-  const s = time.toLowerCase();
-  if (s.includes("morning")) return "morning";
-  if (s.includes("afternoon")) return "afternoon";
-  if (s.includes("evening") || s.includes("night")) return "evening";
-  return undefined;
-}
 
 /** A primary plan activity plus the alternatives (by array index) that swap
  *  in for its slot. `dayAlts` collects whole-day backups (and any slot
@@ -672,8 +659,17 @@ function ChapterDetailContent({ day }: { day: Day }) {
             <ol className="mt-5 sm:mt-6 space-y-3">
               {plan.nodes.map((node, ni) => {
                 const act = localDay.activities[node.primary];
+                /* Slot classification runs on the CANONICAL day (English
+                   time labels are language-stable); the heading text shows
+                   the localized label. */
+                const canonicalTime = day.activities[node.primary].time;
                 return (
                   <Fragment key={node.primary}>
+                    <SlotHeading
+                      canonicalTime={canonicalTime}
+                      localTime={act.time}
+                      first={ni === 0}
+                    />
                     {ni === 0 && localDay.rideToFirst && localDay.departureTime && (
                       <RideConnector
                         departAt={localDay.departureTime}
@@ -1021,6 +1017,54 @@ function SectionLabel({ eyebrow, title, accentClass = "text-terracotta-600/85" }
   );
 }
 
+/** The big time-of-day anchor above each plan stop — the redesign's core
+ *  move. "Morning" / "Afternoon" render as serif headings with the slot's
+ *  own icon + tint, so a glance down the plan answers "what do we do in
+ *  the morning, what in the afternoon" before anything else is read.
+ *  Clock times keep the hour beside the slot label; unslotted labels
+ *  ("All day") render verbatim with a neutral clock. */
+function SlotHeading({
+  canonicalTime,
+  localTime,
+  first
+}: {
+  /** English `time` from the canonical day — drives slot classification. */
+  canonicalTime?: string;
+  /** Localized `time` shown for unslotted labels and clock chips. */
+  localTime?: string;
+  first: boolean;
+}) {
+  const t = useT();
+  if (!canonicalTime) return null;
+  const slot = displaySlot(canonicalTime);
+  const meta = slot ? SLOT_META[slot] : undefined;
+  const Icon = meta?.Icon ?? Clock;
+  const label = meta ? t(meta.labelKey) : localTime ?? canonicalTime;
+  return (
+    <li className={`flex items-center gap-2.5 ${first ? "" : "pt-4 sm:pt-5"}`}>
+      <span
+        className={`shrink-0 w-9 h-9 rounded-full flex items-center justify-center ${
+          meta ? `${meta.bg} ${meta.text}` : "bg-cream-100 text-ink-700/70 ring-1 ring-cream-300/80"
+        }`}
+      >
+        <Icon size={17} strokeWidth={2} />
+      </span>
+      <h3 className="font-serif text-[22px] sm:text-[26px] text-ink-900 leading-none">
+        {label}
+      </h3>
+      {meta && isClockTime(canonicalTime) && (
+        <span
+          className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full ${meta.bg} ${meta.text} text-[12px] font-bold tabular-nums`}
+        >
+          <Clock size={11} strokeWidth={2.2} />
+          {localTime ?? canonicalTime}
+        </span>
+      )}
+      <span aria-hidden className="flex-1 min-w-4 h-px bg-ink-900/10" />
+    </li>
+  );
+}
+
 function ActivityRow({
   activity,
   isToday,
@@ -1071,8 +1115,10 @@ function ActivityRow({
           })}
         </span>
         {/* Alternative activities get a dedicated "swap-in" badge naming
-            the slot they replace; everything else shows the time chip. */}
-        {activity.alternativeFor ? (
+            the slot they replace. Primary stops carry NO time chip here —
+            the big SlotHeading above the card owns the when, so the card
+            is free to lead with the what. */}
+        {activity.alternativeFor && (
           <span
             className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-terracotta-500/12 text-terracotta-700 text-[12px] font-bold ring-1 ring-terracotta-500/25"
             title={t("alt_aria")}
@@ -1081,12 +1127,7 @@ function ActivityRow({
             <ArrowLeftRight size={11} strokeWidth={2} />
             {t(ALT_KEY[activity.alternativeFor])}
           </span>
-        ) : activity.time ? (
-          <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-terracotta-500/10 text-terracotta-700 text-[12px] font-bold tabular-nums">
-            <Clock size={11} strokeWidth={2} />
-            {activity.time}
-          </span>
-        ) : null}
+        )}
         {activity.tag && (
           <span className="text-[9px] uppercase tracking-[0.22em] text-ink-700/50 font-medium">
             {t(TAG_KEY[activity.tag] ?? "tag_view")}

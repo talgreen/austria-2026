@@ -6,14 +6,30 @@ import { navigateTab, navigateChapter } from "../../lib/route";
 import { localizeShortDate } from "../../lib/dict";
 import { useLang } from "../../lib/i18n";
 import WeatherStrip from "../WeatherStrip";
+import { displaySlot, SLOT_META } from "../../lib/timeSlot";
 
 export default function DuringTrip({ state }: { state: Extract<TripState, { phase: "during" }> }) {
   const t = useT();
   const { lang } = useLang();
   const localizeDay = useLocalizeDay();
   const day = localizeDay(state.featured);
-  const now = day.activities[0];
-  const next = day.activities[1];
+  /* The two headline cards carry the day's PLAN — primaries only, never
+     a swap-in alternative. Indices come from the canonical day (whose
+     English `time` labels also drive slot classification); localization
+     preserves activity order, so the same indices address `day`. */
+  const primaryIdx = state.featured.activities
+    .map((a, i) => (a.alternativeFor ? -1 : i))
+    .filter(i => i >= 0);
+  const now = primaryIdx.length > 0 ? day.activities[primaryIdx[0]] : undefined;
+  const next = primaryIdx.length > 1 ? day.activities[primaryIdx[1]] : undefined;
+  const nowSlot = primaryIdx.length > 0
+    ? displaySlot(state.featured.activities[primaryIdx[0]].time)
+    : undefined;
+  const nextSlot = primaryIdx.length > 1
+    ? displaySlot(state.featured.activities[primaryIdx[1]].time)
+    : undefined;
+  const NowIcon = nowSlot ? SLOT_META[nowSlot].Icon : MapPin;
+  const NextIcon = nextSlot ? SLOT_META[nextSlot].Icon : ArrowRight;
 
   return (
     <div className="mx-auto max-w-lg px-4 pb-8 space-y-3">
@@ -28,13 +44,19 @@ export default function DuringTrip({ state }: { state: Extract<TripState, { phas
       <div className="rounded-3xl p-5 text-cream-50 bg-gradient-to-br from-rust-500 to-rust-700 shadow-[0_6px_0_#5c2712]">
         <div className="flex items-start justify-between gap-3">
           <div className="min-w-0">
+            {/* Eyebrow names the time slot ("Morning") when the plan has
+                one — that's the data the family actually scans for — and
+                falls back to the generic "Right now" otherwise. */}
             <div className="flex items-center gap-2 text-[11px] font-extrabold uppercase tracking-wide opacity-90">
-              <MapPin size={14} /> {t("today_now_label")}
+              <NowIcon size={14} />{" "}
+              {nowSlot ? t(SLOT_META[nowSlot].labelKey) : t("today_now_label")}
             </div>
-            <div className="mt-1 text-lg font-extrabold truncate">
+            <div className="mt-1 text-lg font-extrabold line-clamp-2">
               {now ? now.title : day.title}
             </div>
-            {now?.time && <div className="mt-1 text-sm opacity-90">{now.time}</div>}
+            {!nowSlot && now?.time && (
+              <div className="mt-1 text-sm opacity-90">{now.time}</div>
+            )}
           </div>
           <div className="shrink-0 rounded-xl bg-cream-50/20 px-2 py-1">
             <WeatherStrip variant="glass" />
@@ -45,7 +67,11 @@ export default function DuringTrip({ state }: { state: Extract<TripState, { phas
       {/* Up next — pine practical card */}
       <div className="rounded-[var(--radius-card)] p-4 bg-surface-next">
         <div className="flex items-center gap-2 text-[11px] font-extrabold uppercase tracking-wide text-olive-600">
-          <ArrowRight size={14} className="rtl:scale-x-[-1]" /> {t("today_next_label")}
+          <NextIcon
+            size={14}
+            className={nextSlot ? undefined : "rtl:scale-x-[-1]"}
+          />{" "}
+          {nextSlot ? t(SLOT_META[nextSlot].labelKey) : t("today_next_label")}
         </div>
         {next ? (
           <>
